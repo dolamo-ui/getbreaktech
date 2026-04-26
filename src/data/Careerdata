@@ -1,0 +1,442 @@
+// ─── CAREER DATA ─────────────────────────────────────────────────────────────
+// Add any new career by adding a key matching the route :id
+
+export interface CareerLevel {
+  level: string
+  title: string
+  duration: string
+  salary: string
+  description: string
+  skills: string[]
+  accent: string
+}
+
+export interface RoadmapStep {
+  step: number
+  title: string
+  description: string
+  duration: string
+  skills: string[]
+}
+
+export interface HardSkill { name: string; level: number }
+export interface SoftSkill { name: string; description: string }
+export interface EduPath {
+  type: string; title: string; duration: string; cost: string
+  pros: string[]; cons: string[]
+  border: string; bg: string; typeBg: string; typeColor: string
+}
+export interface ScheduleItem { time: string; act: string; desc: string; duration: string; icon: string }
+export interface Tool { name: string; cat: string }
+export interface WorkEnv { type: string; pct: number }
+export interface ImpactCard {
+  title: string; desc: string; tools: string[]
+  border: string; bg: string; icoBg: string; ico: string; tag: string; tagText: string; titleColor: string
+}
+export interface ProCon { title: string; desc: string }
+export interface Video { id: string; title: string; desc: string; dur: string; channel: string }
+
+export interface CareerData {
+  id: string
+  title: string
+  subtitle: string
+  category: string
+  description: string
+  readTime: string
+  lastUpdated: string
+  difficulty: string
+  salary: string
+  accentColor: string
+  // sections
+  careerLevels: CareerLevel[]
+  roadmapSteps: RoadmapStep[]
+  hardSkills: HardSkill[]
+  softSkills: SoftSkill[]
+  eduPaths: EduPath[]
+  schedule: ScheduleItem[]
+  tools: Tool[]
+  workEnvs: WorkEnv[]
+  impacts: ImpactCard[]
+  futureSkills: string[]
+  pros: ProCon[]
+  cons: ProCon[]
+  videos: Video[]
+  takeaways: string[]
+}
+
+// ─── AI & ML ENGINEER ────────────────────────────────────────────────────────
+const aiMlEngineer: CareerData = {
+  id: 'ai-ml-engineer',
+  title: 'AI & ML Engineer',
+  subtitle: 'Career Roadmap 2026',
+  category: 'AI & Data',
+  description: 'Build, train, and deploy machine learning models that power the next generation of intelligent products — from recommendation engines to large language models.',
+  readTime: '20 min read',
+  lastUpdated: 'March 2026',
+  difficulty: 'Advanced',
+  salary: 'R900k – R2.2M',
+  accentColor: '#7c3aed',
+
+  careerLevels: [
+    { level: 'Beginner', title: 'Junior ML Engineer', duration: '0–2 yrs', salary: 'R400k–R600k', description: 'Run supervised learning experiments with guidance and learn the ML workflow end to end.', skills: ['Python', 'Scikit-learn', 'Pandas', 'Stats'], accent: '#22d3ee' },
+    { level: 'Intermediate', title: 'ML Engineer', duration: '2–5 yrs', salary: 'R700k–R1.2M', description: 'Train and deploy models independently, own evaluation pipelines, and contribute to MLOps.', skills: ['PyTorch/TF', 'MLflow', 'Docker', 'Cloud AI'], accent: '#4ade80' },
+    { level: 'Advanced', title: 'Senior ML Engineer', duration: '5–8 yrs', salary: 'R1.2M–R1.8M', description: 'Lead model architecture decisions, mentor juniors, and drive model quality across products.', skills: ['Architecture', 'LLM FT', 'System Design', 'Lead'], accent: '#818cf8' },
+    { level: 'Expert', title: 'Staff / Principal ML', duration: '8+ yrs', salary: 'R2M+', description: 'Define AI strategy, publish research, and solve frontier problems that shape the entire field.', skills: ['Research', 'AI Strategy', 'Publications', 'Org'], accent: '#fb923c' },
+  ],
+
+  roadmapSteps: [
+    { step: 1, title: 'Python & Math Foundations', description: 'Build a rock-solid base in Python, linear algebra, calculus, and probability. These non-negotiables gate every advanced concept.', duration: '2–3 months', skills: ['Python', 'NumPy', 'Linear Algebra', 'Statistics'] },
+    { step: 2, title: 'Data Wrangling & EDA', description: 'Learn to clean, transform, and explore real-world datasets. Data quality is the single biggest driver of model quality.', duration: '1–2 months', skills: ['Pandas', 'Matplotlib', 'Seaborn', 'SQL'] },
+    { step: 3, title: 'Classical Machine Learning', description: 'Master supervised and unsupervised algorithms. Understand why each works — not just how to call it from Scikit-learn.', duration: '2–3 months', skills: ['Scikit-learn', 'Regression', 'Decision Trees', 'Clustering'] },
+    { step: 4, title: 'Deep Learning & Transformers', description: 'Dive into neural networks, CNNs, RNNs, and the Transformer architecture. Train models on real data with PyTorch.', duration: '3–4 months', skills: ['PyTorch', 'CNNs', 'Transformers', 'TensorFlow'] },
+    { step: 5, title: 'MLOps & Production Deployment', description: 'Learn to ship models to production, monitor drift, and maintain pipelines. This is what separates hobbyists from professionals.', duration: '2 months', skills: ['Docker', 'MLflow', 'FastAPI', 'Cloud AI'] },
+    { step: 6, title: 'LLMs & Specialisation', description: 'Fine-tune large language models, build RAG pipelines, and specialise in NLP, vision, or reinforcement learning.', duration: '2–3 months', skills: ['Hugging Face', 'LangChain', 'LoRA / QLoRA', 'RAG'] },
+  ],
+
+  hardSkills: [
+    { name: 'Python & Data Libraries (NumPy, Pandas)', level: 95 },
+    { name: 'Machine Learning Fundamentals', level: 90 },
+    { name: 'Deep Learning & Neural Networks', level: 85 },
+    { name: 'PyTorch / TensorFlow', level: 80 },
+    { name: 'MLOps & Model Deployment', level: 72 },
+    { name: 'NLP & LLM Fine-Tuning', level: 70 },
+    { name: 'Computer Vision', level: 65 },
+    { name: 'Distributed Training & Cloud AI', level: 58 },
+  ],
+
+  softSkills: [
+    { name: 'Research Mindset', description: 'Read and apply cutting-edge papers; translate theory into working systems.' },
+    { name: 'Experimental Thinking', description: 'Design rigorous experiments, track metrics, and iterate fast on insights.' },
+    { name: 'Communication', description: 'Explain complex model behaviour clearly to non-technical stakeholders.' },
+    { name: 'Statistical Intuition', description: 'Spot data leakage, bias, and overfitting before they become production problems.' },
+    { name: 'Collaboration', description: 'Work fluidly alongside data engineers, product teams, and infrastructure.' },
+    { name: 'Ethical Judgment', description: 'Evaluate fairness, safety, and societal impact of every model you ship.' },
+  ],
+
+  eduPaths: [
+    { type: 'Degree', title: 'CS / Statistics Degree', duration: '3–4 years', cost: 'R400k – R1M+', border: 'rgba(99,102,241,0.2)', bg: 'rgba(99,102,241,0.04)', typeBg: 'rgba(99,102,241,0.12)', typeColor: '#818cf8', pros: ['Strong mathematical foundation', 'Research network & internships', 'Valued at top AI labs', 'Peer cohort & connections'], cons: ['Time-intensive (3–4 years)', 'Expensive tuition costs', 'Slow initial career start', 'Theory-heavy curriculum'] },
+    { type: 'Bootcamp', title: 'ML / Data Science Bootcamp', duration: '3–6 months', cost: 'R80k – R180k', border: 'rgba(34,211,238,0.2)', bg: 'rgba(34,211,238,0.04)', typeBg: 'rgba(34,211,238,0.12)', typeColor: '#22d3ee', pros: ['Fast-tracked practical skills', 'Project-based curriculum', 'Career services included', 'Strong community cohort'], cons: ['Limited theoretical depth', 'Variable programme quality', 'Credential not always respected', 'Competitive job market entry'] },
+    { type: 'Self-Taught', title: 'Online Courses + Projects', duration: '6–24 months', cost: 'R0 – R6k', border: 'rgba(167,139,250,0.2)', bg: 'rgba(167,139,250,0.04)', typeBg: 'rgba(167,139,250,0.12)', typeColor: '#a78bfa', pros: ['Fully flexible schedule', 'Very low cost to start', 'Curate your own path', 'Global world-class resources'], cons: ['Requires iron discipline', 'No formal credential', 'Can feel isolating', 'Hard to validate skills early'] },
+  ],
+
+  schedule: [
+    { time: '9:00', act: 'Team Standup', desc: 'Sync on experiment progress, blockers, and model metrics', duration: '15 min', icon: 'Users' },
+    { time: '9:30', act: 'Experiment Design', desc: 'Write hypothesis, set up training runs, configure hyperparameters', duration: '1.5 hrs', icon: 'Lightbulb' },
+    { time: '11:00', act: 'Model Training', desc: 'Launch training jobs, monitor loss curves, review training logs', duration: '2 hrs', icon: 'Monitor' },
+    { time: '1:00', act: 'Lunch Break', desc: 'Step away from the screen, recharge, and decompress', duration: '1 hr', icon: 'Coffee' },
+    { time: '2:00', act: 'Paper Reading', desc: 'Stay current — read a new arXiv paper or engineering blog post', duration: '1 hr', icon: 'Code' },
+    { time: '3:00', act: 'Code & Evaluation', desc: 'Analyse results, write evaluation scripts, improve the pipeline', duration: '2 hrs', icon: 'MessageSquare' },
+    { time: '5:00', act: 'Async Reviews & Docs', desc: 'Review PRs, update experiment tracking, log key findings', duration: '30 min', icon: 'Home' },
+  ],
+
+  tools: [
+    { name: 'PyTorch', cat: 'Framework' }, { name: 'Jupyter', cat: 'Notebook' },
+    { name: 'W&B', cat: 'Tracking' }, { name: 'VS Code', cat: 'IDE' },
+    { name: 'Docker', cat: 'Infra' }, { name: 'AWS / GCP', cat: 'Cloud' },
+    { name: 'Hugging Face', cat: 'Models' }, { name: 'GitHub', cat: 'Version Control' },
+  ],
+
+  workEnvs: [{ type: 'Remote', pct: 52 }, { type: 'Hybrid', pct: 33 }, { type: 'In-Office', pct: 15 }],
+
+  impacts: [
+    { title: 'AI-Assisted Experimentation', desc: 'Use AutoML platforms and neural architecture search to run 10× more experiments in the same time.', tools: ['AutoML', 'Optuna', 'Ray Tune', 'NAS'], border: 'rgba(99,102,241,0.2)', bg: 'rgba(99,102,241,0.05)', icoBg: 'rgba(99,102,241,0.1)', ico: '#818cf8', tag: 'rgba(99,102,241,0.12)', tagText: '#818cf8', titleColor: '#818cf8' },
+    { title: 'LLM-Powered Code & Debugging', desc: 'GitHub Copilot, Claude, and GPT-4 accelerate writing training pipelines, data loaders, and evaluation scripts.', tools: ['GitHub Copilot', 'Claude', 'ChatGPT', 'Cursor AI'], border: 'rgba(34,211,238,0.2)', bg: 'rgba(34,211,238,0.05)', icoBg: 'rgba(34,211,238,0.1)', ico: '#22d3ee', tag: 'rgba(34,211,238,0.12)', tagText: '#22d3ee', titleColor: '#22d3ee' },
+    { title: 'Foundation Model Fine-Tuning', desc: 'Instead of training from scratch, adapt pre-trained LLMs and vision models for your domain with LoRA / QLoRA.', tools: ['LoRA / QLoRA', 'PEFT', 'Hugging Face', 'vLLM'], border: 'rgba(167,139,250,0.2)', bg: 'rgba(167,139,250,0.05)', icoBg: 'rgba(167,139,250,0.1)', ico: '#a78bfa', tag: 'rgba(167,139,250,0.12)', tagText: '#a78bfa', titleColor: '#a78bfa' },
+  ],
+
+  futureSkills: ['Prompt Engineering & Evaluation', 'Retrieval-Augmented Generation (RAG)', 'RLHF & Alignment Techniques', 'Multimodal Model Development', 'LLM Observability & Monitoring', 'AI Safety & Red-Teaming'],
+
+  pros: [
+    { title: 'Explosive Demand', desc: 'AI engineers are among the most sought-after professionals globally, with job postings growing 75% year-over-year.' },
+    { title: 'Frontier Work', desc: 'Build systems that push the boundaries — from generative AI to fully autonomous agents.' },
+    { title: 'Exceptional Salaries', desc: 'Top-tier compensation with senior roles exceeding R2M total comp at leading companies.' },
+    { title: 'High Impact', desc: 'Your models directly shape products used by millions of people.' },
+    { title: 'Intellectual Depth', desc: 'Combines maths, statistics, software engineering, and domain expertise.' },
+    { title: 'Remote-Friendly', desc: 'Most AI/ML roles are fully remote or hybrid, giving you flexibility to work from anywhere.' },
+  ],
+
+  cons: [
+    { title: 'Steep Learning Curve', desc: 'Requires strong foundations in linear algebra, calculus, statistics, and programming.' },
+    { title: 'Compute Costs', desc: 'Training large models is expensive. Access to GPUs can be a genuine bottleneck.' },
+    { title: 'Rapid Obsolescence', desc: 'Techniques change fast — what is state-of-the-art today may be outdated next year.' },
+    { title: 'Data Dependency', desc: 'Model quality is only as good as your data. Cleaning it is unglamorous but critical.' },
+    { title: 'Evaluation Challenges', desc: 'Measuring model performance fairly and avoiding benchmark overfitting requires rigorous methodology.' },
+    { title: 'Ethical Complexity', desc: 'Navigating bias, fairness, hallucinations, and misuse adds significant responsibility.' },
+  ],
+
+  videos: [
+    { id: 'aircAruvnKk', title: 'But what is a neural network?', desc: '3Blue1Browns iconic visual explanation of how neural networks learn — the best introduction on the internet.', dur: '19:13', channel: '3Blue1Brown' },
+    { id: 'wjZofJX0v4M', title: 'Deep Learning in 100 Seconds', desc: 'A lightning-fast overview of deep learning fundamentals for developers who want the essentials fast.', dur: '2:12', channel: 'Fireship' },
+    { id: '5tvmMX8r_OM', title: 'ML Engineering for Production', desc: 'Andrew Ngs course overview on deploying ML models at scale — the MLOps perspective.', dur: '16:04', channel: 'DeepLearning.AI' },
+  ],
+
+  takeaways: [
+    'Master Python, maths, and statistics before jumping to any framework',
+    'Build end-to-end projects: data collection → model → production deployment',
+    'Learn MLOps early — most candidates skip it and hiring managers notice',
+    'Read papers and implement key architectures from scratch at least once',
+    'Embrace AI coding tools to accelerate your own engineering velocity',
+  ],
+}
+
+// ─── CYBERSECURITY SPECIALIST ─────────────────────────────────────────────────
+const cybersecurity: CareerData = {
+  id: 'cybersecurity',
+  title: 'Cybersecurity Specialist',
+  subtitle: 'Career Roadmap 2026',
+  category: 'Security',
+  description: 'Protect every company on earth from threats. Learn ethical hacking, network defence, and incident response — then get paid extremely well to do it.',
+  readTime: '18 min read',
+  lastUpdated: 'March 2026',
+  difficulty: 'Advanced',
+  salary: 'R750k – R1.6M',
+  accentColor: '#ef4444',
+
+  careerLevels: [
+    { level: 'Beginner', title: 'SOC Analyst / IT Security', duration: '0–2 yrs', salary: 'R300k–R550k', description: 'Monitor alerts, triage incidents, and learn the fundamentals of network and endpoint security.', skills: ['Wireshark', 'SIEM', 'Linux', 'Networking'], accent: '#22d3ee' },
+    { level: 'Intermediate', title: 'Cybersecurity Analyst', duration: '2–5 yrs', salary: 'R600k–R1M', description: 'Hunt threats proactively, lead incident response, and operate security tools independently.', skills: ['Threat Intel', 'Splunk', 'IDS/IPS', 'Forensics'], accent: '#4ade80' },
+    { level: 'Advanced', title: 'Penetration Tester / SecEng', duration: '5–8 yrs', salary: 'R1M–R1.6M', description: 'Conduct red-team exercises, design secure architectures, and advise on security posture.', skills: ['Metasploit', 'Burp Suite', 'Zero Trust', 'OSCP'], accent: '#818cf8' },
+    { level: 'Expert', title: 'CISO / Principal Security', duration: '8+ yrs', salary: 'R1.8M+', description: 'Lead enterprise security strategy, manage risk programmes, and report to the board.', skills: ['Risk Mgmt', 'CISM', 'ISO 27001', 'Leadership'], accent: '#fb923c' },
+  ],
+
+  roadmapSteps: [
+    { step: 1, title: 'Networking & OS Fundamentals', description: 'You cannot defend what you do not understand. Master TCP/IP, DNS, HTTP, and Linux/Windows system administration.', duration: '2–3 months', skills: ['TCP/IP', 'DNS', 'Linux', 'Windows Server'] },
+    { step: 2, title: 'Security Foundations & Certifications', description: 'Learn the core security domains: cryptography, access control, threat modelling, and compliance frameworks.', duration: '2–3 months', skills: ['CompTIA Sec+', 'Cryptography', 'IAM', 'NIST'] },
+    { step: 3, title: 'Offensive Security Basics', description: 'Learn how attackers think. Study ethical hacking, OWASP Top 10, and practice on platforms like HackTheBox and TryHackMe.', duration: '2–3 months', skills: ['Kali Linux', 'OWASP', 'HackTheBox', 'Nmap'] },
+    { step: 4, title: 'Defensive Operations & SIEM', description: 'Build your blue-team skills. Learn to operate SIEM platforms, write detection rules, and lead incident response.', duration: '2 months', skills: ['Splunk', 'Elastic SIEM', 'Incident Response', 'Threat Hunting'] },
+    { step: 5, title: 'Cloud & Application Security', description: 'Modern infrastructure lives in the cloud. Learn AWS/Azure security, container security, and DevSecOps principles.', duration: '2 months', skills: ['AWS Security', 'Kubernetes', 'DevSecOps', 'CSPM'] },
+    { step: 6, title: 'Specialisation & Advanced Certs', description: 'Choose a track: penetration testing (OSCP), cloud security (CCSP), or governance (CISM/CISSP).', duration: '3–4 months', skills: ['OSCP', 'CISSP', 'CCSP', 'Red Teaming'] },
+  ],
+
+  hardSkills: [
+    { name: 'Network Security & Protocols', level: 95 },
+    { name: 'SIEM & Log Analysis', level: 88 },
+    { name: 'Penetration Testing', level: 82 },
+    { name: 'Incident Response & Forensics', level: 78 },
+    { name: 'Cloud Security (AWS/Azure)', level: 74 },
+    { name: 'Malware Analysis', level: 66 },
+    { name: 'Identity & Access Management', level: 72 },
+    { name: 'Scripting (Python / Bash)', level: 68 },
+  ],
+
+  softSkills: [
+    { name: 'Attacker Mindset', description: 'Think like the adversary — anticipate attack vectors before they are exploited.' },
+    { name: 'Attention to Detail', description: 'A single misconfigured firewall rule can expose an entire organisation.' },
+    { name: 'Communication Under Pressure', description: 'Clearly brief executives during active incidents without causing panic.' },
+    { name: 'Continuous Learning', description: 'The threat landscape changes daily — staying current is non-negotiable.' },
+    { name: 'Ethical Integrity', description: 'Access to sensitive systems demands an unwavering ethical compass.' },
+    { name: 'Problem-Solving Speed', description: 'Triage and contain threats rapidly before damage spreads.' },
+  ],
+
+  eduPaths: [
+    { type: 'Degree', title: 'Cybersecurity / CS Degree', duration: '3–4 years', cost: 'R400k – R1M+', border: 'rgba(239,68,68,0.2)', bg: 'rgba(239,68,68,0.04)', typeBg: 'rgba(239,68,68,0.12)', typeColor: '#f87171', pros: ['Comprehensive theoretical foundation', 'Internship & recruiter pipelines', 'Government/military roles often require it', 'Research opportunities'], cons: ['4-year time commitment', 'High tuition cost', 'Not always hands-on enough', 'Curriculum can lag industry'] },
+    { type: 'Certifications', title: 'CompTIA / OSCP / CISSP Path', duration: '6–18 months', cost: 'R20k – R80k', border: 'rgba(34,211,238,0.2)', bg: 'rgba(34,211,238,0.04)', typeBg: 'rgba(34,211,238,0.12)', typeColor: '#22d3ee', pros: ['Industry-recognised credentials', 'Laser-focused practical skills', 'Faster to employability', 'Vendor-neutral standards'], cons: ['Exam costs add up quickly', 'No holistic CS foundation', 'Cert fatigue is real', 'Requires self-discipline'] },
+    { type: 'Self-Taught', title: 'HackTheBox + TryHackMe + Labs', duration: '8–24 months', cost: 'R0 – R4k', border: 'rgba(167,139,250,0.2)', bg: 'rgba(167,139,250,0.04)', typeBg: 'rgba(167,139,250,0.12)', typeColor: '#a78bfa', pros: ['Completely self-paced', 'Gamified hands-on hacking', 'Build a visible portfolio', 'Global community support'], cons: ['No formal recognition initially', 'Needs extreme self-motivation', 'Gaps in knowledge possible', 'Hard to get first job without certs'] },
+  ],
+
+  schedule: [
+    { time: '9:00', act: 'Threat Intel Briefing', desc: 'Review overnight alerts, threat feeds, and global incident reports', duration: '30 min', icon: 'Monitor' },
+    { time: '9:30', act: 'Alert Triage & Investigation', desc: 'Analyse flagged events in SIEM, correlate IOCs, and escalate real threats', duration: '2 hrs', icon: 'Shield' },
+    { time: '11:30', act: 'Vulnerability Scanning', desc: 'Run scans, review new CVEs, and track remediation with engineering teams', duration: '1.5 hrs', icon: 'Search' },
+    { time: '1:00', act: 'Lunch Break', desc: 'Step away, recharge, and reset your threat-hunting mindset', duration: '1 hr', icon: 'Coffee' },
+    { time: '2:00', act: 'Red/Blue Team Exercise', desc: 'Simulate attacks on internal systems or defend against red-team scenarios', duration: '2 hrs', icon: 'Zap' },
+    { time: '4:00', act: 'Documentation & Reporting', desc: 'Write incident reports, update runbooks, and log security findings', duration: '1 hr', icon: 'FileText' },
+    { time: '5:00', act: 'Training & Research', desc: 'Read threat research, complete CTF challenges, or study for certs', duration: '30 min', icon: 'BookOpen' },
+  ],
+
+  tools: [
+    { name: 'Splunk', cat: 'SIEM' }, { name: 'Kali Linux', cat: 'Pentesting' },
+    { name: 'Burp Suite', cat: 'Web Security' }, { name: 'Wireshark', cat: 'Network Analysis' },
+    { name: 'Metasploit', cat: 'Exploitation' }, { name: 'CrowdStrike', cat: 'EDR' },
+    { name: 'Nmap', cat: 'Recon' }, { name: 'MITRE ATT&CK', cat: 'Framework' },
+  ],
+
+  workEnvs: [{ type: 'Hybrid', pct: 45 }, { type: 'In-Office', pct: 35 }, { type: 'Remote', pct: 20 }],
+
+  impacts: [
+    { title: 'AI-Powered Threat Detection', desc: 'ML models now identify anomalous behaviour and zero-day attacks faster than any manual analyst can.', tools: ['Darktrace', 'CrowdStrike AI', 'Microsoft Sentinel', 'Vectra AI'], border: 'rgba(239,68,68,0.2)', bg: 'rgba(239,68,68,0.05)', icoBg: 'rgba(239,68,68,0.1)', ico: '#f87171', tag: 'rgba(239,68,68,0.12)', tagText: '#f87171', titleColor: '#f87171' },
+    { title: 'Automated Penetration Testing', desc: 'AI-assisted tools like Pentera and NodeZero automate repetitive recon and exploitation, freeing pentesters for creative attacks.', tools: ['Pentera', 'NodeZero', 'Nuclei', 'Burp AI'], border: 'rgba(34,211,238,0.2)', bg: 'rgba(34,211,238,0.05)', icoBg: 'rgba(34,211,238,0.1)', ico: '#22d3ee', tag: 'rgba(34,211,238,0.12)', tagText: '#22d3ee', titleColor: '#22d3ee' },
+    { title: 'LLM-Assisted Code Review', desc: 'Use AI to automatically scan codebases for injection flaws, insecure dependencies, and OWASP Top 10 vulnerabilities.', tools: ['GitHub Advanced Security', 'Semgrep AI', 'Snyk', 'CodeQL'], border: 'rgba(167,139,250,0.2)', bg: 'rgba(167,139,250,0.05)', icoBg: 'rgba(167,139,250,0.1)', ico: '#a78bfa', tag: 'rgba(167,139,250,0.12)', tagText: '#a78bfa', titleColor: '#a78bfa' },
+  ],
+
+  futureSkills: ['AI Security & Adversarial ML', 'Cloud-Native Security (CNAPP)', 'Zero Trust Architecture Design', 'Threat Intelligence Automation', 'Quantum-Safe Cryptography', 'GenAI Red-Teaming'],
+
+  pros: [
+    { title: 'Perpetual Demand', desc: 'Cyber threats grow every year — security professionals will always be needed regardless of economic cycles.' },
+    { title: 'Thrilling Work', desc: 'No two days are the same. Hunting real adversaries and stopping breaches is genuinely exciting.' },
+    { title: 'Strong Salaries', desc: 'The talent shortage keeps compensation high at every level of the career ladder.' },
+    { title: 'Clear Certification Path', desc: 'Unlike many tech careers, certs like OSCP and CISSP are industry-recognised and directly boost pay.' },
+    { title: 'Mission-Driven', desc: 'Protecting people, infrastructure, and data gives the work a sense of real-world purpose.' },
+    { title: 'Remote Opportunities', desc: 'Many security analyst and consultant roles can be done fully remotely.' },
+  ],
+
+  cons: [
+    { title: 'On-Call Stress', desc: 'Breaches don\'t respect business hours. Senior roles often involve overnight and weekend incident response.' },
+    { title: 'Constant Learning Required', desc: 'New CVEs, attack techniques, and tools emerge weekly — falling behind is a career risk.' },
+    { title: 'Alert Fatigue', desc: 'SOC analysts face hundreds of alerts daily. Burnout rates in security operations are notably high.' },
+    { title: 'High Responsibility', desc: 'A missed alert or misconfiguration can cost an organisation millions and destroy your reputation.' },
+    { title: 'Certification Cost', desc: 'Top certs like CISSP and OSCP require significant time and financial investment.' },
+    { title: 'Adversarial Asymmetry', desc: 'Defenders must be right every time; attackers only need to succeed once.' },
+  ],
+
+  videos: [
+    { id: 'hXSFdwIOfnE', title: 'So you want to be a hacker? Roadmap 2024', desc: 'A clear, no-fluff breakdown of how to enter the cybersecurity field from scratch with a realistic roadmap.', dur: '18:42', channel: 'TCM Security' },
+    { id: 'inWWhr5tnEA', title: 'Cybersecurity in 100 Seconds', desc: 'Fireship explains the core concepts of cybersecurity in under two minutes — perfect for a quick orientation.', dur: '1:52', channel: 'Fireship' },
+    { id: 'KcN41s-wXKo', title: 'How to Start in Cybersecurity 2024', desc: 'David Bombal walks through the exact steps, certifications, and tools needed to land your first security job.', dur: '22:15', channel: 'David Bombal' },
+  ],
+
+  takeaways: [
+    'Start with networking and Linux — security is built on top of these foundations',
+    'Get CompTIA Security+ as your first credential to open junior doors',
+    'Practice daily on HackTheBox or TryHackMe to build real hands-on skills',
+    'Learn both offensive (red team) and defensive (blue team) concepts',
+    'Build a home lab — simulate attacks and defences in a safe environment',
+  ],
+}
+
+// ─── FRONTEND DEVELOPER ───────────────────────────────────────────────────────
+const frontendDeveloper: CareerData = {
+  id: 'frontend',
+  title: 'Frontend Developer',
+  subtitle: 'Career Roadmap 2026',
+  category: 'Tech',
+  description: 'Craft the digital experiences people actually see and love. Learn React, build beautiful interfaces, and launch your career with one of the most hirable skills in tech.',
+  readTime: '15 min read',
+  lastUpdated: 'March 2026',
+  difficulty: 'Beginner',
+  salary: 'R650k – R1.2M',
+  accentColor: '#3b82f6',
+
+  careerLevels: [
+    { level: 'Beginner', title: 'Junior Frontend Dev', duration: '0–2 yrs', salary: 'R250k–R450k', description: 'Build UI components, fix bugs, and learn the codebase with guidance from senior developers.', skills: ['HTML', 'CSS', 'JavaScript', 'React Basics'], accent: '#22d3ee' },
+    { level: 'Intermediate', title: 'Frontend Developer', duration: '2–4 yrs', salary: 'R500k–R850k', description: 'Independently build features, own component libraries, and optimise web performance.', skills: ['React', 'TypeScript', 'Testing', 'Accessibility'], accent: '#4ade80' },
+    { level: 'Advanced', title: 'Senior Frontend Dev', duration: '4–7 yrs', salary: 'R850k–R1.2M', description: 'Lead architecture decisions, mentor juniors, and define front-end standards across products.', skills: ['Architecture', 'Design Systems', 'Perf Audit', 'Mentoring'], accent: '#818cf8' },
+    { level: 'Expert', title: 'Staff / Principal Engineer', duration: '7+ yrs', salary: 'R1.4M+', description: 'Define engineering culture, drive cross-team technical strategy, and lead platform initiatives.', skills: ['Engineering Culture', 'Strategy', 'Platform', 'OSS'], accent: '#fb923c' },
+  ],
+
+  roadmapSteps: [
+    { step: 1, title: 'HTML & CSS Mastery', description: 'The bedrock of everything on the web. Learn semantic HTML and modern CSS including Flexbox, Grid, and responsive design.', duration: '1–2 months', skills: ['HTML5', 'CSS3', 'Flexbox', 'CSS Grid'] },
+    { step: 2, title: 'JavaScript Fundamentals', description: 'Learn the language of the web. Cover DOM manipulation, async programming, APIs, and ES6+ modern syntax.', duration: '2–3 months', skills: ['ES6+', 'DOM', 'Fetch API', 'Async/Await'] },
+    { step: 3, title: 'React & Component Architecture', description: 'Master React hooks, state management, routing, and component composition — the industry-standard library.', duration: '2–3 months', skills: ['React', 'Hooks', 'React Router', 'Context API'] },
+    { step: 4, title: 'TypeScript & Tooling', description: 'Add type safety to your code and learn the professional developer toolchain: Vite, ESLint, Prettier, and Git workflows.', duration: '1–2 months', skills: ['TypeScript', 'Vite', 'ESLint', 'Git'] },
+    { step: 5, title: 'Testing & Accessibility', description: 'Write reliable code and build for all users. Cover unit testing, integration testing, and WCAG accessibility standards.', duration: '1 month', skills: ['Vitest', 'Playwright', 'WCAG', 'axe-core'] },
+    { step: 6, title: 'Portfolio & Job Prep', description: 'Build 3–5 polished projects, deploy them, and craft a developer portfolio that gets you interviews.', duration: '1–2 months', skills: ['Vercel', 'Portfolio', 'Interview Prep', 'Open Source'] },
+  ],
+
+  hardSkills: [
+    { name: 'HTML & CSS (Responsive Design)', level: 95 },
+    { name: 'JavaScript / TypeScript', level: 92 },
+    { name: 'React & Component Libraries', level: 88 },
+    { name: 'State Management (Zustand / Redux)', level: 75 },
+    { name: 'Testing (Vitest / Playwright)', level: 68 },
+    { name: 'Web Performance Optimisation', level: 72 },
+    { name: 'Accessibility (WCAG)', level: 65 },
+    { name: 'GraphQL / REST API Integration', level: 78 },
+  ],
+
+  softSkills: [
+    { name: 'Design Sense', description: 'Translate Figma designs pixel-perfectly and push back when UX decisions hurt users.' },
+    { name: 'Cross-functional Collaboration', description: 'Work daily with designers, backend engineers, and product managers.' },
+    { name: 'User Empathy', description: 'Always ask "how will a real user experience this?" before shipping.' },
+    { name: 'Attention to Detail', description: 'The difference between good and great UI is all in the micro-details.' },
+    { name: 'Ownership Mentality', description: 'Own your features end-to-end: from design review through production monitoring.' },
+    { name: 'Adaptability', description: 'The JS ecosystem moves fast — staying curious is a survival skill.' },
+  ],
+
+  eduPaths: [
+    { type: 'Bootcamp', title: 'Full-Stack Web Bootcamp', duration: '3–6 months', cost: 'R50k – R140k', border: 'rgba(59,130,246,0.2)', bg: 'rgba(59,130,246,0.04)', typeBg: 'rgba(59,130,246,0.12)', typeColor: '#60a5fa', pros: ['Fastest path to job-ready', 'Structured curriculum', 'Career support & hiring network', 'Cohort accountability'], cons: ['Significant upfront cost', 'Quality varies widely', 'Rushed pace can cause gaps', 'No formal credential'] },
+    { type: 'Self-Taught', title: 'freeCodeCamp + Projects', duration: '6–18 months', cost: 'R0 – R3k', border: 'rgba(34,211,238,0.2)', bg: 'rgba(34,211,238,0.04)', typeBg: 'rgba(34,211,238,0.12)', typeColor: '#22d3ee', pros: ['Completely free and self-paced', 'Massive community support', 'Build a real portfolio', 'Learn at your own speed'], cons: ['Requires extreme discipline', 'No structured mentorship', 'Easy to get stuck', 'Longer timeline'] },
+    { type: 'Degree', title: 'CS / Software Engineering Degree', duration: '3–4 years', cost: 'R400k – R1M+', border: 'rgba(167,139,250,0.2)', bg: 'rgba(167,139,250,0.04)', typeBg: 'rgba(167,139,250,0.12)', typeColor: '#a78bfa', pros: ['Respected by large corporates', 'Strong CS fundamentals', 'Internship pipelines', 'Alumni network'], cons: ['4-year time investment', 'Expensive tuition', 'Frontend rarely taught in depth', 'Slow to reflect industry changes'] },
+  ],
+
+  schedule: [
+    { time: '9:00', act: 'Daily Standup', desc: 'Share progress, blockers, and align with the team on priorities', duration: '15 min', icon: 'Users' },
+    { time: '9:30', act: 'Feature Development', desc: 'Build UI components, implement design specs, and write clean TypeScript', duration: '2.5 hrs', icon: 'Code' },
+    { time: '12:00', act: 'Design Review', desc: 'Walk through new Figma designs with product and ensure feasibility', duration: '30 min', icon: 'Palette' },
+    { time: '1:00', act: 'Lunch Break', desc: 'Step away from the screen, recharge, and scroll something other than GitHub', duration: '1 hr', icon: 'Coffee' },
+    { time: '2:00', act: 'Code Reviews', desc: 'Review teammates PRs, leave constructive feedback, and learn from others', duration: '1 hr', icon: 'MessageSquare' },
+    { time: '3:00', act: 'Testing & Bug Fixes', desc: 'Write unit/e2e tests, investigate reported bugs, and ship fixes', duration: '1.5 hrs', icon: 'Zap' },
+    { time: '4:30', act: 'Documentation & Learning', desc: 'Update component docs, read release notes, or explore a new library', duration: '30 min', icon: 'BookOpen' },
+  ],
+
+  tools: [
+    { name: 'React', cat: 'Framework' }, { name: 'TypeScript', cat: 'Language' },
+    { name: 'Tailwind CSS', cat: 'Styling' }, { name: 'Figma', cat: 'Design' },
+    { name: 'Vite', cat: 'Bundler' }, { name: 'Vercel', cat: 'Deployment' },
+    { name: 'Playwright', cat: 'Testing' }, { name: 'GitHub', cat: 'Version Control' },
+  ],
+
+  workEnvs: [{ type: 'Remote', pct: 58 }, { type: 'Hybrid', pct: 32 }, { type: 'In-Office', pct: 10 }],
+
+  impacts: [
+    { title: 'AI-Generated UI Components', desc: 'Tools like v0 by Vercel and Copilot generate React components from plain descriptions, dramatically speeding up prototyping.', tools: ['v0 by Vercel', 'GitHub Copilot', 'Cursor AI', 'Builder.io'], border: 'rgba(59,130,246,0.2)', bg: 'rgba(59,130,246,0.05)', icoBg: 'rgba(59,130,246,0.1)', ico: '#60a5fa', tag: 'rgba(59,130,246,0.12)', tagText: '#60a5fa', titleColor: '#60a5fa' },
+    { title: 'Automated Visual Testing', desc: 'AI-powered tools catch visual regressions across thousands of component states automatically, replacing manual screenshot comparison.', tools: ['Percy', 'Chromatic', 'Applitools', 'Lost Pixel'], border: 'rgba(34,211,238,0.2)', bg: 'rgba(34,211,238,0.05)', icoBg: 'rgba(34,211,238,0.1)', ico: '#22d3ee', tag: 'rgba(34,211,238,0.12)', tagText: '#22d3ee', titleColor: '#22d3ee' },
+    { title: 'Design-to-Code Automation', desc: 'Figma plugins and AI tools are beginning to generate production-quality component code directly from design files.', tools: ['Anima', 'Locofy', 'Figma Dev Mode', 'Galileo AI'], border: 'rgba(167,139,250,0.2)', bg: 'rgba(167,139,250,0.05)', icoBg: 'rgba(167,139,250,0.1)', ico: '#a78bfa', tag: 'rgba(167,139,250,0.12)', tagText: '#a78bfa', titleColor: '#a78bfa' },
+  ],
+
+  futureSkills: ['React Server Components & Next.js App Router', 'Web Performance (Core Web Vitals)', 'Micro-frontend Architecture', 'Edge-side Rendering Patterns', 'Accessibility-first Development', 'AI-Integrated UI Components'],
+
+  pros: [
+    { title: 'Beginner Friendly Entry', desc: 'One of the most accessible tech careers — you can get your first job with 6–9 months of focused learning.' },
+    { title: 'Instant Gratification', desc: 'Build something visual that works — the feedback loop of seeing your code rendered is uniquely motivating.' },
+    { title: 'Massive Demand', desc: 'Every business needs a web presence, making frontend skills perpetually in-demand across all industries.' },
+    { title: 'Creative + Technical', desc: 'Rare combination of artistic expression and engineering rigour in a single role.' },
+    { title: 'Remote-First Culture', desc: 'Frontend development has one of the highest rates of remote work in the entire tech industry.' },
+    { title: 'Clear Portfolio Signal', desc: 'Unlike many careers, you can show your work to employers instantly via deployed projects.' },
+  ],
+
+  cons: [
+    { title: 'JavaScript Fatigue', desc: 'The ecosystem changes constantly — new frameworks, bundlers, and paradigms appear faster than you can learn them.' },
+    { title: 'Design Subjectivity', desc: 'Receiving conflicting feedback from stakeholders with different aesthetic opinions is a daily reality.' },
+    { title: 'Browser Inconsistencies', desc: 'Supporting multiple browsers and devices adds significant complexity to every feature.' },
+    { title: 'Scope Creep', desc: 'Frontend work often expands — "just make it look slightly different" rarely means what it sounds like.' },
+    { title: 'Undervalued Perception', desc: 'Some organisations still treat frontend as "not real engineering" despite its technical depth.' },
+    { title: 'Accessibility Debt', desc: 'Most codebases have significant a11y issues that are painful to retroactively fix.' },
+  ],
+
+  videos: [
+    { id: 'zJSY8tbf_ys', title: 'Frontend Web Development – Full Roadmap', desc: 'Traversy Media maps out the complete frontend path from HTML basics through advanced React and beyond.', dur: '21:00', channel: 'Traversy Media' },
+    { id: 'Tn6-PIqc4UM', title: 'React in 100 Seconds', desc: 'Fireship breaks down the React mental model — components, state, and the virtual DOM — in under two minutes.', dur: '2:02', channel: 'Fireship' },
+    { id: '0pThnRneDjw', title: 'How to Become a Frontend Developer in 2024', desc: 'Kevin Powell gives an honest, practical guide to learning frontend development without wasting time on the wrong things.', dur: '14:27', channel: 'Kevin Powell' },
+  ],
+
+  takeaways: [
+    'Start with HTML and CSS — skipping the basics creates painful gaps later',
+    'Build real projects from day one, not just tutorials',
+    'Learn TypeScript early — it is the industry standard at professional companies',
+    'Understand accessibility — it is both a legal requirement and a career differentiator',
+    'Deploy everything publicly so employers can see your work instantly',
+  ],
+}
+
+// ─── REGISTRY ─────────────────────────────────────────────────────────────────
+// Add new careers here — the detail page picks them up automatically.
+const CAREER_REGISTRY: Record<string, CareerData> = {
+  'ai-ml-engineer': aiMlEngineer,
+  'cybersecurity': cybersecurity,
+  'frontend': frontendDeveloper,
+  // alias all other IDs to the most relevant existing data for now
+  'cybersecurity-analyst': cybersecurity,
+  'security-engineer': cybersecurity,
+  'ethical-hacker': cybersecurity,
+  'cloud-security-engineer': cybersecurity,
+  'digital-forensics': cybersecurity,
+  'info-security-manager': cybersecurity,
+  'soc-analyst': cybersecurity,
+  'risk-compliance': cybersecurity,
+  'data-scientist': aiMlEngineer,
+  'backend': frontendDeveloper,
+  'fullstack': frontendDeveloper,
+  'mobile-developer': frontendDeveloper,
+  'cloud-devops': aiMlEngineer,
+  'cloud-engineer': aiMlEngineer,
+  'devops-engineer': aiMlEngineer,
+  'sre': aiMlEngineer,
+  'platform-engineer': aiMlEngineer,
+}
+
+export function getCareerData(id: string): CareerData {
+  return CAREER_REGISTRY[id] ?? aiMlEngineer
+}
+
+export { aiMlEngineer, cybersecurity, frontendDeveloper }

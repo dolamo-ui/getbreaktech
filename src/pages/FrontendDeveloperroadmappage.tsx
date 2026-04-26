@@ -1,0 +1,1135 @@
+import { useEffect, useRef, useState } from 'react'
+import { Link } from 'react-router-dom'
+import gsap from 'gsap'
+import { ScrollTrigger } from 'gsap/ScrollTrigger'
+import {
+  ArrowLeft, ArrowRight, Check, X,
+  Clock, DollarSign, Rocket,
+  CheckCircle2, Code, MessageSquare, Play, ExternalLink,
+  GraduationCap, Scale, ThumbsUp, ThumbsDown,
+  Briefcase, Coffee, Users, Lightbulb, Monitor, Home,
+  Sparkles, Zap, TrendingUp,
+  Link2, Download, Share2, Copy, CheckCheck,
+  BookOpen, AlertTriangle, RefreshCw, Star, Calendar,
+  Award, Target, Flame, BarChart2,
+  Layers, FileText, Globe, Layout,
+  GitBranch, Package, Cpu, Shield,
+  Cloud, Workflow, Eye,
+} from 'lucide-react'
+
+gsap.registerPlugin(ScrollTrigger)
+
+/* ─── COLORS ──────────────────────────────────────────────────────────────── */
+const C = {
+  bg: '#ffffff',
+  bgAlt: '#f8f9ff',
+  bgCard: '#ffffff',
+  border: 'rgba(0,0,0,0.07)',
+  text: '#0f172a',
+  textMuted: '#64748b',
+  textFaint: '#94a3b8',
+  primary: '#2563eb',         // blue — frontend brand colour
+  primaryLight: 'rgba(37,99,235,0.08)',
+  primaryMid: 'rgba(37,99,235,0.15)',
+  violet: '#7c3aed',
+  violetLight: 'rgba(124,58,237,0.08)',
+  green: '#16a34a',
+  greenLight: 'rgba(22,163,74,0.08)',
+  red: '#dc2626',
+  redLight: 'rgba(220,38,38,0.08)',
+  orange: '#ea580c',
+  orangeLight: 'rgba(234,88,12,0.08)',
+  indigo: '#4f46e5',
+  indigoLight: 'rgba(79,70,229,0.08)',
+  cyan: '#0891b2',
+  cyanLight: 'rgba(8,145,178,0.08)',
+}
+
+/* ─── DATA ────────────────────────────────────────────────────────────────── */
+
+const CAREER_LEVELS = [
+  {
+    level: 'Junior', title: 'Junior Frontend Dev', duration: '0–2 yrs', salary: 'R280k–R480k',
+    description: 'Build UI components, fix styling bugs, learn the component library, and implement designs under guidance. Code reviews and mentoring are your primary learning tools.',
+    skills: ['HTML/CSS', 'JavaScript', 'React', 'Git'],
+    accent: '#0891b2', accentBg: 'rgba(8,145,178,0.08)', accentBorder: 'rgba(8,145,178,0.18)',
+  },
+  {
+    level: 'Mid-Level', title: 'Frontend Developer', duration: '2–5 yrs', salary: 'R540k–R950k',
+    description: 'Own feature development end-to-end, design component architectures, perform code reviews, and contribute to frontend performance optimization across the product.',
+    skills: ['TypeScript', 'React Patterns', 'CSS Mastery', 'Testing'],
+    accent: '#16a34a', accentBg: 'rgba(22,163,74,0.08)', accentBorder: 'rgba(22,163,74,0.18)',
+  },
+  {
+    level: 'Senior', title: 'Senior Frontend Dev', duration: '5–8 yrs', salary: 'R950k–R1.6M',
+    description: 'Design scalable component systems, establish performance standards, mentor mid-level developers, and make architectural decisions that impact the entire frontend codebase.',
+    skills: ['System Design', 'Performance', 'Design Systems', 'Mentoring'],
+    accent: '#7c3aed', accentBg: 'rgba(124,58,237,0.08)', accentBorder: 'rgba(124,58,237,0.18)',
+  },
+  {
+    level: 'Principal', title: 'Principal Frontend Eng', duration: '8+ yrs', salary: 'R1.6M+',
+    description: 'Define frontend engineering vision, drive adoption of best practices across teams, architect large-scale frontend systems, and shape product direction through technical excellence.',
+    skills: ['Arch Strategy', 'Tech Leadership', 'Standards', 'Vision'],
+    accent: '#ea580c', accentBg: 'rgba(234,88,12,0.08)', accentBorder: 'rgba(234,88,12,0.18)',
+  },
+]
+
+const ROADMAP_STEPS = [
+  {
+    step: 1, title: 'HTML, CSS & JavaScript Foundations',
+    description: 'Master semantic HTML, modern CSS (Flexbox, Grid, animations), and core JavaScript — DOM manipulation, async/await, and ES6+ syntax. These fundamentals separate great frontend devs from average ones.',
+    duration: '2–3 months', skills: ['HTML5', 'CSS3', 'JavaScript ES6+', 'DOM API'],
+  },
+  {
+    step: 2, title: 'React & Component Architecture',
+    description: 'Deep dive into React — hooks, state management, component patterns, and React best practices. Learn to build reusable, performant, and maintainable component systems that scale across large applications.',
+    duration: '2–3 months', skills: ['React Hooks', 'Component Design', 'State Mgmt', 'Context API'],
+  },
+  {
+    step: 3, title: 'TypeScript & Advanced Patterns',
+    description: 'Add type safety to your React code. Learn TypeScript generics, advanced types, and how to use them for better component APIs. Type-safe frontend code prevents runtime errors and improves DX.',
+    duration: '1–2 months', skills: ['TypeScript', 'Advanced Types', 'Generic Patterns', 'Type Inference'],
+  },
+  {
+    step: 4, title: 'CSS Mastery & Responsive Design',
+    description: 'Master modern CSS — custom properties, Grid, animations, transitions, and responsive design. Learn how to build performant, accessible, and beautiful interfaces that work across all devices seamlessly.',
+    duration: '2 months', skills: ['Advanced CSS', 'Responsive Design', 'Animations', 'Accessibility'],
+  },
+  {
+    step: 5, title: 'State Management & Data Fetching',
+    description: 'Learn state management libraries like Redux or Zustand, understand data fetching patterns, API integration, caching strategies, and how to manage complex application state efficiently.',
+    duration: '1–2 months', skills: ['Redux / Zustand', 'API Integration', 'Caching', 'Data Fetching'],
+  },
+  {
+    step: 6, title: 'Performance, Testing & Optimization',
+    description: 'Frontend performance is a feature. Learn to profile, optimize bundle sizes, implement lazy loading, write comprehensive tests (unit and integration), and deliver lightning-fast user experiences.',
+    duration: '2–3 months', skills: ['Web Performance', 'Testing (Jest)', 'Bundle Optimization', 'Monitoring'],
+  },
+]
+
+const HARD_SKILLS = [
+  { name: 'JavaScript / TypeScript', level: 95 },
+  { name: 'React & Modern Frameworks', level: 94 },
+  { name: 'CSS & Responsive Design', level: 90 },
+  { name: 'HTML & Semantic Markup', level: 88 },
+  { name: 'Git & Version Control', level: 87 },
+  { name: 'Web Performance Optimization', level: 78 },
+  { name: 'Testing (Unit & Integration)', level: 75 },
+  { name: 'API Integration & Async Patterns', level: 82 },
+]
+
+const SOFT_SKILLS = [
+  { name: 'Attention to Detail', description: 'Frontend is pixel-perfect. Notice when spacing, alignment, or color is slightly off. Small details compound into great user experiences.' },
+  { name: 'User Empathy', description: 'Think like the user. Understand accessibility, performance perception, and how your code impacts real people using the product across different devices and networks.' },
+  { name: 'Design Collaboration', description: 'Work closely with designers — understand their intent, ask for clarification on edge cases, and bridge the gap between design mockups and implemented interfaces.' },
+  { name: 'Performance Ownership', description: 'Take responsibility for every millisecond. Monitor metrics, profile code, identify bottlenecks, and celebrate when your optimizations improve user experience measurably.' },
+  { name: 'Debugging Precision', description: 'Master DevTools deeply. Understand the DOM, CSS layout, JavaScript execution, network requests, and how to isolate issues systematically in complex UIs.' },
+  { name: 'Component Abstraction', description: 'Build reusable abstractions. Create components that are flexible enough to be used everywhere yet constrained enough to prevent misuse. This is the core craft of frontend engineering.' },
+]
+
+const EDU_PATHS = [
+  {
+    type: 'Degree', title: 'Computer Science Degree', duration: '3–4 years', cost: 'R400k – R1M+',
+    borderColor: 'rgba(37,99,235,0.2)', bgColor: '#f0f5ff', typeBg: 'rgba(37,99,235,0.12)', typeColor: '#2563eb',
+    pros: ['Comprehensive CS fundamentals', 'Recruiter trust and brand recognition', 'Campus internship opportunities', 'Strong peer network'],
+    cons: ['Outdated web technology curriculum', 'Slow path to first job', 'Theory-heavy, hands-on light', 'Frontend skills require self-study'],
+  },
+  {
+    type: 'Bootcamp', title: 'Frontend Bootcamp', duration: '3–6 months', cost: 'R50k – R120k',
+    borderColor: 'rgba(22,163,74,0.2)', bgColor: '#f0fdf4', typeBg: 'rgba(22,163,74,0.12)', typeColor: '#16a34a',
+    pros: ['Fast path to job-ready skills', 'Strong project portfolio', 'Career support & job placement', 'Hands-on project-based learning'],
+    cons: ['Variable program quality', 'Limited CS depth', 'Competitive job market on exit', 'Credential not universally valued'],
+  },
+  {
+    type: 'Self-Taught', title: 'Online Courses & Projects', duration: '9–18 months', cost: 'R0 – R5k',
+    borderColor: 'rgba(79,70,229,0.2)', bgColor: '#eef2ff', typeBg: 'rgba(79,70,229,0.12)', typeColor: '#4f46e5',
+    pros: ['World-class free resources', 'Flexible self-paced learning', 'Build real projects immediately', 'No credential ceiling'],
+    cons: ['Requires strong self-discipline', 'Easy to miss fundamentals', 'Portfolio-driven job search', 'Imposter syndrome common'],
+  },
+]
+
+const SCHEDULE = [
+  { time: '9:00', act: 'Standup & Design Review', desc: 'Sync with team on blockers, review design updates, and clarify requirements for the day\'s work', duration: '30 min', icon: <Eye size={14} /> },
+  { time: '9:30', act: 'Component Development', desc: 'Deep focus on building reusable components, implementing designs, and crafting excellent user experiences', duration: '2.5 hrs', icon: <Code size={14} /> },
+  { time: '12:00', act: 'Testing & QA', desc: 'Write unit and integration tests, test across browsers, and verify responsive design across devices', duration: '1 hr', icon: <Shield size={14} /> },
+  { time: '1:00', act: 'Lunch & Mental Break', desc: 'Step away from the screen. Fresh eyes often spot design issues and CSS problems instantly', duration: '1 hr', icon: <Coffee size={14} /> },
+  { time: '2:00', act: 'Code Review & Collaboration', desc: 'Review teammate\'s PRs, participate in design discussions, and sync with backend on API integrations', duration: '1 hr', icon: <Users size={14} /> },
+  { time: '3:00', act: 'Performance & Polish', desc: 'Optimize bundle size, improve page load times, implement animations, and sweat the details', duration: '1.5 hrs', icon: <Zap size={14} /> },
+  { time: '4:30', act: 'Learning & Exploration', desc: 'Read frontend blogs, experiment with new CSS features, explore design systems, or contribute to open source', duration: '30 min', icon: <BookOpen size={14} /> },
+]
+
+const TOOLS = [
+  { name: 'VS Code', cat: 'IDE' }, { name: 'Chrome DevTools', cat: 'Debugging' },
+  { name: 'Figma', cat: 'Design' }, { name: 'Vercel', cat: 'Deploy' },
+  { name: 'CSS-in-JS', cat: 'Styling' }, { name: 'Storybook', cat: 'Components' },
+  { name: 'Jest', cat: 'Testing' }, { name: 'GitHub', cat: 'Version Control' },
+]
+
+const WORK_ENVS = [
+  { type: 'Remote', pct: 58 },
+  { type: 'Hybrid', pct: 30 },
+  { type: 'In-Office', pct: 12 },
+]
+
+const AI_IMPACTS = [
+  {
+    title: 'AI-Generated Code', icon: <Sparkles size={20} />,
+    desc: 'GitHub Copilot generates component boilerplate, CSS patterns, and helps write tests faster. Frontend devs using AI assistants ship UI 40% faster while maintaining quality.',
+    tools: ['GitHub Copilot', 'Claude', 'Cursor', 'Tabnine'],
+    borderColor: 'rgba(37,99,235,0.18)', bgColor: '#f0f5ff', icoBg: 'rgba(37,99,235,0.12)', icoColor: '#2563eb', tagBg: 'rgba(37,99,235,0.1)', tagColor: '#2563eb', titleColor: '#2563eb',
+  },
+  {
+    title: 'AI Design-to-Code', icon: <Layout size={20} />,
+    desc: 'Tools like v0, Locofy, and AI-powered design systems bridge design and code. Designers and developers collaborate better when mockups can become working components in minutes.',
+    tools: ['v0', 'Locofy', 'Galileo', 'Design Systems AI'],
+    borderColor: 'rgba(79,70,229,0.18)', bgColor: '#eef2ff', icoBg: 'rgba(79,70,229,0.12)', icoColor: '#4f46e5', tagBg: 'rgba(79,70,229,0.1)', tagColor: '#4f46e5', titleColor: '#4f46e5',
+  },
+  {
+    title: 'AI-Powered Testing', icon: <TrendingUp size={20} />,
+    desc: 'AI tools can generate test cases, detect visual regressions, and suggest accessibility improvements automatically. Less time writing boilerplate tests, more time shipping features.',
+    tools: ['Percy AI', 'Chromatic', 'Accessibility AI', 'Auto Test Gen'],
+    borderColor: 'rgba(22,163,74,0.18)', bgColor: '#f0fdf4', icoBg: 'rgba(22,163,74,0.12)', icoColor: '#16a34a', tagBg: 'rgba(22,163,74,0.1)', tagColor: '#16a34a', titleColor: '#16a34a',
+  },
+]
+
+const FUTURE_SKILLS = [
+  'React Server Components', 'Web Components & Micro Frontends',
+  'Performance Monitoring (Real User Data)', 'Advanced CSS (Container Queries)',
+  'Design Systems & Component Libraries', 'Accessibility (WCAG 2.1+)',
+]
+
+const PROS = [
+  { title: 'See Your Work Immediately', desc: 'Frontend work is instantly visible — users see your pixels within minutes. You get immediate feedback and validation. This rapid iteration loop is incredibly rewarding and motivating.' },
+  { title: 'Highest Remote Work Adoption', desc: 'Frontend development is 58% remote globally. The highest of any technical discipline besides pure backend. Code compiles the same from your bedroom as from an office.' },
+  { title: 'Excellent Compensation', desc: 'Senior frontend developers earn R950k–R1.6M in South Africa. Global remote roles in USD can pay 2–3× that. Demand far exceeds supply.' },
+  { title: 'Creative Problem-Solving', desc: 'Every interface is a puzzle — how do you make this beautiful, accessible, and lightning-fast? These challenges require genuine creativity and problem-solving constantly.' },
+  { title: 'Direct User Impact', desc: 'Your code directly affects millions of users. A performance optimization you ship saves users hours of waiting every single day. That impact is real and measurable.' },
+  { title: 'Design Collaboration', desc: 'Working closely with designers, product managers, and UX researchers creates a rich, collaborative environment that most backend or DevOps roles don\'t get to experience.' },
+]
+
+const CONS = [
+  { title: 'Browser Compatibility Headaches', desc: 'What works in Chrome might break mysteriously in Safari or Firefox. Browser inconsistencies remain a source of frustration even in 2026.' },
+  { title: 'Design Specification Ambiguity', desc: 'Designers hand you mockups at 1x scale, but your design system needs to handle 4K screens and 3G networks. Bridging this gap requires constant back-and-forth.' },
+  { title: 'Aesthetic Perfectionism', desc: 'When a pixel is off by 1px, only designers and frontend engineers notice. But once you see it, you can\'t unsee it. Chasing perfection can become exhausting.' },
+  { title: 'Performance Pressure', desc: 'Users notice slow pages instantly. If your JavaScript bundle is too large or your CSS causes layout thrashing, real people experience pain. That pressure is constant.' },
+  { title: 'Framework Fatigue', desc: 'A new JavaScript framework launches every month. React dominance is solid, but staying current without losing fundamentals requires careful curation and learning discipline.' },
+  { title: 'Limited Backend Understanding', desc: 'Great frontend work sometimes gets blocked by backend API changes or limitations. Having some backend knowledge helps, but many frontend engineers feel limited by backend constraints.' },
+]
+
+const VIDEOS = [
+  { id: 'T9ogK8uKD0w', title: 'Frontend Developer Roadmap 2025', desc: 'Complete guide to learning frontend development — technologies, resources, and realistic timeline from zero to job-ready.', dur: '24:15', channel: 'Traversy Media' },
+  { id: 'V74oLC_jHJU', title: 'Modern React Tutorial (Full Course)', desc: 'Learn React hooks, component patterns, state management, and build a complete real-world project from scratch.', dur: '11:42:00', channel: 'freeCodeCamp' },
+  { id: 'ysEN5RaKOlA', title: 'CSS Grid & Flexbox Mastery', desc: 'Build responsive, beautiful layouts with modern CSS. Master the tools that separate junior from senior frontend developers.', dur: '6:30:00', channel: 'Kevin Powell' },
+]
+
+const TAKEAWAYS = [
+  'Master HTML, CSS, and JavaScript deeply before learning any framework — they are forever',
+  'Build at least 5 real projects and deploy them publicly before applying for jobs',
+  'Learn to read design files — understand spacing, typography, shadows, and motion intent',
+  'Performance matters — every millisecond counts when users browse on 3G or low-end devices',
+  'Accessibility is not optional — WCAG compliance protects and includes real people using your interface',
+]
+
+const CAREER_FACTS = [
+  {
+    icon: <Eye size={20} />, title: 'What You Build',
+    desc: 'User interfaces, component systems, interactive dashboards, design systems, single-page applications, progressive web apps, and pixel-perfect implementations across all screen sizes.',
+    color: '#2563eb',
+  },
+  {
+    icon: <Workflow size={20} />, title: 'Core Activities',
+    desc: 'Component development, CSS implementation, JavaScript interactivity, responsive design, performance optimization, accessibility compliance, testing, and design collaboration.',
+    color: '#16a34a',
+  },
+  {
+    icon: <Users size={20} />, title: 'Who You Work With',
+    desc: 'Designers, product managers, UX researchers, backend engineers, QA testers, and occasionally your end users who provide feedback and reveal bugs immediately.',
+    color: '#4f46e5',
+  },
+  {
+    icon: <TrendingUp size={20} />, title: 'Industry Demand',
+    desc: 'Frontend developers are among the most in-demand tech roles. Demand grew 22% in 2024 and continues rising as companies invest heavily in user experience and performance.',
+    color: '#ea580c',
+  },
+]
+
+const WHY_REASONS = [
+  { emoji: '🎨', title: 'Creative Expression', desc: 'Code meets design. You get to express creativity through interactive interfaces, animations, and thoughtful UX. Few careers blend logic and art this perfectly.' },
+  { emoji: '💰', title: 'Excellent Salary', desc: 'Senior frontend engineers earn R950k–R1.6M in South Africa. Global remote roles pay 2–3× that in USD. The market pays handsomely for quality frontend work.' },
+  { emoji: '🏠', title: 'Remote-First Career', desc: '58% of frontend roles are fully remote — highest of any tech discipline. Your home office setup is as productive as any corporate office.' },
+  { emoji: '⚡', title: 'Rapid Feedback Loop', desc: 'You see results instantly. Write code, refresh the browser, and your pixels appear. This immediate feedback is motivating and accelerates learning.' },
+  { emoji: '📱', title: 'Impact at Scale', desc: 'Your UI reaches millions of users instantly. A performance improvement you ship saves users hours of waiting globally. That impact is real and measurable daily.' },
+  { emoji: '🚀', title: 'Continuous Learning', desc: 'CSS, JavaScript, and the browser API evolve constantly. The learning never stops, which means boredom is impossible and you stay sharp indefinitely.' },
+]
+
+const FREE_RESOURCES = [
+  { category: 'Courses', color: '#2563eb', bgColor: '#f0f5ff', items: [
+    { name: 'The Odin Project (free, complete curriculum)', url: '#', type: 'Course', rating: 5 },
+    { name: 'freeCodeCamp Frontend Development', url: '#', type: 'Course', rating: 5 },
+    { name: 'Frontend Masters (some free content)', url: '#', type: 'Course', rating: 5 },
+    { name: 'Scrimba — Interactive Frontend Courses', url: '#', type: 'Course', rating: 4 },
+  ]},
+  { category: 'Practice', color: '#16a34a', bgColor: '#f0fdf4', items: [
+    { name: 'Frontend Mentor — Real Challenges', url: '#', type: 'Practice', rating: 5 },
+    { name: 'CodePen — CSS & Animation Focus', url: '#', type: 'Community', rating: 5 },
+    { name: 'LeetCode (algorithms for interviews)', url: '#', type: 'Practice', rating: 4 },
+    { name: 'CSS Tricks Guides', url: '#', type: 'Reference', rating: 5 },
+  ]},
+  { category: 'Community', color: '#4f46e5', bgColor: '#eef2ff', items: [
+    { name: 'Kevin Powell YouTube (CSS Master)', url: '#', type: 'YouTube', rating: 5 },
+    { name: 'Fireship.io — Web Dev Essentials', url: '#', type: 'YouTube', rating: 5 },
+    { name: 'r/webdev & r/learnprogramming', url: '#', type: 'Forum', rating: 4 },
+    { name: 'Web.dev by Google (best practices)', url: '#', type: 'Resource', rating: 5 },
+  ]},
+]
+
+const SALARY_DATA = [
+  { role: 'Junior Frontend Developer', range: 'R280k – R480k', midpoint: 380, yoe: '0–2 yrs', color: '#0891b2' },
+  { role: 'Frontend Developer', range: 'R540k – R950k', midpoint: 745, yoe: '2–5 yrs', color: '#16a34a' },
+  { role: 'Senior Frontend Developer', range: 'R950k – R1.6M', midpoint: 1275, yoe: '5–8 yrs', color: '#7c3aed' },
+  { role: 'Principal Frontend Engineer', range: 'R1.6M – R2.8M+', midpoint: 2100, yoe: '8+ yrs', color: '#ea580c' },
+]
+
+const MISTAKES = [
+  {
+    num: '01', title: 'Copying Tutorials Without Understanding',
+    desc: 'Watching React tutorials without understanding why hooks work or how closures affect state. Make the same mistakes in production when you haven\'t built the mental model.',
+    fix: 'After every tutorial, rebuild the project from zero without looking at the original code.',
+  },
+  {
+    num: '02', title: 'Ignoring Accessibility',
+    desc: 'Building interfaces that work for you on your perfect laptop setup. But real users use screen readers, keyboards only, and zoomed-in browsers. Accessibility is not optional.',
+    fix: 'Learn WCAG 2.1 basics. Run accessibility audits on every project. Test with keyboard navigation.',
+  },
+  {
+    num: '03', title: 'Not Optimizing Performance',
+    desc: 'Shipping 500KB JavaScript bundles on 3G connections. Your local development environment is fast. Real users\' networks are not. Performance is a feature.',
+    fix: 'Use Lighthouse, Web Vitals, and DevTools profiling. Set a budget: max 200KB JS, <3s first contentful paint.',
+  },
+  {
+    num: '04', title: 'CSS Anxiety',
+    desc: 'Building everything in CSS-in-JS because you\'re anxious about CSS. CSS is not scary — it\'s powerful. CSS-in-JS is a tool, not a crutch.',
+    fix: 'Complete a dedicated CSS course (Kevin Powell). Build 5 pure CSS projects without libraries.',
+  },
+  {
+    num: '05', title: 'Portfolio with Only Tutorials Projects',
+    desc: 'Applying for jobs with clones of tutorial projects. Recruiters have seen it. Your portfolio should showcase your unique problem-solving, not your ability to follow along.',
+    fix: 'Build one original project that solves a problem you actually have. Deploy it. Get 50 real users to test it.',
+  },
+  {
+    num: '06', title: 'Neglecting Responsive Design',
+    desc: 'Building mobile-first in theory but only testing on one resolution. Responsive design means your component works at literally every viewport size smoothly.',
+    fix: 'Test at 320px, 768px, and 1440px minimum. Use media queries thoughtfully. Use DevTools device emulation constantly.',
+  },
+]
+
+const CAREER_CHANGE_PATHS = [
+  {
+    from: 'Designer / UI Designer',
+    ease: 'Very Easy', easeColor: '#2563eb', easeBg: '#f0f5ff',
+    desc: 'You already understand design, spacing, color, and user intent. HTML and CSS are tools to implement design. JavaScript adds interactivity. You\'re already halfway there.',
+    steps: ['Learn HTML/CSS fundamentals', 'Pick React and learn it deeply', 'Build 3 interactive UI projects', 'Target design-forward companies'],
+  },
+  {
+    from: 'Graphic Designer',
+    ease: 'Very Manageable', easeColor: '#16a34a', easeBg: '#f0fdf4',
+    desc: 'You understand typography, color theory, and visual hierarchy deeply. These translate directly to web. Add HTML/CSS/JavaScript and you bridge design and code perfectly.',
+    steps: ['Start with HTML/CSS basics', 'Learn design-to-code workflow', 'Study CSS animations and interactions', 'Apply for frontend roles at design-focused startups'],
+  },
+  {
+    from: 'Product Manager / Analyst',
+    ease: 'Natural Fit', easeColor: '#4f46e5', easeBg: '#eef2ff',
+    desc: 'You understand user needs and product direction. Add frontend skills and you can prototype ideas, build MVPs, and better collaborate with engineering teams on feature decisions.',
+    steps: ['Learn HTML/CSS/JavaScript basics', 'Build a product MVP for yourself', 'Add React and TypeScript skills', 'Target product-forward frontend roles'],
+  },
+  {
+    from: 'Backend Developer',
+    ease: 'Achievable', easeColor: '#ea580c', easeBg: '#fff7ed',
+    desc: 'You understand servers, APIs, and data. Switching to frontend means learning the browser, CSS, and UX thinking. Your backend knowledge makes you dangerous in full-stack contexts.',
+    steps: ['Learn HTML/CSS deeply (not glossing over)', 'Master JavaScript and the DOM', 'Learn React thoroughly', 'Target full-stack or frontend roles'],
+  },
+]
+
+const THIRTY_DAY_PLAN = [
+  { week: 'Week 1', theme: 'HTML & CSS Mastery', color: '#2563eb', bg: '#f0f5ff', days: [
+    { day: 'Day 1–2', task: 'Set up VS Code and Git. Build a semantic HTML portfolio page from scratch.' },
+    { day: 'Day 3–4', task: 'CSS Flexbox mastery — recreate 3 real-world layouts (navigation, hero, grid).' },
+    { day: 'Day 5–6', task: 'CSS Grid intensive — responsive layouts, auto-placement, and media queries at scale.' },
+    { day: 'Day 7', task: 'Responsive design challenge — make your portfolio perfect at 320px AND 1920px. Commit to GitHub.' },
+  ]},
+  { week: 'Week 2', theme: 'JavaScript & DOM', color: '#16a34a', bg: '#f0fdf4', days: [
+    { day: 'Day 8–9', task: 'JavaScript fundamentals: variables, functions, arrays, objects, DOM manipulation.' },
+    { day: 'Day 10–11', task: 'Build an interactive component library (buttons, modals, tabs) in vanilla JavaScript.' },
+    { day: 'Day 12–13', task: 'Async JavaScript: fetch API, promises, async/await. Call a public API and render data.' },
+    { day: 'Day 14', task: 'Build a weather dashboard using vanilla JS + API. Deploy to Vercel. Push to GitHub.' },
+  ]},
+  { week: 'Week 3', theme: 'React & Components', color: '#4f46e5', bg: '#eef2ff', days: [
+    { day: 'Day 15–16', task: 'React basics — functional components, JSX, props, state with hooks.' },
+    { day: 'Day 17–18', task: 'Advanced hooks: useState, useEffect, useContext. Build a multi-component app.' },
+    { day: 'Day 19–20', task: 'TypeScript + React. Convert your app to TypeScript. Fix all type errors.' },
+    { day: 'Day 21', task: 'Build a form-heavy app with validation and error handling in React. Test it thoroughly.' },
+  ]},
+  { week: 'Week 4', theme: 'Performance & Deploy', color: '#ea580c', bg: '#fff7ed', days: [
+    { day: 'Day 22–24', task: 'Performance optimization: code splitting, lazy loading, bundle analysis with Webpack Analyzer.' },
+    { day: 'Day 25–26', task: 'Write component tests with Jest. Aim for 70%+ code coverage. Deploy to Vercel.' },
+    { day: 'Day 27–28', task: 'Accessibility audit: make your app WCAG 2.1 AA compliant. Test with keyboard only.' },
+    { day: 'Day 29–30', task: 'Finalize portfolio, write a detailed README, share on Twitter & LinkedIn, apply to jobs.' },
+  ]},
+]
+
+const TOC_ITEMS = [
+  { num: '01', label: 'Introduction' },
+  { num: '02', label: 'What This Career Is' },
+  { num: '03', label: 'Why Choose This Career' },
+  { num: '04', label: 'A Day in the Life' },
+  { num: '05', label: 'Career Timeline' },
+  { num: '06', label: 'Step-by-Step Roadmap' },
+  { num: '07', label: 'Skill Checkpoints' },
+  { num: '08', label: 'Education Paths' },
+  { num: '09', label: 'Best Free Resources' },
+  { num: '10', label: 'AI-Enhanced Roadmap' },
+  { num: '11', label: 'Pros & Cons' },
+  { num: '12', label: 'Salary' },
+  { num: '13', label: 'Common Mistakes' },
+  { num: '14', label: 'Career Change Guide' },
+  { num: '15', label: '30-Day Action Plan' },
+  { num: '16', label: 'Final Thoughts' },
+]
+
+/* ─── SHARE BAR ───────────────────────────────────────────────────────────── */
+function ShareBar() {
+  const [copied, setCopied] = useState(false)
+  const handleCopy = () => {
+    navigator.clipboard.writeText(window.location.href).then(() => { setCopied(true); setTimeout(() => setCopied(false), 2000) })
+  }
+  const handleShare = async () => {
+    if (navigator.share) {
+      try { await navigator.share({ title: 'Frontend Developer Career Roadmap 2026', text: 'Complete step-by-step roadmap to become a Frontend Developer in 2026', url: window.location.href }) }
+      catch (_) {}
+    } else { handleCopy() }
+  }
+  return (
+    <div className="flex flex-wrap items-center justify-center gap-3 mt-10 p-4 rounded-2xl" style={{ background: '#f8f9ff', border: `1px solid ${C.border}` }}>
+      <span className="text-xs font-semibold" style={{ color: C.textMuted }}>Share this roadmap:</span>
+      <button onClick={handleCopy} className="inline-flex items-center gap-2 px-4 py-2 rounded-xl text-xs font-semibold transition-all duration-200 cursor-pointer border-0" style={{ background: copied ? 'rgba(22,163,74,0.1)' : C.primaryLight, color: copied ? '#16a34a' : C.primary, outline: 'none' }}>
+        {copied ? <CheckCheck size={13} /> : <Copy size={13} />}{copied ? 'Copied!' : 'Copy Link'}
+      </button>
+      <button onClick={() => window.print()} className="inline-flex items-center gap-2 px-4 py-2 rounded-xl text-xs font-semibold transition-all duration-200 cursor-pointer border-0" style={{ background: C.violetLight, color: C.violet, outline: 'none' }}>
+        <Download size={13} />Download / Save PDF
+      </button>
+      <button onClick={handleShare} className="inline-flex items-center gap-2 px-4 py-2 rounded-xl text-xs font-semibold transition-all duration-200 cursor-pointer border-0" style={{ background: C.orangeLight, color: C.orange, outline: 'none' }}>
+        <Share2 size={13} />Share
+      </button>
+      <div className="flex items-center gap-2 px-3 py-2 rounded-xl text-xs font-mono truncate max-w-xs" style={{ background: '#f1f5f9', color: C.textMuted, border: `1px solid ${C.border}` }}>
+        <Link2 size={11} style={{ color: C.textFaint, flexShrink: 0 }} />
+        <span className="truncate">{typeof window !== 'undefined' ? window.location.href : '/roadmaps/frontend-developer'}</span>
+      </div>
+    </div>
+  )
+}
+
+/* ─── SECTION HEADER ─────────────────────────────────────────────────────── */
+function SectionHeader({ icon, title, subtitle, iconBg, iconColor }: { icon: React.ReactNode; title: string; subtitle: string; iconBg: string; iconColor: string }) {
+  return (
+    <div className="flex items-center gap-4 mb-10">
+      <div className="w-12 h-12 rounded-2xl flex items-center justify-center flex-shrink-0" style={{ background: iconBg }}>
+        <span style={{ color: iconColor }}>{icon}</span>
+      </div>
+      <div>
+        <div className="text-2xl font-bold mb-1" style={{ fontFamily: 'Syne, sans-serif', color: C.text }}>{title}</div>
+        <div className="text-xs" style={{ color: C.textMuted }}>{subtitle}</div>
+      </div>
+    </div>
+  )
+}
+
+/* ─── FADE HOOK ──────────────────────────────────────────────────────────── */
+function useFade() {
+  const ref = useRef<HTMLDivElement>(null)
+  useEffect(() => {
+    const el = ref.current; if (!el) return
+    el.style.opacity = '0'; el.style.transform = 'translateY(24px)'; el.style.transition = 'opacity 0.55s ease, transform 0.55s ease'
+    const obs = new IntersectionObserver(([e]) => { if (e.isIntersecting) { el.style.opacity = '1'; el.style.transform = 'translateY(0)'; obs.disconnect() } }, { threshold: 0.07 })
+    obs.observe(el); return () => obs.disconnect()
+  }, [])
+  return ref
+}
+
+/* ─── PAGE ────────────────────────────────────────────────────────────────── */
+export default function FrontendDeveloperRoadmapPage() {
+  const progressRef = useRef<HTMLDivElement>(null)
+  const tlSectionRef = useRef<HTMLElement>(null)
+  const barsContainerRef = useRef<HTMLDivElement>(null)
+
+  useEffect(() => {
+    const link = document.createElement('link')
+    link.rel = 'stylesheet'
+    link.href = 'https://fonts.googleapis.com/css2?family=Syne:wght@400;500;600;700;800&display=swap'
+    document.head.appendChild(link)
+  }, [])
+
+  useEffect(() => {
+    const ctx = gsap.context(() => {
+      if (progressRef.current) {
+        gsap.fromTo(progressRef.current, { width: '0%' }, { width: '100%', duration: 2.2, ease: 'power2.out', scrollTrigger: { trigger: tlSectionRef.current, start: 'top 72%', toggleActions: 'play none none reverse' } })
+      }
+    }); return () => ctx.revert()
+  }, [])
+
+  useEffect(() => {
+    const ctx = gsap.context(() => {
+      const bars = barsContainerRef.current?.querySelectorAll<HTMLElement>('[data-bar-w]')
+      bars?.forEach(bar => {
+        gsap.fromTo(bar, { width: '0%' }, { width: `${bar.dataset.barW}%`, duration: 1.2, ease: 'power2.out', scrollTrigger: { trigger: bar, start: 'top 92%', toggleActions: 'play none none reverse' } })
+      })
+    }); return () => ctx.revert()
+  }, [])
+
+  const introRef = useFade(); const whatRef = useFade(); const whyRef = useFade()
+  const tlRef = useFade(); const stepsRef = useFade(); const skillsRef = useFade()
+  const eduRef = useFade(); const freeRef = useFade(); const dayRef = useFade()
+  const pcRef = useFade(); const aiRef = useFade(); const salaryRef = useFade()
+  const mistakesRef = useFade(); const changeRef = useFade(); const planRef = useFade()
+  const finalRef = useFade(); const vidsRef = useFade()
+
+  const sectionStyle = { paddingTop: 72, paddingBottom: 72, borderBottomColor: C.border }
+
+  return (
+    <div className="min-h-screen" style={{ background: C.bg, color: C.text, fontFamily: 'Inter, sans-serif' }}>
+
+      {/* Back button */}
+      <Link to="/roadmaps" className="fixed top-5 left-5 z-50 flex items-center gap-2 px-4 py-2 rounded-xl text-xs font-semibold no-underline transition-all duration-200"
+        style={{ background: 'rgba(255,255,255,0.9)', backdropFilter: 'blur(12px)', border: `1px solid ${C.border}`, color: C.textMuted, boxShadow: '0 2px 12px rgba(0,0,0,0.08)' }}>
+        <ArrowLeft size={14} /> All Roadmaps
+      </Link>
+
+      {/* ── HERO ── */}
+      <div className="relative w-full" style={{ background: C.bg }}>
+        <div className="relative w-full overflow-hidden" style={{ height: '100vh', minHeight: 600 }}>
+          <img
+            src="https://i.imgur.com/I52Pjq4.png"
+            alt="Frontend Developer workspace"
+            className="w-full h-full object-cover object-center block"
+            style={{ filter: 'saturate(0.55) brightness(1.05)' }}
+          />
+          <div className="absolute inset-0" style={{ background: 'linear-gradient(to bottom, rgba(255,255,255,0) 45%, rgba(255,255,255,0.75) 72%, rgba(255,255,255,1) 88%)' }} />
+          <div className="absolute bottom-0 left-0 right-0 z-10">
+            <div className="max-w-4xl mx-auto px-8 pb-12">
+              <div className="inline-flex items-center gap-1.5 rounded-full px-3.5 py-1 mb-3 text-xs font-semibold" style={{ background: C.primaryLight, color: C.primary }}>
+                <Code size={12} /> Design & Development
+              </div>
+              <h1 className="font-extrabold leading-tight mb-2" style={{ fontFamily: 'Syne, sans-serif', fontSize: 'clamp(2.2rem, 5vw, 3.6rem)', color: '#0f172a', letterSpacing: '-0.03em' }}>
+                Frontend Developer
+              </h1>
+              <span className="block font-normal mb-3" style={{ fontFamily: 'Syne, sans-serif', fontSize: 'clamp(0.95rem, 1.8vw, 1.2rem)', color: C.textMuted }}>
+                Career Roadmap 2026
+              </span>
+              <div className="flex items-center gap-4">
+                <div className="flex items-center gap-1.5 text-sm" style={{ color: C.textMuted }}><Clock size={14} style={{ color: C.textFaint }} /> 18 min read</div>
+                <div className="flex items-center gap-1.5 text-sm" style={{ color: C.textMuted }}><BookOpen size={14} style={{ color: C.textFaint }} /> 16 sections</div>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div className="max-w-4xl mx-auto px-8 pt-6 pb-16">
+          <p className="text-base leading-relaxed" style={{ color: '#4b5563', maxWidth: 560, marginLeft: 140 }}>
+            Craft beautiful, performant, and accessible interfaces that millions of users experience every day. Frontend developers bridge design and code, creating the visual experiences that define products.
+          </p>
+          <div className="h-px mt-10" style={{ background: C.border }} />
+        </div>
+      </div>
+
+      {/* ── TABLE OF CONTENTS ── */}
+      <section className="border-b" style={{ ...sectionStyle, background: '#f8f9ff' }}>
+        <div className="max-w-4xl mx-auto px-8">
+          <div ref={introRef}>
+            <SectionHeader icon={<BookOpen size={22} />} title="What's Inside" subtitle="Everything you need to know about this career in one place" iconBg={C.primaryLight} iconColor={C.primary} />
+            <div className="grid grid-cols-2 md:grid-cols-4 gap-2">
+              {TOC_ITEMS.map(item => (
+                <div key={item.num} className="flex items-center gap-2.5 rounded-xl px-3.5 py-3 border transition-all duration-150 cursor-default hover:shadow-sm" style={{ background: C.bg, borderColor: C.border }}>
+                  <span className="font-mono text-xs font-bold flex-shrink-0" style={{ color: C.textFaint }}>{item.num}</span>
+                  <span className="text-xs font-medium" style={{ color: C.text }}>{item.label}</span>
+                </div>
+              ))}
+            </div>
+          </div>
+        </div>
+      </section>
+
+      {/* ── WHAT THIS CAREER IS ── */}
+      <section className="border-b" style={{ ...sectionStyle, background: C.bg }}>
+        <div className="max-w-4xl mx-auto px-8">
+          <div ref={whatRef}>
+            <SectionHeader icon={<Layers size={22} />} title="What This Career Is" subtitle="The role, responsibilities, and scope of Frontend Development" iconBg={C.primaryLight} iconColor={C.primary} />
+            <div className="rounded-2xl p-6 mb-8 border" style={{ background: '#f0f5ff', borderColor: 'rgba(37,99,235,0.2)' }}>
+              <p className="text-base leading-relaxed" style={{ color: '#374151' }}>
+                A <strong style={{ color: C.primary }}>Frontend Developer</strong> builds the interfaces users see and interact with. HTML for structure, CSS for beauty, and JavaScript for interactivity — combined with React or similar frameworks for scalability. Frontend developers obsess over pixels, performance, and user experience. They bridge design mockups and business logic, translating intent into code.
+              </p>
+            </div>
+            <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+              {CAREER_FACTS.map(f => (
+                <div key={f.title} className="flex gap-4 rounded-2xl p-5 border transition-all duration-200 hover:-translate-y-0.5 hover:shadow-md" style={{ background: C.bg, borderColor: C.border }}>
+                  <div className="w-11 h-11 rounded-xl flex items-center justify-center flex-shrink-0" style={{ background: `${f.color}12` }}>
+                    <span style={{ color: f.color }}>{f.icon}</span>
+                  </div>
+                  <div>
+                    <div className="text-sm font-bold mb-1.5" style={{ color: C.text }}>{f.title}</div>
+                    <div className="text-xs leading-relaxed" style={{ color: C.textMuted }}>{f.desc}</div>
+                  </div>
+                </div>
+              ))}
+            </div>
+          </div>
+        </div>
+      </section>
+
+      {/* ── WHY CHOOSE ── */}
+      <section className="border-b" style={{ ...sectionStyle, background: '#f8f9ff' }}>
+        <div className="max-w-4xl mx-auto px-8">
+          <div ref={whyRef}>
+            <SectionHeader icon={<Flame size={22} />} title="Why Choose This Career" subtitle="Six compelling reasons Frontend Development could be your best move" iconBg={C.orangeLight} iconColor={C.orange} />
+            <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+              {WHY_REASONS.map(r => (
+                <div key={r.title} className="rounded-2xl p-5 border transition-all duration-200 hover:-translate-y-0.5 hover:shadow-md" style={{ background: C.bg, borderColor: C.border }}>
+                  <div className="flex items-start gap-3">
+                    <div className="text-2xl flex-shrink-0">{r.emoji}</div>
+                    <div>
+                      <div className="text-sm font-bold mb-1.5" style={{ color: C.text }}>{r.title}</div>
+                      <div className="text-xs leading-relaxed" style={{ color: C.textMuted }}>{r.desc}</div>
+                    </div>
+                  </div>
+                </div>
+              ))}
+            </div>
+          </div>
+        </div>
+      </section>
+
+      {/* ── DAY IN THE LIFE ── */}
+      <section className="border-b" style={{ ...sectionStyle, background: C.bg }}>
+        <div className="max-w-4xl mx-auto px-8">
+          <div ref={dayRef}>
+            <SectionHeader icon={<Briefcase size={22} />} title="A Day in the Life" subtitle="What a typical Frontend Developer workday looks like" iconBg={C.indigoLight} iconColor={C.indigo} />
+            <div className="grid gap-7" style={{ gridTemplateColumns: '1fr 260px' }}>
+              <div>
+                <p className="text-sm font-semibold mb-4" style={{ fontFamily: 'Syne, sans-serif', color: C.textMuted }}>Typical Daily Schedule</p>
+                {SCHEDULE.map(item => (
+                  <div key={item.time} className="flex items-start gap-3.5 rounded-2xl p-4 border mb-2.5 transition-all duration-200" style={{ background: C.bg, borderColor: C.border }}
+                    onMouseEnter={e => { (e.currentTarget as HTMLElement).style.borderColor = 'rgba(37,99,235,0.3)'; (e.currentTarget as HTMLElement).style.background = '#f0f5ff' }}
+                    onMouseLeave={e => { (e.currentTarget as HTMLElement).style.borderColor = C.border; (e.currentTarget as HTMLElement).style.background = C.bg }}>
+                    <div className="w-9 h-9 rounded-xl flex items-center justify-center flex-shrink-0" style={{ background: C.primaryLight, color: C.primary }}>{item.icon}</div>
+                    <div className="flex-1 min-w-0">
+                      <div className="flex items-center justify-between gap-2 mb-0.5">
+                        <span className="text-sm font-semibold" style={{ color: C.text }}>{item.act}</span>
+                        <span className="text-xs flex-shrink-0" style={{ color: C.textMuted }}>{item.duration}</span>
+                      </div>
+                      <div className="text-xs" style={{ color: C.textMuted }}>{item.desc}</div>
+                    </div>
+                    <span className="font-mono text-xs flex-shrink-0" style={{ color: C.primary }}>{item.time}</span>
+                  </div>
+                ))}
+              </div>
+              <div>
+                <div className="rounded-2xl p-5 mb-4 border" style={{ background: '#f8f9ff', borderColor: C.border }}>
+                  <div className="text-sm font-bold mb-4" style={{ fontFamily: 'Syne, sans-serif', color: C.text }}>Tools & Tech</div>
+                  <div className="flex flex-wrap">
+                    {TOOLS.map(t => (
+                      <span key={t.name} className="inline-block rounded-lg px-2.5 py-1.5 mr-1.5 mb-2 border" style={{ background: C.bg, borderColor: C.border }}>
+                        <span className="text-xs font-semibold" style={{ color: C.text }}>{t.name}</span>
+                        <span className="text-xs" style={{ color: C.textFaint }}> ({t.cat})</span>
+                      </span>
+                    ))}
+                  </div>
+                </div>
+                <div className="rounded-2xl p-5 border" style={{ background: '#f8f9ff', borderColor: C.border }}>
+                  <div className="text-sm font-bold mb-4" style={{ fontFamily: 'Syne, sans-serif', color: C.text }}>Work Environment</div>
+                  {WORK_ENVS.map(e => (
+                    <div key={e.type} className="mb-3.5">
+                      <div className="flex justify-between text-xs mb-1.5">
+                        <span style={{ color: C.textMuted }}>{e.type}</span>
+                        <span className="font-mono" style={{ color: C.primary }}>{e.pct}%</span>
+                      </div>
+                      <div className="h-1.5 rounded-full overflow-hidden" style={{ background: '#e2e8f0' }}>
+                        <div className="h-1.5 rounded-full" style={{ width: `${e.pct}%`, background: C.primary }} />
+                      </div>
+                    </div>
+                  ))}
+                  <div className="text-xs mt-2" style={{ color: C.textFaint }}>Based on 2026 industry surveys</div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      {/* ── CAREER TIMELINE ── */}
+      <section ref={tlSectionRef} className="border-b" style={{ ...sectionStyle, background: '#f8f9ff' }}>
+        <div className="max-w-4xl mx-auto px-8">
+          <div ref={tlRef}>
+            <SectionHeader icon={<Clock size={22} />} title="Career Timeline" subtitle="Time estimates and salary ranges for each level" iconBg={C.indigoLight} iconColor={C.indigo} />
+            <div className="mb-10">
+              <div className="flex justify-between text-xs mb-2.5" style={{ color: C.textMuted }}><span>Career Progression</span><span>Junior → Principal</span></div>
+              <div className="h-1.5 rounded-full overflow-hidden" style={{ background: '#e2e8f0' }}>
+                <div ref={progressRef} className="h-1.5 rounded-full" style={{ width: '0%', background: 'linear-gradient(90deg, #0891b2 0%, #16a34a 33%, #7c3aed 66%, #ea580c 100%)' }} />
+              </div>
+              <div className="flex justify-between mt-2.5">
+                {CAREER_LEVELS.map(l => <span key={l.level} className="font-mono" style={{ color: l.accent, fontSize: '0.68rem' }}>{l.duration}</span>)}
+              </div>
+            </div>
+            <div className="grid grid-cols-2 md:grid-cols-4 gap-3.5">
+              {CAREER_LEVELS.map(l => (
+                <div key={l.level} className="rounded-2xl p-5 border transition-all duration-200 hover:-translate-y-1 hover:shadow-lg" style={{ background: C.bg, borderColor: l.accentBorder }}>
+                  <div className="inline-block rounded-full px-2.5 py-0.5 mb-3 font-mono text-xs font-bold uppercase tracking-widest" style={{ background: l.accentBg, color: l.accent }}>{l.level}</div>
+                  <div className="text-base font-bold mb-1" style={{ fontFamily: 'Syne, sans-serif', color: C.text }}>{l.title}</div>
+                  <div className="text-sm font-semibold mb-2.5" style={{ color: l.accent }}>{l.salary}</div>
+                  <div className="text-xs leading-relaxed mb-3.5" style={{ color: C.textMuted }}>{l.description}</div>
+                  <div className="flex flex-wrap gap-1.5">
+                    {l.skills.map(s => <span key={s} className="rounded px-1.5 py-0.5 font-mono text-xs" style={{ background: '#f1f5f9', color: C.textMuted }}>{s}</span>)}
+                  </div>
+                </div>
+              ))}
+            </div>
+          </div>
+        </div>
+      </section>
+
+      {/* ── ROADMAP ── */}
+      <section className="border-b" style={{ ...sectionStyle, background: C.bg }}>
+        <div ref={stepsRef} className="max-w-2xl mx-auto px-4">
+          <SectionHeader icon={<Target size={22} />} title="Step-by-Step Roadmap" subtitle="Your path from complete beginner to job-ready" iconBg={C.primaryLight} iconColor={C.primary} />
+          <div className="relative flex flex-col items-center">
+            {ROADMAP_STEPS.map((s, i) => {
+              const icons = ['🌐', '⚛️', '📘', '🎨', '🗂️', '⚡']
+              const accentColors = ['#2563eb', '#16a34a', '#2563eb', '#16a34a', '#2563eb', '#16a34a']
+              const accent = accentColors[i]; const isLast = i === ROADMAP_STEPS.length - 1; const isEven = i % 2 === 0
+              return (
+                <div key={s.step} className="w-full flex flex-col items-center">
+                  <div className="w-full" style={{ opacity: 0, transform: 'translateY(20px)', transition: `opacity 0.5s ${i * 0.13}s ease, transform 0.5s ${i * 0.13}s ease` }}
+                    ref={el => {
+                      if (!el) return
+                      const obs = new IntersectionObserver(([e]) => { if (e.isIntersecting) { el.style.opacity = '1'; el.style.transform = 'translateY(0)'; obs.disconnect() } }, { threshold: 0.15 })
+                      obs.observe(el)
+                    }}>
+                    <div className="w-full rounded-3xl overflow-hidden" style={{ background: `${accent}08`, border: `2px solid ${accent}25`, boxShadow: `0 4px 24px ${accent}12` }}>
+                      <div className="flex items-center gap-4 px-5 py-5">
+                        <div className="flex-shrink-0 flex items-center justify-center rounded-full text-2xl font-bold" style={{ width: 64, height: 64, background: `linear-gradient(135deg, ${accent}20, ${accent}10)`, border: `3px solid ${accent}40` }}>{icons[i]}</div>
+                        <div className="flex-1 min-w-0">
+                          <div className="flex items-center gap-2 mb-1 flex-wrap">
+                            <span className="text-xs font-black uppercase tracking-widest font-mono" style={{ color: accent }}>STEP {s.step}:</span>
+                            <span className="text-xs rounded-full px-2 py-0.5 font-mono" style={{ background: `${accent}12`, color: accent }}>{s.duration}</span>
+                          </div>
+                          <div className="font-extrabold mb-2 leading-tight" style={{ fontFamily: 'Syne, sans-serif', fontSize: '1rem', color: C.text }}>{s.title.toUpperCase()}</div>
+                          <div className="grid grid-cols-2 gap-x-4 gap-y-1">
+                            {s.skills.map(sk => (
+                              <div key={sk} className="flex items-center gap-1.5 text-xs" style={{ color: C.textMuted }}>
+                                <CheckCircle2 size={11} style={{ color: accent, flexShrink: 0 }} />
+                                <span className="font-mono uppercase tracking-wide" style={{ fontSize: '0.65rem' }}>{sk}</span>
+                              </div>
+                            ))}
+                          </div>
+                        </div>
+                      </div>
+                      <div className="px-5 pb-4 text-xs leading-relaxed" style={{ color: C.textMuted, borderTop: `1px solid ${accent}15`, paddingTop: 10 }}>{s.description}</div>
+                    </div>
+                  </div>
+                  {!isLast && (
+                    <div className="flex w-full" style={{ height: 48 }}>
+                      <svg viewBox="0 0 400 48" className="w-full" style={{ height: 48 }} preserveAspectRatio="none">
+                        <path d={isEven ? 'M200,0 C200,24 380,24 380,48' : 'M200,0 C200,24 20,24 20,48'} fill="none" stroke="#e2e8f0" strokeWidth="40" strokeLinecap="round" />
+                        <path d={isEven ? 'M200,0 C200,24 380,24 380,48' : 'M200,0 C200,24 20,24 20,48'} fill="none" stroke={accentColors[i + 1] ?? accent} strokeWidth="4" strokeLinecap="round" strokeOpacity="0.4" strokeDasharray="12 8" />
+                        {isEven
+                          ? <polygon points="372,36 388,44 372,52" fill={accentColors[i + 1] ?? accent} opacity="0.5" />
+                          : <polygon points="28,36 12,44 28,52" fill={accentColors[i + 1] ?? accent} opacity="0.5" />}
+                      </svg>
+                    </div>
+                  )}
+                </div>
+              )
+            })}
+            <div className="w-full rounded-3xl mt-2 py-8 px-8 text-center" style={{ background: `linear-gradient(135deg, ${C.primary} 0%, ${C.indigo} 100%)`, boxShadow: '0 8px 48px rgba(37,99,235,0.25)' }}>
+              <div className="text-4xl mb-3">🎨</div>
+              <div className="font-extrabold text-white mb-1" style={{ fontFamily: 'Syne, sans-serif', fontSize: 'clamp(1.3rem, 3vw, 1.8rem)' }}>GO FROM ZERO to</div>
+              <div className="font-extrabold mb-4" style={{ fontFamily: 'Syne, sans-serif', fontSize: 'clamp(1.3rem, 3vw, 1.8rem)', color: 'rgba(255,255,255,0.75)' }}>JOB-READY IN 2026</div>
+              <div className="text-sm" style={{ color: 'rgba(255,255,255,0.6)' }}>9–14 months · Consistent daily practice · Build and deploy real projects</div>
+            </div>
+          </div>
+          <ShareBar />
+        </div>
+      </section>
+
+      {/* ── SKILLS ── */}
+      <section className="border-b" style={{ ...sectionStyle, background: '#f8f9ff' }}>
+        <div className="max-w-4xl mx-auto px-8">
+          <div ref={skillsRef}>
+            <SectionHeader icon={<CheckCircle2 size={22} />} title="Skill Checkpoints" subtitle="Technical and interpersonal skills to develop" iconBg={C.indigoLight} iconColor={C.indigo} />
+            <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+              <div className="rounded-2xl p-7 border" style={{ background: C.bg, borderColor: C.border }}>
+                <div className="flex items-center gap-3 mb-6">
+                  <div className="w-9 h-9 rounded-xl flex items-center justify-center" style={{ background: C.indigoLight }}><Code size={16} style={{ color: C.indigo }} /></div>
+                  <div>
+                    <div className="text-base font-bold" style={{ fontFamily: 'Syne, sans-serif', color: C.text }}>Hard Skills</div>
+                    <div className="text-xs mt-0.5" style={{ color: C.textMuted }}>Technical competencies required</div>
+                  </div>
+                </div>
+                <div ref={barsContainerRef}>
+                  {HARD_SKILLS.map(s => (
+                    <div key={s.name} className="mb-4">
+                      <div className="flex justify-between mb-1.5">
+                        <span className="text-xs" style={{ color: C.textMuted }}>{s.name}</span>
+                        <span className="text-xs font-mono" style={{ color: C.textFaint }}>{s.level}%</span>
+                      </div>
+                      <div className="h-1.5 rounded-full overflow-hidden" style={{ background: '#e2e8f0' }}>
+                        <div className="h-1.5 rounded-full" data-bar-w={s.level} style={{ width: 0, background: `linear-gradient(90deg, ${C.primary}, ${C.indigo})` }} />
+                      </div>
+                    </div>
+                  ))}
+                </div>
+              </div>
+              <div className="rounded-2xl p-7 border" style={{ background: C.bg, borderColor: C.border }}>
+                <div className="flex items-center gap-3 mb-6">
+                  <div className="w-9 h-9 rounded-xl flex items-center justify-center" style={{ background: C.primaryLight }}><MessageSquare size={16} style={{ color: C.primary }} /></div>
+                  <div>
+                    <div className="text-base font-bold" style={{ fontFamily: 'Syne, sans-serif', color: C.text }}>Soft Skills</div>
+                    <div className="text-xs mt-0.5" style={{ color: C.textMuted }}>Interpersonal abilities to build</div>
+                  </div>
+                </div>
+                {SOFT_SKILLS.map(s => (
+                  <div key={s.name} className="rounded-xl p-3.5 mb-2.5 last:mb-0 border transition-colors cursor-default" style={{ background: '#f8f9ff', borderColor: C.border }}
+                    onMouseEnter={e => (e.currentTarget as HTMLElement).style.background = C.primaryLight}
+                    onMouseLeave={e => (e.currentTarget as HTMLElement).style.background = '#f8f9ff'}>
+                    <div className="text-sm font-semibold mb-0.5" style={{ color: C.text }}>{s.name}</div>
+                    <div className="text-xs leading-relaxed" style={{ color: C.textMuted }}>{s.description}</div>
+                  </div>
+                ))}
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      {/* ── EDUCATION PATHS ── */}
+      <section className="border-b" style={{ ...sectionStyle, background: C.bg }}>
+        <div className="max-w-4xl mx-auto px-8">
+          <div ref={eduRef}>
+            <SectionHeader icon={<GraduationCap size={22} />} title="Education Paths" subtitle="Three routes into the field — pick yours" iconBg="rgba(148,163,184,0.1)" iconColor={C.textMuted} />
+            <div className="grid grid-cols-1 md:grid-cols-3 gap-5">
+              {EDU_PATHS.map(p => (
+                <div key={p.type} className="rounded-2xl p-6 border transition-all duration-200 hover:-translate-y-1 hover:shadow-lg" style={{ background: p.bgColor, borderColor: p.borderColor }}>
+                  <div className="inline-block rounded-full px-3 py-1 text-xs font-black uppercase tracking-widest mb-4 font-mono" style={{ background: p.typeBg, color: p.typeColor }}>{p.type}</div>
+                  <div className="text-base font-bold mb-3.5" style={{ fontFamily: 'Syne, sans-serif', color: C.text }}>{p.title}</div>
+                  <div className="flex gap-3.5 text-xs mb-4" style={{ color: C.textMuted }}>
+                    <span className="flex items-center gap-1"><Clock size={11} />{p.duration}</span>
+                    <span className="flex items-center gap-1"><DollarSign size={11} />{p.cost}</span>
+                  </div>
+                  <div className="text-xs font-bold mb-2" style={{ color: C.green }}>Advantages</div>
+                  {p.pros.map(item => <div key={item} className="flex items-start gap-2 text-xs mb-1.5" style={{ color: C.textMuted }}><Check size={11} style={{ color: C.green, flexShrink: 0, marginTop: 2 }} />{item}</div>)}
+                  <div className="text-xs font-bold mb-2 mt-3.5" style={{ color: C.red }}>Challenges</div>
+                  {p.cons.map(item => <div key={item} className="flex items-start gap-2 text-xs mb-1.5" style={{ color: C.textMuted }}><X size={11} style={{ color: C.red, flexShrink: 0, marginTop: 2 }} />{item}</div>)}
+                </div>
+              ))}
+            </div>
+          </div>
+        </div>
+      </section>
+
+      {/* ── FREE RESOURCES ── */}
+      <section className="border-b" style={{ ...sectionStyle, background: '#f8f9ff' }}>
+        <div className="max-w-4xl mx-auto px-8">
+          <div ref={freeRef}>
+            <SectionHeader icon={<BookOpen size={22} />} title="Best Free Resources" subtitle="World-class learning material, most of it completely free" iconBg={C.greenLight} iconColor={C.green} />
+            <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
+              {FREE_RESOURCES.map(cat => (
+                <div key={cat.category} className="rounded-2xl p-6 border" style={{ background: cat.bgColor, borderColor: `${cat.color}25` }}>
+                  <div className="inline-block rounded-full px-3 py-1 text-xs font-black uppercase tracking-widest mb-5 font-mono" style={{ background: `${cat.color}15`, color: cat.color }}>{cat.category}</div>
+                  {cat.items.map(item => (
+                    <div key={item.name} className="rounded-xl p-3 mb-2.5 last:mb-0 border" style={{ background: C.bg, borderColor: C.border }}>
+                      <div className="flex items-start justify-between gap-2 mb-1">
+                        <span className="text-xs font-semibold" style={{ color: C.text }}>{item.name}</span>
+                        <span className="text-xs rounded px-1.5 py-0.5 flex-shrink-0 font-mono" style={{ background: `${cat.color}12`, color: cat.color }}>{item.type}</span>
+                      </div>
+                      <div className="flex gap-0.5">
+                        {[...Array(5)].map((_, i) => <Star key={i} size={10} fill={i < item.rating ? cat.color : 'none'} style={{ color: i < item.rating ? cat.color : C.textFaint }} />)}
+                      </div>
+                    </div>
+                  ))}
+                </div>
+              ))}
+            </div>
+          </div>
+        </div>
+      </section>
+
+      {/* ── AI IMPACT ── */}
+      <section className="border-b" style={{ ...sectionStyle, background: C.bg }}>
+        <div className="max-w-4xl mx-auto px-8">
+          <div ref={aiRef}>
+            <SectionHeader icon={<Sparkles size={22} />} title="AI-Enhanced Roadmap" subtitle="How AI is transforming Frontend Development in 2026" iconBg={C.primaryLight} iconColor={C.primary} />
+            <div className="rounded-2xl p-5 mb-7 text-sm leading-relaxed border" style={{ background: '#f0f5ff', borderColor: 'rgba(37,99,235,0.2)', color: C.textMuted }}>
+              AI tools like Copilot and Claude accelerate frontend work — they generate component boilerplate, suggest CSS patterns, and write tests. Frontend developers using AI ship 35–45% faster while maintaining code quality and owning the architecture.
+            </div>
+            <div className="grid grid-cols-1 md:grid-cols-3 gap-4 mb-9">
+              {AI_IMPACTS.map(item => (
+                <div key={item.title} className="rounded-2xl p-5 border transition-all duration-200 hover:-translate-y-1 hover:shadow-md" style={{ background: item.bgColor, borderColor: item.borderColor }}>
+                  <div className="w-11 h-11 rounded-xl flex items-center justify-center mb-4" style={{ background: item.icoBg }}><span style={{ color: item.icoColor }}>{item.icon}</span></div>
+                  <div className="text-sm font-bold mb-2" style={{ fontFamily: 'Syne, sans-serif', color: item.titleColor }}>{item.title}</div>
+                  <div className="text-xs leading-relaxed mb-3.5" style={{ color: C.textMuted }}>{item.desc}</div>
+                  <div className="flex flex-wrap gap-1.5">
+                    {item.tools.map(t => <span key={t} className="rounded px-2 py-0.5 text-xs font-mono font-semibold" style={{ background: item.tagBg, color: item.tagColor }}>{t}</span>)}
+                  </div>
+                </div>
+              ))}
+            </div>
+            <p className="text-sm font-semibold mb-4" style={{ fontFamily: 'Syne, sans-serif', color: C.textMuted }}>Emerging Skills to Learn Now</p>
+            <div className="grid grid-cols-2 md:grid-cols-3 gap-3">
+              {FUTURE_SKILLS.map((s, i) => (
+                <div key={s} className="flex items-center gap-2.5 rounded-xl px-4 py-3.5 border" style={{ background: '#f8f9ff', borderColor: C.border }}>
+                  <div className="w-6 h-6 rounded-full flex items-center justify-center flex-shrink-0 font-mono font-black text-xs" style={{ background: C.primaryLight, color: C.primary }}>{i + 1}</div>
+                  <span className="text-xs font-medium" style={{ color: C.text }}>{s}</span>
+                </div>
+              ))}
+            </div>
+          </div>
+        </div>
+      </section>
+
+      {/* ── PROS & CONS ── */}
+      <section className="border-b" style={{ ...sectionStyle, background: '#f8f9ff' }}>
+        <div className="max-w-4xl mx-auto px-8">
+          <div ref={pcRef}>
+            <SectionHeader icon={<Scale size={22} />} title="Pros & Cons" subtitle="The honest picture of this career path" iconBg="rgba(148,163,184,0.1)" iconColor={C.textMuted} />
+            <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+              <div className="rounded-3xl p-7 border" style={{ background: '#f0fdf4', borderColor: 'rgba(22,163,74,0.2)' }}>
+                <div className="flex items-center gap-3 mb-5">
+                  <div className="w-9 h-9 rounded-xl flex items-center justify-center" style={{ background: 'rgba(22,163,74,0.12)' }}><ThumbsUp size={16} style={{ color: C.green }} /></div>
+                  <span className="text-base font-bold" style={{ fontFamily: 'Syne, sans-serif', color: C.green }}>Advantages</span>
+                </div>
+                {PROS.map(p => (
+                  <div key={p.title} className="rounded-xl p-3.5 mb-2.5 last:mb-0 border" style={{ background: C.bg, borderColor: 'rgba(22,163,74,0.12)' }}>
+                    <div className="text-sm font-semibold mb-1" style={{ color: C.text }}>{p.title}</div>
+                    <div className="text-xs leading-relaxed" style={{ color: C.textMuted }}>{p.desc}</div>
+                  </div>
+                ))}
+              </div>
+              <div className="rounded-3xl p-7 border" style={{ background: '#fff5f5', borderColor: 'rgba(220,38,38,0.2)' }}>
+                <div className="flex items-center gap-3 mb-5">
+                  <div className="w-9 h-9 rounded-xl flex items-center justify-center" style={{ background: 'rgba(220,38,38,0.1)' }}><ThumbsDown size={16} style={{ color: C.red }} /></div>
+                  <span className="text-base font-bold" style={{ fontFamily: 'Syne, sans-serif', color: C.red }}>Challenges</span>
+                </div>
+                {CONS.map(c => (
+                  <div key={c.title} className="rounded-xl p-3.5 mb-2.5 last:mb-0 border" style={{ background: C.bg, borderColor: 'rgba(220,38,38,0.12)' }}>
+                    <div className="text-sm font-semibold mb-1" style={{ color: C.text }}>{c.title}</div>
+                    <div className="text-xs leading-relaxed" style={{ color: C.textMuted }}>{c.desc}</div>
+                  </div>
+                ))}
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      {/* ── SALARY ── */}
+      <section className="border-b" style={{ ...sectionStyle, background: C.bg }}>
+        <div className="max-w-4xl mx-auto px-8">
+          <div ref={salaryRef}>
+            <SectionHeader icon={<DollarSign size={22} />} title="Salary" subtitle="What you can realistically earn at each stage" iconBg={C.greenLight} iconColor={C.green} />
+            <div className="rounded-2xl p-6 mb-6 border" style={{ background: '#f0fdf4', borderColor: 'rgba(22,163,74,0.2)' }}>
+              <p className="text-sm leading-relaxed" style={{ color: C.textMuted }}>Figures reflect South African total compensation. Global remote contracts — especially for senior and principal roles — can pay 2–4× these figures in USD.</p>
+            </div>
+            <div className="space-y-4">
+              {SALARY_DATA.map(row => (
+                <div key={row.role} className="rounded-2xl p-5 border" style={{ background: '#f8f9ff', borderColor: C.border }}>
+                  <div className="flex items-center justify-between mb-3 flex-wrap gap-2">
+                    <div>
+                      <span className="text-sm font-bold" style={{ color: C.text }}>{row.role}</span>
+                      <span className="ml-3 text-xs font-mono" style={{ color: C.textFaint }}>{row.yoe}</span>
+                    </div>
+                    <span className="text-sm font-bold" style={{ color: row.color }}>{row.range}</span>
+                  </div>
+                  <div className="h-2.5 rounded-full overflow-hidden" style={{ background: '#e2e8f0' }}>
+                    <div className="h-2.5 rounded-full" style={{ width: `${(row.midpoint / 2400) * 100}%`, background: row.color }} />
+                  </div>
+                </div>
+              ))}
+            </div>
+            <div className="mt-6 rounded-2xl p-5 border" style={{ background: '#f0f5ff', borderColor: 'rgba(37,99,235,0.2)' }}>
+              <p className="text-xs leading-relaxed" style={{ color: C.textMuted }}>
+                <strong style={{ color: C.primary }}>Pro tip:</strong> Frontend developers at product companies and startups earn 25–40% more than at agencies. Target companies where the product and user experience drive revenue.
+              </p>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      {/* ── MISTAKES ── */}
+      <section className="border-b" style={{ ...sectionStyle, background: '#f8f9ff' }}>
+        <div className="max-w-4xl mx-auto px-8">
+          <div ref={mistakesRef}>
+            <SectionHeader icon={<AlertTriangle size={22} />} title="Common Mistakes" subtitle="Avoid the traps that slow down most aspiring developers" iconBg={C.orangeLight} iconColor={C.orange} />
+            <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+              {MISTAKES.map(m => (
+                <div key={m.num} className="rounded-2xl p-5 border transition-all duration-200 hover:shadow-md" style={{ background: C.bg, borderColor: C.border }}>
+                  <div className="flex items-start gap-3 mb-3">
+                    <span className="font-mono text-xs font-black flex-shrink-0 mt-0.5" style={{ color: C.textFaint }}>{m.num}</span>
+                    <div>
+                      <div className="text-sm font-bold mb-1.5" style={{ color: C.red }}>{m.title}</div>
+                      <div className="text-xs leading-relaxed" style={{ color: C.textMuted }}>{m.desc}</div>
+                    </div>
+                  </div>
+                  <div className="rounded-xl p-3 border-l-2 ml-5" style={{ background: '#f0fdf4', borderLeftColor: C.green }}>
+                    <span className="text-xs font-bold" style={{ color: C.green }}>Fix: </span>
+                    <span className="text-xs" style={{ color: C.textMuted }}>{m.fix}</span>
+                  </div>
+                </div>
+              ))}
+            </div>
+          </div>
+        </div>
+      </section>
+
+      {/* ── CAREER CHANGE ── */}
+      <section className="border-b" style={{ ...sectionStyle, background: C.bg }}>
+        <div className="max-w-4xl mx-auto px-8">
+          <div ref={changeRef}>
+            <SectionHeader icon={<RefreshCw size={22} />} title="Career Change Guide" subtitle="How to break into frontend from your current background" iconBg={C.primaryLight} iconColor={C.primary} />
+            <div className="grid grid-cols-1 md:grid-cols-2 gap-5">
+              {CAREER_CHANGE_PATHS.map(path => (
+                <div key={path.from} className="rounded-2xl p-6 border" style={{ background: path.easeBg, borderColor: `${path.easeColor}20` }}>
+                  <div className="flex items-center justify-between mb-3">
+                    <div className="text-base font-bold" style={{ fontFamily: 'Syne, sans-serif', color: C.text }}>From: {path.from}</div>
+                    <span className="text-xs rounded-full px-2.5 py-1 font-semibold" style={{ background: `${path.easeColor}15`, color: path.easeColor }}>{path.ease}</span>
+                  </div>
+                  <p className="text-xs leading-relaxed mb-4" style={{ color: C.textMuted }}>{path.desc}</p>
+                  <div className="space-y-2">
+                    {path.steps.map((step, i) => (
+                      <div key={step} className="flex items-center gap-2.5 text-xs" style={{ color: C.text }}>
+                        <div className="w-5 h-5 rounded-full flex items-center justify-center flex-shrink-0 text-xs font-bold" style={{ background: `${path.easeColor}20`, color: path.easeColor }}>{i + 1}</div>
+                        {step}
+                      </div>
+                    ))}
+                  </div>
+                </div>
+              ))}
+            </div>
+          </div>
+        </div>
+      </section>
+
+      {/* ── 30-DAY PLAN ── */}
+      <section className="border-b" style={{ ...sectionStyle, background: '#f8f9ff' }}>
+        <div className="max-w-4xl mx-auto px-8">
+          <div ref={planRef}>
+            <SectionHeader icon={<Calendar size={22} />} title="30-Day Action Plan" subtitle="Exactly what to do in your first month. Start today." iconBg={C.orangeLight} iconColor={C.orange} />
+            <div className="grid grid-cols-1 md:grid-cols-2 gap-5">
+              {THIRTY_DAY_PLAN.map(week => (
+                <div key={week.week} className="rounded-2xl border overflow-hidden" style={{ background: C.bg, borderColor: C.border }}>
+                  <div className="px-5 py-4 border-b" style={{ background: week.bg, borderBottomColor: `${week.color}20` }}>
+                    <div className="flex items-center justify-between">
+                      <span className="text-sm font-bold" style={{ fontFamily: 'Syne, sans-serif', color: week.color }}>{week.week}</span>
+                      <span className="text-xs font-semibold px-2.5 py-1 rounded-full" style={{ background: `${week.color}15`, color: week.color }}>{week.theme}</span>
+                    </div>
+                  </div>
+                  <div className="p-5">
+                    {week.days.map(d => (
+                      <div key={d.day} className="flex items-start gap-3 mb-3.5 last:mb-0">
+                        <span className="text-xs font-mono font-bold flex-shrink-0 pt-0.5" style={{ color: week.color }}>{d.day}</span>
+                        <span className="text-xs leading-relaxed" style={{ color: C.textMuted }}>{d.task}</span>
+                      </div>
+                    ))}
+                  </div>
+                </div>
+              ))}
+            </div>
+          </div>
+        </div>
+      </section>
+
+      {/* ── VIDEOS ── */}
+      <section className="border-b" style={{ ...sectionStyle, background: C.bg }}>
+        <div className="max-w-4xl mx-auto px-8">
+          <div ref={vidsRef}>
+            <SectionHeader icon={<Play size={22} />} title="Video Resources" subtitle="Learn from the best educators in Frontend Development" iconBg={C.redLight} iconColor={C.red} />
+            <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
+              {VIDEOS.map(v => (
+                <div key={v.id} className="rounded-2xl overflow-hidden border transition-all duration-200" style={{ background: '#f8f9ff', borderColor: C.border }}
+                  onMouseEnter={e => { (e.currentTarget as HTMLElement).style.borderColor = 'rgba(220,38,38,0.3)'; (e.currentTarget as HTMLElement).style.boxShadow = '0 8px 30px rgba(0,0,0,0.1)' }}
+                  onMouseLeave={e => { (e.currentTarget as HTMLElement).style.borderColor = C.border; (e.currentTarget as HTMLElement).style.boxShadow = 'none' }}>
+                  <div className="relative overflow-hidden" style={{ aspectRatio: '16/9', background: '#0a0c1a' }}>
+                    <img src={`https://img.youtube.com/vi/${v.id}/mqdefault.jpg`} alt={v.title} className="w-full h-full object-cover" style={{ opacity: 0.75 }} />
+                    <a href={`https://www.youtube.com/watch?v=${v.id}`} target="_blank" rel="noopener noreferrer" className="absolute inset-0 flex items-center justify-center no-underline">
+                      <div className="rounded-full flex items-center justify-center" style={{ width: 52, height: 52, background: 'rgba(220,38,38,0.9)' }}>
+                        <Play size={20} fill="white" style={{ color: '#fff', marginLeft: 2 }} />
+                      </div>
+                    </a>
+                    <div className="absolute bottom-2 right-2 flex items-center gap-1 rounded px-2 py-1 text-xs text-white" style={{ background: 'rgba(0,0,0,0.75)' }}>
+                      <Clock size={10} />{v.dur}
+                    </div>
+                  </div>
+                  <div className="p-4">
+                    <div className="text-sm font-semibold mb-1.5 leading-snug" style={{ color: C.text }}>{v.title}</div>
+                    <div className="text-xs leading-relaxed mb-3" style={{ color: C.textMuted }}>{v.desc}</div>
+                    <div className="flex items-center justify-between">
+                      <span className="text-xs" style={{ color: C.textFaint }}>{v.channel}</span>
+                      <a href={`https://www.youtube.com/watch?v=${v.id}`} target="_blank" rel="noopener noreferrer" className="flex items-center gap-1 text-xs no-underline" style={{ color: C.indigo }}>Watch <ExternalLink size={11} /></a>
+                    </div>
+                  </div>
+                </div>
+              ))}
+            </div>
+          </div>
+        </div>
+      </section>
+
+      {/* ── FINAL THOUGHTS ── */}
+      <section className="border-b" style={{ ...sectionStyle, background: '#f8f9ff' }}>
+        <div className="max-w-4xl mx-auto px-8">
+          <div ref={finalRef}>
+            <SectionHeader icon={<Award size={22} />} title="Final Thoughts" subtitle="What we want you to take away from this guide" iconBg={C.primaryLight} iconColor={C.primary} />
+            <div className="rounded-2xl p-6 border mb-8" style={{ background: C.bg, borderColor: C.border }}>
+              <p className="text-base leading-relaxed mb-4" style={{ color: '#374151' }}>
+                Frontend development is where <strong style={{ color: C.primary }}>design meets code</strong>. It's creative, challenging, and immediately rewarding. Every pixel you polish, every animation you craft, and every millisecond you save impacts millions of users directly. That responsibility is real, but so is the satisfaction.
+              </p>
+              <p className="text-base leading-relaxed" style={{ color: '#374151' }}>
+                The path to a frontend job isn't about learning React perfectly — it's about building real projects that solve real problems, deploying them, and showing employers you can turn design into working software. Start small, ship often, and let your portfolio speak for itself.
+              </p>
+            </div>
+            <div className="grid grid-cols-1 gap-3">
+              {TAKEAWAYS.map((t, i) => (
+                <div key={t} className="flex items-center gap-3.5 rounded-xl px-5 py-3.5 border" style={{ background: C.bg, borderColor: C.border }}>
+                  <div className="w-7 h-7 rounded-full flex items-center justify-center flex-shrink-0 font-mono font-black text-xs" style={{ background: C.primaryLight, color: C.primary }}>{i + 1}</div>
+                  <span className="text-sm" style={{ color: C.text }}>{t}</span>
+                </div>
+              ))}
+            </div>
+          </div>
+        </div>
+      </section>
+
+      {/* ── CTA ── */}
+      <div className="max-w-4xl mx-auto px-8" style={{ paddingTop: 72, paddingBottom: 96 }}>
+        <div className="relative overflow-hidden rounded-3xl px-12 py-16 text-center" style={{ background: `linear-gradient(135deg, ${C.primary} 0%, ${C.indigo} 100%)` }}>
+          <div className="absolute rounded-full pointer-events-none" style={{ width: 300, height: 300, background: 'rgba(255,255,255,0.05)', top: -120, right: -80 }} />
+          <div className="w-16 h-16 rounded-2xl flex items-center justify-center mx-auto mb-7" style={{ background: 'rgba(255,255,255,0.15)' }}>
+            <Rocket size={30} style={{ color: '#fff' }} />
+          </div>
+          <h2 className="font-extrabold text-white mb-3" style={{ fontFamily: 'Syne, sans-serif', fontSize: 'clamp(1.6rem, 3vw, 2.2rem)', letterSpacing: '-0.02em' }}>
+            Ready to Start Your Journey?
+          </h2>
+          <p className="text-sm mb-10 mx-auto leading-relaxed" style={{ color: 'rgba(255,255,255,0.65)', maxWidth: 440 }}>
+            You have the roadmap. You have the resources. You have the 30-day plan. All that's left is to open VS Code and build something beautiful.
+          </p>
+          <div className="flex flex-wrap justify-center gap-3.5">
+            <Link to="/roadmaps" className="inline-flex items-center gap-2 rounded-xl px-7 py-3.5 font-bold text-sm no-underline" style={{ fontFamily: 'Syne, sans-serif', background: '#fff', color: C.primary }}>
+              Explore More Roadmaps <ArrowRight size={16} />
+            </Link>
+            <a href="/contact" className="inline-flex items-center gap-2 rounded-xl px-7 py-3.5 text-sm font-semibold text-white no-underline" style={{ background: 'rgba(255,255,255,0.1)', border: '1px solid rgba(255,255,255,0.2)' }}>
+              Get Career Advice
+            </a>
+          </div>
+          <p className="text-xs mt-5" style={{ color: 'rgba(255,255,255,0.35)' }}>Start shipping today. Your future self will be proud.</p>
+        </div>
+        <ShareBar />
+      </div>
+
+    </div>
+  )
+}
