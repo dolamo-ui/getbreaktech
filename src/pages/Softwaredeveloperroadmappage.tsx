@@ -14,12 +14,11 @@ import {
   Award, Target, Flame, Database,
   Layers, FileText, Globe, Server, Layout,
   GitBranch, Terminal, Package, Shield,
-  Cloud, Workflow, Headphones, Wrench, Radio, PhoneCall,
+  Cloud, Workflow,
 } from 'lucide-react'
 
 gsap.registerPlugin(ScrollTrigger)
 
-/* ─── COLORS ──────────────────────────────────────────────────────────────── */
 const C = {
   bg: '#ffffff',
   bgAlt: '#f8f9ff',
@@ -28,7 +27,7 @@ const C = {
   text: '#0f172a',
   textMuted: '#64748b',
   textFaint: '#94a3b8',
-  primary: '#0369a1',          // support blue — IT support brand colour
+  primary: '#0369a1',
   primaryLight: 'rgba(3,105,161,0.08)',
   primaryMid: 'rgba(3,105,161,0.15)',
   violet: '#7c3aed',
@@ -45,337 +44,333 @@ const C = {
   cyanLight: 'rgba(8,145,178,0.08)',
 }
 
-/* ─── DATA ────────────────────────────────────────────────────────────────── */
-
 const CAREER_LEVELS = [
   {
-    level: 'Junior', title: 'Help Desk Technician', duration: '0–2 yrs', salary: 'R160k–R290k',
-    description: 'Handle Tier 1 support tickets, troubleshoot hardware and software issues, reset passwords, and escalate complex problems. Learn ticketing systems and ITIL basics.',
-    skills: ['Windows OS', 'Ticketing Tools', 'Basic Networking', 'Active Directory'],
+    level: 'Junior', title: 'Junior Software Dev', duration: '0–2 yrs', salary: 'R280k–R500k',
+    description: 'Implement features, fix bugs, write tests, and learn software design patterns under mentorship. Understand version control, code reviews, and agile workflows.',
+    skills: ['Python/Java/C#', 'Git & GitHub', 'Unit Testing', 'Agile Basics'],
     accent: '#0891b2', accentBg: 'rgba(8,145,178,0.08)', accentBorder: 'rgba(8,145,178,0.18)',
   },
   {
-    level: 'Mid-Level', title: 'IT Support Specialist', duration: '2–5 yrs', salary: 'R290k–R540k',
-    description: 'Own Tier 2 escalations, manage endpoints at scale, configure network equipment, support cloud tools (Microsoft 365, Google Workspace), and mentor junior staff.',
-    skills: ['Microsoft 365', 'ITIL Foundation', 'Network Config', 'MDM / Intune'],
+    level: 'Mid-Level', title: 'Software Developer', duration: '2–5 yrs', salary: 'R550k–R1M',
+    description: 'Own features end-to-end, design software modules, lead code reviews, implement design patterns, and mentor junior developers across the product.',
+    skills: ['Design Patterns', 'System Design', 'CI/CD', 'Cloud Basics'],
     accent: '#16a34a', accentBg: 'rgba(22,163,74,0.08)', accentBorder: 'rgba(22,163,74,0.18)',
   },
   {
-    level: 'Senior', title: 'Service Desk Analyst', duration: '5–8 yrs', salary: 'R540k–R900k',
-    description: 'Drive SLA compliance, lead incident and problem management, design knowledge base processes, and build automation that reduces ticket volume. Technical escalation lead.',
-    skills: ['ITIL Advanced', 'PowerShell', 'SIEM Basics', 'Process Design'],
+    level: 'Senior', title: 'Senior Software Dev', duration: '5–8 yrs', salary: 'R1M–R1.8M',
+    description: 'Architect complex software solutions, define engineering standards, drive technical roadmaps, and mentor entire engineering teams across the organization.',
+    skills: ['Architecture', 'Tech Strategy', 'Mentoring', 'Cross-team'],
     accent: '#7c3aed', accentBg: 'rgba(124,58,237,0.08)', accentBorder: 'rgba(124,58,237,0.18)',
   },
   {
-    level: 'Expert', title: 'IT Support Manager', duration: '8+ yrs', salary: 'R900k+',
-    description: 'Lead the support function, define IT service strategy, manage vendor relationships, implement ITSM platforms, and align IT operations with business objectives.',
-    skills: ['ITSM Strategy', 'Team Leadership', 'Budget Mgmt', 'ITIL Expert'],
+    level: 'Expert', title: 'Staff / Principal Eng', duration: '8+ yrs', salary: 'R2M+',
+    description: 'Define engineering vision across the organization, shape culture, resolve the hardest design and reliability challenges, and drive strategic technical decisions.',
+    skills: ['Eng Leadership', 'Platform Design', 'Org Strategy', 'Innovation'],
     accent: '#ea580c', accentBg: 'rgba(234,88,12,0.08)', accentBorder: 'rgba(234,88,12,0.18)',
   },
 ]
 
 const ROADMAP_STEPS = [
   {
-    step: 1, title: 'IT Fundamentals & Operating Systems',
-    description: 'Build a solid base in how computers work. Learn Windows 10/11 administration inside out — installation, user accounts, Group Policy, file systems, and troubleshooting. Supplement with macOS and Linux basics. CompTIA A+ is the gold-standard certification for this stage and is widely recognised by employers.',
-    duration: '2–3 months', skills: ['Windows 10/11', 'macOS Basics', 'Linux CLI', 'CompTIA A+'],
+    step: 1, title: 'Programming Fundamentals — Pick Your Language',
+    description: 'Choose Python, Java, or C# as your first language and master it deeply. Learn variables, data types, control flow, functions, OOP, error handling, and modules. Understand how programs execute and how memory is managed at a conceptual level.',
+    duration: '2–3 months', skills: ['Python / Java / C#', 'OOP Principles', 'Data Structures', 'Algorithms Basics'],
   },
   {
-    step: 2, title: 'Networking Essentials',
-    description: 'Every support call eventually becomes a network problem. Learn TCP/IP, DNS, DHCP, subnetting, VLANs, Wi-Fi troubleshooting, and VPN concepts. Understand the OSI model at a practical level. CompTIA Network+ validates these skills and is required or preferred at most IT departments.',
-    duration: '2–3 months', skills: ['TCP/IP & DNS', 'Subnetting', 'Wi-Fi & VPN', 'CompTIA Network+'],
+    step: 2, title: 'Data Structures & Algorithms',
+    description: 'Master arrays, linked lists, stacks, queues, trees, graphs, and hash maps. Understand time and space complexity (Big O). Solve problems on LeetCode and HackerRank. These concepts underpin every technical interview and every high-performance system.',
+    duration: '2–3 months', skills: ['Arrays & Trees', 'Sorting & Search', 'Big O Notation', 'Problem Solving'],
   },
   {
-    step: 3, title: 'Active Directory, M365 & Identity',
-    description: 'Enterprise IT runs on Microsoft. Learn Active Directory — user and group management, OUs, Group Policy Objects, and domain structure. Then master Microsoft 365 administration: Exchange Online, Teams, SharePoint, and Intune for device management. These skills appear in nearly every job description.',
-    duration: '2–3 months', skills: ['Active Directory', 'Microsoft 365', 'Intune / MDM', 'Azure AD'],
+    step: 3, title: 'Software Design & Architecture Patterns',
+    description: 'Learn the SOLID principles, design patterns (Factory, Observer, Strategy, Singleton), and clean code practices. Understand how to structure large codebases, separate concerns, and write code that is readable, testable, and maintainable.',
+    duration: '2–3 months', skills: ['SOLID Principles', 'Design Patterns', 'Clean Code', 'Refactoring'],
   },
   {
-    step: 4, title: 'ITIL, Ticketing & Service Management',
-    description: 'IT support is a professional service, not just fixing computers. Learn ITIL 4 — incident, problem, change, and service request management. Get hands-on with a ticketing system (ServiceNow, Jira Service Management, or Freshdesk). Study SLA management and how to write knowledge base articles that reduce repeat tickets.',
-    duration: '1–2 months', skills: ['ITIL 4 Foundation', 'ServiceNow / Jira', 'SLA Management', 'Knowledge Mgmt'],
+    step: 4, title: 'Version Control, Testing & Collaboration',
+    description: 'Master Git branching strategies, pull requests, and merge conflict resolution. Learn unit, integration, and end-to-end testing. Write code that others can review and build on. Understand agile ceremonies and how engineering teams collaborate at scale.',
+    duration: '1–2 months', skills: ['Git Advanced', 'TDD / BDD', 'Code Reviews', 'Agile/Scrum'],
   },
   {
-    step: 5, title: 'Security Fundamentals & Endpoint Protection',
-    description: 'Security is inseparable from IT support. Learn how to identify phishing attempts, configure Windows Defender and endpoint protection tools, manage BitLocker encryption, apply patches, and respond to a basic security incident. CompTIA Security+ is the entry-point certification into cybersecurity-adjacent IT roles.',
-    duration: '2–3 months', skills: ['CompTIA Security+', 'Endpoint Protection', 'Patch Management', 'Incident Response'],
+    step: 5, title: 'Databases, APIs & System Integration',
+    description: 'Learn relational (PostgreSQL) and NoSQL (MongoDB) databases. Build and consume REST APIs. Understand authentication, caching, and data modeling. Software developers who can reason across the full system are significantly more valuable than specialists in isolation.',
+    duration: '2–3 months', skills: ['SQL & NoSQL', 'REST APIs', 'Authentication', 'Caching'],
   },
   {
-    step: 6, title: 'Scripting, Automation & Cloud',
-    description: 'Senior support professionals automate repetitive tasks. Learn PowerShell to script Active Directory operations, user onboarding, and reporting. Add basics of Azure or AWS for cloud-hosted infrastructure support. Automation skills dramatically differentiate you from peers and open paths into sysadmin and cloud engineering roles.',
-    duration: '3–4 months', skills: ['PowerShell', 'Azure Fundamentals', 'Automation Scripts', 'Cloud Basics'],
+    step: 6, title: 'Cloud, DevOps & Deployment',
+    description: 'Learn Docker for containerization, CI/CD pipelines for automated deployment, and cloud platforms (AWS, Azure, or GCP) for hosting and scaling. Understand infrastructure as code, environment management, and how to ship software reliably to production systems.',
+    duration: '2–3 months', skills: ['Docker', 'CI/CD Pipelines', 'AWS / Azure / GCP', 'IaC Basics'],
   },
 ]
 
 const HARD_SKILLS = [
-  { name: 'Windows OS Administration', level: 95 },
-  { name: 'Microsoft 365 & Azure AD', level: 93 },
-  { name: 'Networking & TCP/IP', level: 88 },
-  { name: 'Active Directory & GPO', level: 85 },
-  { name: 'ITIL / ITSM Processes', level: 82 },
-  { name: 'Security & Endpoint Protection', level: 75 },
-  { name: 'PowerShell Scripting', level: 68 },
-  { name: 'Cloud Platforms (Azure/AWS)', level: 60 },
+  { name: 'Core Programming Language', level: 95 },
+  { name: 'Data Structures & Algorithms', level: 90 },
+  { name: 'Software Design Patterns', level: 87 },
+  { name: 'Testing (Unit / Integration)', level: 85 },
+  { name: 'Git & Version Control', level: 92 },
+  { name: 'Databases (SQL & NoSQL)', level: 80 },
+  { name: 'Cloud & DevOps', level: 72 },
+  { name: 'System Architecture', level: 65 },
 ]
 
 const SOFT_SKILLS = [
-  { name: 'Empathetic Communication', description: 'Users are often stressed when they call support. The ability to listen patiently, explain technical concepts in plain language, and make the person feel heard is what separates great support from merely functional support.' },
-  { name: 'Calm Under Pressure', description: 'Major outages affect hundreds of people simultaneously. The support professional who stays methodical, communicates clearly, and works the problem without panicking is irreplaceable during incidents.' },
-  { name: 'Systematic Troubleshooting', description: 'The best IT support people don\'t guess — they eliminate variables. A disciplined, hypothesis-driven approach to diagnosis gets to root causes faster and prevents repeat calls on the same issue.' },
-  { name: 'Documentation Discipline', description: 'Every ticket is an opportunity to create institutional knowledge. Support professionals who document problems and solutions thoroughly build the knowledge base that makes the whole team faster over time.' },
-  { name: 'Customer Service Mindset', description: 'IT support is a service. Treating users as internal customers — not as interruptions — builds trust, improves response quality, and makes you the person people actually want to call when things break.' },
-  { name: 'Continuous Self-Learning', description: 'Technology changes faster than any job description can capture. The best support professionals are perpetually curious — studying for the next cert, testing new tools in a home lab, and following IT news to stay ahead.' },
+  { name: 'Analytical Problem Solving', description: 'Break ambiguous requirements into precise, implementable specifications. The best software developers turn vague product ideas into clean, working systems through structured decomposition.' },
+  { name: 'Code Communication', description: 'Write code as communication first, execution second. Variable names, function signatures, and module structure tell the story of your intent. Code that needs comments to explain what it does is code that needs refactoring.' },
+  { name: 'Estimating Accurately', description: 'One of the rarest skills in software development. Decompose tasks, identify unknowns early, and communicate uncertainty. Teams trust developers who estimate well and communicate changes proactively.' },
+  { name: 'Feedback Receptiveness', description: 'Code reviews are gifts. Every PR comment is an opportunity to learn how your peers think about design. Developers who detach ego from code grow significantly faster than those who defend their first draft.' },
+  { name: 'Product Thinking', description: 'The best software developers understand why a feature exists, not just what it should do. Asking "why" before implementing "how" consistently leads to simpler, more elegant solutions.' },
+  { name: 'Adaptability', description: 'Technologies change. Requirements change. Codebases get rewritten. Developers who build strong fundamentals and stay curious adapt faster than specialists tied to a single tool or framework.' },
 ]
 
 const EDU_PATHS = [
   {
-    type: 'Degree', title: 'IT / Computer Science Degree', duration: '3–4 years', cost: 'R400k – R1M+',
-    borderColor: 'rgba(3,105,161,0.2)', bgColor: '#eff6ff', typeBg: 'rgba(3,105,161,0.12)', typeColor: '#0369a1',
-    pros: ['Deepest theoretical foundation', 'Opens doors to management and specialisation faster', 'Graduate schemes at large corporates and banks', 'Strong peer network of future IT professionals'],
-    cons: ['Slow and expensive path to first salary', 'Practical hands-on lab time is limited', 'Many grads still need certifications to get hired', 'IT support roles rarely require a degree at entry level'],
+    type: 'Degree', title: 'Computer Science Degree', duration: '3–4 years', cost: 'R400k – R1M+',
+    borderColor: 'rgba(3,105,161,0.2)', bgColor: '#f0f9ff', typeBg: 'rgba(3,105,161,0.12)', typeColor: '#0369a1',
+    pros: ['Deep theory: algorithms, OS, compilers, networking', 'High credibility at top tech companies', 'Structured exposure to mathematics and formal logic', 'Access to graduate programmes and internship pipelines'],
+    cons: ['3–4 year runway before first job', 'Heavy on theory, light on practical tooling', 'Web frameworks and modern DevOps largely self-taught', 'Expensive — especially at private universities'],
   },
   {
-    type: 'Certifications', title: 'CompTIA A+ → Network+ → Security+', duration: '6–18 months', cost: 'R15k – R60k',
+    type: 'Bootcamp', title: 'Software Dev Bootcamp', duration: '3–6 months', cost: 'R60k – R130k',
     borderColor: 'rgba(22,163,74,0.2)', bgColor: '#f0fdf4', typeBg: 'rgba(22,163,74,0.12)', typeColor: '#16a34a',
-    pros: ['Vendor-neutral, globally recognised credentials', 'Directly maps to job descriptions and hiring filters', 'Much faster and cheaper than a degree', 'CompTIA A+ is explicitly required by many help desk roles'],
-    cons: ['Exams require dedicated study and exam fees', 'Credentials alone don\'t replace hands-on lab practice', 'Need to be renewed every 3 years via CEUs', 'Won\'t replace leadership experience for management roles'],
+    pros: ['Job-ready skills in months, not years', 'Strong project portfolio on exit', 'Career support and employer networks', 'Cohort accountability and structured pacing'],
+    cons: ['Variable programme quality across providers', 'Credential not universally respected by employers', 'Algorithms and CS depth largely absent', 'Junior market highly competitive on exit'],
   },
   {
-    type: 'Self-Taught', title: 'Home Lab + Free Courses', duration: '12–24 months', cost: 'R2k – R10k',
+    type: 'Self-Taught', title: 'Online Courses & Projects', duration: '12–24 months', cost: 'R0 – R8k',
     borderColor: 'rgba(79,70,229,0.2)', bgColor: '#eef2ff', typeBg: 'rgba(79,70,229,0.12)', typeColor: '#4f46e5',
-    pros: ['Build real skills on real hardware', 'Microsoft Learn and Google IT Support cert are free/cheap', 'Immediate hands-on practice with no waiting', 'Home lab experience impresses interviewers who test practically'],
-    cons: ['No formal credential on CV without separate exam', 'Requires significant self-discipline and structure', 'Knowledge gaps can be dangerous without structured curriculum', 'Harder to demonstrate competence without certification'],
+    pros: ['World-class free courses (CS50, The Odin Project)', 'Build real projects from day one', 'No ceiling on what you can learn or how fast', 'Flexible to your schedule and interests'],
+    cons: ['Requires exceptional self-discipline', 'Easy to have dangerous knowledge gaps', 'No formal credential on your CV', 'Imposter syndrome is persistent and common'],
   },
 ]
 
 const SCHEDULE = [
-  { time: '8:00', act: 'Queue Triage & Priority Setting', desc: 'Review the overnight ticket queue, identify P1/P2 incidents, assign team members to urgent items and communicate status to affected users before business starts', duration: '30 min', icon: <PhoneCall size={14} /> },
-  { time: '8:30', act: 'Active Incident Resolution', desc: 'Work through priority tickets — remote desktop sessions, on-site hardware swaps, account provisioning, software licensing issues, and connectivity problems', duration: '3 hrs', icon: <Wrench size={14} /> },
-  { time: '11:30', act: 'Escalation & Vendor Follow-up', desc: 'Escalate unresolved Tier 2 issues to sysadmin or vendor support, follow up on outstanding hardware replacements and software licences, update users on ETA', duration: '30 min', icon: <Radio size={14} /> },
-  { time: '12:00', act: 'Lunch & Recovery', desc: 'Step away from the screen. Complex technical problems benefit from a mental reset — some of the best diagnostic insights arrive after a proper break', duration: '1 hr', icon: <Coffee size={14} /> },
-  { time: '1:00', act: 'Knowledge Base & Documentation', desc: 'Write up solutions for recurring issues, update runbooks, improve existing KB articles, and document this morning\'s unusual fixes before the context is lost', duration: '1 hr', icon: <FileText size={14} /> },
-  { time: '2:00', act: 'Proactive Maintenance & Projects', desc: 'Run patch deployments, update endpoint agents, work on ongoing IT projects (e.g., hardware refresh, Office 365 migration), or build automation scripts for repetitive tasks', duration: '1.5 hrs', icon: <Shield size={14} /> },
-  { time: '3:30', act: 'Learning & Certification Study', desc: 'Work through CompTIA study material, practise PowerShell scripts in the home lab, complete a Microsoft Learn module, or test a new tool in a sandbox environment', duration: '30 min', icon: <BookOpen size={14} /> },
+  { time: '9:00', act: 'Standup & Sprint Planning', desc: 'Sync on progress, blockers, and priorities. Review pull requests and triage bug reports from the previous day.', duration: '30 min', icon: <GitBranch size={14} /> },
+  { time: '9:30', act: 'Feature Development', desc: 'Deep implementation work: new features, refactoring, or performance improvements. Protected time with no interruptions.', duration: '2.5 hrs', icon: <Code size={14} /> },
+  { time: '12:00', act: 'Code Reviews & Debugging', desc: 'Review teammates\' pull requests, investigate reported bugs, and trace logic through test environments.', duration: '1 hr', icon: <Terminal size={14} /> },
+  { time: '1:00', act: 'Lunch & Recovery', desc: 'Rest restores cognitive capacity. The best code often comes after stepping away — the brain solves problems in the background.', duration: '1 hr', icon: <Coffee size={14} /> },
+  { time: '2:00', act: 'Technical Design & Planning', desc: 'Write technical specs, design system architecture, create diagrams, collaborate with product on upcoming feature requirements.', duration: '1 hr', icon: <FileText size={14} /> },
+  { time: '3:00', act: 'Testing & CI Pipeline', desc: 'Write unit and integration tests, run the test suite, fix CI failures, and merge approved pull requests to staging.', duration: '1.5 hrs', icon: <Shield size={14} /> },
+  { time: '4:30', act: 'Learning & Documentation', desc: 'Read engineering blogs, study new patterns, update internal docs, or work on a side project or open source contribution.', duration: '30 min', icon: <BookOpen size={14} /> },
 ]
 
 const TOOLS = [
-  { name: 'ServiceNow / Jira SM', cat: 'Ticketing' }, { name: 'Microsoft Intune', cat: 'MDM' },
-  { name: 'Active Directory', cat: 'Identity' }, { name: 'TeamViewer / AnyDesk', cat: 'Remote' },
-  { name: 'Microsoft 365 Admin', cat: 'Cloud' }, { name: 'Wireshark', cat: 'Network' },
-  { name: 'PowerShell ISE', cat: 'Scripting' }, { name: 'Windows Defender', cat: 'Security' },
+  { name: 'VS Code / IntelliJ', cat: 'IDE' }, { name: 'Git / GitHub', cat: 'Version Control' },
+  { name: 'Docker', cat: 'Containers' }, { name: 'GitHub Actions', cat: 'CI/CD' },
+  { name: 'Jest / JUnit', cat: 'Testing' }, { name: 'AWS / Azure', cat: 'Cloud' },
+  { name: 'Jira / Linear', cat: 'Project Mgmt' }, { name: 'Postman', cat: 'API Testing' },
 ]
 
 const WORK_ENVS = [
-  { type: 'In-Office / On-Site', pct: 52 },
-  { type: 'Hybrid', pct: 37 },
-  { type: 'Fully Remote', pct: 11 },
+  { type: 'Remote', pct: 52 },
+  { type: 'Hybrid', pct: 35 },
+  { type: 'In-Office', pct: 13 },
 ]
 
 const AI_IMPACTS = [
   {
-    title: 'AI-Assisted Ticket Resolution', icon: <Sparkles size={20} />,
-    desc: 'AI tools like Copilot for Microsoft 365 and ServiceNow\'s Now Assist auto-suggest resolutions based on ticket content, prior solutions, and knowledge base articles. Support teams using AI report 40–60% faster Tier 1 resolution times and significantly lower escalation rates.',
-    tools: ['Copilot for M365', 'ServiceNow AI', 'Freshdesk AI', 'Zendesk AI'],
-    borderColor: 'rgba(3,105,161,0.18)', bgColor: '#eff6ff', icoBg: 'rgba(3,105,161,0.12)', icoColor: '#0369a1', tagBg: 'rgba(3,105,161,0.1)', tagColor: '#0369a1', titleColor: '#0369a1',
+    title: 'AI Pair Programming', icon: <Sparkles size={20} />,
+    desc: 'GitHub Copilot, Cursor, and Claude now write boilerplate, generate test cases, refactor code, and explain complex logic inline. Software developers using AI tools report 30–50% productivity gains on implementation tasks.',
+    tools: ['GitHub Copilot', 'Cursor', 'Claude', 'Tabnine'],
+    borderColor: 'rgba(3,105,161,0.18)', bgColor: '#f0f9ff', icoBg: 'rgba(3,105,161,0.12)', icoColor: '#0369a1', tagBg: 'rgba(3,105,161,0.1)', tagColor: '#0369a1', titleColor: '#0369a1',
   },
   {
-    title: 'Intelligent Automation & Self-Service', icon: <Zap size={20} />,
-    desc: 'IT support professionals who can build AI-powered chatbots, configure automated provisioning workflows, and connect ITSM platforms to automation tools (Power Automate, Zapier) are in a completely different demand tier in 2026.',
-    tools: ['Power Automate', 'Microsoft Copilot Studio', 'Zapier', 'Azure Logic Apps'],
+    title: 'AI-Powered Code Review', icon: <Zap size={20} />,
+    desc: 'AI tools now catch security vulnerabilities, detect anti-patterns, suggest performance improvements, and flag missing test coverage automatically — before human reviewers even open the PR.',
+    tools: ['CodeRabbit', 'Sourcery', 'DeepCode', 'SonarQube AI'],
     borderColor: 'rgba(79,70,229,0.18)', bgColor: '#eef2ff', icoBg: 'rgba(79,70,229,0.12)', icoColor: '#4f46e5', tagBg: 'rgba(79,70,229,0.1)', tagColor: '#4f46e5', titleColor: '#4f46e5',
   },
   {
-    title: 'AI-Powered IT Monitoring', icon: <TrendingUp size={20} />,
-    desc: 'AIOps platforms now detect infrastructure anomalies, predict hardware failures before they impact users, and auto-route tickets based on historical patterns. Understanding these tools makes you a force multiplier for your entire IT team.',
-    tools: ['Microsoft Sentinel', 'Datadog', 'SolarWinds AI', 'PagerDuty AIOps'],
+    title: 'LLM Feature Integration', icon: <TrendingUp size={20} />,
+    desc: 'Software developers who can integrate LLMs into product features — chat interfaces, document summarisation, intelligent search, and recommendation engines — command a significant premium in 2026.',
+    tools: ['OpenAI API', 'Anthropic API', 'LangChain', 'Vector DBs'],
     borderColor: 'rgba(22,163,74,0.18)', bgColor: '#f0fdf4', icoBg: 'rgba(22,163,74,0.12)', icoColor: '#16a34a', tagBg: 'rgba(22,163,74,0.1)', tagColor: '#16a34a', titleColor: '#16a34a',
   },
 ]
 
 const FUTURE_SKILLS = [
-  'Microsoft Copilot Administration', 'Power Automate & Low-Code Workflows',
-  'Zero Trust Network Access (ZTNA)', 'Azure Virtual Desktop Support',
-  'AI Chatbot Configuration (Copilot Studio)', 'AIOps & Predictive Monitoring',
+  'LLM API Integration (OpenAI / Anthropic)', 'AI-Assisted Test Generation',
+  'WebAssembly (WASM)', 'Edge Computing & Serverless',
+  'OpenTelemetry & Observability', 'Infrastructure as Code (Terraform)',
 ]
 
 const PROS = [
-  { title: 'Always in Demand — Everywhere', desc: 'Every organisation with computers needs IT support. Hospitals, banks, schools, government, retail — the demand is universal, recession-resistant, and geographically distributed across every city in South Africa.' },
-  { title: 'The Fastest Entry into IT', desc: 'Help desk is the most accessible entry point into the technology industry. CompTIA A+ certification and a few months of study can land your first role — no degree required at entry level.' },
-  { title: 'Exposure to the Entire IT Stack', desc: 'No other role gives you broader exposure faster. In a single week, a help desk technician might touch networking, identity management, cloud apps, hardware, security, and backup systems.' },
-  { title: 'Clear Paths to Specialisation', desc: 'IT support is a launchpad, not a ceiling. From here, experienced technicians branch into sysadmin, network engineering, cybersecurity, cloud architecture, or IT management — with every path well-marked.' },
-  { title: 'Strong Job Security', desc: 'Unlike many tech roles, IT support cannot be fully offshored or replaced by software. On-site hardware, physical network infrastructure, and user relationships require a local, trusted human presence.' },
-  { title: 'Fast Skill Development', desc: 'The variety of problems encountered in support accelerates learning faster than almost any other tech role. In two years you\'ll have solved more edge cases than most developers see in five.' },
+  { title: 'Universal Demand Across Every Industry', desc: 'Every sector — healthcare, finance, education, logistics, entertainment — needs software developers. This is one of the most transferable and recession-resistant careers in the global economy.' },
+  { title: 'Remote Work is the Default', desc: '52% of software development roles are fully remote globally. The work requires only a computer and an internet connection — enabling developers to work from anywhere in the world.' },
+  { title: 'Continuous Intellectual Stimulation', desc: 'No two problems are the same. Software development is a craft that combines engineering discipline with creative problem solving — the learning never stops and neither does the satisfaction.' },
+  { title: 'Excellent Compensation at All Levels', desc: 'From junior to principal, software developers earn above-average salaries. Senior developers at product companies in SA earn R1.2M–R2.5M. Global remote contracts pay significantly more.' },
+  { title: 'Clear Growth Path', desc: 'Junior → Mid → Senior → Staff → Principal / Engineering Manager. The path is well-defined, meritocratic, and tied to skill — not tenure or politics.' },
+  { title: 'You Build Things That Exist', desc: 'Every feature you ship, every app you build, every bug you fix creates something that real people use. The tangible output of software development is deeply satisfying in ways most careers are not.' },
 ]
 
 const CONS = [
-  { title: 'Emotionally Demanding Work', desc: 'Supporting frustrated users who can\'t work, managing an overflowing ticket queue, and being the first person blamed when systems fail takes a toll. Emotional resilience is as important as technical skill.' },
-  { title: 'Compensation Ceiling at Tier 1', desc: 'Entry-level help desk roles are among the lower-paid positions in IT. Breaking through to R400k+ requires active upskilling, certifications, and movement into specialist or senior roles.' },
-  { title: 'Repetitive Ticket Fatigue', desc: 'Password resets, "my printer isn\'t working," and Outlook crashes account for a large percentage of tickets. Without deliberate variety and growth goals, the work can become monotonous.' },
-  { title: 'On-Site Requirements', desc: 'Unlike backend or development roles, much IT support still requires physical presence. Hardware replacements, cabling, server room access, and in-person user support mean remote work is limited compared to other tech fields.' },
-  { title: 'Underappreciated Until It Breaks', desc: 'IT support is invisible when it works and immediately visible when it fails. Getting credit for preventing 300 incidents is harder than being blamed for the one that gets through. This is the reality of a support culture.' },
-  { title: 'Credential Treadmill', desc: 'Technology evolves quickly and certifications expire. Staying current in Microsoft, CompTIA, and cloud platforms requires ongoing study investment — both time and money — throughout your career.' },
+  { title: 'Constant Technology Change', desc: 'The JavaScript ecosystem reinvents itself every two years. New frameworks, new paradigms, new tools — keeping up requires ongoing learning that never ends, even for senior engineers.' },
+  { title: 'Technical Debt Reality', desc: 'Most professional codebases are far messier than any tutorial project. Maintaining legacy systems, untangling ten-year-old code, and working around poor past decisions is the unglamorous daily reality of software development.' },
+  { title: 'Estimation is Hard', desc: 'Software projects routinely run over time and budget. The pressure to deliver unrealistic timelines, combined with the inherent unpredictability of software development, creates chronic stress in most teams.' },
+  { title: 'Isolation Risk', desc: 'Deep focus work can become isolating, especially in remote environments. Developers who neglect collaboration, communication, and relationship-building within their teams often plateau professionally.' },
+  { title: 'Imposter Syndrome is Pervasive', desc: 'The field is vast. No single developer knows everything, but many feel they should. Comparing yourself to senior engineers when you\'re still learning creates psychological pressure that takes years to resolve.' },
+  { title: 'Meetings and Context Switching', desc: 'As seniority increases, so does the meeting load. Context switching between deep technical work and planning or review meetings fragments concentration and reduces the depth of the actual development work.' },
 ]
 
 const VIDEOS = [
-  { id: 'G7V2nqFRojA', title: 'CompTIA A+ Core 1 Full Course', desc: 'Complete preparation for the CompTIA A+ 220-1101 exam covering hardware, networking, and troubleshooting — the foundational certification for IT support professionals.', dur: '14:08:00', channel: 'Professor Messer' },
-  { id: 'qiQR5rTSshw', title: 'Google IT Support Professional Certificate', desc: 'Google\'s fully free IT support training program covering technical support fundamentals, networking, operating systems, system administration, and IT security.', dur: '6:32:00', channel: 'Google / Coursera' },
-  { id: 'ynbHdHrU5gs', title: 'CompTIA Network+ Full Course', desc: 'Complete Network+ study guide covering network infrastructure, protocols, troubleshooting, and security — essential for anyone moving beyond Tier 1 support.', dur: '12:16:00', channel: 'Professor Messer' },
+  { id: 'ysEN5RaKOlA', title: 'Software Development Career Roadmap 2025', desc: 'A comprehensive guide covering all the skills, tools, and learning paths to build a successful career as a software developer in 2025 and beyond.', dur: '18:44', channel: 'Fireship' },
+  { id: 'zOjov-2OZ0E', title: 'Data Structures & Algorithms Full Course', desc: 'Master the core data structures and algorithms every software developer needs — arrays, trees, graphs, sorting, searching, and dynamic programming.', dur: '8:03:51', channel: 'freeCodeCamp' },
+  { id: 'FLtqAi7WNBY', title: 'Clean Code — Writing Code That Lasts', desc: 'Learn the principles of clean code, SOLID design, and software craftsmanship that separate junior developers from senior engineers.', dur: '1:04:52', channel: 'Continuous Delivery' },
 ]
 
 const TAKEAWAYS = [
-  'Certifications open doors — CompTIA A+, Network+, and Security+ are worth every hour of study and every rand of exam fees',
-  'Build a home lab on spare hardware or free Azure credits — practical troubleshooting experience you created yourself impresses interviewers more than anything on paper',
-  'Every ticket is a teaching moment: document your solutions well enough that your past self could have solved the problem faster with them',
-  'Learn PowerShell early — a support professional who can automate 20 minutes of daily manual work is immediately more valuable than one who cannot',
-  'Treat every user interaction as a service experience, not a technical problem — the reputation you build with users is your most transferable career asset',
+  'Master one language deeply before learning a second — breadth without depth is the most common trap for early career developers',
+  'Every project you build must be deployed publicly — local projects teach you nothing about the real challenges of software in production',
+  'Algorithms and data structures are permanent knowledge — invest heavily in them early and they will compound throughout your entire career',
+  'Read code written by engineers better than you — open source repositories are free mentorship at the highest level available',
+  'The best developers write less code, not more — simplicity, clarity, and restraint are the marks of genuine software mastery',
 ]
-
-/* ─── NEW SECTIONS ─────────────────────────────────────────────────────────── */
 
 const CAREER_FACTS = [
   {
-    icon: <Headphones size={20} />, title: 'What You Do',
-    desc: 'Diagnose and resolve hardware, software, and network issues. Manage user accounts and permissions, deploy and configure devices, handle IT service requests, and keep systems running so the business never stops.',
+    icon: <Code size={20} />, title: 'What You Build',
+    desc: 'Desktop applications, web platforms, mobile apps, APIs, developer tools, automation scripts, embedded software, data pipelines, and the internal systems that run businesses of every size.',
     color: '#0369a1',
   },
   {
     icon: <Workflow size={20} />, title: 'Core Activities',
-    desc: 'Ticket management and prioritisation, remote and on-site troubleshooting, OS and application support, account and identity management, endpoint deployment, patch management, knowledge base creation, and user training.',
+    desc: 'Feature implementation, code review, debugging, system design, test writing, technical documentation, architecture planning, sprint participation, and continuous delivery pipeline management.',
     color: '#16a34a',
   },
   {
-    icon: <Users size={20} />, title: 'Who You Support',
-    desc: 'Every employee in the organisation — from the CEO who can\'t connect to a Teams meeting to the accountant whose VPN won\'t authenticate. You are the human face of technology and the bridge between IT infrastructure and every user.',
+    icon: <Users size={20} />, title: 'Who You Work With',
+    desc: 'Product managers defining requirements, designers creating interfaces, QA engineers testing your code, DevOps engineers managing infrastructure, and other developers building the same product.',
     color: '#4f46e5',
   },
   {
     icon: <TrendingUp size={20} />, title: 'Industry Demand',
-    desc: 'IT support is one of the most consistently in-demand roles in South Africa. Every sector — banking, healthcare, retail, education, mining, and government — employs IT support staff. Demand grew 18% in 2024 alone.',
+    desc: 'Software developers are among the most in-demand professionals globally. The World Economic Forum lists software development among the top 5 roles seeing the highest demand growth through 2030.',
     color: '#ea580c',
   },
 ]
 
 const WHY_REASONS = [
-  { emoji: '🚪', title: 'The Best Door into IT', desc: 'Help desk is where thousands of successful IT careers begin. Network engineers, cloud architects, and CISOs often started here. It is the most accessible, fastest, and lowest-barrier entry point into a technology career.' },
-  { emoji: '💼', title: 'Hire-Ready in Months, Not Years', desc: 'A CompTIA A+ certification and three months of focused study can get you your first interview. No four-year degree required. IT support is one of the few fields where demonstrated competence beats paper qualifications at entry level.' },
-  { emoji: '🌐', title: 'The Widest Industry Exposure', desc: 'Support touches every part of the IT stack — networking, identity, security, cloud, hardware, and software. You\'ll understand how technology really works in ways most specialists never do.' },
-  { emoji: '🔐', title: 'Security Skills Are Table Stakes', desc: 'In 2026, every IT support role has a security component. You\'re the front line of phishing defence, the person who spots the compromised account, and the one who enforces password and device policies. This makes you essential.' },
-  { emoji: '📈', title: 'Multiple Paths Forward', desc: 'From help desk you can go into sysadmin, network engineering, cybersecurity, cloud, or IT management. This role is not a dead end — it is a crossroads with clearly signed paths to six-figure careers.' },
-  { emoji: '🤝', title: 'You Make a Real Difference Daily', desc: 'When you fix someone\'s laptop so they can present to a client, recover a corrupted file they worked on all week, or restore email during a crisis — you\'ve made a tangible, immediate difference to a real person\'s day.' },
+  { emoji: '💻', title: 'You Build Products Millions Use', desc: 'Software developers create the apps, platforms, and tools that people interact with every day. From mobile banking to productivity tools, your code shapes how the world works.' },
+  { emoji: '💰', title: 'Excellent Salaries at Every Level', desc: 'Senior software developers at product companies in South Africa earn R1.2M–R2.5M. Global remote roles for experienced developers can pay 2–4× more in USD.' },
+  { emoji: '🌍', title: 'Work From Anywhere', desc: '52% of software developer roles are fully remote. All you need is a laptop and internet connection — the work is the same whether you\'re in Johannesburg or Japan.' },
+  { emoji: '🧩', title: 'Creative Problem Solving Every Day', desc: 'Software development combines engineering rigour with creative thinking. Every feature is a design problem, every bug is a detective case, and every architecture is a work of craft.' },
+  { emoji: '📈', title: 'A Well-Defined Growth Path', desc: 'Junior → Mid → Senior → Staff → Principal. The career ladder is clear, skill-based, and meritocratic. Hard work and learning translate directly into career advancement.' },
+  { emoji: '🔧', title: 'You\'re Always Learning', desc: 'Technology evolves constantly — which means software developers are always growing. If lifelong learning energises rather than exhausts you, software development is an ideal career.' },
 ]
 
 const FREE_RESOURCES = [
-  { category: 'Certifications', color: '#0369a1', bgColor: '#eff6ff', items: [
-    { name: 'Professor Messer — CompTIA A+ (free video course)', url: '#', type: 'Video', rating: 5 },
-    { name: 'Google IT Support Professional Cert (Coursera)', url: '#', type: 'Course', rating: 5 },
-    { name: 'Microsoft Learn — M365 & Azure fundamentals', url: '#', type: 'Docs', rating: 5 },
-    { name: 'CompTIA CertMaster Practice (paid, worth it)', url: '#', type: 'Practice', rating: 5 },
+  { category: 'Courses', color: '#0369a1', bgColor: '#f0f9ff', items: [
+    { name: 'CS50x — Harvard Introduction to CS (free)', url: '#', type: 'Course', rating: 5 },
+    { name: 'The Odin Project (full curriculum, free)', url: '#', type: 'Course', rating: 5 },
+    { name: 'MIT OpenCourseWare — 6.006 Algorithms', url: '#', type: 'Course', rating: 5 },
+    { name: 'roadmap.sh — Software Developer Path', url: '#', type: 'Reference', rating: 5 },
   ]},
   { category: 'Practice', color: '#16a34a', bgColor: '#f0fdf4', items: [
-    { name: 'TryHackMe — IT fundamentals & security labs', url: '#', type: 'Lab', rating: 5 },
-    { name: 'Microsoft Learn sandbox environments (free)', url: '#', type: 'Lab', rating: 5 },
-    { name: 'Build a home lab with old hardware or VMs', url: '#', type: 'Project', rating: 5 },
-    { name: 'r/ITCareerQuestions study guides', url: '#', type: 'Forum', rating: 4 },
+    { name: 'LeetCode (algorithms & interview prep)', url: '#', type: 'Practice', rating: 5 },
+    { name: 'Exercism.io (language-specific challenges)', url: '#', type: 'Practice', rating: 4 },
+    { name: 'Build Your Own X (GitHub)', url: '#', type: 'Project', rating: 5 },
+    { name: 'Refactoring Guru (patterns & refactoring)', url: '#', type: 'Reference', rating: 5 },
   ]},
   { category: 'Community', color: '#4f46e5', bgColor: '#eef2ff', items: [
-    { name: 'NetworkChuck YouTube Channel', url: '#', type: 'YouTube', rating: 5 },
-    { name: 'r/sysadmin & r/helpdesk communities', url: '#', type: 'Forum', rating: 5 },
-    { name: 'Darknet Diaries Podcast (security stories)', url: '#', type: 'Podcast', rating: 5 },
-    { name: 'ITIL 4 Foundation Study Guide (free PDF)', url: '#', type: 'Book', rating: 4 },
+    { name: 'Fireship.io YouTube Channel', url: '#', type: 'YouTube', rating: 5 },
+    { name: 'r/learnprogramming & r/cscareerquestions', url: '#', type: 'Forum', rating: 4 },
+    { name: 'Software Engineering Daily Podcast', url: '#', type: 'Podcast', rating: 5 },
+    { name: 'The Pragmatic Programmer (book)', url: '#', type: 'Book', rating: 5 },
   ]},
 ]
 
 const SALARY_DATA = [
-  { role: 'Help Desk Technician (Tier 1)', range: 'R160k – R290k', midpoint: 225, yoe: '0–2 yrs', color: '#0891b2' },
-  { role: 'IT Support Specialist (Tier 2)', range: 'R290k – R540k', midpoint: 415, yoe: '2–5 yrs', color: '#16a34a' },
-  { role: 'Service Desk Analyst / Senior', range: 'R540k – R900k', midpoint: 720, yoe: '5–8 yrs', color: '#7c3aed' },
-  { role: 'IT Support Manager / Team Lead', range: 'R900k – R1.5M+', midpoint: 1150, yoe: '8+ yrs', color: '#ea580c' },
+  { role: 'Junior Software Developer', range: 'R280k – R500k', midpoint: 390, yoe: '0–2 yrs', color: '#0891b2' },
+  { role: 'Software Developer', range: 'R550k – R1M', midpoint: 775, yoe: '2–5 yrs', color: '#16a34a' },
+  { role: 'Senior Software Developer', range: 'R1M – R1.8M', midpoint: 1400, yoe: '5–8 yrs', color: '#7c3aed' },
+  { role: 'Staff / Principal Engineer', range: 'R2M – R3.5M+', midpoint: 2600, yoe: '8+ yrs', color: '#ea580c' },
 ]
 
 const MISTAKES = [
   {
-    num: '01', title: 'Staying at Tier 1 Without Studying for Certs',
-    desc: 'Many technicians spend years in Tier 1 without progressing because they never formalise their skills with certifications. CompTIA A+ and Network+ are the explicit signal employers look for to promote to Tier 2 and beyond.',
-    fix: 'Set a certification target date within 90 days of starting your first role. Study 30 minutes per day minimum, without exception.',
+    num: '01', title: 'Tutorial Hell — Learning Without Building',
+    desc: 'Watching 50 tutorials gives you the feeling of progress without the skills. Real learning happens when you stop following instructions and build something you designed yourself.',
+    fix: 'After every tutorial, close it and rebuild the same thing from memory without looking. Then add one feature the tutorial didn\'t cover.',
   },
   {
-    num: '02', title: 'Treating Documentation as Optional',
-    desc: 'Solving the same problem four times because it was never documented wastes hours every week. Undocumented solutions exist only in one person\'s head — and walk out the door when they leave.',
-    fix: 'Write a KB article for every novel problem you solve. If it took more than 20 minutes to diagnose, document it. No exceptions.',
+    num: '02', title: 'Skipping Algorithms & Data Structures',
+    desc: 'Many bootcamp graduates cannot pass technical interviews at quality companies because they avoided the fundamentals. Data structures and algorithms are permanent, transferable knowledge.',
+    fix: 'Commit to solving at least 2 LeetCode problems per week, every week, starting from your first month of learning.',
   },
   {
-    num: '03', title: 'Skipping the Networking Foundation',
-    desc: 'Most complex support issues — slow applications, connectivity failures, VPN problems, cloud service disruptions — have a network root cause. Technicians who can\'t read a ping output or trace a route are fundamentally limited.',
-    fix: 'Study subnetting until you can do it in your head. Complete Cisco\'s free NetAcad Networking Basics course alongside your A+ studies.',
+    num: '03', title: 'Writing Zero Tests',
+    desc: 'Untested code is a liability that accumulates interest. Developers who don\'t test create technical debt for their entire team and make refactoring terrifying instead of routine.',
+    fix: 'Start every feature with a failing test. Write code to make it pass. This is TDD and it changes how you think about design.',
   },
   {
-    num: '04', title: 'Never Learning PowerShell',
-    desc: 'Manually resetting 50 passwords or onboarding 30 users one by one is a wasted afternoon. A single PowerShell script does it in five minutes. Technicians without scripting skills hit a hard ceiling in any Microsoft environment.',
-    fix: 'Automate one repetitive task per month using PowerShell. Start with bulk user creation or automated disk space reporting.',
+    num: '04', title: 'Neglecting Clean Code Practices',
+    desc: 'Code that works but can\'t be read is half-finished. Variable names, function size, single responsibility, and consistent formatting are professional obligations, not aesthetic preferences.',
+    fix: 'Read "Clean Code" by Robert Martin. Apply one principle per week to code you\'re actively writing.',
   },
   {
-    num: '05', title: 'Neglecting the User Relationship',
-    desc: 'IT support professionals who are technically brilliant but dismissive or impatient with users destroy team trust. The "I don\'t do hand-holding" attitude is career-limiting in any support function.',
-    fix: 'Treat every ticket as if a senior manager will read your notes later. Write updates in plain English. Follow up on closed tickets the next day.',
+    num: '05', title: 'Learning Too Many Languages at Once',
+    desc: 'Dabbling in Python, JavaScript, Java, and Go simultaneously means mastering none of them. Shallow knowledge in many languages is worth less than deep expertise in one.',
+    fix: 'Pick one language and commit to it for at least 18 months. Depth compounds; breadth at this stage is procrastination.',
   },
   {
-    num: '06', title: 'Working Without a Home Lab',
-    desc: 'Reading about Active Directory is not the same as breaking it and fixing it. Technicians with home lab experience solve unfamiliar problems faster and interview far better than those who only know production environments.',
-    fix: 'Build a free lab using VirtualBox and Windows Server evaluation images. Spend two hours per week deliberately breaking and fixing things.',
+    num: '06', title: 'Ignoring Soft Skills',
+    desc: 'Technical skills get you hired. Communication, collaboration, and estimation skills determine your career trajectory. Engineers who can\'t communicate their technical ideas hit a hard ceiling at mid-level.',
+    fix: 'Write a technical blog, give a talk at a local meetup, or start contributing to open source. Practise communicating technical ideas in public.',
   },
 ]
 
 const CAREER_CHANGE_PATHS = [
   {
-    from: 'Customer Service / Call Centre',
-    ease: 'Natural Fit', easeColor: '#0369a1', easeBg: '#eff6ff',
-    desc: 'You already have the most underrated skill in IT support: dealing with frustrated people calmly and professionally. Add the technical layer — A+ certification and a home lab — and you transition more smoothly than most.',
-    steps: ['Study CompTIA A+ (3–4 months of focused prep)', 'Build a free home lab with VirtualBox + Windows Server eval', 'Apply for Tier 1 help desk roles emphasising your customer skills', 'Earn Network+ within your first year to accelerate to Tier 2'],
+    from: 'Mathematics / Statistics Graduate',
+    ease: 'Natural Fit', easeColor: '#0369a1', easeBg: '#f0f9ff',
+    desc: 'Mathematical thinking, logical reasoning, and comfort with abstraction transfer directly to software development. Add a programming language and software engineering practices to a foundation that\'s already strong.',
+    steps: ['Learn Python — math grads pick it up in weeks', 'Study data structures and algorithm complexity', 'Build a project combining your domain and code', 'Target data engineering or backend developer roles'],
   },
   {
-    from: 'General IT / Tech Hobbyist',
+    from: 'IT Support / Sysadmin',
     ease: 'Strong Fit', easeColor: '#16a34a', easeBg: '#f0fdf4',
-    desc: 'If you\'ve been building PCs, fixing family members\' computers, or tinkering with routers for fun — you have more practical experience than most candidates. Certify what you already know and document your lab work for interviews.',
-    steps: ['Convert your hobby experience into CompTIA A+ certification', 'Add structured enterprise skills: Active Directory, M365, Intune', 'Build a home lab simulating an enterprise environment', 'Target SME IT support roles where breadth beats depth'],
+    desc: 'Systems thinking, networking knowledge, and familiarity with Linux give IT professionals a major advantage in understanding how software runs in production. Add programming skills to move into development or DevOps.',
+    steps: ['Learn Python scripting (automate your current job)', 'Build a small application that solves a work problem', 'Study web frameworks and add API development skills', 'Apply to junior developer or DevOps-adjacent roles'],
   },
   {
-    from: 'Business / Administrative Role',
+    from: 'Non-Technical / Other Background',
     ease: 'Very Achievable', easeColor: '#4f46e5', easeBg: '#eef2ff',
-    desc: 'Business acumen combined with IT skills is genuinely rare and valued in service desk management. Your understanding of how the business works — priorities, stakeholders, impact — makes you an unusually effective IT support professional.',
-    steps: ['Start with the Google IT Support Professional Certificate', 'Study for CompTIA A+ while working in your current role', 'Volunteer as informal IT contact in your current workplace', 'Apply to IT support roles in your current industry vertical'],
+    desc: 'Domain expertise plus software skills is a rare and powerful combination. A developer who deeply understands healthcare, legal, finance, or education workflows commands a significant premium in those verticals.',
+    steps: ['Start with CS50 — the best intro to programming available', 'Learn Python fundamentals over 3 months', 'Build a project relevant to your previous industry', 'Target companies in your domain with your combined skills'],
   },
   {
-    from: 'Other Background',
+    from: 'Designer / Creative Professional',
     ease: 'Achievable', easeColor: '#ea580c', easeBg: '#fff7ed',
-    desc: 'Domain expertise from healthcare, finance, legal, or education combined with IT support skills is extremely valuable in those verticals. Healthcare IT support, for example, pays a significant premium over general help desk roles.',
-    steps: ['Complete the Google IT Support Certificate (free/cheap)', 'Study A+ and N+ using Professor Messer\'s free courses', 'Target IT support roles in your previous industry', 'Leverage your domain knowledge as a differentiator in interviews'],
+    desc: 'Designers who code are exceptionally rare and valuable. Visual thinking, user empathy, and attention to detail translate beautifully into frontend development and ultimately into full-stack roles.',
+    steps: ['Start with HTML, CSS, and JavaScript fundamentals', 'Learn a modern frontend framework (React)', 'Add backend skills (Node.js or Python)', 'Target frontend or full-stack developer roles'],
   },
 ]
 
 const THIRTY_DAY_PLAN = [
-  { week: 'Week 1', theme: 'Foundation & Setup', color: '#0369a1', bg: '#eff6ff', days: [
-    { day: 'Day 1–2', task: 'Install VirtualBox. Set up a Windows 10 VM and a Windows Server 2019 eval VM. Get comfortable with the interface.' },
-    { day: 'Day 3–4', task: 'Begin Professor Messer\'s free CompTIA A+ Core 1 video series. Complete the hardware and components modules.' },
-    { day: 'Day 5–6', task: 'Configure a free ServiceNow Developer Instance or set up a Freshdesk free trial. Create your first mock tickets.' },
-    { day: 'Day 7', task: 'Research local IT support job listings. Identify the 5 most common tools and requirements in your target market.' },
+  { week: 'Week 1', theme: 'Language & Foundations', color: '#0369a1', bg: '#f0f9ff', days: [
+    { day: 'Day 1–2', task: 'Choose Python or JavaScript. Install the environment. Write scripts covering variables, loops, functions, and basic classes.' },
+    { day: 'Day 3–4', task: 'Git fundamentals: init, commit, branch, merge, rebase. Create a GitHub profile and push your first repository.' },
+    { day: 'Day 5–6', task: 'Solve 5 easy algorithm problems on LeetCode. Focus on arrays and string manipulation — the most common interview categories.' },
+    { day: 'Day 7', task: 'Build a small CLI tool that solves a real problem you have. Commit to GitHub with a clear README.' },
   ]},
-  { week: 'Week 2', theme: 'OS & Networking', color: '#16a34a', bg: '#f0fdf4', days: [
-    { day: 'Day 8–9', task: 'Windows Server lab: install Active Directory Domain Services, promote to domain controller, create 10 test users.' },
-    { day: 'Day 10–11', task: 'Networking fundamentals: study subnetting using the subnettingpractice.com tool. Do 30 minutes of subnetting drills per day.' },
-    { day: 'Day 12–13', task: 'Install Wireshark. Capture and analyse a DNS lookup, a ping, and a web page load. Understand what you\'re seeing.' },
-    { day: 'Day 14', task: 'CompTIA A+ Core 1 mock exam. Target 75%+. Identify knowledge gaps and revisit the weak sections.' },
+  { week: 'Week 2', theme: 'Data Structures & OOP', color: '#16a34a', bg: '#f0fdf4', days: [
+    { day: 'Day 8–9', task: 'Implement a linked list, stack, and queue from scratch. Understand when to use each one.' },
+    { day: 'Day 10–11', task: 'Study OOP: classes, inheritance, polymorphism, encapsulation. Refactor your CLI tool using proper OOP design.' },
+    { day: 'Day 12–13', task: 'Learn hash maps and binary trees. Solve 5 more LeetCode problems using these structures.' },
+    { day: 'Day 14', task: 'Write unit tests for every function in your CLI tool using pytest or Jest. Fix any bugs your tests expose.' },
   ]},
-  { week: 'Week 3', theme: 'Cloud & Identity', color: '#4f46e5', bg: '#eef2ff', days: [
-    { day: 'Day 15–16', task: 'Create a free Microsoft 365 developer tenant. Set up users, assign licences, configure MFA. Simulate a real onboarding.' },
-    { day: 'Day 17–18', task: 'Complete the Microsoft Learn "Azure Fundamentals" learning path (AZ-900). It\'s free and takes about 10 hours.' },
-    { day: 'Day 19–20', task: 'Begin PowerShell: write scripts to create AD users in bulk, list all computers in the domain, and check disk space.' },
-    { day: 'Day 21', task: 'ITIL 4 Foundation overview: watch the free YouTube overview by AXELOS. Understand the core concepts and vocabulary.' },
+  { week: 'Week 3', theme: 'Web Development & APIs', color: '#4f46e5', bg: '#eef2ff', days: [
+    { day: 'Day 15–16', task: 'Build a simple web application with a framework (Flask/Django or Express). Understand request/response lifecycle.' },
+    { day: 'Day 17–18', task: 'Connect the application to a PostgreSQL database. Perform CRUD operations using an ORM.' },
+    { day: 'Day 19–20', task: 'Add user authentication (registration, login, JWT tokens). Protect private routes with middleware.' },
+    { day: 'Day 21', task: 'Write integration tests for all API endpoints. Achieve 80% test coverage before moving on.' },
   ]},
-  { week: 'Week 4', theme: 'Polish & Apply', color: '#ea580c', bg: '#fff7ed', days: [
-    { day: 'Day 22–24', task: 'Build your IT support portfolio: document 3 lab scenarios with screenshots, problem descriptions, and step-by-step resolutions.' },
-    { day: 'Day 25–26', task: 'Rewrite your CV with IT language. List your home lab setup, tools used, and the specific skills you\'ve demonstrated.' },
-    { day: 'Day 27–28', task: 'Book your CompTIA A+ Core 1 exam date. Having a real target date forces productive study. Schedule Core 2 for 6 weeks after.' },
-    { day: 'Day 29–30', task: 'Apply to 5 junior IT support or help desk roles. Customise each CV. Follow up with a connection request to the hiring manager on LinkedIn.' },
+  { week: 'Week 4', theme: 'Deploy & Get Hired', color: '#ea580c', bg: '#fff7ed', days: [
+    { day: 'Day 22–24', task: 'Dockerise the application. Write a docker-compose file. Deploy to Railway or Render with a working live URL.' },
+    { day: 'Day 25–26', task: 'Set up GitHub Actions CI. Automatically run tests on every push. Send a Slack notification on failure.' },
+    { day: 'Day 27–28', task: 'Write a README with architecture diagram, setup guide, and feature list. Add OpenAPI docs for every endpoint.' },
+    { day: 'Day 29–30', task: 'Post the project to LinkedIn with a short writeup. Apply to 5 junior developer roles. Update CV with GitHub and live URL.' },
   ]},
 ]
 
@@ -398,7 +393,6 @@ const TOC_ITEMS = [
   { num: '16', label: 'Final Thoughts' },
 ]
 
-/* ─── SHARE BAR ─────────────────────────────────────────────────────────────── */
 function ShareBar() {
   const [copied, setCopied] = useState(false)
   const handleCopy = () => {
@@ -406,7 +400,7 @@ function ShareBar() {
   }
   const handleShare = async () => {
     if (navigator.share) {
-      try { await navigator.share({ title: 'Help Desk & IT Support Career Roadmap 2026', text: 'Complete step-by-step roadmap to become an IT Support Specialist in 2026', url: window.location.href }) }
+      try { await navigator.share({ title: 'Software Developer Career Roadmap 2026', text: 'Complete step-by-step roadmap to become a Software Developer in 2026', url: window.location.href }) }
       catch (_) {}
     } else { handleCopy() }
   }
@@ -424,13 +418,12 @@ function ShareBar() {
       </button>
       <div className="flex items-center gap-2 px-3 py-2 rounded-xl text-xs font-mono truncate max-w-xs" style={{ background: '#f1f5f9', color: C.textMuted, border: `1px solid ${C.border}` }}>
         <Link2 size={11} style={{ color: C.textFaint, flexShrink: 0 }} />
-        <span className="truncate">{typeof window !== 'undefined' ? window.location.href : '/roadmaps/help-desk-it-support'}</span>
+        <span className="truncate">{typeof window !== 'undefined' ? window.location.href : '/roadmaps/software-developer'}</span>
       </div>
     </div>
   )
 }
 
-/* ─── SECTION HEADER ──────────────────────────────────────────────────────── */
 function SectionHeader({ icon, title, subtitle, iconBg, iconColor }: { icon: React.ReactNode; title: string; subtitle: string; iconBg: string; iconColor: string }) {
   return (
     <div className="flex items-center gap-4 mb-10">
@@ -445,7 +438,6 @@ function SectionHeader({ icon, title, subtitle, iconBg, iconColor }: { icon: Rea
   )
 }
 
-/* ─── FADE HOOK ──────────────────────────────────────────────────────────── */
 function useFade() {
   const ref = useRef<HTMLDivElement>(null)
   useEffect(() => {
@@ -457,8 +449,7 @@ function useFade() {
   return ref
 }
 
-/* ─── PAGE ────────────────────────────────────────────────────────────────── */
-export default function HelpDeskITSupportRoadmapPage() {
+export default function SoftwareDeveloperRoadmapPage() {
   const progressRef = useRef<HTMLDivElement>(null)
   const tlSectionRef = useRef<HTMLElement>(null)
   const barsContainerRef = useRef<HTMLDivElement>(null)
@@ -499,32 +490,31 @@ export default function HelpDeskITSupportRoadmapPage() {
   return (
     <div className="min-h-screen" style={{ background: C.bg, color: C.text, fontFamily: 'Inter, sans-serif' }}>
 
-      {/* Back button */}
       <Link to="/roadmaps" className="fixed top-5 left-5 z-50 flex items-center gap-2 px-4 py-2 rounded-xl text-xs font-semibold no-underline transition-all duration-200"
         style={{ background: 'rgba(255,255,255,0.9)', backdropFilter: 'blur(12px)', border: `1px solid ${C.border}`, color: C.textMuted, boxShadow: '0 2px 12px rgba(0,0,0,0.08)' }}>
         <ArrowLeft size={14} /> All Roadmaps
       </Link>
 
-      {/* ── HERO ── */}
+      {/* HERO */}
       <div className="relative w-full" style={{ background: C.bg }}>
         <div className="relative w-full overflow-hidden" style={{ height: '100vh', minHeight: 600 }}>
           <img
-            src="https://i.imgur.com/6rBm8j5.jpeg"
-            alt="IT Support technician at service desk"
+            src="https://i.imgur.com/d7StxGp.jpeg"
+            alt="Software Developer coding workspace"
             className="w-full h-full object-cover object-center block"
-            style={{ filter: 'saturate(0.45) brightness(1.1) hue-rotate(190deg)' }}
+            style={{ filter: 'saturate(0.55) brightness(1.05)' }}
           />
           <div className="absolute inset-0" style={{ background: 'linear-gradient(to bottom, rgba(255,255,255,0) 45%, rgba(255,255,255,0.75) 72%, rgba(255,255,255,1) 88%)' }} />
           <div className="absolute bottom-0 left-0 right-0 z-10">
             <div className="max-w-4xl mx-auto px-8 pb-12">
               <div className="inline-flex items-center gap-1.5 rounded-full px-3.5 py-1 mb-3 text-xs font-semibold" style={{ background: C.primaryLight, color: C.primary }}>
-                <Headphones size={12} /> Customer IT Support & Service Desk
+                <Code size={12} /> Software Engineering
               </div>
               <h1 className="font-extrabold leading-tight mb-2" style={{ fontFamily: 'Syne, sans-serif', fontSize: 'clamp(2.2rem, 5vw, 3.6rem)', color: '#0f172a', letterSpacing: '-0.03em' }}>
-                Help Desk & IT Support
+                Software Developer
               </h1>
               <span className="block font-normal mb-3" style={{ fontFamily: 'Syne, sans-serif', fontSize: 'clamp(0.95rem, 1.8vw, 1.2rem)', color: C.textMuted }}>
-                Career Roadmap 2026 — Technician · Specialist · Analyst · Manager
+                Career Roadmap 2026
               </span>
               <div className="flex items-center gap-4">
                 <div className="flex items-center gap-1.5 text-sm" style={{ color: C.textMuted }}><Clock size={14} style={{ color: C.textFaint }} /> 20 min read</div>
@@ -535,13 +525,13 @@ export default function HelpDeskITSupportRoadmapPage() {
         </div>
         <div className="max-w-4xl mx-auto px-8 pt-6 pb-16">
           <p className="text-base leading-relaxed" style={{ color: '#4b5563', maxWidth: 560, marginLeft: 140 }}>
-            Be the person who keeps every organisation running. IT support professionals solve real problems for real people every day — and use that experience as the launchpad to every specialisation in technology.
+            Write the future. Software developers design, build, and maintain the applications that power every modern business — from startup MVPs to enterprise platforms used by millions.
           </p>
           <div className="h-px mt-10" style={{ background: C.border }} />
         </div>
       </div>
 
-      {/* ── TABLE OF CONTENTS ── */}
+      {/* TABLE OF CONTENTS */}
       <section className="border-b" style={{ ...sectionStyle, background: '#f8f9ff' }}>
         <div className="max-w-4xl mx-auto px-8">
           <div ref={introRef}>
@@ -558,14 +548,14 @@ export default function HelpDeskITSupportRoadmapPage() {
         </div>
       </section>
 
-      {/* ── WHAT THIS CAREER IS ── */}
+      {/* WHAT THIS CAREER IS */}
       <section className="border-b" style={{ ...sectionStyle, background: C.bg }}>
         <div className="max-w-4xl mx-auto px-8">
           <div ref={whatRef}>
-            <SectionHeader icon={<Layers size={22} />} title="What This Career Is" subtitle="The roles, responsibilities, and scope of IT Support" iconBg={C.primaryLight} iconColor={C.primary} />
-            <div className="rounded-2xl p-6 mb-8 border" style={{ background: '#eff6ff', borderColor: 'rgba(3,105,161,0.2)' }}>
+            <SectionHeader icon={<Layers size={22} />} title="What This Career Is" subtitle="The role, responsibilities, and scope of Software Development" iconBg={C.primaryLight} iconColor={C.primary} />
+            <div className="rounded-2xl p-6 mb-8 border" style={{ background: '#f0f9ff', borderColor: 'rgba(3,105,161,0.2)' }}>
               <p className="text-base leading-relaxed" style={{ color: '#374151' }}>
-                <strong style={{ color: C.primary }}>IT Support & Help Desk professionals</strong> are the operational backbone of every technology-dependent organisation. Whether operating as a Help Desk Technician handling first-call resolution, an IT Support Specialist owning complex escalations, a Service Desk Analyst driving process improvement, or a Customer IT Support Engineer building long-term user relationships — these roles ensure that technology serves people, not the other way around.
+                A <strong style={{ color: C.primary }}>Software Developer</strong> designs, writes, tests, and maintains the code that powers applications, platforms, and tools. Unlike more specialised roles, software developers work across the full product lifecycle — from understanding user requirements and designing technical solutions to shipping features and fixing production bugs. The role is a blend of analytical engineering and creative problem solving.
               </p>
             </div>
             <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
@@ -585,11 +575,11 @@ export default function HelpDeskITSupportRoadmapPage() {
         </div>
       </section>
 
-      {/* ── WHY CHOOSE ── */}
+      {/* WHY CHOOSE */}
       <section className="border-b" style={{ ...sectionStyle, background: '#f8f9ff' }}>
         <div className="max-w-4xl mx-auto px-8">
           <div ref={whyRef}>
-            <SectionHeader icon={<Flame size={22} />} title="Why Choose This Career" subtitle="Six compelling reasons IT Support could be your best move" iconBg={C.orangeLight} iconColor={C.orange} />
+            <SectionHeader icon={<Flame size={22} />} title="Why Choose This Career" subtitle="Six compelling reasons Software Development could be your best move" iconBg={C.orangeLight} iconColor={C.orange} />
             <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
               {WHY_REASONS.map(r => (
                 <div key={r.title} className="rounded-2xl p-5 border transition-all duration-200 hover:-translate-y-0.5 hover:shadow-md" style={{ background: C.bg, borderColor: C.border }}>
@@ -607,17 +597,17 @@ export default function HelpDeskITSupportRoadmapPage() {
         </div>
       </section>
 
-      {/* ── DAY IN THE LIFE ── */}
+      {/* DAY IN THE LIFE */}
       <section className="border-b" style={{ ...sectionStyle, background: C.bg }}>
         <div className="max-w-4xl mx-auto px-8">
           <div ref={dayRef}>
-            <SectionHeader icon={<Briefcase size={22} />} title="A Day in the Life" subtitle="What a typical IT Support professional's workday looks like" iconBg={C.indigoLight} iconColor={C.indigo} />
+            <SectionHeader icon={<Briefcase size={22} />} title="A Day in the Life" subtitle="What a typical Software Developer workday looks like" iconBg={C.indigoLight} iconColor={C.indigo} />
             <div className="grid gap-7" style={{ gridTemplateColumns: '1fr 260px' }}>
               <div>
                 <p className="text-sm font-semibold mb-4" style={{ fontFamily: 'Syne, sans-serif', color: C.textMuted }}>Typical Daily Schedule</p>
                 {SCHEDULE.map(item => (
                   <div key={item.time} className="flex items-start gap-3.5 rounded-2xl p-4 border mb-2.5 transition-all duration-200" style={{ background: C.bg, borderColor: C.border }}
-                    onMouseEnter={e => { (e.currentTarget as HTMLElement).style.borderColor = 'rgba(3,105,161,0.3)'; (e.currentTarget as HTMLElement).style.background = '#eff6ff' }}
+                    onMouseEnter={e => { (e.currentTarget as HTMLElement).style.borderColor = 'rgba(3,105,161,0.3)'; (e.currentTarget as HTMLElement).style.background = '#f0f9ff' }}
                     onMouseLeave={e => { (e.currentTarget as HTMLElement).style.borderColor = C.border; (e.currentTarget as HTMLElement).style.background = C.bg }}>
                     <div className="w-9 h-9 rounded-xl flex items-center justify-center flex-shrink-0" style={{ background: C.primaryLight, color: C.primary }}>{item.icon}</div>
                     <div className="flex-1 min-w-0">
@@ -664,13 +654,13 @@ export default function HelpDeskITSupportRoadmapPage() {
         </div>
       </section>
 
-      {/* ── CAREER TIMELINE ── */}
+      {/* CAREER TIMELINE */}
       <section ref={tlSectionRef} className="border-b" style={{ ...sectionStyle, background: '#f8f9ff' }}>
         <div className="max-w-4xl mx-auto px-8">
           <div ref={tlRef}>
             <SectionHeader icon={<Clock size={22} />} title="Career Timeline" subtitle="Time estimates and salary ranges for each level" iconBg={C.indigoLight} iconColor={C.indigo} />
             <div className="mb-10">
-              <div className="flex justify-between text-xs mb-2.5" style={{ color: C.textMuted }}><span>Career Progression</span><span>Technician → IT Manager</span></div>
+              <div className="flex justify-between text-xs mb-2.5" style={{ color: C.textMuted }}><span>Career Progression</span><span>Junior → Staff Engineer</span></div>
               <div className="h-1.5 rounded-full overflow-hidden" style={{ background: '#e2e8f0' }}>
                 <div ref={progressRef} className="h-1.5 rounded-full" style={{ width: '0%', background: 'linear-gradient(90deg, #0891b2 0%, #16a34a 33%, #7c3aed 66%, #ea580c 100%)' }} />
               </div>
@@ -695,13 +685,13 @@ export default function HelpDeskITSupportRoadmapPage() {
         </div>
       </section>
 
-      {/* ── ROADMAP ── */}
+      {/* ROADMAP */}
       <section className="border-b" style={{ ...sectionStyle, background: C.bg }}>
         <div ref={stepsRef} className="max-w-2xl mx-auto px-4">
           <SectionHeader icon={<Target size={22} />} title="Step-by-Step Roadmap" subtitle="Your path from complete beginner to job-ready" iconBg={C.primaryLight} iconColor={C.primary} />
           <div className="relative flex flex-col items-center">
             {ROADMAP_STEPS.map((s, i) => {
-              const icons = ['💻', '🌐', '🏢', '📋', '🔐', '⚡']
+              const icons = ['💻', '🧮', '🏗️', '🧪', '🗄️', '☁️']
               const accentColors = ['#0369a1', '#16a34a', '#0369a1', '#16a34a', '#0369a1', '#16a34a']
               const accent = accentColors[i]; const isLast = i === ROADMAP_STEPS.length - 1; const isEven = i % 2 === 0
               return (
@@ -752,14 +742,14 @@ export default function HelpDeskITSupportRoadmapPage() {
               <div className="text-4xl mb-3">🏆</div>
               <div className="font-extrabold text-white mb-1" style={{ fontFamily: 'Syne, sans-serif', fontSize: 'clamp(1.3rem, 3vw, 1.8rem)' }}>GO FROM ZERO to</div>
               <div className="font-extrabold mb-4" style={{ fontFamily: 'Syne, sans-serif', fontSize: 'clamp(1.3rem, 3vw, 1.8rem)', color: 'rgba(255,255,255,0.75)' }}>JOB-READY IN 2026</div>
-              <div className="text-sm" style={{ color: 'rgba(255,255,255,0.6)' }}>8–12 months · Consistent daily study · Certify as you learn</div>
+              <div className="text-sm" style={{ color: 'rgba(255,255,255,0.6)' }}>10–14 months · Consistent daily practice · Build and ship real projects</div>
             </div>
           </div>
           <ShareBar />
         </div>
       </section>
 
-      {/* ── SKILLS ── */}
+      {/* SKILLS */}
       <section className="border-b" style={{ ...sectionStyle, background: '#f8f9ff' }}>
         <div className="max-w-4xl mx-auto px-8">
           <div ref={skillsRef}>
@@ -809,7 +799,7 @@ export default function HelpDeskITSupportRoadmapPage() {
         </div>
       </section>
 
-      {/* ── EDUCATION PATHS ── */}
+      {/* EDUCATION PATHS */}
       <section className="border-b" style={{ ...sectionStyle, background: C.bg }}>
         <div className="max-w-4xl mx-auto px-8">
           <div ref={eduRef}>
@@ -834,7 +824,7 @@ export default function HelpDeskITSupportRoadmapPage() {
         </div>
       </section>
 
-      {/* ── FREE RESOURCES ── */}
+      {/* FREE RESOURCES */}
       <section className="border-b" style={{ ...sectionStyle, background: '#f8f9ff' }}>
         <div className="max-w-4xl mx-auto px-8">
           <div ref={freeRef}>
@@ -861,13 +851,13 @@ export default function HelpDeskITSupportRoadmapPage() {
         </div>
       </section>
 
-      {/* ── AI IMPACT ── */}
+      {/* AI IMPACT */}
       <section className="border-b" style={{ ...sectionStyle, background: C.bg }}>
         <div className="max-w-4xl mx-auto px-8">
           <div ref={aiRef}>
-            <SectionHeader icon={<Sparkles size={22} />} title="AI-Enhanced Roadmap" subtitle="How AI is transforming IT Support in 2026" iconBg={C.primaryLight} iconColor={C.primary} />
-            <div className="rounded-2xl p-5 mb-7 text-sm leading-relaxed border" style={{ background: '#eff6ff', borderColor: 'rgba(3,105,161,0.2)', color: C.textMuted }}>
-              AI tools don't replace IT support professionals — they <em style={{ color: C.primary }}>amplify</em> them. Support teams using AI-assisted ticket resolution and automation handle 40–60% more tickets with the same headcount — freeing senior staff for complex incidents and strategic projects.
+            <SectionHeader icon={<Sparkles size={22} />} title="AI-Enhanced Roadmap" subtitle="How AI is transforming Software Development in 2026" iconBg={C.primaryLight} iconColor={C.primary} />
+            <div className="rounded-2xl p-5 mb-7 text-sm leading-relaxed border" style={{ background: '#f0f9ff', borderColor: 'rgba(3,105,161,0.2)', color: C.textMuted }}>
+              AI tools don't replace software developers — they <em style={{ color: C.primary }}>amplify</em> them. Developers who integrate Copilot and Claude into their workflow generate boilerplate, write test suites, and debug complex logic significantly faster — freeing cognitive capacity for architecture and design.
             </div>
             <div className="grid grid-cols-1 md:grid-cols-3 gap-4 mb-9">
               {AI_IMPACTS.map(item => (
@@ -894,7 +884,7 @@ export default function HelpDeskITSupportRoadmapPage() {
         </div>
       </section>
 
-      {/* ── PROS & CONS ── */}
+      {/* PROS & CONS */}
       <section className="border-b" style={{ ...sectionStyle, background: '#f8f9ff' }}>
         <div className="max-w-4xl mx-auto px-8">
           <div ref={pcRef}>
@@ -929,13 +919,13 @@ export default function HelpDeskITSupportRoadmapPage() {
         </div>
       </section>
 
-      {/* ── SALARY ── */}
+      {/* SALARY */}
       <section className="border-b" style={{ ...sectionStyle, background: C.bg }}>
         <div className="max-w-4xl mx-auto px-8">
           <div ref={salaryRef}>
             <SectionHeader icon={<DollarSign size={22} />} title="Salary" subtitle="What you can realistically earn at each stage" iconBg={C.greenLight} iconColor={C.green} />
             <div className="rounded-2xl p-6 mb-6 border" style={{ background: '#f0fdf4', borderColor: 'rgba(22,163,74,0.2)' }}>
-              <p className="text-sm leading-relaxed" style={{ color: C.textMuted }}>Figures reflect South African total compensation. Sectors like financial services, mining, and large enterprise consistently pay 20–35% above these benchmarks for senior IT support professionals.</p>
+              <p className="text-sm leading-relaxed" style={{ color: C.textMuted }}>Figures reflect South African total compensation. Global remote contracts — especially for senior and staff roles — can pay 2–4× these figures in USD.</p>
             </div>
             <div className="space-y-4">
               {SALARY_DATA.map(row => (
@@ -948,25 +938,25 @@ export default function HelpDeskITSupportRoadmapPage() {
                     <span className="text-sm font-bold" style={{ color: row.color }}>{row.range}</span>
                   </div>
                   <div className="h-2.5 rounded-full overflow-hidden" style={{ background: '#e2e8f0' }}>
-                    <div className="h-2.5 rounded-full" style={{ width: `${(row.midpoint / 1500) * 100}%`, background: row.color }} />
+                    <div className="h-2.5 rounded-full" style={{ width: `${(row.midpoint / 3200) * 100}%`, background: row.color }} />
                   </div>
                 </div>
               ))}
             </div>
-            <div className="mt-6 rounded-2xl p-5 border" style={{ background: '#eff6ff', borderColor: 'rgba(3,105,161,0.2)' }}>
+            <div className="mt-6 rounded-2xl p-5 border" style={{ background: '#f0f9ff', borderColor: 'rgba(3,105,161,0.2)' }}>
               <p className="text-xs leading-relaxed" style={{ color: C.textMuted }}>
-                <strong style={{ color: C.primary }}>Pro tip:</strong> ITIL certification, PowerShell scripting skills, and Microsoft 365 administration experience consistently command a 15–25% salary premium over uncertified peers at the same experience level. Certifications are not optional — they are the salary lever in IT support.
+                <strong style={{ color: C.primary }}>Pro tip:</strong> Software developers at product-led companies (SaaS, fintech, developer tools) earn 30–50% more than those at agencies or outsourcing firms. Target companies where software is the product, not just a tool.
               </p>
             </div>
           </div>
         </div>
       </section>
 
-      {/* ── MISTAKES ── */}
+      {/* MISTAKES */}
       <section className="border-b" style={{ ...sectionStyle, background: '#f8f9ff' }}>
         <div className="max-w-4xl mx-auto px-8">
           <div ref={mistakesRef}>
-            <SectionHeader icon={<AlertTriangle size={22} />} title="Common Mistakes" subtitle="Avoid the traps that slow down most aspiring IT support professionals" iconBg={C.orangeLight} iconColor={C.orange} />
+            <SectionHeader icon={<AlertTriangle size={22} />} title="Common Mistakes" subtitle="Avoid the traps that slow down most aspiring software developers" iconBg={C.orangeLight} iconColor={C.orange} />
             <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
               {MISTAKES.map(m => (
                 <div key={m.num} className="rounded-2xl p-5 border transition-all duration-200 hover:shadow-md" style={{ background: C.bg, borderColor: C.border }}>
@@ -988,11 +978,11 @@ export default function HelpDeskITSupportRoadmapPage() {
         </div>
       </section>
 
-      {/* ── CAREER CHANGE ── */}
+      {/* CAREER CHANGE */}
       <section className="border-b" style={{ ...sectionStyle, background: C.bg }}>
         <div className="max-w-4xl mx-auto px-8">
           <div ref={changeRef}>
-            <SectionHeader icon={<RefreshCw size={22} />} title="Career Change Guide" subtitle="How to break into IT Support from your current background" iconBg={C.primaryLight} iconColor={C.primary} />
+            <SectionHeader icon={<RefreshCw size={22} />} title="Career Change Guide" subtitle="How to break into software development from your current background" iconBg={C.primaryLight} iconColor={C.primary} />
             <div className="grid grid-cols-1 md:grid-cols-2 gap-5">
               {CAREER_CHANGE_PATHS.map(path => (
                 <div key={path.from} className="rounded-2xl p-6 border" style={{ background: path.easeBg, borderColor: `${path.easeColor}20` }}>
@@ -1016,7 +1006,7 @@ export default function HelpDeskITSupportRoadmapPage() {
         </div>
       </section>
 
-      {/* ── 30-DAY PLAN ── */}
+      {/* 30-DAY PLAN */}
       <section className="border-b" style={{ ...sectionStyle, background: '#f8f9ff' }}>
         <div className="max-w-4xl mx-auto px-8">
           <div ref={planRef}>
@@ -1045,11 +1035,11 @@ export default function HelpDeskITSupportRoadmapPage() {
         </div>
       </section>
 
-      {/* ── VIDEOS ── */}
+      {/* VIDEOS */}
       <section className="border-b" style={{ ...sectionStyle, background: C.bg }}>
         <div className="max-w-4xl mx-auto px-8">
           <div ref={vidsRef}>
-            <SectionHeader icon={<Play size={22} />} title="Video Resources" subtitle="Learn from the best educators in IT Support" iconBg={C.redLight} iconColor={C.red} />
+            <SectionHeader icon={<Play size={22} />} title="Video Resources" subtitle="Learn from the best educators in Software Development" iconBg={C.redLight} iconColor={C.red} />
             <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
               {VIDEOS.map(v => (
                 <div key={v.id} className="rounded-2xl overflow-hidden border transition-all duration-200" style={{ background: '#f8f9ff', borderColor: C.border }}
@@ -1081,17 +1071,17 @@ export default function HelpDeskITSupportRoadmapPage() {
         </div>
       </section>
 
-      {/* ── FINAL THOUGHTS ── */}
+      {/* FINAL THOUGHTS */}
       <section className="border-b" style={{ ...sectionStyle, background: '#f8f9ff' }}>
         <div className="max-w-4xl mx-auto px-8">
           <div ref={finalRef}>
             <SectionHeader icon={<Award size={22} />} title="Final Thoughts" subtitle="What we want you to take away from this guide" iconBg={C.primaryLight} iconColor={C.primary} />
             <div className="rounded-2xl p-6 border mb-8" style={{ background: C.bg, borderColor: C.border }}>
               <p className="text-base leading-relaxed mb-4" style={{ color: '#374151' }}>
-                IT support is <strong style={{ color: C.primary }}>where technology careers begin and where great careers are built</strong>. The help desk is not a waiting room for a "real" IT job — it is the most complete technology education available. In a single year, a driven help desk technician encounters more real-world IT problems than most CS graduates see in three years of lectures.
+                Software development is one of the most <strong style={{ color: C.primary }}>intellectually rewarding and financially compelling</strong> careers available today. Every application you build, every bug you fix, every system you improve creates real value for real people.
               </p>
               <p className="text-base leading-relaxed" style={{ color: '#374151' }}>
-                The professionals who thrive here are those who treat every ticket as a learning opportunity, every user as a valued customer, and every certification as a commitment to excellence. The field rewards curiosity, consistency, and care — and it rewards them generously.
+                The fundamentals you invest in early — algorithms, design patterns, clean code — compound over decades. A developer who deeply understands these principles writes better code in any language, on any platform, in any era of technology.
               </p>
             </div>
             <div className="grid grid-cols-1 gap-3">
@@ -1106,7 +1096,7 @@ export default function HelpDeskITSupportRoadmapPage() {
         </div>
       </section>
 
-      {/* ── CTA ── */}
+      {/* CTA */}
       <div className="max-w-4xl mx-auto px-8" style={{ paddingTop: 72, paddingBottom: 96 }}>
         <div className="relative overflow-hidden rounded-3xl px-12 py-16 text-center" style={{ background: `linear-gradient(135deg, ${C.primary} 0%, ${C.indigo} 100%)` }}>
           <div className="absolute rounded-full pointer-events-none" style={{ width: 300, height: 300, background: 'rgba(255,255,255,0.05)', top: -120, right: -80 }} />
@@ -1117,7 +1107,7 @@ export default function HelpDeskITSupportRoadmapPage() {
             Ready to Start Your Journey?
           </h2>
           <p className="text-sm mb-10 mx-auto leading-relaxed" style={{ color: 'rgba(255,255,255,0.65)', maxWidth: 440 }}>
-            You have the roadmap. You have the resources. You have the 30-day plan. All that's left is to open your browser, register for CompTIA A+, and take the first step.
+            You have the roadmap. You have the resources. You have the 30-day plan. All that's left is to open your editor and write your first function.
           </p>
           <div className="flex flex-wrap justify-center gap-3.5">
             <Link to="/roadmaps" className="inline-flex items-center gap-2 rounded-xl px-7 py-3.5 font-bold text-sm no-underline" style={{ fontFamily: 'Syne, sans-serif', background: '#fff', color: C.primary }}>
@@ -1127,7 +1117,7 @@ export default function HelpDeskITSupportRoadmapPage() {
               Get Career Advice
             </a>
           </div>
-          <p className="text-xs mt-5" style={{ color: 'rgba(255,255,255,0.35)' }}>Start studying today. Your future self will thank you.</p>
+          <p className="text-xs mt-5" style={{ color: 'rgba(255,255,255,0.35)' }}>Start building today. Your future self will thank you.</p>
         </div>
         <ShareBar />
       </div>

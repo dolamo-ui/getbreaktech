@@ -14,7 +14,7 @@ import {
   Award, Target, Flame, Database,
   Layers, FileText, Globe, Server, Layout,
   GitBranch, Terminal, Package, Shield,
-  Cloud, Workflow, Headphones, Wrench, Radio, PhoneCall,
+  Cloud, Workflow,
 } from 'lucide-react'
 
 gsap.registerPlugin(ScrollTrigger)
@@ -28,9 +28,9 @@ const C = {
   text: '#0f172a',
   textMuted: '#64748b',
   textFaint: '#94a3b8',
-  primary: '#0369a1',          // support blue — IT support brand colour
-  primaryLight: 'rgba(3,105,161,0.08)',
-  primaryMid: 'rgba(3,105,161,0.15)',
+  primary: '#0f766e',          // teal — agile brand colour
+  primaryLight: 'rgba(15,118,110,0.08)',
+  primaryMid: 'rgba(15,118,110,0.15)',
   violet: '#7c3aed',
   violetLight: 'rgba(124,58,237,0.08)',
   green: '#16a34a',
@@ -49,333 +49,333 @@ const C = {
 
 const CAREER_LEVELS = [
   {
-    level: 'Junior', title: 'Help Desk Technician', duration: '0–2 yrs', salary: 'R160k–R290k',
-    description: 'Handle Tier 1 support tickets, troubleshoot hardware and software issues, reset passwords, and escalate complex problems. Learn ticketing systems and ITIL basics.',
-    skills: ['Windows OS', 'Ticketing Tools', 'Basic Networking', 'Active Directory'],
+    level: 'Junior', title: 'Junior Scrum Master', duration: '0–2 yrs', salary: 'R280k–R480k',
+    description: 'Facilitate daily standups, sprint planning and retrospectives. Support the team in understanding Scrum. Remove small impediments under a senior SM\'s guidance.',
+    skills: ['Scrum Basics', 'Facilitation', 'Jira/Confluence', 'Active Listening'],
     accent: '#0891b2', accentBg: 'rgba(8,145,178,0.08)', accentBorder: 'rgba(8,145,178,0.18)',
   },
   {
-    level: 'Mid-Level', title: 'IT Support Specialist', duration: '2–5 yrs', salary: 'R290k–R540k',
-    description: 'Own Tier 2 escalations, manage endpoints at scale, configure network equipment, support cloud tools (Microsoft 365, Google Workspace), and mentor junior staff.',
-    skills: ['Microsoft 365', 'ITIL Foundation', 'Network Config', 'MDM / Intune'],
+    level: 'Mid-Level', title: 'Scrum Master', duration: '2–5 yrs', salary: 'R520k–R950k',
+    description: 'Own agile ceremonies end-to-end, coach the product owner on backlog management, remove cross-team impediments, and drive continuous improvement through metrics.',
+    skills: ['Team Coaching', 'Metrics & KPIs', 'Scaled Agile', 'Stakeholder Mgmt'],
     accent: '#16a34a', accentBg: 'rgba(22,163,74,0.08)', accentBorder: 'rgba(22,163,74,0.18)',
   },
   {
-    level: 'Senior', title: 'Service Desk Analyst', duration: '5–8 yrs', salary: 'R540k–R900k',
-    description: 'Drive SLA compliance, lead incident and problem management, design knowledge base processes, and build automation that reduces ticket volume. Technical escalation lead.',
-    skills: ['ITIL Advanced', 'PowerShell', 'SIEM Basics', 'Process Design'],
+    level: 'Senior', title: 'Senior Scrum Master', duration: '5–8 yrs', salary: 'R950k–R1.6M',
+    description: 'Lead agile transformation across multiple teams, establish agile frameworks at the organisational level, mentor other Scrum Masters, and influence culture change.',
+    skills: ['SAFe / LeSS', 'Change Management', 'OKRs', 'Org Design'],
     accent: '#7c3aed', accentBg: 'rgba(124,58,237,0.08)', accentBorder: 'rgba(124,58,237,0.18)',
   },
   {
-    level: 'Expert', title: 'IT Support Manager', duration: '8+ yrs', salary: 'R900k+',
-    description: 'Lead the support function, define IT service strategy, manage vendor relationships, implement ITSM platforms, and align IT operations with business objectives.',
-    skills: ['ITSM Strategy', 'Team Leadership', 'Budget Mgmt', 'ITIL Expert'],
+    level: 'Expert', title: 'Agile Coach / Head of Agile', duration: '8+ yrs', salary: 'R1.8M+',
+    description: 'Define enterprise agile strategy, coach C-suite and leadership, architect operating models, and drive business agility at scale across divisions and geographies.',
+    skills: ['Enterprise Agility', 'Executive Coaching', 'Portfolio Mgmt', 'Leadership'],
     accent: '#ea580c', accentBg: 'rgba(234,88,12,0.08)', accentBorder: 'rgba(234,88,12,0.18)',
   },
 ]
 
 const ROADMAP_STEPS = [
   {
-    step: 1, title: 'IT Fundamentals & Operating Systems',
-    description: 'Build a solid base in how computers work. Learn Windows 10/11 administration inside out — installation, user accounts, Group Policy, file systems, and troubleshooting. Supplement with macOS and Linux basics. CompTIA A+ is the gold-standard certification for this stage and is widely recognised by employers.',
-    duration: '2–3 months', skills: ['Windows 10/11', 'macOS Basics', 'Linux CLI', 'CompTIA A+'],
+    step: 1, title: 'Agile Fundamentals & the Scrum Framework',
+    description: 'Master the Scrum Guide cover to cover. Understand the three pillars (transparency, inspection, adaptation), five values, three accountabilities, five events, and three artefacts. Learn the Agile Manifesto and its 12 principles — they underpin every coaching conversation you will ever have.',
+    duration: '1–2 months', skills: ['Scrum Guide', 'Agile Manifesto', 'Sprint Cycle', 'Scrum Values'],
   },
   {
-    step: 2, title: 'Networking Essentials',
-    description: 'Every support call eventually becomes a network problem. Learn TCP/IP, DNS, DHCP, subnetting, VLANs, Wi-Fi troubleshooting, and VPN concepts. Understand the OSI model at a practical level. CompTIA Network+ validates these skills and is required or preferred at most IT departments.',
-    duration: '2–3 months', skills: ['TCP/IP & DNS', 'Subnetting', 'Wi-Fi & VPN', 'CompTIA Network+'],
+    step: 2, title: 'Facilitation Skills & Agile Ceremonies',
+    description: 'Become an expert facilitator of Sprint Planning, Daily Scrum, Sprint Review, and Retrospective. Study facilitation techniques — liberating structures, 1-2-4-All, WSJF prioritisation, and retrospective formats. Great Scrum Masters are great meeting designers.',
+    duration: '1–2 months', skills: ['Sprint Planning', 'Retrospectives', 'Liberating Structures', 'Timeboxing'],
   },
   {
-    step: 3, title: 'Active Directory, M365 & Identity',
-    description: 'Enterprise IT runs on Microsoft. Learn Active Directory — user and group management, OUs, Group Policy Objects, and domain structure. Then master Microsoft 365 administration: Exchange Online, Teams, SharePoint, and Intune for device management. These skills appear in nearly every job description.',
-    duration: '2–3 months', skills: ['Active Directory', 'Microsoft 365', 'Intune / MDM', 'Azure AD'],
+    step: 3, title: 'Product Backlog, User Stories & Estimation',
+    description: 'Coach product owners in writing clear, valuable user stories with acceptance criteria. Facilitate backlog refinement, relative estimation with story points, and planning poker. Understand the relationship between backlog health and team velocity.',
+    duration: '1–2 months', skills: ['User Stories', 'Story Points', 'Backlog Refinement', 'Definition of Done'],
   },
   {
-    step: 4, title: 'ITIL, Ticketing & Service Management',
-    description: 'IT support is a professional service, not just fixing computers. Learn ITIL 4 — incident, problem, change, and service request management. Get hands-on with a ticketing system (ServiceNow, Jira Service Management, or Freshdesk). Study SLA management and how to write knowledge base articles that reduce repeat tickets.',
-    duration: '1–2 months', skills: ['ITIL 4 Foundation', 'ServiceNow / Jira', 'SLA Management', 'Knowledge Mgmt'],
+    step: 4, title: 'Agile Metrics, Tooling & Reporting',
+    description: 'Learn to measure what matters: velocity, cycle time, lead time, sprint burndown, and cumulative flow diagrams. Become proficient in Jira, Azure DevOps, or Linear. Use data to drive retrospectives and inform stakeholder conversations — not to micromanage.',
+    duration: '1–2 months', skills: ['Velocity & Burndown', 'Cycle Time', 'Jira / Azure DevOps', 'CFD Charts'],
   },
   {
-    step: 5, title: 'Security Fundamentals & Endpoint Protection',
-    description: 'Security is inseparable from IT support. Learn how to identify phishing attempts, configure Windows Defender and endpoint protection tools, manage BitLocker encryption, apply patches, and respond to a basic security incident. CompTIA Security+ is the entry-point certification into cybersecurity-adjacent IT roles.',
-    duration: '2–3 months', skills: ['CompTIA Security+', 'Endpoint Protection', 'Patch Management', 'Incident Response'],
+    step: 5, title: 'Coaching, Impediment Removal & Servant Leadership',
+    description: 'Shift from facilitation to coaching. Learn coaching stances, powerful questions, and active listening. Study servant leadership and psychological safety. Master impediment escalation and the art of removing organisational blockers without authority.',
+    duration: '2–3 months', skills: ['Coaching Stance', 'Servant Leadership', 'Psychological Safety', 'Conflict Resolution'],
   },
   {
-    step: 6, title: 'Scripting, Automation & Cloud',
-    description: 'Senior support professionals automate repetitive tasks. Learn PowerShell to script Active Directory operations, user onboarding, and reporting. Add basics of Azure or AWS for cloud-hosted infrastructure support. Automation skills dramatically differentiate you from peers and open paths into sysadmin and cloud engineering roles.',
-    duration: '3–4 months', skills: ['PowerShell', 'Azure Fundamentals', 'Automation Scripts', 'Cloud Basics'],
+    step: 6, title: 'Scaled Agile, Transformation & Agile Coaching',
+    description: 'Grow into enterprise agility. Study SAFe, LeSS, Nexus, or Scrum@Scale. Understand value stream mapping, portfolio management, and OKRs. Develop change management skills to lead agile transformations — this is where Scrum Masters become Agile Coaches.',
+    duration: '3–4 months', skills: ['SAFe / LeSS', 'OKRs', 'Value Streams', 'Org Change'],
   },
 ]
 
 const HARD_SKILLS = [
-  { name: 'Windows OS Administration', level: 95 },
-  { name: 'Microsoft 365 & Azure AD', level: 93 },
-  { name: 'Networking & TCP/IP', level: 88 },
-  { name: 'Active Directory & GPO', level: 85 },
-  { name: 'ITIL / ITSM Processes', level: 82 },
-  { name: 'Security & Endpoint Protection', level: 75 },
-  { name: 'PowerShell Scripting', level: 68 },
-  { name: 'Cloud Platforms (Azure/AWS)', level: 60 },
+  { name: 'Scrum Framework Mastery', level: 95 },
+  { name: 'Facilitation & Meeting Design', level: 93 },
+  { name: 'Agile Metrics & Reporting', level: 88 },
+  { name: 'Backlog & Estimation Coaching', level: 85 },
+  { name: 'Jira / Azure DevOps', level: 82 },
+  { name: 'Scaled Agile (SAFe / LeSS)', level: 72 },
+  { name: 'OKRs & Portfolio Management', level: 65 },
+  { name: 'Organisational Change Management', level: 60 },
 ]
 
 const SOFT_SKILLS = [
-  { name: 'Empathetic Communication', description: 'Users are often stressed when they call support. The ability to listen patiently, explain technical concepts in plain language, and make the person feel heard is what separates great support from merely functional support.' },
-  { name: 'Calm Under Pressure', description: 'Major outages affect hundreds of people simultaneously. The support professional who stays methodical, communicates clearly, and works the problem without panicking is irreplaceable during incidents.' },
-  { name: 'Systematic Troubleshooting', description: 'The best IT support people don\'t guess — they eliminate variables. A disciplined, hypothesis-driven approach to diagnosis gets to root causes faster and prevents repeat calls on the same issue.' },
-  { name: 'Documentation Discipline', description: 'Every ticket is an opportunity to create institutional knowledge. Support professionals who document problems and solutions thoroughly build the knowledge base that makes the whole team faster over time.' },
-  { name: 'Customer Service Mindset', description: 'IT support is a service. Treating users as internal customers — not as interruptions — builds trust, improves response quality, and makes you the person people actually want to call when things break.' },
-  { name: 'Continuous Self-Learning', description: 'Technology changes faster than any job description can capture. The best support professionals are perpetually curious — studying for the next cert, testing new tools in a home lab, and following IT news to stay ahead.' },
+  { name: 'Servant Leadership', description: 'A Scrum Master\'s power is influence without authority. The ability to motivate, protect, and serve a team while driving outcomes is the single most defining trait of an exceptional SM.' },
+  { name: 'Coaching & Powerful Questioning', description: 'Ask, don\'t tell. Great Scrum Masters resist solving problems for teams and instead ask questions that help teams solve problems themselves — building capability, not dependency.' },
+  { name: 'Psychological Safety Builder', description: 'Teams that feel safe speak up, experiment, and learn from failure. Creating an environment of trust and safety is a deliberate skill that the best Scrum Masters practise in every interaction.' },
+  { name: 'Conflict Navigation', description: 'Conflict in teams is healthy if channelled well. Scrum Masters who can surface, name, and facilitate through interpersonal tension build higher-performing teams than those who avoid it.' },
+  { name: 'Stakeholder Communication', description: 'Translate delivery realities into language executives understand. Scrum Masters who can manage up — giving clear, calm, data-driven progress communication — earn trust that protects their teams.' },
+  { name: 'Systems Thinking', description: 'See the whole, not just the sprint. Great Agile Coaches understand how team dynamics, org structure, incentives, and processes interact — and intervene at the right level to create lasting improvement.' },
 ]
 
 const EDU_PATHS = [
   {
-    type: 'Degree', title: 'IT / Computer Science Degree', duration: '3–4 years', cost: 'R400k – R1M+',
-    borderColor: 'rgba(3,105,161,0.2)', bgColor: '#eff6ff', typeBg: 'rgba(3,105,161,0.12)', typeColor: '#0369a1',
-    pros: ['Deepest theoretical foundation', 'Opens doors to management and specialisation faster', 'Graduate schemes at large corporates and banks', 'Strong peer network of future IT professionals'],
-    cons: ['Slow and expensive path to first salary', 'Practical hands-on lab time is limited', 'Many grads still need certifications to get hired', 'IT support roles rarely require a degree at entry level'],
+    type: 'Certification', title: 'CSM / PSM Certification Path', duration: '3–6 months', cost: 'R8k – R25k',
+    borderColor: 'rgba(15,118,110,0.2)', bgColor: '#f0fdfa', typeBg: 'rgba(15,118,110,0.12)', typeColor: '#0f766e',
+    pros: ['Industry-recognised credential (CSM, PSM I/II)', 'Fast path to first Scrum Master role', 'Structured learning with coaching community', 'Practitioner-taught with real case studies'],
+    cons: ['Certification alone does not equal competence', 'Ongoing renewal costs and CPD requirements', 'Does not cover scaled agile or coaching depth', 'Market is saturated with basic SM certifications'],
   },
   {
-    type: 'Certifications', title: 'CompTIA A+ → Network+ → Security+', duration: '6–18 months', cost: 'R15k – R60k',
+    type: 'Degree', title: 'Business / Management Degree', duration: '3–4 years', cost: 'R400k – R1M+',
     borderColor: 'rgba(22,163,74,0.2)', bgColor: '#f0fdf4', typeBg: 'rgba(22,163,74,0.12)', typeColor: '#16a34a',
-    pros: ['Vendor-neutral, globally recognised credentials', 'Directly maps to job descriptions and hiring filters', 'Much faster and cheaper than a degree', 'CompTIA A+ is explicitly required by many help desk roles'],
-    cons: ['Exams require dedicated study and exam fees', 'Credentials alone don\'t replace hands-on lab practice', 'Need to be renewed every 3 years via CEUs', 'Won\'t replace leadership experience for management roles'],
+    pros: ['Strong foundation in organisational behaviour', 'Credibility at enterprise and corporate level', 'Access to graduate management programmes', 'Deep business context for agile conversations'],
+    cons: ['Rarely covers Scrum or agile directly', 'Slow and expensive path to first SM role', 'Practical agile skills are entirely self-taught', 'Academic theory lags agile practice by years'],
   },
   {
-    type: 'Self-Taught', title: 'Home Lab + Free Courses', duration: '12–24 months', cost: 'R2k – R10k',
+    type: 'Self-Taught', title: 'Online Courses & Practice', duration: '6–18 months', cost: 'R0 – R6k',
     borderColor: 'rgba(79,70,229,0.2)', bgColor: '#eef2ff', typeBg: 'rgba(79,70,229,0.12)', typeColor: '#4f46e5',
-    pros: ['Build real skills on real hardware', 'Microsoft Learn and Google IT Support cert are free/cheap', 'Immediate hands-on practice with no waiting', 'Home lab experience impresses interviewers who test practically'],
-    cons: ['No formal credential on CV without separate exam', 'Requires significant self-discipline and structure', 'Knowledge gaps can be dangerous without structured curriculum', 'Harder to demonstrate competence without certification'],
+    pros: ['World-class free content (Scrum.org, YouTube)', 'Volunteer SM on community or open-source projects', 'No ceiling on depth you can reach', 'Flexible — learn while working your current role'],
+    cons: ['No formal credential without exams', 'Harder to get first role without certification', 'Easy to miss nuanced facilitation techniques', 'Requires strong self-motivation and structure'],
   },
 ]
 
 const SCHEDULE = [
-  { time: '8:00', act: 'Queue Triage & Priority Setting', desc: 'Review the overnight ticket queue, identify P1/P2 incidents, assign team members to urgent items and communicate status to affected users before business starts', duration: '30 min', icon: <PhoneCall size={14} /> },
-  { time: '8:30', act: 'Active Incident Resolution', desc: 'Work through priority tickets — remote desktop sessions, on-site hardware swaps, account provisioning, software licensing issues, and connectivity problems', duration: '3 hrs', icon: <Wrench size={14} /> },
-  { time: '11:30', act: 'Escalation & Vendor Follow-up', desc: 'Escalate unresolved Tier 2 issues to sysadmin or vendor support, follow up on outstanding hardware replacements and software licences, update users on ETA', duration: '30 min', icon: <Radio size={14} /> },
-  { time: '12:00', act: 'Lunch & Recovery', desc: 'Step away from the screen. Complex technical problems benefit from a mental reset — some of the best diagnostic insights arrive after a proper break', duration: '1 hr', icon: <Coffee size={14} /> },
-  { time: '1:00', act: 'Knowledge Base & Documentation', desc: 'Write up solutions for recurring issues, update runbooks, improve existing KB articles, and document this morning\'s unusual fixes before the context is lost', duration: '1 hr', icon: <FileText size={14} /> },
-  { time: '2:00', act: 'Proactive Maintenance & Projects', desc: 'Run patch deployments, update endpoint agents, work on ongoing IT projects (e.g., hardware refresh, Office 365 migration), or build automation scripts for repetitive tasks', duration: '1.5 hrs', icon: <Shield size={14} /> },
-  { time: '3:30', act: 'Learning & Certification Study', desc: 'Work through CompTIA study material, practise PowerShell scripts in the home lab, complete a Microsoft Learn module, or test a new tool in a sandbox environment', duration: '30 min', icon: <BookOpen size={14} /> },
+  { time: '9:00', act: 'Daily Standup Facilitation', desc: 'Facilitate the 15-minute Daily Scrum. Ensure it stays focused on the Sprint Goal — not a status report. Remove blockers surfaced by the team immediately after.', duration: '15–30 min', icon: <Users size={14} /> },
+  { time: '9:30', act: 'Impediment Resolution', desc: 'Chase down blockers raised in standup. Coordinate with product owners, other teams, or management to clear the path for your developers.', duration: '1 hr', icon: <Target size={14} /> },
+  { time: '10:30', act: 'Backlog Refinement Support', desc: 'Support the Product Owner in grooming the backlog — coaching on story splitting, acceptance criteria, and estimation ahead of Sprint Planning.', duration: '1 hr', icon: <FileText size={14} /> },
+  { time: '12:00', act: 'Stakeholder Communication', desc: 'Prepare sprint progress updates, update velocity dashboards, and communicate risks to stakeholders before they become crises.', duration: '45 min', icon: <MessageSquare size={14} /> },
+  { time: '1:00', act: 'Lunch & Recovery', desc: 'Step away intentionally. Scrum Masters who don\'t recharge burn out from constant human-facing work faster than almost any other tech role.', duration: '1 hr', icon: <Coffee size={14} /> },
+  { time: '2:00', act: 'Coaching & 1-on-1s', desc: 'Coach team members, the Product Owner, or leadership. Use powerful questions rather than answers. Build the team\'s agile capability and self-organisation.', duration: '1.5 hrs', icon: <Award size={14} /> },
+  { time: '3:30', act: 'Ceremony Preparation & Learning', desc: 'Design the next retrospective. Research new facilitation formats. Read agile blogs (Mountain Goat, Less.works, Liberating Structures) or study for your next certification.', duration: '1 hr', icon: <BookOpen size={14} /> },
 ]
 
 const TOOLS = [
-  { name: 'ServiceNow / Jira SM', cat: 'Ticketing' }, { name: 'Microsoft Intune', cat: 'MDM' },
-  { name: 'Active Directory', cat: 'Identity' }, { name: 'TeamViewer / AnyDesk', cat: 'Remote' },
-  { name: 'Microsoft 365 Admin', cat: 'Cloud' }, { name: 'Wireshark', cat: 'Network' },
-  { name: 'PowerShell ISE', cat: 'Scripting' }, { name: 'Windows Defender', cat: 'Security' },
+  { name: 'Jira', cat: 'Backlog Mgmt' }, { name: 'Confluence', cat: 'Documentation' },
+  { name: 'Miro / Mural', cat: 'Facilitation' }, { name: 'Azure DevOps', cat: 'Sprint Tracking' },
+  { name: 'Retrium', cat: 'Retrospectives' }, { name: 'Slack / Teams', cat: 'Communication' },
+  { name: 'Linear', cat: 'Issue Tracking' }, { name: 'Notion', cat: 'Knowledge Base' },
 ]
 
 const WORK_ENVS = [
-  { type: 'In-Office / On-Site', pct: 52 },
-  { type: 'Hybrid', pct: 37 },
-  { type: 'Fully Remote', pct: 11 },
+  { type: 'Hybrid', pct: 52 },
+  { type: 'Remote', pct: 33 },
+  { type: 'In-Office', pct: 15 },
 ]
 
 const AI_IMPACTS = [
   {
-    title: 'AI-Assisted Ticket Resolution', icon: <Sparkles size={20} />,
-    desc: 'AI tools like Copilot for Microsoft 365 and ServiceNow\'s Now Assist auto-suggest resolutions based on ticket content, prior solutions, and knowledge base articles. Support teams using AI report 40–60% faster Tier 1 resolution times and significantly lower escalation rates.',
-    tools: ['Copilot for M365', 'ServiceNow AI', 'Freshdesk AI', 'Zendesk AI'],
-    borderColor: 'rgba(3,105,161,0.18)', bgColor: '#eff6ff', icoBg: 'rgba(3,105,161,0.12)', icoColor: '#0369a1', tagBg: 'rgba(3,105,161,0.1)', tagColor: '#0369a1', titleColor: '#0369a1',
+    title: 'AI-Assisted Retrospectives & Facilitation', icon: <Sparkles size={20} />,
+    desc: 'AI tools now help Scrum Masters generate retrospective formats, synthesise team feedback into themes, and suggest action items based on sprint data. Tools like Parabol and Echometer use AI to surface patterns across multiple retrospectives.',
+    tools: ['Parabol', 'Echometer', 'Miro AI', 'ChatGPT'],
+    borderColor: 'rgba(15,118,110,0.18)', bgColor: '#f0fdfa', icoBg: 'rgba(15,118,110,0.12)', icoColor: '#0f766e', tagBg: 'rgba(15,118,110,0.1)', tagColor: '#0f766e', titleColor: '#0f766e',
   },
   {
-    title: 'Intelligent Automation & Self-Service', icon: <Zap size={20} />,
-    desc: 'IT support professionals who can build AI-powered chatbots, configure automated provisioning workflows, and connect ITSM platforms to automation tools (Power Automate, Zapier) are in a completely different demand tier in 2026.',
-    tools: ['Power Automate', 'Microsoft Copilot Studio', 'Zapier', 'Azure Logic Apps'],
+    title: 'AI-Powered Sprint Analytics', icon: <Zap size={20} />,
+    desc: 'AI tools integrated into Jira and Azure DevOps predict sprint risk, identify velocity anomalies, and surface bottlenecks in the delivery pipeline before they become missed commitments. Scrum Masters who read this data lead more proactive conversations.',
+    tools: ['Jira Atlassian AI', 'LinearB', 'Nave', 'Haystack'],
     borderColor: 'rgba(79,70,229,0.18)', bgColor: '#eef2ff', icoBg: 'rgba(79,70,229,0.12)', icoColor: '#4f46e5', tagBg: 'rgba(79,70,229,0.1)', tagColor: '#4f46e5', titleColor: '#4f46e5',
   },
   {
-    title: 'AI-Powered IT Monitoring', icon: <TrendingUp size={20} />,
-    desc: 'AIOps platforms now detect infrastructure anomalies, predict hardware failures before they impact users, and auto-route tickets based on historical patterns. Understanding these tools makes you a force multiplier for your entire IT team.',
-    tools: ['Microsoft Sentinel', 'Datadog', 'SolarWinds AI', 'PagerDuty AIOps'],
+    title: 'AI-Augmented Coaching Conversations', icon: <TrendingUp size={20} />,
+    desc: 'Agile coaches now use AI tools to analyse team health survey data, identify engagement trends, and personalise coaching approaches per individual. Understanding how to integrate AI insights into coaching practice is a differentiating skill in 2026.',
+    tools: ['TeamRetro AI', 'Culture Amp AI', 'Lattice AI', 'Leapsome'],
     borderColor: 'rgba(22,163,74,0.18)', bgColor: '#f0fdf4', icoBg: 'rgba(22,163,74,0.12)', icoColor: '#16a34a', tagBg: 'rgba(22,163,74,0.1)', tagColor: '#16a34a', titleColor: '#16a34a',
   },
 ]
 
 const FUTURE_SKILLS = [
-  'Microsoft Copilot Administration', 'Power Automate & Low-Code Workflows',
-  'Zero Trust Network Access (ZTNA)', 'Azure Virtual Desktop Support',
-  'AI Chatbot Configuration (Copilot Studio)', 'AIOps & Predictive Monitoring',
+  'AI-Augmented Delivery Analytics', 'Product Discovery & Dual-Track Agile',
+  'OKR Coaching & Alignment', 'Team Topology Design',
+  'Value Stream Mapping', 'Executive & Leadership Coaching',
 ]
 
 const PROS = [
-  { title: 'Always in Demand — Everywhere', desc: 'Every organisation with computers needs IT support. Hospitals, banks, schools, government, retail — the demand is universal, recession-resistant, and geographically distributed across every city in South Africa.' },
-  { title: 'The Fastest Entry into IT', desc: 'Help desk is the most accessible entry point into the technology industry. CompTIA A+ certification and a few months of study can land your first role — no degree required at entry level.' },
-  { title: 'Exposure to the Entire IT Stack', desc: 'No other role gives you broader exposure faster. In a single week, a help desk technician might touch networking, identity management, cloud apps, hardware, security, and backup systems.' },
-  { title: 'Clear Paths to Specialisation', desc: 'IT support is a launchpad, not a ceiling. From here, experienced technicians branch into sysadmin, network engineering, cybersecurity, cloud architecture, or IT management — with every path well-marked.' },
-  { title: 'Strong Job Security', desc: 'Unlike many tech roles, IT support cannot be fully offshored or replaced by software. On-site hardware, physical network infrastructure, and user relationships require a local, trusted human presence.' },
-  { title: 'Fast Skill Development', desc: 'The variety of problems encountered in support accelerates learning faster than almost any other tech role. In two years you\'ll have solved more edge cases than most developers see in five.' },
+  { title: 'High Human Impact', desc: 'You directly improve the working lives of development teams. When a Scrum Master does their job well, teams become happier, more autonomous, and more effective — the human ROI is immediate and visible.' },
+  { title: 'Strong Demand Across All Industries', desc: 'Every company adopting agile — from banks to hospitals to tech startups — needs Scrum Masters and Agile Coaches. The role is industry-agnostic, giving you extraordinary career flexibility.' },
+  { title: 'No Deep Technical Coding Required', desc: 'One of the few high-paying roles in technology that doesn\'t require programming skills. Background in business, HR, project management, or psychology is equally valid and valued.' },
+  { title: 'Clear Path to Agile Coaching & Leadership', desc: 'The natural growth path from Scrum Master to Agile Coach to Head of Agile / Chief Agile Officer is one of the most respected leadership trajectories in modern organisations.' },
+  { title: 'Transferable Cross-Domain Expertise', desc: 'Coaching, facilitation, change management, and servant leadership skills transfer across every team, organisation, and industry. Skills built here compound across your entire career.' },
+  { title: 'Hybrid & Remote-Friendly Role', desc: 'With the right facilitation tools, Scrum Masters operate effectively from anywhere. 33% of SM roles are fully remote globally; 52% are hybrid — among the most flexible arrangements in tech.' },
 ]
 
 const CONS = [
-  { title: 'Emotionally Demanding Work', desc: 'Supporting frustrated users who can\'t work, managing an overflowing ticket queue, and being the first person blamed when systems fail takes a toll. Emotional resilience is as important as technical skill.' },
-  { title: 'Compensation Ceiling at Tier 1', desc: 'Entry-level help desk roles are among the lower-paid positions in IT. Breaking through to R400k+ requires active upskilling, certifications, and movement into specialist or senior roles.' },
-  { title: 'Repetitive Ticket Fatigue', desc: 'Password resets, "my printer isn\'t working," and Outlook crashes account for a large percentage of tickets. Without deliberate variety and growth goals, the work can become monotonous.' },
-  { title: 'On-Site Requirements', desc: 'Unlike backend or development roles, much IT support still requires physical presence. Hardware replacements, cabling, server room access, and in-person user support mean remote work is limited compared to other tech fields.' },
-  { title: 'Underappreciated Until It Breaks', desc: 'IT support is invisible when it works and immediately visible when it fails. Getting credit for preventing 300 incidents is harder than being blamed for the one that gets through. This is the reality of a support culture.' },
-  { title: 'Credential Treadmill', desc: 'Technology evolves quickly and certifications expire. Staying current in Microsoft, CompTIA, and cloud platforms requires ongoing study investment — both time and money — throughout your career.' },
+  { title: 'Authority Without Power', desc: 'Scrum Masters have significant responsibility but no line management authority. Driving change through influence alone is exhausting when the organisation isn\'t bought into agile values.' },
+  { title: 'Credential Inflation', desc: 'The market is flooded with CSM holders who attended a two-day course and call themselves Scrum Masters. Differentiating genuine expertise from credential-holding is a challenge on both sides of the hiring table.' },
+  { title: 'Organisational Resistance to Change', desc: 'The hardest part of this job is not Scrum — it\'s culture. Helping traditional hierarchies embrace agile values requires patience, political savvy, and resilience against constant institutional friction.' },
+  { title: 'Constant Emotional Labour', desc: 'Mediating conflict, coaching struggling team members, and managing stakeholder anxiety is emotionally demanding. Scrum Masters who lack healthy boundaries burn out faster than almost any other tech-adjacent role.' },
+  { title: 'Misunderstood & Undervalued Role', desc: 'Many organisations hire Scrum Masters but don\'t understand what the role should do. Being reduced to "meeting organiser" or "Jira administrator" is a frustrating reality for many SMs in immature agile organisations.' },
+  { title: 'Salary Ceiling vs. Technical Peers', desc: 'Senior Scrum Masters and mid-level Agile Coaches typically earn less than equivalent-experience backend or data engineers. The path to top compensation requires reaching Head of Agile or enterprise coaching level.' },
 ]
 
 const VIDEOS = [
-  { id: 'G7V2nqFRojA', title: 'CompTIA A+ Core 1 Full Course', desc: 'Complete preparation for the CompTIA A+ 220-1101 exam covering hardware, networking, and troubleshooting — the foundational certification for IT support professionals.', dur: '14:08:00', channel: 'Professor Messer' },
-  { id: 'qiQR5rTSshw', title: 'Google IT Support Professional Certificate', desc: 'Google\'s fully free IT support training program covering technical support fundamentals, networking, operating systems, system administration, and IT security.', dur: '6:32:00', channel: 'Google / Coursera' },
-  { id: 'ynbHdHrU5gs', title: 'CompTIA Network+ Full Course', desc: 'Complete Network+ study guide covering network infrastructure, protocols, troubleshooting, and security — essential for anyone moving beyond Tier 1 support.', dur: '12:16:00', channel: 'Professor Messer' },
+  { id: 'vuqBIdgKcDQ', title: 'What Does a Scrum Master Actually Do?', desc: 'A clear, honest breakdown of the Scrum Master role — what it is, what it isn\'t, and what great Scrum Masters actually spend their time doing day to day.', dur: '12:18', channel: 'Scrum.org' },
+  { id: 'XU0llRltyFM', title: 'Scrum Master Full Course — Agile & Scrum', desc: 'Comprehensive beginner-to-intermediate guide covering the Scrum framework, ceremonies, artefacts, and how to prepare for the PSM I certification exam.', dur: '6:34:00', channel: 'freeCodeCamp' },
+  { id: 'TRcReyRYIMg', title: 'Agile Coach vs Scrum Master — What\'s the Difference?', desc: 'A practical comparison of the Scrum Master and Agile Coach roles — career paths, responsibilities, and how to grow from one into the other.', dur: '18:42', channel: 'Agile Mentors' },
 ]
 
 const TAKEAWAYS = [
-  'Certifications open doors — CompTIA A+, Network+, and Security+ are worth every hour of study and every rand of exam fees',
-  'Build a home lab on spare hardware or free Azure credits — practical troubleshooting experience you created yourself impresses interviewers more than anything on paper',
-  'Every ticket is a teaching moment: document your solutions well enough that your past self could have solved the problem faster with them',
-  'Learn PowerShell early — a support professional who can automate 20 minutes of daily manual work is immediately more valuable than one who cannot',
-  'Treat every user interaction as a service experience, not a technical problem — the reputation you build with users is your most transferable career asset',
+  'Read the Scrum Guide in full — it\'s only 13 pages, but every word matters and most "Scrum Masters" haven\'t truly internalised it',
+  'Get experience facilitating real teams before any certification — workshops, community projects, and volunteer teams all count',
+  'Your job is to make yourself unnecessary — teams that fully self-organise are the sign of a great Scrum Master, not teams that depend on you',
+  'Coaching is not advising — learn the difference early and practice asking powerful questions instead of giving answers',
+  'Metrics should serve conversations, not replace them — velocity is a tool for the team, not a weapon for management',
 ]
 
-/* ─── NEW SECTIONS ─────────────────────────────────────────────────────────── */
+/* ─── CAREER FACTS ─────────────────────────────────────────────────────────── */
 
 const CAREER_FACTS = [
   {
-    icon: <Headphones size={20} />, title: 'What You Do',
-    desc: 'Diagnose and resolve hardware, software, and network issues. Manage user accounts and permissions, deploy and configure devices, handle IT service requests, and keep systems running so the business never stops.',
-    color: '#0369a1',
+    icon: <Users size={20} />, title: 'What You Do',
+    desc: 'Facilitate agile ceremonies, remove impediments, coach teams and product owners, protect the team\'s focus, drive continuous improvement, and serve as a change agent for agile values across the organisation.',
+    color: '#0f766e',
   },
   {
     icon: <Workflow size={20} />, title: 'Core Activities',
-    desc: 'Ticket management and prioritisation, remote and on-site troubleshooting, OS and application support, account and identity management, endpoint deployment, patch management, knowledge base creation, and user training.',
+    desc: 'Sprint facilitation, retrospective design, backlog refinement coaching, impediment escalation, stakeholder communication, team health measurement, agile metrics analysis, and organisational coaching.',
     color: '#16a34a',
   },
   {
-    icon: <Users size={20} />, title: 'Who You Support',
-    desc: 'Every employee in the organisation — from the CEO who can\'t connect to a Teams meeting to the accountant whose VPN won\'t authenticate. You are the human face of technology and the bridge between IT infrastructure and every user.',
+    icon: <Users size={20} />, title: 'Who You Work With',
+    desc: 'Development teams you serve, Product Owners you coach, engineering managers you partner with, executives you influence, and other Scrum Masters you mentor — the role is fundamentally relational.',
     color: '#4f46e5',
   },
   {
     icon: <TrendingUp size={20} />, title: 'Industry Demand',
-    desc: 'IT support is one of the most consistently in-demand roles in South Africa. Every sector — banking, healthcare, retail, education, mining, and government — employs IT support staff. Demand grew 18% in 2024 alone.',
+    desc: 'Scrum Master and Agile Coach roles grew 28% year-on-year globally in 2024. Every company undergoing digital transformation — from banks to retailers to healthcare — is actively hiring agile practitioners.',
     color: '#ea580c',
   },
 ]
 
 const WHY_REASONS = [
-  { emoji: '🚪', title: 'The Best Door into IT', desc: 'Help desk is where thousands of successful IT careers begin. Network engineers, cloud architects, and CISOs often started here. It is the most accessible, fastest, and lowest-barrier entry point into a technology career.' },
-  { emoji: '💼', title: 'Hire-Ready in Months, Not Years', desc: 'A CompTIA A+ certification and three months of focused study can get you your first interview. No four-year degree required. IT support is one of the few fields where demonstrated competence beats paper qualifications at entry level.' },
-  { emoji: '🌐', title: 'The Widest Industry Exposure', desc: 'Support touches every part of the IT stack — networking, identity, security, cloud, hardware, and software. You\'ll understand how technology really works in ways most specialists never do.' },
-  { emoji: '🔐', title: 'Security Skills Are Table Stakes', desc: 'In 2026, every IT support role has a security component. You\'re the front line of phishing defence, the person who spots the compromised account, and the one who enforces password and device policies. This makes you essential.' },
-  { emoji: '📈', title: 'Multiple Paths Forward', desc: 'From help desk you can go into sysadmin, network engineering, cybersecurity, cloud, or IT management. This role is not a dead end — it is a crossroads with clearly signed paths to six-figure careers.' },
-  { emoji: '🤝', title: 'You Make a Real Difference Daily', desc: 'When you fix someone\'s laptop so they can present to a client, recover a corrupted file they worked on all week, or restore email during a crisis — you\'ve made a tangible, immediate difference to a real person\'s day.' },
+  { emoji: '🤝', title: 'You Make Teams Thrive', desc: 'Scrum Masters directly improve how people work together. When you do your job well, developers have more autonomy, less friction, and more satisfaction — the human impact is immediate and profound.' },
+  { emoji: '💰', title: 'Competitive Compensation', desc: 'Senior Scrum Masters earn R950k–R1.6M in South Africa. Agile Coaches at enterprise level command R1.8M+. Global remote contracts in USD push these figures considerably higher.' },
+  { emoji: '🌍', title: 'Work From Anywhere', desc: '33% of Scrum Master roles are fully remote. Armed with Miro and Zoom, you can facilitate ceremonies and coach teams from Cape Town to Cape Breton — the role is inherently location-flexible.' },
+  { emoji: '🧩', title: 'People Problems Are Hard Problems', desc: 'Helping 8 humans align on a goal, resolve conflict, and deliver together — sprint after sprint — is genuinely difficult and deeply satisfying. These are the richest professional challenges you\'ll ever face.' },
+  { emoji: '📈', title: 'Clear Path to Agile Leadership', desc: 'Scrum Master → Senior SM → Agile Coach → Head of Agile is one of the most respected career trajectories in modern product organisations — and it doesn\'t require writing a single line of code.' },
+  { emoji: '🔒', title: 'Skills That Will Never Be Automated', desc: 'Coaching, facilitation, conflict resolution, and servant leadership are deeply human. These skills are not just AI-resistant — they become more valuable as AI takes over routine technical work.' },
 ]
 
 const FREE_RESOURCES = [
-  { category: 'Certifications', color: '#0369a1', bgColor: '#eff6ff', items: [
-    { name: 'Professor Messer — CompTIA A+ (free video course)', url: '#', type: 'Video', rating: 5 },
-    { name: 'Google IT Support Professional Cert (Coursera)', url: '#', type: 'Course', rating: 5 },
-    { name: 'Microsoft Learn — M365 & Azure fundamentals', url: '#', type: 'Docs', rating: 5 },
-    { name: 'CompTIA CertMaster Practice (paid, worth it)', url: '#', type: 'Practice', rating: 5 },
+  { category: 'Courses', color: '#0f766e', bgColor: '#f0fdfa', items: [
+    { name: 'Scrum.org — Free Scrum Guide & Learning Path', url: '#', type: 'Guide', rating: 5 },
+    { name: 'Atlassian Agile Coach Resource Hub', url: '#', type: 'Course', rating: 5 },
+    { name: 'Mountain Goat Software — Mike Cohn Blog', url: '#', type: 'Blog', rating: 5 },
+    { name: 'Agile Alliance — Resources & Case Studies', url: '#', type: 'Reference', rating: 4 },
   ]},
   { category: 'Practice', color: '#16a34a', bgColor: '#f0fdf4', items: [
-    { name: 'TryHackMe — IT fundamentals & security labs', url: '#', type: 'Lab', rating: 5 },
-    { name: 'Microsoft Learn sandbox environments (free)', url: '#', type: 'Lab', rating: 5 },
-    { name: 'Build a home lab with old hardware or VMs', url: '#', type: 'Project', rating: 5 },
-    { name: 'r/ITCareerQuestions study guides', url: '#', type: 'Forum', rating: 4 },
+    { name: 'Open PSM I Practice Assessments (Scrum.org)', url: '#', type: 'Practice', rating: 5 },
+    { name: 'Liberating Structures — Full Method Library', url: '#', type: 'Reference', rating: 5 },
+    { name: 'Volunteer as SM on an open-source project', url: '#', type: 'Project', rating: 5 },
+    { name: 'roadmap.sh — Scrum Master Learning Path', url: '#', type: 'Reference', rating: 4 },
   ]},
   { category: 'Community', color: '#4f46e5', bgColor: '#eef2ff', items: [
-    { name: 'NetworkChuck YouTube Channel', url: '#', type: 'YouTube', rating: 5 },
-    { name: 'r/sysadmin & r/helpdesk communities', url: '#', type: 'Forum', rating: 5 },
-    { name: 'Darknet Diaries Podcast (security stories)', url: '#', type: 'Podcast', rating: 5 },
-    { name: 'ITIL 4 Foundation Study Guide (free PDF)', url: '#', type: 'Book', rating: 4 },
+    { name: 'Agile Amped Podcast (Scaled Agile)', url: '#', type: 'Podcast', rating: 5 },
+    { name: 'r/scrum & r/agile Reddit Communities', url: '#', type: 'Forum', rating: 4 },
+    { name: 'Adventures with Agile YouTube Channel', url: '#', type: 'YouTube', rating: 5 },
+    { name: 'LeadingAgile Blog & Podcast', url: '#', type: 'Blog', rating: 5 },
   ]},
 ]
 
 const SALARY_DATA = [
-  { role: 'Help Desk Technician (Tier 1)', range: 'R160k – R290k', midpoint: 225, yoe: '0–2 yrs', color: '#0891b2' },
-  { role: 'IT Support Specialist (Tier 2)', range: 'R290k – R540k', midpoint: 415, yoe: '2–5 yrs', color: '#16a34a' },
-  { role: 'Service Desk Analyst / Senior', range: 'R540k – R900k', midpoint: 720, yoe: '5–8 yrs', color: '#7c3aed' },
-  { role: 'IT Support Manager / Team Lead', range: 'R900k – R1.5M+', midpoint: 1150, yoe: '8+ yrs', color: '#ea580c' },
+  { role: 'Junior Scrum Master', range: 'R280k – R480k', midpoint: 380, yoe: '0–2 yrs', color: '#0891b2' },
+  { role: 'Scrum Master', range: 'R520k – R950k', midpoint: 735, yoe: '2–5 yrs', color: '#16a34a' },
+  { role: 'Senior Scrum Master', range: 'R950k – R1.6M', midpoint: 1275, yoe: '5–8 yrs', color: '#7c3aed' },
+  { role: 'Agile Coach / Head of Agile', range: 'R1.8M – R3M+', midpoint: 2300, yoe: '8+ yrs', color: '#ea580c' },
 ]
 
 const MISTAKES = [
   {
-    num: '01', title: 'Staying at Tier 1 Without Studying for Certs',
-    desc: 'Many technicians spend years in Tier 1 without progressing because they never formalise their skills with certifications. CompTIA A+ and Network+ are the explicit signal employers look for to promote to Tier 2 and beyond.',
-    fix: 'Set a certification target date within 90 days of starting your first role. Study 30 minutes per day minimum, without exception.',
+    num: '01', title: 'Acting as a Project Manager in Disguise',
+    desc: 'Tracking tasks, assigning work, and reporting status to management makes you a glorified PM — not a Scrum Master. Teams become dependent rather than self-organising, and you undermine the whole point of agile.',
+    fix: 'Ask: "Is the team doing this themselves?" If not, coach them to own it. Your job is to make your role unnecessary over time.',
   },
   {
-    num: '02', title: 'Treating Documentation as Optional',
-    desc: 'Solving the same problem four times because it was never documented wastes hours every week. Undocumented solutions exist only in one person\'s head — and walk out the door when they leave.',
-    fix: 'Write a KB article for every novel problem you solve. If it took more than 20 minutes to diagnose, document it. No exceptions.',
+    num: '02', title: 'Skipping Retrospectives When Things Are Busy',
+    desc: 'The retrospective is the most important ceremony in Scrum. Cancelling it when sprints are rough is like removing smoke detectors when there\'s a fire. It sends exactly the wrong message to the team.',
+    fix: 'Protect retros unconditionally. If you only have 30 minutes, run a 30-minute retro. The ceremony must happen every sprint.',
   },
   {
-    num: '03', title: 'Skipping the Networking Foundation',
-    desc: 'Most complex support issues — slow applications, connectivity failures, VPN problems, cloud service disruptions — have a network root cause. Technicians who can\'t read a ping output or trace a route are fundamentally limited.',
-    fix: 'Study subnetting until you can do it in your head. Complete Cisco\'s free NetAcad Networking Basics course alongside your A+ studies.',
+    num: '03', title: 'Giving Answers Instead of Asking Questions',
+    desc: 'When a Scrum Master solves problems for the team, the team learns nothing. Handing over solutions creates dependency and stunts the team\'s agile maturity — even when your answer is right.',
+    fix: 'Replace "Here\'s what you should do" with "What do you think the options are?" Coach first, advise only when necessary.',
   },
   {
-    num: '04', title: 'Never Learning PowerShell',
-    desc: 'Manually resetting 50 passwords or onboarding 30 users one by one is a wasted afternoon. A single PowerShell script does it in five minutes. Technicians without scripting skills hit a hard ceiling in any Microsoft environment.',
-    fix: 'Automate one repetitive task per month using PowerShell. Start with bulk user creation or automated disk space reporting.',
+    num: '04', title: 'Using Velocity as a Management Weapon',
+    desc: 'Sharing raw velocity data with management so they can compare or pressure teams destroys trust immediately. Velocity is a planning tool for the team — not a performance metric for executives.',
+    fix: 'Educate stakeholders on what velocity is and isn\'t. Share trend data and outcome metrics instead of raw sprint points.',
   },
   {
-    num: '05', title: 'Neglecting the User Relationship',
-    desc: 'IT support professionals who are technically brilliant but dismissive or impatient with users destroy team trust. The "I don\'t do hand-holding" attitude is career-limiting in any support function.',
-    fix: 'Treat every ticket as if a senior manager will read your notes later. Write updates in plain English. Follow up on closed tickets the next day.',
+    num: '05', title: 'Ignoring the Product Owner Relationship',
+    desc: 'A Scrum Master who only works with developers misses half the role. The PO relationship is equally critical — backlog health, story quality, and stakeholder alignment are all coaching opportunities.',
+    fix: 'Schedule regular 1-on-1s with your Product Owner. Coach them on backlog refinement, user story quality, and stakeholder management.',
   },
   {
-    num: '06', title: 'Working Without a Home Lab',
-    desc: 'Reading about Active Directory is not the same as breaking it and fixing it. Technicians with home lab experience solve unfamiliar problems faster and interview far better than those who only know production environments.',
-    fix: 'Build a free lab using VirtualBox and Windows Server evaluation images. Spend two hours per week deliberately breaking and fixing things.',
+    num: '06', title: 'Stopping at Scrum — Not Growing into Coaching',
+    desc: 'Pure ceremony facilitation is a junior skill. Mid-career Scrum Masters who don\'t develop coaching, change management, and scaled agile skills plateau quickly and find themselves passed over for senior roles.',
+    fix: 'Deliberately grow your coaching vocabulary. Study ICAgile, the Agile Coaching Growth Wheel, and at least one scaling framework deeply.',
   },
 ]
 
 const CAREER_CHANGE_PATHS = [
   {
-    from: 'Customer Service / Call Centre',
-    ease: 'Natural Fit', easeColor: '#0369a1', easeBg: '#eff6ff',
-    desc: 'You already have the most underrated skill in IT support: dealing with frustrated people calmly and professionally. Add the technical layer — A+ certification and a home lab — and you transition more smoothly than most.',
-    steps: ['Study CompTIA A+ (3–4 months of focused prep)', 'Build a free home lab with VirtualBox + Windows Server eval', 'Apply for Tier 1 help desk roles emphasising your customer skills', 'Earn Network+ within your first year to accelerate to Tier 2'],
+    from: 'Project Manager (Traditional)',
+    ease: 'Natural Fit', easeColor: '#0f766e', easeBg: '#f0fdfa',
+    desc: 'You already understand delivery cycles, stakeholder management, and risk. The shift to Scrum Master requires unlearning command-and-control and embracing servant leadership — but your planning instincts are a genuine asset.',
+    steps: ['Study the Scrum Guide deeply — compare it to PMP/PRINCE2', 'Get CSM or PSM I certification', 'Volunteer as SM on an internal agile pilot', 'Position yourself as a "PM turned SM" with transformation experience'],
   },
   {
-    from: 'General IT / Tech Hobbyist',
+    from: 'QA / Test Engineer',
     ease: 'Strong Fit', easeColor: '#16a34a', easeBg: '#f0fdf4',
-    desc: 'If you\'ve been building PCs, fixing family members\' computers, or tinkering with routers for fun — you have more practical experience than most candidates. Certify what you already know and document your lab work for interviews.',
-    steps: ['Convert your hobby experience into CompTIA A+ certification', 'Add structured enterprise skills: Active Directory, M365, Intune', 'Build a home lab simulating an enterprise environment', 'Target SME IT support roles where breadth beats depth'],
+    desc: 'Your technical credibility means developers respect you immediately. Quality mindset maps directly to Definition of Done coaching and acceptance criteria. Add facilitation skills and you become a highly effective engineering-focused SM.',
+    steps: ['Learn facilitation techniques from Liberating Structures', 'Get PSM I certification (Scrum.org)', 'Facilitate standups and retros on your current team', 'Target SM roles on technical/engineering-heavy teams'],
   },
   {
-    from: 'Business / Administrative Role',
+    from: 'HR / People Operations',
     ease: 'Very Achievable', easeColor: '#4f46e5', easeBg: '#eef2ff',
-    desc: 'Business acumen combined with IT skills is genuinely rare and valued in service desk management. Your understanding of how the business works — priorities, stakeholders, impact — makes you an unusually effective IT support professional.',
-    steps: ['Start with the Google IT Support Professional Certificate', 'Study for CompTIA A+ while working in your current role', 'Volunteer as informal IT contact in your current workplace', 'Apply to IT support roles in your current industry vertical'],
+    desc: 'Coaching, conflict resolution, and people development are already your strengths. You\'ll need to build agile framework knowledge and technical credibility — but your human skills make you a natural Agile Coach candidate.',
+    steps: ['Complete CSM + ICAgile ICP-ACC certifications', 'Shadow an existing Scrum Master for one quarter', 'Run retrospectives and team health assessments', 'Target HR-tech or people-ops teams where your background is valued'],
   },
   {
-    from: 'Other Background',
+    from: 'Developer / Tech Lead',
     ease: 'Achievable', easeColor: '#ea580c', easeBg: '#fff7ed',
-    desc: 'Domain expertise from healthcare, finance, legal, or education combined with IT support skills is extremely valuable in those verticals. Healthcare IT support, for example, pays a significant premium over general help desk roles.',
-    steps: ['Complete the Google IT Support Certificate (free/cheap)', 'Study A+ and N+ using Professor Messer\'s free courses', 'Target IT support roles in your previous industry', 'Leverage your domain knowledge as a differentiator in interviews'],
+    desc: 'Technical depth earns immediate developer respect. The challenge is shifting from solving technical problems to coaching people — from doing to enabling. Your engineering background makes you exceptional at technical debt and architecture conversations.',
+    steps: ['Deliberately practise restraint — coach, don\'t solve', 'Get PSM I or CSM and study coaching frameworks', 'Volunteer to facilitate ceremonies on your current team', 'Target developer-heavy product teams where your technical credibility is valued'],
   },
 ]
 
 const THIRTY_DAY_PLAN = [
-  { week: 'Week 1', theme: 'Foundation & Setup', color: '#0369a1', bg: '#eff6ff', days: [
-    { day: 'Day 1–2', task: 'Install VirtualBox. Set up a Windows 10 VM and a Windows Server 2019 eval VM. Get comfortable with the interface.' },
-    { day: 'Day 3–4', task: 'Begin Professor Messer\'s free CompTIA A+ Core 1 video series. Complete the hardware and components modules.' },
-    { day: 'Day 5–6', task: 'Configure a free ServiceNow Developer Instance or set up a Freshdesk free trial. Create your first mock tickets.' },
-    { day: 'Day 7', task: 'Research local IT support job listings. Identify the 5 most common tools and requirements in your target market.' },
+  { week: 'Week 1', theme: 'Foundation & Framework', color: '#0f766e', bg: '#f0fdfa', days: [
+    { day: 'Day 1–2', task: 'Read the Scrum Guide in full (scrumguides.org). Take notes on each event, artefact, and accountability. Re-read twice.' },
+    { day: 'Day 3–4', task: 'Study the Agile Manifesto and all 12 principles. Write one personal example for each principle from your current work.' },
+    { day: 'Day 5–6', task: 'Watch the Scrum.org introductory video series. Take the free Open Assessment on Scrum.org and aim for 85%+.' },
+    { day: 'Day 7', task: 'Create a one-page visual summary of the Scrum Framework from memory. Share it — teaching is the fastest path to understanding.' },
   ]},
-  { week: 'Week 2', theme: 'OS & Networking', color: '#16a34a', bg: '#f0fdf4', days: [
-    { day: 'Day 8–9', task: 'Windows Server lab: install Active Directory Domain Services, promote to domain controller, create 10 test users.' },
-    { day: 'Day 10–11', task: 'Networking fundamentals: study subnetting using the subnettingpractice.com tool. Do 30 minutes of subnetting drills per day.' },
-    { day: 'Day 12–13', task: 'Install Wireshark. Capture and analyse a DNS lookup, a ping, and a web page load. Understand what you\'re seeing.' },
-    { day: 'Day 14', task: 'CompTIA A+ Core 1 mock exam. Target 75%+. Identify knowledge gaps and revisit the weak sections.' },
+  { week: 'Week 2', theme: 'Facilitation Practice', color: '#16a34a', bg: '#f0fdf4', days: [
+    { day: 'Day 8–9', task: 'Study 5 retrospective formats (4Ls, KALM, Start-Stop-Continue, Sailboat, Mad-Sad-Glad). Design one and run it — even informally.' },
+    { day: 'Day 10–11', task: 'Learn 3 Liberating Structures techniques (1-2-4-All, Troika Consulting, What-So What-Now What). Practise in a real or simulated setting.' },
+    { day: 'Day 12–13', task: 'Volunteer to facilitate a meeting at work. Practise timekeeping, equal voice, and parking lot management. Gather feedback.' },
+    { day: 'Day 14', task: 'Set up Miro or Mural free account. Recreate a retrospective board digitally. Practice the facilitation flow for a remote team.' },
   ]},
-  { week: 'Week 3', theme: 'Cloud & Identity', color: '#4f46e5', bg: '#eef2ff', days: [
-    { day: 'Day 15–16', task: 'Create a free Microsoft 365 developer tenant. Set up users, assign licences, configure MFA. Simulate a real onboarding.' },
-    { day: 'Day 17–18', task: 'Complete the Microsoft Learn "Azure Fundamentals" learning path (AZ-900). It\'s free and takes about 10 hours.' },
-    { day: 'Day 19–20', task: 'Begin PowerShell: write scripts to create AD users in bulk, list all computers in the domain, and check disk space.' },
-    { day: 'Day 21', task: 'ITIL 4 Foundation overview: watch the free YouTube overview by AXELOS. Understand the core concepts and vocabulary.' },
+  { week: 'Week 3', theme: 'Coaching & Tools', color: '#4f46e5', bg: '#eef2ff', days: [
+    { day: 'Day 15–16', task: 'Study the GROW coaching model and practice "powerful questions." Coach a colleague through a work problem using only questions.' },
+    { day: 'Day 17–18', task: 'Create a free Jira project. Build a product backlog with user stories, acceptance criteria, story points, and a sprint board.' },
+    { day: 'Day 19–20', task: 'Study velocity, burndown charts, and cycle time. Pull data from any project tool you have access to and produce a sprint health report.' },
+    { day: 'Day 21', task: 'Review the PSM I exam syllabus. Complete two practice exams on Scrum.org. Identify knowledge gaps and address them.' },
   ]},
-  { week: 'Week 4', theme: 'Polish & Apply', color: '#ea580c', bg: '#fff7ed', days: [
-    { day: 'Day 22–24', task: 'Build your IT support portfolio: document 3 lab scenarios with screenshots, problem descriptions, and step-by-step resolutions.' },
-    { day: 'Day 25–26', task: 'Rewrite your CV with IT language. List your home lab setup, tools used, and the specific skills you\'ve demonstrated.' },
-    { day: 'Day 27–28', task: 'Book your CompTIA A+ Core 1 exam date. Having a real target date forces productive study. Schedule Core 2 for 6 weeks after.' },
-    { day: 'Day 29–30', task: 'Apply to 5 junior IT support or help desk roles. Customise each CV. Follow up with a connection request to the hiring manager on LinkedIn.' },
+  { week: 'Week 4', theme: 'Certify & Apply', color: '#ea580c', bg: '#fff7ed', days: [
+    { day: 'Day 22–24', task: 'Book and take the PSM I exam (Scrum.org — $150). Target 85%+ to earn the certification. Study any gaps from your practice exams.' },
+    { day: 'Day 25–26', task: 'Update your LinkedIn profile to reflect your SM journey. Write a post sharing your certification and what you learned.' },
+    { day: 'Day 27–28', task: 'Draft your SM CV. Highlight any facilitation, coaching, team leadership, or project experience as relevant agile experience.' },
+    { day: 'Day 29–30', task: 'Apply to 5 junior Scrum Master or Agile Coordinator roles. Join the Scrum Alliance and r/scrum communities. Start networking actively.' },
   ]},
 ]
 
@@ -398,7 +398,7 @@ const TOC_ITEMS = [
   { num: '16', label: 'Final Thoughts' },
 ]
 
-/* ─── SHARE BAR ─────────────────────────────────────────────────────────────── */
+/* ─── SHARE BAR ───────────────────────────────────────────────────────────── */
 function ShareBar() {
   const [copied, setCopied] = useState(false)
   const handleCopy = () => {
@@ -406,7 +406,7 @@ function ShareBar() {
   }
   const handleShare = async () => {
     if (navigator.share) {
-      try { await navigator.share({ title: 'Help Desk & IT Support Career Roadmap 2026', text: 'Complete step-by-step roadmap to become an IT Support Specialist in 2026', url: window.location.href }) }
+      try { await navigator.share({ title: 'Scrum Master / Agile Coach Career Roadmap 2026', text: 'Complete step-by-step roadmap to become a Scrum Master / Agile Coach in 2026', url: window.location.href }) }
       catch (_) {}
     } else { handleCopy() }
   }
@@ -424,13 +424,13 @@ function ShareBar() {
       </button>
       <div className="flex items-center gap-2 px-3 py-2 rounded-xl text-xs font-mono truncate max-w-xs" style={{ background: '#f1f5f9', color: C.textMuted, border: `1px solid ${C.border}` }}>
         <Link2 size={11} style={{ color: C.textFaint, flexShrink: 0 }} />
-        <span className="truncate">{typeof window !== 'undefined' ? window.location.href : '/roadmaps/help-desk-it-support'}</span>
+        <span className="truncate">{typeof window !== 'undefined' ? window.location.href : '/roadmaps/scrum-master'}</span>
       </div>
     </div>
   )
 }
 
-/* ─── SECTION HEADER ──────────────────────────────────────────────────────── */
+/* ─── SECTION HEADER ─────────────────────────────────────────────────────── */
 function SectionHeader({ icon, title, subtitle, iconBg, iconColor }: { icon: React.ReactNode; title: string; subtitle: string; iconBg: string; iconColor: string }) {
   return (
     <div className="flex items-center gap-4 mb-10">
@@ -458,7 +458,7 @@ function useFade() {
 }
 
 /* ─── PAGE ────────────────────────────────────────────────────────────────── */
-export default function HelpDeskITSupportRoadmapPage() {
+export default function ScrumMasterRoadmapPage() {
   const progressRef = useRef<HTMLDivElement>(null)
   const tlSectionRef = useRef<HTMLElement>(null)
   const barsContainerRef = useRef<HTMLDivElement>(null)
@@ -509,22 +509,22 @@ export default function HelpDeskITSupportRoadmapPage() {
       <div className="relative w-full" style={{ background: C.bg }}>
         <div className="relative w-full overflow-hidden" style={{ height: '100vh', minHeight: 600 }}>
           <img
-            src="https://i.imgur.com/6rBm8j5.jpeg"
-            alt="IT Support technician at service desk"
+            src="https://i.imgur.com/hyv0AoI.jpeg"
+            alt="Scrum Master agile team collaboration"
             className="w-full h-full object-cover object-center block"
-            style={{ filter: 'saturate(0.45) brightness(1.1) hue-rotate(190deg)' }}
+            style={{ filter: 'saturate(0.55) brightness(1.05)' }}
           />
           <div className="absolute inset-0" style={{ background: 'linear-gradient(to bottom, rgba(255,255,255,0) 45%, rgba(255,255,255,0.75) 72%, rgba(255,255,255,1) 88%)' }} />
           <div className="absolute bottom-0 left-0 right-0 z-10">
             <div className="max-w-4xl mx-auto px-8 pb-12">
               <div className="inline-flex items-center gap-1.5 rounded-full px-3.5 py-1 mb-3 text-xs font-semibold" style={{ background: C.primaryLight, color: C.primary }}>
-                <Headphones size={12} /> Customer IT Support & Service Desk
+                <Users size={12} /> Agile & Delivery Leadership
               </div>
               <h1 className="font-extrabold leading-tight mb-2" style={{ fontFamily: 'Syne, sans-serif', fontSize: 'clamp(2.2rem, 5vw, 3.6rem)', color: '#0f172a', letterSpacing: '-0.03em' }}>
-                Help Desk & IT Support
+                Scrum Master / Agile Coach
               </h1>
               <span className="block font-normal mb-3" style={{ fontFamily: 'Syne, sans-serif', fontSize: 'clamp(0.95rem, 1.8vw, 1.2rem)', color: C.textMuted }}>
-                Career Roadmap 2026 — Technician · Specialist · Analyst · Manager
+                Career Roadmap 2026
               </span>
               <div className="flex items-center gap-4">
                 <div className="flex items-center gap-1.5 text-sm" style={{ color: C.textMuted }}><Clock size={14} style={{ color: C.textFaint }} /> 20 min read</div>
@@ -535,7 +535,7 @@ export default function HelpDeskITSupportRoadmapPage() {
         </div>
         <div className="max-w-4xl mx-auto px-8 pt-6 pb-16">
           <p className="text-base leading-relaxed" style={{ color: '#4b5563', maxWidth: 560, marginLeft: 140 }}>
-            Be the person who keeps every organisation running. IT support professionals solve real problems for real people every day — and use that experience as the launchpad to every specialisation in technology.
+            Make teams extraordinary. Scrum Masters and Agile Coaches serve the people who build the product — removing obstacles, designing better ways of working, and driving the culture change that makes great delivery possible.
           </p>
           <div className="h-px mt-10" style={{ background: C.border }} />
         </div>
@@ -562,10 +562,10 @@ export default function HelpDeskITSupportRoadmapPage() {
       <section className="border-b" style={{ ...sectionStyle, background: C.bg }}>
         <div className="max-w-4xl mx-auto px-8">
           <div ref={whatRef}>
-            <SectionHeader icon={<Layers size={22} />} title="What This Career Is" subtitle="The roles, responsibilities, and scope of IT Support" iconBg={C.primaryLight} iconColor={C.primary} />
-            <div className="rounded-2xl p-6 mb-8 border" style={{ background: '#eff6ff', borderColor: 'rgba(3,105,161,0.2)' }}>
+            <SectionHeader icon={<Layers size={22} />} title="What This Career Is" subtitle="The role, responsibilities, and scope of the Scrum Master / Agile Coach" iconBg={C.primaryLight} iconColor={C.primary} />
+            <div className="rounded-2xl p-6 mb-8 border" style={{ background: '#f0fdfa', borderColor: 'rgba(15,118,110,0.2)' }}>
               <p className="text-base leading-relaxed" style={{ color: '#374151' }}>
-                <strong style={{ color: C.primary }}>IT Support & Help Desk professionals</strong> are the operational backbone of every technology-dependent organisation. Whether operating as a Help Desk Technician handling first-call resolution, an IT Support Specialist owning complex escalations, a Service Desk Analyst driving process improvement, or a Customer IT Support Engineer building long-term user relationships — these roles ensure that technology serves people, not the other way around.
+                A <strong style={{ color: C.primary }}>Scrum Master / Agile Coach</strong> is a servant leader whose job is to make teams more effective, organisations more adaptive, and delivery more predictable. Unlike project managers who direct work, Scrum Masters facilitate process, remove obstacles, coach people, and champion agile values — creating the conditions where great engineering teams do their best work.
               </p>
             </div>
             <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
@@ -589,7 +589,7 @@ export default function HelpDeskITSupportRoadmapPage() {
       <section className="border-b" style={{ ...sectionStyle, background: '#f8f9ff' }}>
         <div className="max-w-4xl mx-auto px-8">
           <div ref={whyRef}>
-            <SectionHeader icon={<Flame size={22} />} title="Why Choose This Career" subtitle="Six compelling reasons IT Support could be your best move" iconBg={C.orangeLight} iconColor={C.orange} />
+            <SectionHeader icon={<Flame size={22} />} title="Why Choose This Career" subtitle="Six compelling reasons the Scrum Master path could be your best move" iconBg={C.orangeLight} iconColor={C.orange} />
             <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
               {WHY_REASONS.map(r => (
                 <div key={r.title} className="rounded-2xl p-5 border transition-all duration-200 hover:-translate-y-0.5 hover:shadow-md" style={{ background: C.bg, borderColor: C.border }}>
@@ -611,13 +611,13 @@ export default function HelpDeskITSupportRoadmapPage() {
       <section className="border-b" style={{ ...sectionStyle, background: C.bg }}>
         <div className="max-w-4xl mx-auto px-8">
           <div ref={dayRef}>
-            <SectionHeader icon={<Briefcase size={22} />} title="A Day in the Life" subtitle="What a typical IT Support professional's workday looks like" iconBg={C.indigoLight} iconColor={C.indigo} />
+            <SectionHeader icon={<Briefcase size={22} />} title="A Day in the Life" subtitle="What a typical Scrum Master workday looks like" iconBg={C.indigoLight} iconColor={C.indigo} />
             <div className="grid gap-7" style={{ gridTemplateColumns: '1fr 260px' }}>
               <div>
                 <p className="text-sm font-semibold mb-4" style={{ fontFamily: 'Syne, sans-serif', color: C.textMuted }}>Typical Daily Schedule</p>
                 {SCHEDULE.map(item => (
                   <div key={item.time} className="flex items-start gap-3.5 rounded-2xl p-4 border mb-2.5 transition-all duration-200" style={{ background: C.bg, borderColor: C.border }}
-                    onMouseEnter={e => { (e.currentTarget as HTMLElement).style.borderColor = 'rgba(3,105,161,0.3)'; (e.currentTarget as HTMLElement).style.background = '#eff6ff' }}
+                    onMouseEnter={e => { (e.currentTarget as HTMLElement).style.borderColor = 'rgba(15,118,110,0.3)'; (e.currentTarget as HTMLElement).style.background = '#f0fdfa' }}
                     onMouseLeave={e => { (e.currentTarget as HTMLElement).style.borderColor = C.border; (e.currentTarget as HTMLElement).style.background = C.bg }}>
                     <div className="w-9 h-9 rounded-xl flex items-center justify-center flex-shrink-0" style={{ background: C.primaryLight, color: C.primary }}>{item.icon}</div>
                     <div className="flex-1 min-w-0">
@@ -670,7 +670,7 @@ export default function HelpDeskITSupportRoadmapPage() {
           <div ref={tlRef}>
             <SectionHeader icon={<Clock size={22} />} title="Career Timeline" subtitle="Time estimates and salary ranges for each level" iconBg={C.indigoLight} iconColor={C.indigo} />
             <div className="mb-10">
-              <div className="flex justify-between text-xs mb-2.5" style={{ color: C.textMuted }}><span>Career Progression</span><span>Technician → IT Manager</span></div>
+              <div className="flex justify-between text-xs mb-2.5" style={{ color: C.textMuted }}><span>Career Progression</span><span>Junior SM → Agile Coach</span></div>
               <div className="h-1.5 rounded-full overflow-hidden" style={{ background: '#e2e8f0' }}>
                 <div ref={progressRef} className="h-1.5 rounded-full" style={{ width: '0%', background: 'linear-gradient(90deg, #0891b2 0%, #16a34a 33%, #7c3aed 66%, #ea580c 100%)' }} />
               </div>
@@ -701,8 +701,8 @@ export default function HelpDeskITSupportRoadmapPage() {
           <SectionHeader icon={<Target size={22} />} title="Step-by-Step Roadmap" subtitle="Your path from complete beginner to job-ready" iconBg={C.primaryLight} iconColor={C.primary} />
           <div className="relative flex flex-col items-center">
             {ROADMAP_STEPS.map((s, i) => {
-              const icons = ['💻', '🌐', '🏢', '📋', '🔐', '⚡']
-              const accentColors = ['#0369a1', '#16a34a', '#0369a1', '#16a34a', '#0369a1', '#16a34a']
+              const icons = ['📋', '🗣️', '🗂️', '📊', '🤝', '🏢']
+              const accentColors = ['#0f766e', '#16a34a', '#0f766e', '#16a34a', '#0f766e', '#16a34a']
               const accent = accentColors[i]; const isLast = i === ROADMAP_STEPS.length - 1; const isEven = i % 2 === 0
               return (
                 <div key={s.step} className="w-full flex flex-col items-center">
@@ -748,11 +748,11 @@ export default function HelpDeskITSupportRoadmapPage() {
                 </div>
               )
             })}
-            <div className="w-full rounded-3xl mt-2 py-8 px-8 text-center" style={{ background: `linear-gradient(135deg, ${C.primary} 0%, ${C.indigo} 100%)`, boxShadow: '0 8px 48px rgba(3,105,161,0.25)' }}>
+            <div className="w-full rounded-3xl mt-2 py-8 px-8 text-center" style={{ background: `linear-gradient(135deg, ${C.primary} 0%, ${C.indigo} 100%)`, boxShadow: '0 8px 48px rgba(15,118,110,0.25)' }}>
               <div className="text-4xl mb-3">🏆</div>
               <div className="font-extrabold text-white mb-1" style={{ fontFamily: 'Syne, sans-serif', fontSize: 'clamp(1.3rem, 3vw, 1.8rem)' }}>GO FROM ZERO to</div>
               <div className="font-extrabold mb-4" style={{ fontFamily: 'Syne, sans-serif', fontSize: 'clamp(1.3rem, 3vw, 1.8rem)', color: 'rgba(255,255,255,0.75)' }}>JOB-READY IN 2026</div>
-              <div className="text-sm" style={{ color: 'rgba(255,255,255,0.6)' }}>8–12 months · Consistent daily study · Certify as you learn</div>
+              <div className="text-sm" style={{ color: 'rgba(255,255,255,0.6)' }}>8–12 months · Consistent daily practice · Facilitate real teams from day one</div>
             </div>
           </div>
           <ShareBar />
@@ -770,7 +770,7 @@ export default function HelpDeskITSupportRoadmapPage() {
                   <div className="w-9 h-9 rounded-xl flex items-center justify-center" style={{ background: C.indigoLight }}><Code size={16} style={{ color: C.indigo }} /></div>
                   <div>
                     <div className="text-base font-bold" style={{ fontFamily: 'Syne, sans-serif', color: C.text }}>Hard Skills</div>
-                    <div className="text-xs mt-0.5" style={{ color: C.textMuted }}>Technical competencies required</div>
+                    <div className="text-xs mt-0.5" style={{ color: C.textMuted }}>Framework and tooling competencies required</div>
                   </div>
                 </div>
                 <div ref={barsContainerRef}>
@@ -792,7 +792,7 @@ export default function HelpDeskITSupportRoadmapPage() {
                   <div className="w-9 h-9 rounded-xl flex items-center justify-center" style={{ background: C.primaryLight }}><MessageSquare size={16} style={{ color: C.primary }} /></div>
                   <div>
                     <div className="text-base font-bold" style={{ fontFamily: 'Syne, sans-serif', color: C.text }}>Soft Skills</div>
-                    <div className="text-xs mt-0.5" style={{ color: C.textMuted }}>Interpersonal abilities to build</div>
+                    <div className="text-xs mt-0.5" style={{ color: C.textMuted }}>Human abilities to build and sharpen</div>
                   </div>
                 </div>
                 {SOFT_SKILLS.map(s => (
@@ -865,9 +865,9 @@ export default function HelpDeskITSupportRoadmapPage() {
       <section className="border-b" style={{ ...sectionStyle, background: C.bg }}>
         <div className="max-w-4xl mx-auto px-8">
           <div ref={aiRef}>
-            <SectionHeader icon={<Sparkles size={22} />} title="AI-Enhanced Roadmap" subtitle="How AI is transforming IT Support in 2026" iconBg={C.primaryLight} iconColor={C.primary} />
-            <div className="rounded-2xl p-5 mb-7 text-sm leading-relaxed border" style={{ background: '#eff6ff', borderColor: 'rgba(3,105,161,0.2)', color: C.textMuted }}>
-              AI tools don't replace IT support professionals — they <em style={{ color: C.primary }}>amplify</em> them. Support teams using AI-assisted ticket resolution and automation handle 40–60% more tickets with the same headcount — freeing senior staff for complex incidents and strategic projects.
+            <SectionHeader icon={<Sparkles size={22} />} title="AI-Enhanced Roadmap" subtitle="How AI is transforming the Scrum Master / Agile Coach role in 2026" iconBg={C.primaryLight} iconColor={C.primary} />
+            <div className="rounded-2xl p-5 mb-7 text-sm leading-relaxed border" style={{ background: '#f0fdfa', borderColor: 'rgba(15,118,110,0.2)', color: C.textMuted }}>
+              AI tools don't replace Scrum Masters — they <em style={{ color: C.primary }}>free them</em>. When AI handles retrospective data synthesis, sprint analytics, and survey reporting, Scrum Masters spend more time on what machines cannot do: coaching humans, building trust, and navigating organisational complexity.
             </div>
             <div className="grid grid-cols-1 md:grid-cols-3 gap-4 mb-9">
               {AI_IMPACTS.map(item => (
@@ -935,7 +935,7 @@ export default function HelpDeskITSupportRoadmapPage() {
           <div ref={salaryRef}>
             <SectionHeader icon={<DollarSign size={22} />} title="Salary" subtitle="What you can realistically earn at each stage" iconBg={C.greenLight} iconColor={C.green} />
             <div className="rounded-2xl p-6 mb-6 border" style={{ background: '#f0fdf4', borderColor: 'rgba(22,163,74,0.2)' }}>
-              <p className="text-sm leading-relaxed" style={{ color: C.textMuted }}>Figures reflect South African total compensation. Sectors like financial services, mining, and large enterprise consistently pay 20–35% above these benchmarks for senior IT support professionals.</p>
+              <p className="text-sm leading-relaxed" style={{ color: C.textMuted }}>Figures reflect South African total compensation. Global remote contracts — especially for senior Agile Coach and Head of Agile roles — can pay 2–3× these figures in USD.</p>
             </div>
             <div className="space-y-4">
               {SALARY_DATA.map(row => (
@@ -948,14 +948,14 @@ export default function HelpDeskITSupportRoadmapPage() {
                     <span className="text-sm font-bold" style={{ color: row.color }}>{row.range}</span>
                   </div>
                   <div className="h-2.5 rounded-full overflow-hidden" style={{ background: '#e2e8f0' }}>
-                    <div className="h-2.5 rounded-full" style={{ width: `${(row.midpoint / 1500) * 100}%`, background: row.color }} />
+                    <div className="h-2.5 rounded-full" style={{ width: `${(row.midpoint / 3200) * 100}%`, background: row.color }} />
                   </div>
                 </div>
               ))}
             </div>
-            <div className="mt-6 rounded-2xl p-5 border" style={{ background: '#eff6ff', borderColor: 'rgba(3,105,161,0.2)' }}>
+            <div className="mt-6 rounded-2xl p-5 border" style={{ background: '#f0fdfa', borderColor: 'rgba(15,118,110,0.2)' }}>
               <p className="text-xs leading-relaxed" style={{ color: C.textMuted }}>
-                <strong style={{ color: C.primary }}>Pro tip:</strong> ITIL certification, PowerShell scripting skills, and Microsoft 365 administration experience consistently command a 15–25% salary premium over uncertified peers at the same experience level. Certifications are not optional — they are the salary lever in IT support.
+                <strong style={{ color: C.primary }}>Pro tip:</strong> Agile Coaches at product-led companies and digital transformation consultancies earn significantly more than internal SMs at traditional organisations. Target companies actively undergoing agile transformation — that's where coaching is a competitive advantage.
               </p>
             </div>
           </div>
@@ -966,7 +966,7 @@ export default function HelpDeskITSupportRoadmapPage() {
       <section className="border-b" style={{ ...sectionStyle, background: '#f8f9ff' }}>
         <div className="max-w-4xl mx-auto px-8">
           <div ref={mistakesRef}>
-            <SectionHeader icon={<AlertTriangle size={22} />} title="Common Mistakes" subtitle="Avoid the traps that slow down most aspiring IT support professionals" iconBg={C.orangeLight} iconColor={C.orange} />
+            <SectionHeader icon={<AlertTriangle size={22} />} title="Common Mistakes" subtitle="Avoid the traps that slow down most aspiring Scrum Masters" iconBg={C.orangeLight} iconColor={C.orange} />
             <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
               {MISTAKES.map(m => (
                 <div key={m.num} className="rounded-2xl p-5 border transition-all duration-200 hover:shadow-md" style={{ background: C.bg, borderColor: C.border }}>
@@ -992,7 +992,7 @@ export default function HelpDeskITSupportRoadmapPage() {
       <section className="border-b" style={{ ...sectionStyle, background: C.bg }}>
         <div className="max-w-4xl mx-auto px-8">
           <div ref={changeRef}>
-            <SectionHeader icon={<RefreshCw size={22} />} title="Career Change Guide" subtitle="How to break into IT Support from your current background" iconBg={C.primaryLight} iconColor={C.primary} />
+            <SectionHeader icon={<RefreshCw size={22} />} title="Career Change Guide" subtitle="How to break into Scrum Master / Agile Coaching from your current background" iconBg={C.primaryLight} iconColor={C.primary} />
             <div className="grid grid-cols-1 md:grid-cols-2 gap-5">
               {CAREER_CHANGE_PATHS.map(path => (
                 <div key={path.from} className="rounded-2xl p-6 border" style={{ background: path.easeBg, borderColor: `${path.easeColor}20` }}>
@@ -1049,7 +1049,7 @@ export default function HelpDeskITSupportRoadmapPage() {
       <section className="border-b" style={{ ...sectionStyle, background: C.bg }}>
         <div className="max-w-4xl mx-auto px-8">
           <div ref={vidsRef}>
-            <SectionHeader icon={<Play size={22} />} title="Video Resources" subtitle="Learn from the best educators in IT Support" iconBg={C.redLight} iconColor={C.red} />
+            <SectionHeader icon={<Play size={22} />} title="Video Resources" subtitle="Learn from the best educators in Agile & Scrum" iconBg={C.redLight} iconColor={C.red} />
             <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
               {VIDEOS.map(v => (
                 <div key={v.id} className="rounded-2xl overflow-hidden border transition-all duration-200" style={{ background: '#f8f9ff', borderColor: C.border }}
@@ -1088,10 +1088,10 @@ export default function HelpDeskITSupportRoadmapPage() {
             <SectionHeader icon={<Award size={22} />} title="Final Thoughts" subtitle="What we want you to take away from this guide" iconBg={C.primaryLight} iconColor={C.primary} />
             <div className="rounded-2xl p-6 border mb-8" style={{ background: C.bg, borderColor: C.border }}>
               <p className="text-base leading-relaxed mb-4" style={{ color: '#374151' }}>
-                IT support is <strong style={{ color: C.primary }}>where technology careers begin and where great careers are built</strong>. The help desk is not a waiting room for a "real" IT job — it is the most complete technology education available. In a single year, a driven help desk technician encounters more real-world IT problems than most CS graduates see in three years of lectures.
+                The Scrum Master is one of the most <strong style={{ color: C.primary }}>underestimated roles in technology</strong>. When done well, it transforms the way teams work — creating the safety, clarity, and momentum that turns a group of individuals into a high-performing unit. When done poorly, it becomes an expensive meeting-scheduling service.
               </p>
               <p className="text-base leading-relaxed" style={{ color: '#374151' }}>
-                The professionals who thrive here are those who treat every ticket as a learning opportunity, every user as a valued customer, and every certification as a commitment to excellence. The field rewards curiosity, consistency, and care — and it rewards them generously.
+                The path from junior SM to senior Agile Coach is a journey of continuous human growth. The frameworks are learnable in weeks — but the coaching, the facilitation mastery, and the organisational wisdom take years to build. Start with the Scrum Guide. Then go coach a real team.
               </p>
             </div>
             <div className="grid grid-cols-1 gap-3">
@@ -1117,7 +1117,7 @@ export default function HelpDeskITSupportRoadmapPage() {
             Ready to Start Your Journey?
           </h2>
           <p className="text-sm mb-10 mx-auto leading-relaxed" style={{ color: 'rgba(255,255,255,0.65)', maxWidth: 440 }}>
-            You have the roadmap. You have the resources. You have the 30-day plan. All that's left is to open your browser, register for CompTIA A+, and take the first step.
+            You have the roadmap. You have the resources. You have the 30-day plan. All that's left is to open the Scrum Guide and facilitate your first retrospective.
           </p>
           <div className="flex flex-wrap justify-center gap-3.5">
             <Link to="/roadmaps" className="inline-flex items-center gap-2 rounded-xl px-7 py-3.5 font-bold text-sm no-underline" style={{ fontFamily: 'Syne, sans-serif', background: '#fff', color: C.primary }}>
@@ -1127,7 +1127,7 @@ export default function HelpDeskITSupportRoadmapPage() {
               Get Career Advice
             </a>
           </div>
-          <p className="text-xs mt-5" style={{ color: 'rgba(255,255,255,0.35)' }}>Start studying today. Your future self will thank you.</p>
+          <p className="text-xs mt-5" style={{ color: 'rgba(255,255,255,0.35)' }}>Start serving teams today. Your future self will thank you.</p>
         </div>
         <ShareBar />
       </div>

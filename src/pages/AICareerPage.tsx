@@ -1,7 +1,10 @@
 import React, { useState, useRef } from 'react';
+import { Link } from 'react-router-dom';
 import { motion, useInView, AnimatePresence } from 'framer-motion';
-import { TrendingUp } from 'lucide-react';
-import { Navbar } from '../components/Navbar';   // ← shared Navbar
+import { X } from 'lucide-react';
+import { Navbar }    from '../components/Navbar';
+import { Footer }    from '../components/Footer';
+import { saveEmail } from '../services/emailService'; // ← NEW: Firebase helper
 
 // ════════════════════════════════════════════════════════════════
 //  TYPES
@@ -131,12 +134,105 @@ const tools: Tool[] = [
 //  STATUS CONFIG
 // ════════════════════════════════════════════════════════════════
 
-const statusConfig: Record<Career['status'], { label: string; dot: string; bg: string; border: string; text: string }> = {
+const statusConfig: Record<
+  Career['status'],
+  { label: string; dot: string; bg: string; border: string; text: string }
+> = {
   thriving:  { label: 'Thriving',  dot: '#10b981', bg: '#f0fdf4', border: '#bbf7d0', text: '#065f46' },
   resilient: { label: 'Resilient', dot: '#0ea5e9', bg: '#f0f9ff', border: '#bae6fd', text: '#0c4a6e' },
   evolving:  { label: 'Evolving',  dot: '#f59e0b', bg: '#fffbeb', border: '#fde68a', text: '#78350f' },
   atrisk:    { label: 'At Risk',   dot: '#ef4444', bg: '#fef2f2', border: '#fecaca', text: '#7f1d1d' },
 };
+
+// ════════════════════════════════════════════════════════════════
+//  VIDEO MODAL
+// ════════════════════════════════════════════════════════════════
+
+const OVERVIEW_VIDEO_URL = 'https://www.youtube.com/embed/AD6H5GKE4U4?autoplay=1';
+
+interface VideoModalProps {
+  onClose: () => void;
+}
+
+const VideoModal: React.FC<VideoModalProps> = ({ onClose }) => (
+  <AnimatePresence>
+    <motion.div
+      key="backdrop"
+      initial={{ opacity: 0 }}
+      animate={{ opacity: 1 }}
+      exit={{ opacity: 0 }}
+      onClick={onClose}
+      style={{
+        position: 'fixed', inset: 0, zIndex: 1000,
+        background: 'rgba(0,0,0,0.82)',
+        display: 'flex', alignItems: 'center', justifyContent: 'center',
+        padding: '20px',
+      }}
+    >
+      <motion.div
+        key="modal"
+        initial={{ opacity: 0, scale: 0.93, y: 20 }}
+        animate={{ opacity: 1, scale: 1, y: 0 }}
+        exit={{ opacity: 0, scale: 0.93, y: 20 }}
+        transition={{ duration: 0.3, ease: [0.22, 1, 0.36, 1] }}
+        onClick={(e: React.MouseEvent) => e.stopPropagation()}
+        style={{
+          background: '#111827',
+          borderRadius: 20,
+          overflow: 'hidden',
+          width: '100%',
+          maxWidth: 860,
+          boxShadow: '0 32px 80px rgba(0,0,0,0.6)',
+          position: 'relative',
+        }}
+      >
+        <button
+          onClick={onClose}
+          style={{
+            position: 'absolute', top: 14, right: 14, zIndex: 10,
+            width: 36, height: 36, borderRadius: '50%',
+            background: 'rgba(255,255,255,0.12)',
+            border: '1px solid rgba(255,255,255,0.2)',
+            display: 'flex', alignItems: 'center', justifyContent: 'center',
+            cursor: 'pointer', color: '#fff', transition: 'background 0.2s',
+          }}
+          aria-label="Close video"
+        >
+          <X size={16} />
+        </button>
+
+        <div style={{ padding: '20px 24px 0', display: 'flex', alignItems: 'center', gap: 10 }}>
+          <div style={{
+            width: 8, height: 8, borderRadius: '50%', background: '#10b981',
+            animation: 'pulse-dot 2s ease-in-out infinite',
+          }} />
+          <span style={{ fontSize: 11, fontWeight: 700, color: 'rgba(255,255,255,0.5)', letterSpacing: 1.4, textTransform: 'uppercase' }}>
+            AI Career Overview
+          </span>
+        </div>
+        <div style={{ padding: '10px 24px 16px' }}>
+          <h3 style={{ fontSize: 18, fontWeight: 800, color: '#fff', margin: 0 }}>
+            The AI Revolution — What It Means for Your Career
+          </h3>
+        </div>
+
+        <div style={{ position: 'relative', paddingBottom: '56.25%', height: 0, background: '#000' }}>
+          <iframe
+            src={OVERVIEW_VIDEO_URL}
+            title="AI Career Overview"
+            allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
+            allowFullScreen
+            style={{
+              position: 'absolute', top: 0, left: 0,
+              width: '100%', height: '100%',
+              border: 'none',
+            }}
+          />
+        </div>
+      </motion.div>
+    </motion.div>
+  </AnimatePresence>
+);
 
 // ════════════════════════════════════════════════════════════════
 //  SUB-COMPONENTS
@@ -150,16 +246,27 @@ const SkillRow: React.FC<{ s: Skill; i: number }> = ({ s, i }) => {
       <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: 8 }}>
         <div style={{ display: 'flex', alignItems: 'center', gap: 8, flexWrap: 'wrap' }}>
           <span style={{ fontSize: 14, fontWeight: 700, color: '#111827' }}>{s.name}</span>
-          <span style={{ fontSize: 11, fontWeight: 600, color: s.color, background: s.color + '14', border: `1px solid ${s.color}30`, padding: '2px 9px', borderRadius: 99 }}>{s.tag}</span>
+          <span style={{
+            fontSize: 11, fontWeight: 600, color: s.color,
+            background: s.color + '14', border: `1px solid ${s.color}30`,
+            padding: '2px 9px', borderRadius: 99,
+          }}>
+            {s.tag}
+          </span>
         </div>
-        <span style={{ fontSize: 14, fontWeight: 800, color: s.color, marginLeft: 8, whiteSpace: 'nowrap' }}>{s.pct}%</span>
+        <span style={{ fontSize: 14, fontWeight: 800, color: s.color, marginLeft: 8, whiteSpace: 'nowrap' }}>
+          {s.pct}%
+        </span>
       </div>
       <div style={{ height: 8, background: '#f1f5f9', borderRadius: 99, overflow: 'hidden' }}>
         <motion.div
           initial={{ width: 0 }}
           animate={inView ? { width: `${s.pct}%` } : {}}
           transition={{ duration: 1.3, delay: i * 0.1, ease: [0.22, 1, 0.36, 1] }}
-          style={{ height: '100%', borderRadius: 99, background: `linear-gradient(90deg, ${s.color}99, ${s.color})` }}
+          style={{
+            height: '100%', borderRadius: 99,
+            background: `linear-gradient(90deg, ${s.color}99, ${s.color})`,
+          }}
         />
       </div>
     </div>
@@ -170,7 +277,7 @@ const CareerCard: React.FC<{ c: Career; index: number }> = ({ c, index }) => {
   const ref = useRef<HTMLDivElement>(null);
   const inView = useInView(ref, { once: true });
   const cfg = statusConfig[c.status];
-  const [hov, setHov] = useState(false);
+  const [hov, setHov] = useState<boolean>(false);
   return (
     <motion.div
       ref={ref}
@@ -190,7 +297,11 @@ const CareerCard: React.FC<{ c: Career; index: number }> = ({ c, index }) => {
     >
       <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'flex-start', marginBottom: 12 }}>
         <div style={{ display: 'flex', alignItems: 'center', gap: 10 }}>
-          <div style={{ width: 42, height: 42, borderRadius: 12, background: cfg.bg, border: `1px solid ${cfg.border}`, display: 'flex', alignItems: 'center', justifyContent: 'center', fontSize: 20 }}>
+          <div style={{
+            width: 42, height: 42, borderRadius: 12,
+            background: cfg.bg, border: `1px solid ${cfg.border}`,
+            display: 'flex', alignItems: 'center', justifyContent: 'center', fontSize: 20,
+          }}>
             {c.emoji}
           </div>
           <div>
@@ -198,8 +309,14 @@ const CareerCard: React.FC<{ c: Career; index: number }> = ({ c, index }) => {
             <p style={{ fontSize: 12, color: '#10b981', fontWeight: 600, margin: '2px 0 0' }}>{c.salary}</p>
           </div>
         </div>
-        <span style={{ fontSize: 10, fontWeight: 700, padding: '3px 10px', borderRadius: 99, background: cfg.bg, color: cfg.text, border: `1px solid ${cfg.border}`, whiteSpace: 'nowrap' }}>
-          <span style={{ display: 'inline-block', width: 6, height: 6, borderRadius: '50%', background: cfg.dot, marginRight: 5, verticalAlign: 'middle' }} />
+        <span style={{
+          fontSize: 10, fontWeight: 700, padding: '3px 10px', borderRadius: 99,
+          background: cfg.bg, color: cfg.text, border: `1px solid ${cfg.border}`, whiteSpace: 'nowrap',
+        }}>
+          <span style={{
+            display: 'inline-block', width: 6, height: 6, borderRadius: '50%',
+            background: cfg.dot, marginRight: 5, verticalAlign: 'middle',
+          }} />
           {cfg.label}
         </span>
       </div>
@@ -213,7 +330,11 @@ const CareerCard: React.FC<{ c: Career; index: number }> = ({ c, index }) => {
             style={{ height: '100%', borderRadius: 99, background: cfg.dot }}
           />
         </div>
-        <span style={{ fontSize: 12, fontWeight: 800, color: c.status === 'atrisk' ? '#ef4444' : c.status === 'thriving' ? '#10b981' : '#f59e0b', minWidth: 44, textAlign: 'right' }}>
+        <span style={{
+          fontSize: 12, fontWeight: 800,
+          color: c.status === 'atrisk' ? '#ef4444' : c.status === 'thriving' ? '#10b981' : '#f59e0b',
+          minWidth: 44, textAlign: 'right',
+        }}>
           {c.growth}
         </span>
       </div>
@@ -226,9 +347,23 @@ const CareerCard: React.FC<{ c: Career; index: number }> = ({ c, index }) => {
 // ════════════════════════════════════════════════════════════════
 
 const AICareerPage: React.FC = () => {
-  const [tab, setTab] = useState<TabKey>('all');
-  const [email, setEmail] = useState('');
-  const [subscribed, setSubscribed] = useState(false);
+  const [tab,       setTab]       = useState<TabKey>('all');
+  const [email,     setEmail]     = useState<string>('');
+  const [videoOpen, setVideoOpen] = useState<boolean>(false);
+
+  // ── NEW: proper status state instead of a simple boolean ──────────────────
+  const [ctaStatus, setCtaStatus] = useState<'idle' | 'loading' | 'done' | 'dup' | 'err'>('idle');
+
+  // ── helper so we don't repeat the save logic twice ────────────────────────
+  const handleCtaSubscribe = async () => {
+    if (!email.trim()) return;
+    setCtaStatus('loading');
+    const result = await saveEmail(email, 'newsletter_ai_career');
+    setCtaStatus(
+      result === 'saved'     ? 'done' :
+      result === 'duplicate' ? 'dup'  : 'err'
+    );
+  };
 
   const filtered: Career[] =
     tab === 'all'      ? careers :
@@ -243,7 +378,12 @@ const AICareerPage: React.FC = () => {
   ];
 
   return (
-    <div style={{ background: '#ffffff', fontFamily: "'DM Sans', system-ui, sans-serif", color: '#111827', minHeight: '100vh' }}>
+    <div style={{
+      background: '#ffffff',
+      fontFamily: "'DM Sans', system-ui, sans-serif",
+      color: '#111827',
+      minHeight: '100vh',
+    }}>
 
       <style>{`
         @import url('https://fonts.googleapis.com/css2?family=DM+Sans:ital,opsz,wght@0,9..40,300;0,9..40,400;0,9..40,500;0,9..40,600;0,9..40,700;0,9..40,800;0,9..40,900;1,9..40,400&family=DM+Serif+Display:ital@0;1&display=swap');
@@ -265,6 +405,35 @@ const AICareerPage: React.FC = () => {
         .tab-btn:not(.active) { background: #f9fafb; color: #6b7280; border: 1.5px solid #e5e7eb; }
         .tab-btn:not(.active):hover { background: #f3f4f6; }
 
+        .hero-btn-primary {
+          display: inline-flex; align-items: center; gap: 8px;
+          background: #111827; color: #fff;
+          border: none; border-radius: 12px;
+          padding: 14px 28px; font-size: 15px; font-weight: 700;
+          cursor: pointer; font-family: 'DM Sans', sans-serif;
+          text-decoration: none;
+          transition: background 0.2s, transform 0.2s, box-shadow 0.2s;
+        }
+        .hero-btn-primary:hover {
+          background: #1f2937;
+          transform: translateY(-2px);
+          box-shadow: 0 8px 28px rgba(0,0,0,0.22);
+        }
+
+        .hero-btn-secondary {
+          display: inline-flex; align-items: center; gap: 8px;
+          background: #fff; color: #111827;
+          border: 1.5px solid #e5e7eb; border-radius: 12px;
+          padding: 14px 28px; font-size: 15px; font-weight: 600;
+          cursor: pointer; font-family: 'DM Sans', sans-serif;
+          transition: background 0.2s, border-color 0.2s, transform 0.2s;
+        }
+        .hero-btn-secondary:hover {
+          background: #f9fafb;
+          border-color: #d1d5db;
+          transform: translateY(-2px);
+        }
+
         input[type=email]:focus { outline: none; border-color: #111827 !important; }
         input[type=email]::placeholder { color: #9ca3af; }
 
@@ -276,82 +445,122 @@ const AICareerPage: React.FC = () => {
         .stat-mini  { display: grid; grid-template-columns: 1fr 1fr; gap: 12px; }
 
         @media (max-width: 1024px) {
-          .grid-4  { grid-template-columns: 1fr 1fr; }
+          .grid-4    { grid-template-columns: 1fr 1fr; }
           .tool-grid { grid-template-columns: 1fr 1fr; }
         }
         @media (max-width: 768px) {
-          .grid-2  { grid-template-columns: 1fr; }
-          .grid-3  { grid-template-columns: 1fr 1fr; }
+          .grid-2    { grid-template-columns: 1fr; }
+          .grid-3    { grid-template-columns: 1fr 1fr; }
           .card-grid { grid-template-columns: 1fr 1fr; }
         }
         @media (max-width: 560px) {
-          .grid-3  { grid-template-columns: 1fr; }
+          .grid-3    { grid-template-columns: 1fr; }
           .card-grid { grid-template-columns: 1fr; }
-          .grid-4  { grid-template-columns: 1fr; }
+          .grid-4    { grid-template-columns: 1fr; }
           .tool-grid { grid-template-columns: 1fr; }
           .stat-mini { grid-template-columns: 1fr 1fr; }
         }
       `}</style>
 
-      {/* ── SHARED NAVBAR ─────────────────────────────────────────── */}
+      {videoOpen && <VideoModal onClose={() => setVideoOpen(false)} />}
+
       <Navbar />
 
       {/* ── HERO ─────────────────────────────────────────────────────── */}
       <section style={{ background: '#fff', padding: '112px 40px 80px', borderBottom: '1px solid #f3f4f6' }}>
         <div style={{ maxWidth: 1200, margin: '0 auto' }}>
+
           <motion.div
-            initial={{ opacity: 0, y: 20 }} animate={{ opacity: 1, y: 0 }} transition={{ duration: 0.6 }}
-            style={{ display: 'inline-flex', alignItems: 'center', gap: 8, background: '#f9fafb', border: '1px solid #e5e7eb', borderRadius: 99, padding: '6px 16px', marginBottom: 32 }}
+            initial={{ opacity: 0, y: 20 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ duration: 0.6 }}
+            style={{
+              display: 'inline-flex', alignItems: 'center', gap: 8,
+              background: '#f9fafb', border: '1px solid #e5e7eb',
+              borderRadius: 99, padding: '6px 16px', marginBottom: 32,
+            }}
           >
-            <span style={{ width: 7, height: 7, borderRadius: '50%', background: '#10b981', display: 'inline-block', animation: 'pulse-dot 2s ease-in-out infinite' }} />
-            <span style={{ fontSize: 11, fontWeight: 700, color: '#6b7280', letterSpacing: 1.2 }}>2025–2030 AI CAREER INTELLIGENCE REPORT</span>
+            <span style={{
+              width: 7, height: 7, borderRadius: '50%', background: '#10b981',
+              display: 'inline-block', animation: 'pulse-dot 2s ease-in-out infinite',
+            }} />
+            <span style={{ fontSize: 11, fontWeight: 700, color: '#6b7280', letterSpacing: 1.2 }}>
+              2025–2030 AI CAREER INTELLIGENCE REPORT
+            </span>
           </motion.div>
 
           <div style={{ display: 'flex', alignItems: 'flex-start', gap: 64, flexWrap: 'wrap' }}>
             <div style={{ flex: '1 1 360px' }}>
               <motion.h1
-                initial={{ opacity: 0, y: 24 }} animate={{ opacity: 1, y: 0 }} transition={{ delay: 0.1, duration: 0.7 }}
+                initial={{ opacity: 0, y: 24 }}
+                animate={{ opacity: 1, y: 0 }}
+                transition={{ delay: 0.1, duration: 0.7 }}
                 className="serif"
-                style={{ fontSize: 'clamp(42px, 5vw, 74px)', fontWeight: 400, lineHeight: 1.05, color: '#111827', marginBottom: 24, letterSpacing: '-1px' }}
+                style={{
+                  fontSize: 'clamp(42px, 5vw, 74px)',
+                  fontWeight: 400, lineHeight: 1.05, color: '#111827',
+                  marginBottom: 24, letterSpacing: '-1px',
+                }}
               >
                 The AI Career<br />
                 <em style={{ fontStyle: 'italic', color: '#8b5cf6' }}>Revolution</em><br />
                 Is Here.
               </motion.h1>
+
               <motion.p
-                initial={{ opacity: 0, y: 20 }} animate={{ opacity: 1, y: 0 }} transition={{ delay: 0.2, duration: 0.6 }}
+                initial={{ opacity: 0, y: 20 }}
+                animate={{ opacity: 1, y: 0 }}
+                transition={{ delay: 0.2, duration: 0.6 }}
                 style={{ fontSize: 17, color: '#6b7280', lineHeight: 1.8, maxWidth: 420, marginBottom: 36 }}
               >
-                By 2030, <strong style={{ color: '#111827' }}>97 million new AI roles</strong> will emerge while 85 million traditional jobs disappear. The question is not <em>if</em> AI will change your career — it is whether you will be ready.
+                By 2030, <strong style={{ color: '#111827' }}>97 million new AI roles</strong> will emerge
+                while 85 million traditional jobs disappear. The question is not <em>if</em> AI will change
+                your career — it is whether you will be ready.
               </motion.p>
+
               <motion.div
-                initial={{ opacity: 0, y: 16 }} animate={{ opacity: 1, y: 0 }} transition={{ delay: 0.3, duration: 0.5 }}
-                style={{ display: 'flex', gap: 12, flexWrap: 'wrap' }}
+                initial={{ opacity: 0, y: 16 }}
+                animate={{ opacity: 1, y: 0 }}
+                transition={{ delay: 0.3, duration: 0.5 }}
+                style={{ display: 'flex', gap: 12, flexWrap: 'wrap', alignItems: 'center' }}
               >
-                <button style={{ background: '#111827', color: '#fff', border: 'none', borderRadius: 12, padding: '14px 28px', fontSize: 15, fontWeight: 700, cursor: 'pointer', fontFamily: "'DM Sans', sans-serif" }}>
+                <Link to="/roadmaps" className="hero-btn-primary">
                   Explore AI Roadmaps →
-                </button>
-                <button style={{ background: '#fff', color: '#111827', border: '1.5px solid #e5e7eb', borderRadius: 12, padding: '14px 28px', fontSize: 15, fontWeight: 600, cursor: 'pointer', fontFamily: "'DM Sans', sans-serif" }}>
+                </Link>
+                <button className="hero-btn-secondary" onClick={() => setVideoOpen(true)}>
+                  <svg width="18" height="18" viewBox="0 0 18 18" fill="none" style={{ flexShrink: 0 }}>
+                    <circle cx="9" cy="9" r="9" fill="#111827" />
+                    <polygon points="7,5.5 14,9 7,12.5" fill="#fff" />
+                  </svg>
                   Watch Overview
                 </button>
               </motion.div>
             </div>
 
             <motion.div
-              initial={{ opacity: 0, x: 30 }} animate={{ opacity: 1, x: 0 }} transition={{ delay: 0.4, duration: 0.7 }}
+              initial={{ opacity: 0, x: 30 }}
+              animate={{ opacity: 1, x: 0 }}
+              transition={{ delay: 0.4, duration: 0.7 }}
               className="stat-mini"
               style={{ flex: '1 1 300px' }}
             >
-              {stats.map((s, i) => (
+              {stats.map((s: Stat, i: number) => (
                 <motion.div
                   key={s.label}
                   initial={{ opacity: 0, scale: 0.94 }}
                   animate={{ opacity: 1, scale: 1 }}
                   transition={{ delay: 0.5 + i * 0.07 }}
-                  style={{ background: '#fafafa', border: '1.5px solid #f3f4f6', borderRadius: 16, padding: '20px 18px' }}
+                  style={{
+                    background: '#fafafa', border: '1.5px solid #f3f4f6',
+                    borderRadius: 16, padding: '20px 18px',
+                  }}
                 >
-                  <p style={{ fontSize: 30, fontWeight: 900, color: s.color, lineHeight: 1, marginBottom: 6 }}>{s.value}</p>
-                  <p style={{ fontSize: 12, color: '#374151', fontWeight: 600, marginBottom: 3, lineHeight: 1.4 }}>{s.label}</p>
+                  <p style={{ fontSize: 30, fontWeight: 900, color: s.color, lineHeight: 1, marginBottom: 6 }}>
+                    {s.value}
+                  </p>
+                  <p style={{ fontSize: 12, color: '#374151', fontWeight: 600, marginBottom: 3, lineHeight: 1.4 }}>
+                    {s.label}
+                  </p>
                   <p style={{ fontSize: 10, color: '#9ca3af' }}>{s.src}</p>
                 </motion.div>
               ))}
@@ -363,7 +572,7 @@ const AICareerPage: React.FC = () => {
       {/* ── TICKER ──────────────────────────────────────────────────── */}
       <div style={{ background: '#111827', padding: '13px 0', overflow: 'hidden' }}>
         <div style={{ display: 'flex', animation: 'ticker 35s linear infinite', whiteSpace: 'nowrap' }}>
-          {[...Array(4)].map((_, r) => (
+          {[...Array(4)].map((_, r: number) => (
             <span key={r} style={{ display: 'inline-flex', gap: 48, paddingRight: 48 }}>
               {[
                 '🚀 97M new AI jobs by 2030',
@@ -372,8 +581,10 @@ const AICareerPage: React.FC = () => {
                 '🌍 3.5M unfilled AI roles globally',
                 '📈 Prompt Engineering +200% demand',
                 '⚠️ 85M jobs face automation risk',
-              ].map(t => (
-                <span key={t} style={{ fontSize: 12, fontWeight: 600, color: 'rgba(255,255,255,0.7)', letterSpacing: 0.2 }}>{t}</span>
+              ].map((t: string) => (
+                <span key={t} style={{ fontSize: 12, fontWeight: 600, color: 'rgba(255,255,255,0.7)', letterSpacing: 0.2 }}>
+                  {t}
+                </span>
               ))}
             </span>
           ))}
@@ -383,27 +594,52 @@ const AICareerPage: React.FC = () => {
       {/* ── TIMELINE ─────────────────────────────────────────────────── */}
       <section style={{ padding: '88px 40px', background: '#fff', borderBottom: '1px solid #f3f4f6' }}>
         <div style={{ maxWidth: 1200, margin: '0 auto' }}>
-          <motion.div initial={{ opacity: 0, y: 20 }} whileInView={{ opacity: 1, y: 0 }} viewport={{ once: true }} style={{ marginBottom: 56 }}>
-            <span style={{ fontSize: 11, fontWeight: 800, color: '#8b5cf6', letterSpacing: 2, textTransform: 'uppercase' }}>The AI Era Unfolding</span>
+          <motion.div
+            initial={{ opacity: 0, y: 20 }} whileInView={{ opacity: 1, y: 0 }}
+            viewport={{ once: true }} style={{ marginBottom: 56 }}
+          >
+            <span style={{ fontSize: 11, fontWeight: 800, color: '#8b5cf6', letterSpacing: 2, textTransform: 'uppercase' }}>
+              The AI Era Unfolding
+            </span>
             <h2 className="serif" style={{ fontSize: 'clamp(30px, 3.5vw, 52px)', color: '#111827', marginTop: 10, marginBottom: 12, letterSpacing: '-0.5px' }}>
               What Happens Next —<br /><em style={{ color: '#8b5cf6' }}>Year by Year</em>
             </h2>
-            <p style={{ color: '#6b7280', fontSize: 16, maxWidth: 480 }}>The AI transformation is already underway. Here is how the next 6 years unfold for your career.</p>
+            <p style={{ color: '#6b7280', fontSize: 16, maxWidth: 480 }}>
+              The AI transformation is already underway. Here is how the next 6 years unfold for your career.
+            </p>
           </motion.div>
 
           <div style={{ position: 'relative', paddingLeft: 20 }}>
-            <div style={{ position: 'absolute', left: 47, top: 0, bottom: 0, width: 2, background: 'linear-gradient(180deg,#8b5cf6,#f97316,#10b981)' }} />
-            {timeline.map((t, i) => (
-              <motion.div key={t.year}
+            <div style={{
+              position: 'absolute', left: 47, top: 0, bottom: 0, width: 2,
+              background: 'linear-gradient(180deg,#8b5cf6,#f97316,#10b981)',
+            }} />
+            {timeline.map((t: TimelineItem, i: number) => (
+              <motion.div
+                key={t.year}
                 initial={{ opacity: 0, x: -20 }} whileInView={{ opacity: 1, x: 0 }}
                 viewport={{ once: true }} transition={{ delay: i * 0.1, duration: 0.5 }}
                 style={{ display: 'flex', gap: 28, marginBottom: 28, position: 'relative' }}
               >
-                <div style={{ width: 56, height: 56, borderRadius: '50%', background: '#fafafa', border: '2px solid #e5e7eb', display: 'flex', alignItems: 'center', justifyContent: 'center', fontSize: 22, flexShrink: 0, zIndex: 2 }}>
+                <div style={{
+                  width: 56, height: 56, borderRadius: '50%',
+                  background: '#fafafa', border: '2px solid #e5e7eb',
+                  display: 'flex', alignItems: 'center', justifyContent: 'center',
+                  fontSize: 22, flexShrink: 0, zIndex: 2,
+                }}>
                   {t.icon}
                 </div>
-                <div style={{ background: '#fafafa', border: '1.5px solid #f3f4f6', borderRadius: 16, padding: '20px 24px', flex: 1 }}>
-                  <div style={{ display: 'inline-block', background: '#111827', color: '#fff', borderRadius: 99, fontSize: 11, fontWeight: 700, padding: '3px 12px', marginBottom: 10, letterSpacing: 0.5 }}>{t.year}</div>
+                <div style={{
+                  background: '#fafafa', border: '1.5px solid #f3f4f6',
+                  borderRadius: 16, padding: '20px 24px', flex: 1,
+                }}>
+                  <div style={{
+                    display: 'inline-block', background: '#111827', color: '#fff',
+                    borderRadius: 99, fontSize: 11, fontWeight: 700, padding: '3px 12px',
+                    marginBottom: 10, letterSpacing: 0.5,
+                  }}>
+                    {t.year}
+                  </div>
                   <h3 style={{ fontSize: 16, fontWeight: 800, color: '#111827', marginBottom: 6 }}>{t.heading}</h3>
                   <p style={{ fontSize: 13, color: '#6b7280', lineHeight: 1.7 }}>{t.body}</p>
                 </div>
@@ -416,35 +652,64 @@ const AICareerPage: React.FC = () => {
       {/* ── SKILLS MATRIX ────────────────────────────────────────────── */}
       <section style={{ padding: '88px 40px', background: '#fafafa', borderBottom: '1px solid #f3f4f6' }}>
         <div style={{ maxWidth: 1200, margin: '0 auto' }}>
-          <motion.div initial={{ opacity: 0, y: 20 }} whileInView={{ opacity: 1, y: 0 }} viewport={{ once: true }} style={{ marginBottom: 56 }}>
-            <span style={{ fontSize: 11, fontWeight: 800, color: '#ec4899', letterSpacing: 2, textTransform: 'uppercase' }}>Skills Intelligence</span>
+          <motion.div
+            initial={{ opacity: 0, y: 20 }} whileInView={{ opacity: 1, y: 0 }}
+            viewport={{ once: true }} style={{ marginBottom: 56 }}
+          >
+            <span style={{ fontSize: 11, fontWeight: 800, color: '#ec4899', letterSpacing: 2, textTransform: 'uppercase' }}>
+              Skills Intelligence
+            </span>
             <h2 className="serif" style={{ fontSize: 'clamp(30px,3.5vw,52px)', color: '#111827', marginTop: 10, marginBottom: 12, letterSpacing: '-0.5px' }}>
               The 2025 AI <em style={{ color: '#ec4899' }}>Skills Matrix</em>
             </h2>
-            <p style={{ color: '#6b7280', fontSize: 16, maxWidth: 480 }}>Not optional upgrades — the new professional literacy.</p>
+            <p style={{ color: '#6b7280', fontSize: 16, maxWidth: 480 }}>
+              Not optional upgrades — the new professional literacy.
+            </p>
           </motion.div>
 
           <div className="grid-2" style={{ alignItems: 'start' }}>
-            <motion.div initial={{ opacity: 0, x: -20 }} whileInView={{ opacity: 1, x: 0 }} viewport={{ once: true }}
-              style={{ background: '#fff', border: '1.5px solid #e5e7eb', borderRadius: 20, padding: '32px 28px' }}>
+            <motion.div
+              initial={{ opacity: 0, x: -20 }} whileInView={{ opacity: 1, x: 0 }}
+              viewport={{ once: true }}
+              style={{ background: '#fff', border: '1.5px solid #e5e7eb', borderRadius: 20, padding: '32px 28px' }}
+            >
               <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: 28 }}>
-                <p style={{ fontSize: 12, fontWeight: 800, color: '#9ca3af', letterSpacing: 1.5, textTransform: 'uppercase' }}>Demand Index 2025</p>
-                <span style={{ fontSize: 10, background: '#f0fdf4', border: '1px solid #bbf7d0', color: '#065f46', fontWeight: 700, padding: '3px 10px', borderRadius: 99 }}>● Live Data</span>
+                <p style={{ fontSize: 12, fontWeight: 800, color: '#9ca3af', letterSpacing: 1.5, textTransform: 'uppercase' }}>
+                  Demand Index 2025
+                </p>
+                <span style={{
+                  fontSize: 10, background: '#f0fdf4', border: '1px solid #bbf7d0',
+                  color: '#065f46', fontWeight: 700, padding: '3px 10px', borderRadius: 99,
+                }}>
+                  ● Live Data
+                </span>
               </div>
-              {skills.map((s, i) => <SkillRow key={s.name} s={s} i={i} />)}
+              {skills.map((s: Skill, i: number) => <SkillRow key={s.name} s={s} i={i} />)}
             </motion.div>
 
             <div style={{ display: 'flex', flexDirection: 'column', gap: 20 }}>
-              <motion.div initial={{ opacity: 0, x: 20 }} whileInView={{ opacity: 1, x: 0 }} viewport={{ once: true }}
-                style={{ background: '#111827', borderRadius: 20, padding: '32px 28px' }}>
+              <motion.div
+                initial={{ opacity: 0, x: 20 }} whileInView={{ opacity: 1, x: 0 }}
+                viewport={{ once: true }}
+                style={{ background: '#111827', borderRadius: 20, padding: '32px 28px' }}
+              >
                 <div style={{ fontSize: 32, marginBottom: 14 }}>🔥</div>
-                <h3 style={{ fontSize: 20, fontWeight: 800, color: '#fff', marginBottom: 10 }}>The Reskilling Imperative</h3>
+                <h3 style={{ fontSize: 20, fontWeight: 800, color: '#fff', marginBottom: 10 }}>
+                  The Reskilling Imperative
+                </h3>
                 <p style={{ fontSize: 14, color: 'rgba(255,255,255,0.7)', lineHeight: 1.75, marginBottom: 20 }}>
-                  McKinsey estimates <strong style={{ color: '#fbbf24' }}>375 million workers</strong> — 14% of the global workforce — will need to switch occupational categories entirely by 2030.
+                  McKinsey estimates <strong style={{ color: '#fbbf24' }}>375 million workers</strong> — 14% of
+                  the global workforce — will need to switch occupational categories entirely by 2030.
                 </p>
                 <div style={{ display: 'flex', gap: 8, flexWrap: 'wrap' }}>
-                  {['NLP', 'GenAI', 'MLOps', 'AI Ethics', 'Agents', 'RAG'].map(tag => (
-                    <span key={tag} style={{ fontSize: 11, fontWeight: 700, padding: '4px 12px', borderRadius: 99, background: 'rgba(255,255,255,0.08)', border: '1px solid rgba(255,255,255,0.15)', color: '#e5e7eb' }}>{tag}</span>
+                  {['NLP', 'GenAI', 'MLOps', 'AI Ethics', 'Agents', 'RAG'].map((tag: string) => (
+                    <span key={tag} style={{
+                      fontSize: 11, fontWeight: 700, padding: '4px 12px', borderRadius: 99,
+                      background: 'rgba(255,255,255,0.08)', border: '1px solid rgba(255,255,255,0.15)',
+                      color: '#e5e7eb',
+                    }}>
+                      {tag}
+                    </span>
                   ))}
                 </div>
               </motion.div>
@@ -456,23 +721,37 @@ const AICareerPage: React.FC = () => {
       {/* ── CAREER CARDS ─────────────────────────────────────────────── */}
       <section style={{ padding: '88px 40px', background: '#fff', borderBottom: '1px solid #f3f4f6' }}>
         <div style={{ maxWidth: 1200, margin: '0 auto' }}>
-          <motion.div initial={{ opacity: 0, y: 20 }} whileInView={{ opacity: 1, y: 0 }} viewport={{ once: true }} style={{ marginBottom: 40 }}>
-            <span style={{ fontSize: 11, fontWeight: 800, color: '#0ea5e9', letterSpacing: 2, textTransform: 'uppercase' }}>Career Intelligence</span>
+          <motion.div
+            initial={{ opacity: 0, y: 20 }} whileInView={{ opacity: 1, y: 0 }}
+            viewport={{ once: true }} style={{ marginBottom: 40 }}
+          >
+            <span style={{ fontSize: 11, fontWeight: 800, color: '#0ea5e9', letterSpacing: 2, textTransform: 'uppercase' }}>
+              Career Intelligence
+            </span>
             <h2 className="serif" style={{ fontSize: 'clamp(30px,3.5vw,52px)', color: '#111827', marginTop: 10, marginBottom: 12, letterSpacing: '-0.5px' }}>
               Who Wins and Who Loses<br /><em style={{ color: '#0ea5e9' }}>in the AI Economy</em>
             </h2>
-            <p style={{ color: '#6b7280', fontSize: 16, maxWidth: 520, marginBottom: 32 }}>Data-backed analysis of 12 careers — real salaries, growth rates, and AI resilience scores.</p>
+            <p style={{ color: '#6b7280', fontSize: 16, maxWidth: 520, marginBottom: 32 }}>
+              Data-backed analysis of 12 careers — real salaries, growth rates, and AI resilience scores.
+            </p>
             <div style={{ display: 'flex', gap: 8, flexWrap: 'wrap' }}>
               {tabs.map(t => (
-                <button key={t.key} className={`tab-btn ${tab === t.key ? 'active' : ''}`} onClick={() => setTab(t.key)}>
+                <button
+                  key={t.key}
+                  className={`tab-btn ${tab === t.key ? 'active' : ''}`}
+                  onClick={() => setTab(t.key)}
+                >
                   {t.label}
                 </button>
               ))}
             </div>
           </motion.div>
+
           <div className="card-grid">
             <AnimatePresence mode="popLayout">
-              {filtered.map((c, i) => <CareerCard key={c.title} c={c} index={i} />)}
+              {filtered.map((c: Career, i: number) => (
+                <CareerCard key={c.title} c={c} index={i} />
+              ))}
             </AnimatePresence>
           </div>
         </div>
@@ -481,24 +760,46 @@ const AICareerPage: React.FC = () => {
       {/* ── HOT TOOLS ────────────────────────────────────────────────── */}
       <section style={{ padding: '88px 40px', background: '#fafafa', borderBottom: '1px solid #f3f4f6' }}>
         <div style={{ maxWidth: 1200, margin: '0 auto' }}>
-          <motion.div initial={{ opacity: 0, y: 20 }} whileInView={{ opacity: 1, y: 0 }} viewport={{ once: true }} style={{ marginBottom: 56 }}>
-            <span style={{ fontSize: 11, fontWeight: 800, color: '#f97316', letterSpacing: 2, textTransform: 'uppercase' }}>Tools & Ecosystem</span>
+          <motion.div
+            initial={{ opacity: 0, y: 20 }} whileInView={{ opacity: 1, y: 0 }}
+            viewport={{ once: true }} style={{ marginBottom: 56 }}
+          >
+            <span style={{ fontSize: 11, fontWeight: 800, color: '#f97316', letterSpacing: 2, textTransform: 'uppercase' }}>
+              Tools & Ecosystem
+            </span>
             <h2 className="serif" style={{ fontSize: 'clamp(30px,3.5vw,52px)', color: '#111827', marginTop: 10, marginBottom: 12, letterSpacing: '-0.5px' }}>
               AI Tools You <em style={{ color: '#f97316' }}>Must Know</em>
             </h2>
           </motion.div>
+
           <div className="tool-grid">
-            {tools.map((t, i) => (
-              <motion.div key={t.name}
+            {tools.map((t: Tool, i: number) => (
+              <motion.div
+                key={t.name}
                 initial={{ opacity: 0, y: 16 }} whileInView={{ opacity: 1, y: 0 }}
                 viewport={{ once: true }} transition={{ delay: i * 0.05 }}
                 whileHover={{ y: -3, boxShadow: '0 12px 32px rgba(0,0,0,0.08)' }}
-                style={{ background: '#fff', border: `1.5px solid ${t.hot ? '#fde68a' : '#e5e7eb'}`, borderRadius: 14, padding: '16px 18px', transition: 'all 0.2s', position: 'relative' }}
+                style={{
+                  background: '#fff',
+                  border: `1.5px solid ${t.hot ? '#fde68a' : '#e5e7eb'}`,
+                  borderRadius: 14, padding: '16px 18px',
+                  transition: 'all 0.2s', position: 'relative',
+                }}
               >
                 {t.hot && (
-                  <span style={{ position: 'absolute', top: 10, right: 10, fontSize: 9, fontWeight: 800, padding: '2px 7px', borderRadius: 99, background: '#fffbeb', color: '#92400e', border: '1px solid #fde68a' }}>🔥 HOT</span>
+                  <span style={{
+                    position: 'absolute', top: 10, right: 10,
+                    fontSize: 9, fontWeight: 800, padding: '2px 7px', borderRadius: 99,
+                    background: '#fffbeb', color: '#92400e', border: '1px solid #fde68a',
+                  }}>
+                    🔥 HOT
+                  </span>
                 )}
-                <div style={{ width: 36, height: 36, borderRadius: 10, background: '#f9fafb', border: '1px solid #e5e7eb', display: 'flex', alignItems: 'center', justifyContent: 'center', marginBottom: 10 }}>
+                <div style={{
+                  width: 36, height: 36, borderRadius: 10,
+                  background: '#f9fafb', border: '1px solid #e5e7eb',
+                  display: 'flex', alignItems: 'center', justifyContent: 'center', marginBottom: 10,
+                }}>
                   <span style={{ fontSize: 13, fontWeight: 900, color: '#111827' }}>AI</span>
                 </div>
                 <p style={{ fontSize: 13, fontWeight: 700, color: '#111827', marginBottom: 4 }}>{t.name}</p>
@@ -512,19 +813,31 @@ const AICareerPage: React.FC = () => {
       {/* ── CLUSTERS ─────────────────────────────────────────────────── */}
       <section style={{ padding: '88px 40px', background: '#fff', borderBottom: '1px solid #f3f4f6' }}>
         <div style={{ maxWidth: 1200, margin: '0 auto' }}>
-          <motion.div initial={{ opacity: 0, y: 20 }} whileInView={{ opacity: 1, y: 0 }} viewport={{ once: true }} style={{ marginBottom: 56 }}>
-            <span style={{ fontSize: 11, fontWeight: 800, color: '#10b981', letterSpacing: 2, textTransform: 'uppercase' }}>Emerging Industries</span>
+          <motion.div
+            initial={{ opacity: 0, y: 20 }} whileInView={{ opacity: 1, y: 0 }}
+            viewport={{ once: true }} style={{ marginBottom: 56 }}
+          >
+            <span style={{ fontSize: 11, fontWeight: 800, color: '#10b981', letterSpacing: 2, textTransform: 'uppercase' }}>
+              Emerging Industries
+            </span>
             <h2 className="serif" style={{ fontSize: 'clamp(30px,3.5vw,52px)', color: '#111827', marginTop: 10, marginBottom: 12, letterSpacing: '-0.5px' }}>
               8 AI Industry Clusters<br /><em style={{ color: '#10b981' }}>Exploding With Opportunity</em>
             </h2>
           </motion.div>
+
           <div className="grid-4">
-            {clusters.map((cl, i) => (
-              <motion.div key={cl.name}
+            {clusters.map((cl: Cluster, i: number) => (
+              <motion.div
+                key={cl.name}
                 initial={{ opacity: 0, y: 20 }} whileInView={{ opacity: 1, y: 0 }}
                 viewport={{ once: true }} transition={{ delay: i * 0.07 }}
                 whileHover={{ y: -4, boxShadow: '0 16px 40px rgba(0,0,0,0.08)' }}
-                style={{ background: '#fff', border: '1.5px solid #f3f4f6', borderRadius: 18, padding: '24px 20px', transition: 'all 0.25s', position: 'relative', overflow: 'hidden', cursor: 'pointer' }}
+                style={{
+                  background: '#fff', border: '1.5px solid #f3f4f6',
+                  borderRadius: 18, padding: '24px 20px',
+                  transition: 'all 0.25s', position: 'relative',
+                  overflow: 'hidden', cursor: 'pointer',
+                }}
               >
                 <div style={{ position: 'absolute', top: 0, left: 0, right: 0, height: 3, background: cl.color }} />
                 <div style={{ fontSize: 26, marginBottom: 12 }}>{cl.icon}</div>
@@ -541,14 +854,22 @@ const AICareerPage: React.FC = () => {
       <section style={{ background: '#111827', padding: '72px 40px' }}>
         <div style={{ maxWidth: 1200, margin: '0 auto' }}>
           <div className="grid-3">
-            {stats.slice(3).map((s, i) => (
-              <motion.div key={s.label}
+            {stats.slice(3).map((s: Stat, i: number) => (
+              <motion.div
+                key={s.label}
                 initial={{ opacity: 0, y: 20 }} whileInView={{ opacity: 1, y: 0 }}
                 viewport={{ once: true }} transition={{ delay: i * 0.1 }}
-                style={{ background: 'rgba(255,255,255,0.04)', border: '1px solid rgba(255,255,255,0.08)', borderRadius: 18, padding: '28px 24px', textAlign: 'center' }}
+                style={{
+                  background: 'rgba(255,255,255,0.04)', border: '1px solid rgba(255,255,255,0.08)',
+                  borderRadius: 18, padding: '28px 24px', textAlign: 'center',
+                }}
               >
-                <p style={{ fontSize: 38, fontWeight: 900, color: s.color, lineHeight: 1, marginBottom: 10 }}>{s.value}</p>
-                <p style={{ fontSize: 14, color: 'rgba(255,255,255,0.8)', fontWeight: 600, marginBottom: 4 }}>{s.label}</p>
+                <p style={{ fontSize: 38, fontWeight: 900, color: s.color, lineHeight: 1, marginBottom: 10 }}>
+                  {s.value}
+                </p>
+                <p style={{ fontSize: 14, color: 'rgba(255,255,255,0.8)', fontWeight: 600, marginBottom: 4 }}>
+                  {s.label}
+                </p>
                 <p style={{ fontSize: 11, color: 'rgba(255,255,255,0.35)' }}>Source: {s.src}</p>
               </motion.div>
             ))}
@@ -556,58 +877,143 @@ const AICareerPage: React.FC = () => {
         </div>
       </section>
 
-      {/* ── CTA / NEWSLETTER ─────────────────────────────────────────── */}
+      {/* ══════════════════════════════════════════════════════════════
+           ── CTA / NEWSLETTER  (FIXED — saves to Firebase) ──────────
+         ══════════════════════════════════════════════════════════════ */}
       <section style={{ padding: '96px 40px', background: '#fff' }}>
         <div style={{ maxWidth: 680, margin: '0 auto', textAlign: 'center' }}>
-          <motion.div initial={{ opacity: 0, y: 24 }} whileInView={{ opacity: 1, y: 0 }} viewport={{ once: true }}>
-            <h2 className="serif" style={{ fontSize: 'clamp(32px,4vw,56px)', color: '#111827', marginBottom: 16, letterSpacing: '-0.5px', lineHeight: 1.1 }}>
-              Don't Get Left Behind<br />by the <em style={{ color: '#8b5cf6' }}>AI Revolution</em>
+          <motion.div
+            initial={{ opacity: 0, y: 24 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            viewport={{ once: true }}
+          >
+            <h2
+              className="serif"
+              style={{
+                fontSize:      'clamp(32px,4vw,56px)',
+                color:         '#111827',
+                marginBottom:  16,
+                letterSpacing: '-0.5px',
+                lineHeight:    1.1,
+              }}
+            >
+              Don't Get Left Behind<br />
+              by the <em style={{ color: '#8b5cf6' }}>AI Revolution</em>
             </h2>
+
             <p style={{ color: '#6b7280', fontSize: 16, lineHeight: 1.8, marginBottom: 40 }}>
-              Every week: the hottest AI job roles, real salary data, skill trends, and actionable career roadmaps.{' '}
-              <strong style={{ color: '#111827' }}>12,000+ tech professionals</strong> already subscribed.
+              Every week: the hottest AI job roles, real salary data, skill trends, and
+              actionable career roadmaps.{' '}
+              <strong style={{ color: '#111827' }}>12,000+ tech professionals</strong> already
+              subscribed.
             </p>
-            {!subscribed ? (
+
+            {/* ── SUCCESS ── */}
+            {(ctaStatus === 'done' || ctaStatus === 'dup') && (
+              <div
+                style={{
+                  background:   '#f0fdf4',
+                  border:       '1.5px solid #bbf7d0',
+                  borderRadius: 16,
+                  padding:      '20px 32px',
+                  display:      'inline-block',
+                }}
+              >
+                <p style={{ fontSize: 16, fontWeight: 700, color: '#065f46' }}>
+                  {ctaStatus === 'done'
+                    ? "🎉 You're in! Check your inbox for a confirmation."
+                    : '✓ You\'re already subscribed — thanks!'}
+                </p>
+              </div>
+            )}
+
+            {/* ── ERROR ── */}
+            {ctaStatus === 'err' && (
+              <div
+                style={{
+                  background:   'rgba(239,68,68,0.08)',
+                  border:       '1px solid rgba(239,68,68,0.3)',
+                  borderRadius: 12,
+                  padding:      '12px 24px',
+                  marginBottom: 16,
+                  color:        '#ef4444',
+                  fontSize:     14,
+                  fontWeight:   600,
+                }}
+              >
+                ✗ Something went wrong — please try again.
+              </div>
+            )}
+
+            {/* ── FORM (hides after success or duplicate) ── */}
+            {ctaStatus !== 'done' && ctaStatus !== 'dup' && (
               <div>
-                <div style={{ display: 'flex', gap: 10, maxWidth: 440, margin: '0 auto 16px' }}>
+                <div
+                  style={{
+                    display:        'flex',
+                    gap:            10,
+                    maxWidth:       440,
+                    margin:         '0 auto 16px',
+                    flexWrap:       'wrap',
+                    justifyContent: 'center',
+                  }}
+                >
                   <input
-                    type="email" placeholder="your@email.com"
-                    value={email} onChange={e => setEmail(e.target.value)}
-                    style={{ flex: 1, padding: '13px 18px', borderRadius: 12, background: '#f9fafb', border: '1.5px solid #e5e7eb', color: '#111827', fontSize: 14, fontFamily: "'DM Sans', sans-serif" }}
+                    type="email"
+                    placeholder="your@email.com"
+                    value={email}
+                    onChange={(e: React.ChangeEvent<HTMLInputElement>) => setEmail(e.target.value)}
+                    onKeyDown={(e: React.KeyboardEvent<HTMLInputElement>) => {
+                      if (e.key === 'Enter') handleCtaSubscribe();
+                    }}
+                    style={{
+                      flex:         '1 1 200px',
+                      padding:      '13px 18px',
+                      borderRadius: 12,
+                      background:   '#f9fafb',
+                      border:       '1.5px solid #e5e7eb',
+                      color:        '#111827',
+                      fontSize:     14,
+                      fontFamily:   "'DM Sans', sans-serif",
+                      outline:      'none',
+                    }}
                   />
                   <button
-                    onClick={() => email && setSubscribed(true)}
-                    style={{ padding: '13px 24px', borderRadius: 12, background: '#111827', color: '#fff', fontSize: 14, fontWeight: 700, border: 'none', cursor: 'pointer', whiteSpace: 'nowrap', fontFamily: "'DM Sans', sans-serif" }}
+                    disabled={ctaStatus === 'loading'}
+                    onClick={handleCtaSubscribe}
+                    style={{
+                      padding:      '13px 24px',
+                      borderRadius: 12,
+                      background:   ctaStatus === 'loading' ? '#6b7280' : '#111827',
+                      color:        '#fff',
+                      fontSize:     14,
+                      fontWeight:   700,
+                      border:       'none',
+                      cursor:       ctaStatus === 'loading' ? 'not-allowed' : 'pointer',
+                      whiteSpace:   'nowrap',
+                      fontFamily:   "'DM Sans', sans-serif",
+                      transition:   'background 0.2s',
+                    }}
                   >
-                    Get Access
+                    {ctaStatus === 'loading' ? 'Saving…' : 'Get Access'}
                   </button>
                 </div>
+
+                {/* Trust badges */}
                 <div style={{ display: 'flex', justifyContent: 'center', gap: 24, flexWrap: 'wrap' }}>
-                  {['No spam, ever', 'Cancel anytime', '100% free'].map(t => (
-                    <span key={t} style={{ fontSize: 12, color: '#9ca3af', fontWeight: 600 }}>✓ {t}</span>
+                  {['No spam, ever', 'Cancel anytime', '100% free'].map((t: string) => (
+                    <span key={t} style={{ fontSize: 12, color: '#9ca3af', fontWeight: 600 }}>
+                      ✓ {t}
+                    </span>
                   ))}
                 </div>
-              </div>
-            ) : (
-              <div style={{ background: '#f0fdf4', border: '1.5px solid #bbf7d0', borderRadius: 16, padding: '20px 32px', display: 'inline-block' }}>
-                <p style={{ fontSize: 16, fontWeight: 700, color: '#065f46' }}>🎉 You're in! Check your inbox for a confirmation.</p>
               </div>
             )}
           </motion.div>
         </div>
       </section>
 
-      {/* ── FOOTER ───────────────────────────────────────────────────── */}
-      <footer style={{ background: '#fafafa', borderTop: '1px solid #e5e7eb', padding: '40px' }}>
-        <div style={{ maxWidth: 1200, margin: '0 auto', display: 'flex', justifyContent: 'space-between', alignItems: 'center', flexWrap: 'wrap', gap: 16 }}>
-          <p style={{ fontSize: 12, color: '#9ca3af' }}>© 2026 CareerPathGuide. All rights reserved. Data: WEF, McKinsey, Goldman Sachs, LinkedIn.</p>
-          <div style={{ display: 'flex', gap: 20 }}>
-            {[['Privacy', '/privacy'], ['Terms', '/terms'], ['Contact', '/contact'], ['About', '/about']].map(([l, to]) => (
-              <a key={l} href={to} style={{ fontSize: 12, color: '#9ca3af', textDecoration: 'none' }}>{l}</a>
-            ))}
-          </div>
-        </div>
-      </footer>
+      <Footer />
     </div>
   );
 };

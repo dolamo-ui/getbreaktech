@@ -191,7 +191,7 @@ export function WhySection() {
 
           {/* heading */}
           <div ref={headingRef} className="ws-head">
-            <h2 className="ws-h2">Why CareerPathGuide?</h2>
+            <h2 className="ws-h2">Why GetBreakTech?</h2>
             <p className="ws-sub">We provide the structure you need to move from ambition to achievement.</p>
           </div>
 

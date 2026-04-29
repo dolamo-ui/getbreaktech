@@ -1,6 +1,10 @@
 import React, { useState, useEffect, useRef } from 'react'
 import { Link, useLocation } from 'react-router-dom'
-import { MapPin, Menu, X } from 'lucide-react'
+import { Menu, X } from 'lucide-react'
+
+// ── IMPORTANT: Place your logo files in /public/images/ ──
+// favicon.png  →  /public/images/favicon.png   (the "G" swirl icon)
+// logo.png     →  /public/images/logo.png      (full logo with text)
 
 const NAV_LINKS = [
   { label: 'Home',          to: '/'             },
@@ -24,7 +28,6 @@ export const Navbar: React.FC = () => {
     return () => window.removeEventListener('scroll', handler)
   }, [])
 
-  // Close mobile menu on outside click
   useEffect(() => {
     const handler = (e: MouseEvent) => {
       if (menuRef.current && !menuRef.current.contains(e.target as Node)) {
@@ -35,7 +38,6 @@ export const Navbar: React.FC = () => {
     return () => document.removeEventListener('mousedown', handler)
   }, [])
 
-  // Close mobile menu on route change
   useEffect(() => {
     setMenuOpen(false)
   }, [location.pathname])
@@ -66,7 +68,7 @@ export const Navbar: React.FC = () => {
           display: flex;
           align-items: center;
           justify-content: space-between;
-          padding: 0 8px 0 16px;
+          padding: 0 8px 0 12px;
           background: #f5f5f4;
           border-radius: 999px;
           box-shadow: 0 1px 4px rgba(0,0,0,0.08), 0 0 0 1px rgba(0,0,0,0.04);
@@ -76,32 +78,44 @@ export const Navbar: React.FC = () => {
           box-shadow: 0 4px 20px rgba(0,0,0,0.1), 0 0 0 1px rgba(0,0,0,0.05);
         }
         @media (max-width: 480px) {
-          .nav-pill { height: 48px; padding: 0 6px 0 14px; }
+          .nav-pill { height: 48px; padding: 0 6px 0 10px; }
         }
 
+        /* ── LOGO ── */
         .nav-logo {
           display: flex;
           align-items: center;
-          gap: 7px;
-          font-family: 'Georgia', 'Times New Roman', serif;
-          font-weight: 700;
-          font-size: 0.92rem;
-          color: #1a1a1a;
           text-decoration: none;
-          white-space: nowrap;
           flex-shrink: 0;
         }
-        .nav-logo-icon {
-          width: 26px; height: 26px;
-          background: #1a1a1a;
-          border-radius: 6px;
-          display: flex; align-items: center; justify-content: center;
-          color: white; flex-shrink: 0;
+
+        /* Full logo (icon + wordmark image) — shown on ≥521px */
+        .nav-logo-full {
+          height: 36px;
+          width: auto;
+          display: block;
+          /* The logo.png has a black background, so we invert it to look
+             clean on the light pill. Remove the filter if your logo.png
+             already has a transparent background. */
+         
+          /* Optional: if you want to keep the blue colour, use:
+          */
         }
-        .nav-logo-short { display: none; }
+
+        /* Icon-only (favicon) — shown on ≤520px */
+        .nav-logo-icon-img {
+          height: 30px;
+          width: 30px;
+          object-fit: contain;
+          display: none;
+          /* favicon.png has a black background — blend it away */
+          mix-blend-mode: multiply;
+          
+        }
+
         @media (max-width: 520px) {
-          .nav-logo-full  { display: none; }
-          .nav-logo-short { display: inline; }
+          .nav-logo-full      { display: none; }
+          .nav-logo-icon-img  { display: block; }
         }
 
         .nav-links {
@@ -122,8 +136,8 @@ export const Navbar: React.FC = () => {
           transition: color 0.18s, background 0.18s;
           white-space: nowrap;
         }
-        .nav-link:hover          { color: #2563eb; background: rgba(37,99,235,0.07); }
-        .nav-link.active         { color: #2563eb; font-weight: 600; }
+        .nav-link:hover  { color: #2563eb; background: rgba(37,99,235,0.07); }
+        .nav-link.active { color: #2563eb; font-weight: 600; }
 
         .nav-actions {
           display: flex; align-items: center; gap: 4px; flex-shrink: 0;
@@ -168,21 +182,29 @@ export const Navbar: React.FC = () => {
           transition: background 0.15s;
           display: block;
         }
-        .nav-mobile-link:hover        { background: rgba(0,0,0,0.05); }
-        .nav-mobile-link.active       { color: #2563eb; background: rgba(37,99,235,0.07); font-weight: 600; }
+        .nav-mobile-link:hover  { background: rgba(0,0,0,0.05); }
+        .nav-mobile-link.active { color: #2563eb; background: rgba(37,99,235,0.07); font-weight: 600; }
 
-        /* Spacer so page content isn't hidden under the fixed nav */
         .nav-spacer { height: 76px; }
       `}</style>
 
       <div className={`nav-outer${scrolled ? ' scrolled' : ''}`}>
         <div className="nav-pill">
 
-          {/* Logo */}
+          {/* ── Logo ── */}
           <Link to="/" className="nav-logo">
-            <div className="nav-logo-icon"><MapPin size={14} /></div>
-            <span className="nav-logo-full">CareerPathGuide.com</span>
-            <span className="nav-logo-short">CPG</span>
+            {/* Full logo (desktop) */}
+            <img
+              src="/images/logo.png"
+              alt="GetBreakTech"
+              className="nav-logo-full"
+            />
+            {/* Icon only (mobile) */}
+            <img
+              src="/images/favicon.png"
+              alt="GetBreakTech"
+              className="nav-logo-icon-img"
+            />
           </Link>
 
           {/* Desktop links */}

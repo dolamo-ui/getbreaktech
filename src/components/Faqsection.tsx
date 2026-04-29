@@ -9,7 +9,7 @@ const faqs = [
   {
     question: "Do I need a degree or prior experience to use these roadmaps?",
     answer:
-      "Not at all. Every roadmap on CareerPathGuide is designed with complete beginners in mind. We show you exactly where to start, what to learn first, and how to build momentum — regardless of your current background.",
+      "Not at all. Every roadmap on GetBreakTech is designed with complete beginners in mind. We show you exactly where to start, what to learn first, and how to build momentum — regardless of your current background.",
     accent: "#2563eb",
   },
   {
@@ -25,7 +25,7 @@ const faqs = [
     accent: "#0ea5e9",
   },
   {
-    question: "Can I use CareerPathGuide if I want to switch careers, not start from scratch?",
+    question: "Can I use GetBreakTech if I want to switch careers, not start from scratch?",
     answer:
       "Absolutely — in fact, career changers are one of our most common success stories. Our Career Change section maps your existing transferable skills to your target role and shows you the shortest, most efficient path to get there.",
     accent: "#10b981",

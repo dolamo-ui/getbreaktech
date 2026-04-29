@@ -7,7 +7,7 @@ gsap.registerPlugin(ScrollTrigger)
 
 const featuredGuides = [
   {
-    slug: "devops-engineer",
+    slug: "devops",
     title: "DevOps Engineer",
     description: "No experience? No problem. Learn how to automate, deploy, and manage systems — one step at a time.",
     category: "Tech",
@@ -65,7 +65,7 @@ const featuredGuides = [
     ),
   },
   {
-    slug: "data-scientist",
+    slug: "data-science",
     title: "Data Scientist",
     description: "Turn raw numbers into real insights. Perfect for students who love patterns, math, or just want a high-paying career.",
     category: "Data",

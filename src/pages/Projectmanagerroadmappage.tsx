@@ -14,7 +14,7 @@ import {
   Award, Target, Flame, Database,
   Layers, FileText, Globe, Server, Layout,
   GitBranch, Terminal, Package, Shield,
-  Cloud, Workflow, Headphones, Wrench, Radio, PhoneCall,
+  Cloud, Workflow,
 } from 'lucide-react'
 
 gsap.registerPlugin(ScrollTrigger)
@@ -28,9 +28,9 @@ const C = {
   text: '#0f172a',
   textMuted: '#64748b',
   textFaint: '#94a3b8',
-  primary: '#0369a1',          // support blue — IT support brand colour
-  primaryLight: 'rgba(3,105,161,0.08)',
-  primaryMid: 'rgba(3,105,161,0.15)',
+  primary: '#7c3aed',
+  primaryLight: 'rgba(124,58,237,0.08)',
+  primaryMid: 'rgba(124,58,237,0.15)',
   violet: '#7c3aed',
   violetLight: 'rgba(124,58,237,0.08)',
   green: '#16a34a',
@@ -49,333 +49,334 @@ const C = {
 
 const CAREER_LEVELS = [
   {
-    level: 'Junior', title: 'Help Desk Technician', duration: '0–2 yrs', salary: 'R160k–R290k',
-    description: 'Handle Tier 1 support tickets, troubleshoot hardware and software issues, reset passwords, and escalate complex problems. Learn ticketing systems and ITIL basics.',
-    skills: ['Windows OS', 'Ticketing Tools', 'Basic Networking', 'Active Directory'],
+    level: 'Junior', title: 'Project Coordinator', duration: '0–2 yrs', salary: 'R260k–R460k',
+    description: 'Support senior PMs with scheduling, status reporting, meeting coordination, and risk tracking. Learn project management tools, update plans, and own administrative delivery tasks.',
+    skills: ['MS Project / Jira', 'Status Reporting', 'Meeting Facilitation', 'Risk Logging'],
     accent: '#0891b2', accentBg: 'rgba(8,145,178,0.08)', accentBorder: 'rgba(8,145,178,0.18)',
   },
   {
-    level: 'Mid-Level', title: 'IT Support Specialist', duration: '2–5 yrs', salary: 'R290k–R540k',
-    description: 'Own Tier 2 escalations, manage endpoints at scale, configure network equipment, support cloud tools (Microsoft 365, Google Workspace), and mentor junior staff.',
-    skills: ['Microsoft 365', 'ITIL Foundation', 'Network Config', 'MDM / Intune'],
+    level: 'Mid-Level', title: 'Project Manager', duration: '2–5 yrs', salary: 'R580k–R1.0M',
+    description: 'Own project delivery end-to-end. Define scope, build project plans, manage budgets up to R5M, run steering committees, and coordinate cross-functional delivery teams of 5–15 people.',
+    skills: ['Scope Management', 'Budget Control', 'Stakeholder Mgmt', 'PMP / CAPM'],
     accent: '#16a34a', accentBg: 'rgba(22,163,74,0.08)', accentBorder: 'rgba(22,163,74,0.18)',
   },
   {
-    level: 'Senior', title: 'Service Desk Analyst', duration: '5–8 yrs', salary: 'R540k–R900k',
-    description: 'Drive SLA compliance, lead incident and problem management, design knowledge base processes, and build automation that reduces ticket volume. Technical escalation lead.',
-    skills: ['ITIL Advanced', 'PowerShell', 'SIEM Basics', 'Process Design'],
+    level: 'Senior', title: 'Senior Project Manager', duration: '5–8 yrs', salary: 'R1.0M–R1.8M',
+    description: 'Lead complex multi-workstream programmes, manage executive stakeholders, control budgets of R10M+, define PM methodology and governance frameworks, and mentor junior PMs.',
+    skills: ['Programme Mgmt', 'Executive Comms', 'Budget R10M+', 'PMO Leadership'],
     accent: '#7c3aed', accentBg: 'rgba(124,58,237,0.08)', accentBorder: 'rgba(124,58,237,0.18)',
   },
   {
-    level: 'Expert', title: 'IT Support Manager', duration: '8+ yrs', salary: 'R900k+',
-    description: 'Lead the support function, define IT service strategy, manage vendor relationships, implement ITSM platforms, and align IT operations with business objectives.',
-    skills: ['ITSM Strategy', 'Team Leadership', 'Budget Mgmt', 'ITIL Expert'],
+    level: 'Expert', title: 'Programme Director / PMO Head', duration: '8+ yrs', salary: 'R2M+',
+    description: 'Lead the entire portfolio of delivery programmes, define organisational PM standards, sit on executive committees, and drive strategic transformation agendas at board level.',
+    skills: ['Portfolio Mgmt', 'PMO Strategy', 'Org Transformation', 'Board Reporting'],
     accent: '#ea580c', accentBg: 'rgba(234,88,12,0.08)', accentBorder: 'rgba(234,88,12,0.18)',
   },
 ]
 
 const ROADMAP_STEPS = [
   {
-    step: 1, title: 'IT Fundamentals & Operating Systems',
-    description: 'Build a solid base in how computers work. Learn Windows 10/11 administration inside out — installation, user accounts, Group Policy, file systems, and troubleshooting. Supplement with macOS and Linux basics. CompTIA A+ is the gold-standard certification for this stage and is widely recognised by employers.',
-    duration: '2–3 months', skills: ['Windows 10/11', 'macOS Basics', 'Linux CLI', 'CompTIA A+'],
+    step: 1, title: 'Project Management Fundamentals',
+    description: 'Study the PMBOK Guide — the global standard for project management knowledge. Understand the five process groups: Initiating, Planning, Executing, Monitoring & Controlling, and Closing. Learn the ten knowledge areas. Grasp the triple constraint: scope, schedule, and cost — and how every PM decision balances them.',
+    duration: '1–2 months', skills: ['PMBOK Guide', 'Triple Constraint', 'Project Lifecycle', 'PM Terminology'],
   },
   {
-    step: 2, title: 'Networking Essentials',
-    description: 'Every support call eventually becomes a network problem. Learn TCP/IP, DNS, DHCP, subnetting, VLANs, Wi-Fi troubleshooting, and VPN concepts. Understand the OSI model at a practical level. CompTIA Network+ validates these skills and is required or preferred at most IT departments.',
-    duration: '2–3 months', skills: ['TCP/IP & DNS', 'Subnetting', 'Wi-Fi & VPN', 'CompTIA Network+'],
+    step: 2, title: 'Planning, Scheduling & Scope Management',
+    description: 'Master the planning phase — the most critical PM skill. Learn Work Breakdown Structures (WBS), Gantt charts, critical path method (CPM), resource levelling, and dependency mapping. Study scope management: how to write a project scope statement and manage scope creep without damaging stakeholder relationships.',
+    duration: '2–3 months', skills: ['WBS & Gantt Charts', 'Critical Path Method', 'Scope Management', 'MS Project / Smartsheet'],
   },
   {
-    step: 3, title: 'Active Directory, M365 & Identity',
-    description: 'Enterprise IT runs on Microsoft. Learn Active Directory — user and group management, OUs, Group Policy Objects, and domain structure. Then master Microsoft 365 administration: Exchange Online, Teams, SharePoint, and Intune for device management. These skills appear in nearly every job description.',
-    duration: '2–3 months', skills: ['Active Directory', 'Microsoft 365', 'Intune / MDM', 'Azure AD'],
+    step: 3, title: 'Budget Management & Risk',
+    description: 'Learn earned value management (EVM) to track project performance against baseline. Build and manage project budgets, track burn rates, and forecast at completion. Study risk management: identification, qualitative and quantitative analysis, response planning, and risk registers. A PM who can\'t manage money and risk is not a PM.',
+    duration: '2–3 months', skills: ['Earned Value Mgmt', 'Budget Forecasting', 'Risk Register', 'Risk Response Planning'],
   },
   {
-    step: 4, title: 'ITIL, Ticketing & Service Management',
-    description: 'IT support is a professional service, not just fixing computers. Learn ITIL 4 — incident, problem, change, and service request management. Get hands-on with a ticketing system (ServiceNow, Jira Service Management, or Freshdesk). Study SLA management and how to write knowledge base articles that reduce repeat tickets.',
-    duration: '1–2 months', skills: ['ITIL 4 Foundation', 'ServiceNow / Jira', 'SLA Management', 'Knowledge Mgmt'],
+    step: 4, title: 'Agile, Scrum & Hybrid Delivery',
+    description: 'Modern projects rarely run pure waterfall. Learn Scrum deeply — sprints, ceremonies, velocity, and backlogs. Understand Kanban for operational delivery and SAFe for large enterprise programmes. Master the hybrid PM approach: blending Agile flexibility with waterfall governance structures that corporates require.',
+    duration: '1–2 months', skills: ['Scrum / Agile', 'SAFe for PMs', 'Hybrid Delivery', 'Kanban Boards'],
   },
   {
-    step: 5, title: 'Security Fundamentals & Endpoint Protection',
-    description: 'Security is inseparable from IT support. Learn how to identify phishing attempts, configure Windows Defender and endpoint protection tools, manage BitLocker encryption, apply patches, and respond to a basic security incident. CompTIA Security+ is the entry-point certification into cybersecurity-adjacent IT roles.',
-    duration: '2–3 months', skills: ['CompTIA Security+', 'Endpoint Protection', 'Patch Management', 'Incident Response'],
+    step: 5, title: 'Stakeholder Management & Leadership',
+    description: 'A project plan is worthless without people who support it. Study stakeholder mapping, influence strategies, and change management. Learn how to run effective steering committees, present to executives, and manage sponsor expectations. Build the conflict resolution skills that keep delivery on track when people disagree.',
+    duration: '2–3 months', skills: ['Stakeholder Mapping', 'Executive Reporting', 'Conflict Resolution', 'Change Management'],
   },
   {
-    step: 6, title: 'Scripting, Automation & Cloud',
-    description: 'Senior support professionals automate repetitive tasks. Learn PowerShell to script Active Directory operations, user onboarding, and reporting. Add basics of Azure or AWS for cloud-hosted infrastructure support. Automation skills dramatically differentiate you from peers and open paths into sysadmin and cloud engineering roles.',
-    duration: '3–4 months', skills: ['PowerShell', 'Azure Fundamentals', 'Automation Scripts', 'Cloud Basics'],
+    step: 6, title: 'Certification, Specialisation & PMO',
+    description: 'Certify your knowledge with PMP (gold standard, requires 36 months experience), CAPM (entry-level), or PRINCE2 (popular in UK and South Africa). Specialise in a delivery domain: IT projects, construction, financial services, or digital transformation. Study PMO governance to lead at portfolio level.',
+    duration: '3–4 months', skills: ['PMP / PRINCE2', 'PMO Governance', 'Portfolio Mgmt', 'Benefits Realisation'],
   },
 ]
 
 const HARD_SKILLS = [
-  { name: 'Windows OS Administration', level: 95 },
-  { name: 'Microsoft 365 & Azure AD', level: 93 },
-  { name: 'Networking & TCP/IP', level: 88 },
-  { name: 'Active Directory & GPO', level: 85 },
-  { name: 'ITIL / ITSM Processes', level: 82 },
-  { name: 'Security & Endpoint Protection', level: 75 },
-  { name: 'PowerShell Scripting', level: 68 },
-  { name: 'Cloud Platforms (Azure/AWS)', level: 60 },
+  { name: 'Project Planning & Scheduling', level: 95 },
+  { name: 'Stakeholder Management', level: 93 },
+  { name: 'Budget & Cost Management', level: 88 },
+  { name: 'Risk Management', level: 85 },
+  { name: 'Agile / Scrum', level: 82 },
+  { name: 'MS Project / Smartsheet', level: 78 },
+  { name: 'PMO Governance', level: 70 },
+  { name: 'Benefits Realisation', level: 65 },
 ]
 
 const SOFT_SKILLS = [
-  { name: 'Empathetic Communication', description: 'Users are often stressed when they call support. The ability to listen patiently, explain technical concepts in plain language, and make the person feel heard is what separates great support from merely functional support.' },
-  { name: 'Calm Under Pressure', description: 'Major outages affect hundreds of people simultaneously. The support professional who stays methodical, communicates clearly, and works the problem without panicking is irreplaceable during incidents.' },
-  { name: 'Systematic Troubleshooting', description: 'The best IT support people don\'t guess — they eliminate variables. A disciplined, hypothesis-driven approach to diagnosis gets to root causes faster and prevents repeat calls on the same issue.' },
-  { name: 'Documentation Discipline', description: 'Every ticket is an opportunity to create institutional knowledge. Support professionals who document problems and solutions thoroughly build the knowledge base that makes the whole team faster over time.' },
-  { name: 'Customer Service Mindset', description: 'IT support is a service. Treating users as internal customers — not as interruptions — builds trust, improves response quality, and makes you the person people actually want to call when things break.' },
-  { name: 'Continuous Self-Learning', description: 'Technology changes faster than any job description can capture. The best support professionals are perpetually curious — studying for the next cert, testing new tools in a home lab, and following IT news to stay ahead.' },
+  { name: 'Leadership Without Authority', description: 'PMs rarely have direct authority over project team members, who report to functional managers. The ability to motivate, align, and direct people through influence — not hierarchy — is the single most important PM skill.' },
+  { name: 'Communication Precision', description: 'A status report that confuses executives costs projects. PMs communicate the right information to the right people at the right time — concisely, accurately, and at the right level of detail for each audience.' },
+  { name: 'Decisive Problem Solving', description: 'Projects hit problems daily. The PM who freezes under ambiguity creates delay. The PM who moves fast, makes a decision with available information, and pivots when wrong keeps delivery on track.' },
+  { name: 'Calm Under Pressure', description: 'Red projects, executive escalations, and vendor failures are part of every PM\'s career. The ability to remain composed, think clearly, and project confidence during a crisis is what separates good PMs from great ones.' },
+  { name: 'Negotiation', description: 'PMs negotiate constantly: with vendors on SLAs, with sponsors on scope changes, with resource managers on team allocation, and with team members on timelines. This is a craft that must be deliberately developed.' },
+  { name: 'Scope Change Management', description: 'Every stakeholder believes their new request is urgent and out of scope. Managing change requests with discipline — logging them, assessing impact, and getting sponsor sign-off — is what keeps project baselines meaningful.' },
 ]
 
 const EDU_PATHS = [
   {
-    type: 'Degree', title: 'IT / Computer Science Degree', duration: '3–4 years', cost: 'R400k – R1M+',
-    borderColor: 'rgba(3,105,161,0.2)', bgColor: '#eff6ff', typeBg: 'rgba(3,105,161,0.12)', typeColor: '#0369a1',
-    pros: ['Deepest theoretical foundation', 'Opens doors to management and specialisation faster', 'Graduate schemes at large corporates and banks', 'Strong peer network of future IT professionals'],
-    cons: ['Slow and expensive path to first salary', 'Practical hands-on lab time is limited', 'Many grads still need certifications to get hired', 'IT support roles rarely require a degree at entry level'],
+    type: 'Degree', title: 'Business / Management Degree', duration: '3–4 years', cost: 'R350k – R900k',
+    borderColor: 'rgba(124,58,237,0.2)', bgColor: '#faf5ff', typeBg: 'rgba(124,58,237,0.12)', typeColor: '#7c3aed',
+    pros: ['Strong business, finance, and leadership foundations', 'Graduate programme access at large corporates', 'High credibility for senior PM and PMO roles', 'Network of future business leaders'],
+    cons: ['Slow and expensive path to first PM role', 'Rarely teaches PMBOK, Agile, or Jira', 'Most PM skills are learned on the job regardless', 'Entry-level PM roles still require a PMP or experience'],
   },
   {
-    type: 'Certifications', title: 'CompTIA A+ → Network+ → Security+', duration: '6–18 months', cost: 'R15k – R60k',
+    type: 'Bootcamp', title: 'PM Certification Bootcamp', duration: '2–4 months', cost: 'R15k – R60k',
     borderColor: 'rgba(22,163,74,0.2)', bgColor: '#f0fdf4', typeBg: 'rgba(22,163,74,0.12)', typeColor: '#16a34a',
-    pros: ['Vendor-neutral, globally recognised credentials', 'Directly maps to job descriptions and hiring filters', 'Much faster and cheaper than a degree', 'CompTIA A+ is explicitly required by many help desk roles'],
-    cons: ['Exams require dedicated study and exam fees', 'Credentials alone don\'t replace hands-on lab practice', 'Need to be renewed every 3 years via CEUs', 'Won\'t replace leadership experience for management roles'],
+    pros: ['Fast path to CAPM / PRINCE2 Foundation certification', 'Practical tools: MS Project, Jira, risk templates', 'Career support and employer networks', 'Focused, outcome-oriented curriculum'],
+    cons: ['Highly variable programme quality', 'Doesn\'t replace domain experience for complex programmes', 'Credential alone won\'t unlock senior roles', 'PMP requires 36 months experience regardless of course'],
   },
   {
-    type: 'Self-Taught', title: 'Home Lab + Free Courses', duration: '12–24 months', cost: 'R2k – R10k',
+    type: 'Self-Taught', title: 'PMBOK, Online Courses & Projects', duration: '12–18 months', cost: 'R0 – R12k',
     borderColor: 'rgba(79,70,229,0.2)', bgColor: '#eef2ff', typeBg: 'rgba(79,70,229,0.12)', typeColor: '#4f46e5',
-    pros: ['Build real skills on real hardware', 'Microsoft Learn and Google IT Support cert are free/cheap', 'Immediate hands-on practice with no waiting', 'Home lab experience impresses interviewers who test practically'],
-    cons: ['No formal credential on CV without separate exam', 'Requires significant self-discipline and structure', 'Knowledge gaps can be dangerous without structured curriculum', 'Harder to demonstrate competence without certification'],
+    pros: ['PMBOK 7th Edition is accessible and widely studied', 'Free Agile / Scrum content widely available', 'Volunteer to PM a real project from day one', 'CAPM exam accessible with no experience required'],
+    cons: ['Requires significant self-discipline and initiative', 'Hard to get first PM role without a portfolio or mentor', 'Easy to develop theory without practical delivery experience', 'PMP requires 36 months documented experience minimum'],
   },
 ]
 
 const SCHEDULE = [
-  { time: '8:00', act: 'Queue Triage & Priority Setting', desc: 'Review the overnight ticket queue, identify P1/P2 incidents, assign team members to urgent items and communicate status to affected users before business starts', duration: '30 min', icon: <PhoneCall size={14} /> },
-  { time: '8:30', act: 'Active Incident Resolution', desc: 'Work through priority tickets — remote desktop sessions, on-site hardware swaps, account provisioning, software licensing issues, and connectivity problems', duration: '3 hrs', icon: <Wrench size={14} /> },
-  { time: '11:30', act: 'Escalation & Vendor Follow-up', desc: 'Escalate unresolved Tier 2 issues to sysadmin or vendor support, follow up on outstanding hardware replacements and software licences, update users on ETA', duration: '30 min', icon: <Radio size={14} /> },
-  { time: '12:00', act: 'Lunch & Recovery', desc: 'Step away from the screen. Complex technical problems benefit from a mental reset — some of the best diagnostic insights arrive after a proper break', duration: '1 hr', icon: <Coffee size={14} /> },
-  { time: '1:00', act: 'Knowledge Base & Documentation', desc: 'Write up solutions for recurring issues, update runbooks, improve existing KB articles, and document this morning\'s unusual fixes before the context is lost', duration: '1 hr', icon: <FileText size={14} /> },
-  { time: '2:00', act: 'Proactive Maintenance & Projects', desc: 'Run patch deployments, update endpoint agents, work on ongoing IT projects (e.g., hardware refresh, Office 365 migration), or build automation scripts for repetitive tasks', duration: '1.5 hrs', icon: <Shield size={14} /> },
-  { time: '3:30', act: 'Learning & Certification Study', desc: 'Work through CompTIA study material, practise PowerShell scripts in the home lab, complete a Microsoft Learn module, or test a new tool in a sandbox environment', duration: '30 min', icon: <BookOpen size={14} /> },
+  { time: '8:30', act: 'Morning Status Review', desc: 'Review overnight RAG status updates from workstream leads, check project dashboards, flag risks for the daily standup, and prepare the executive summary for the steering committee', duration: '30 min', icon: <Monitor size={14} /> },
+  { time: '9:00', act: 'Daily Standup / Scrum', desc: 'Run a 15-minute standup with the project team. Surface blockers, confirm priorities, and track action items. A PM who runs tight standups saves hours of wasted time weekly.', duration: '15–30 min', icon: <Users size={14} /> },
+  { time: '9:30', act: 'Stakeholder Management', desc: 'Respond to sponsor queries, manage scope change requests, prepare for the afternoon steering committee, and navigate the political dynamics that determine whether the project gets support.', duration: '1.5 hrs', icon: <MessageSquare size={14} /> },
+  { time: '11:00', act: 'Risk & Issue Management', desc: 'Review the risk register, update issue logs, escalate critical items, and work through mitigation actions with workstream leads. Risk management is daily work, not a quarterly exercise.', duration: '1 hr', icon: <Shield size={14} /> },
+  { time: '1:00', act: 'Lunch & Recovery', desc: 'Project management is emotionally intensive. A proper lunch break away from the laptop resets focus for the afternoon — especially before a difficult steering committee conversation.', duration: '1 hr', icon: <Coffee size={14} /> },
+  { time: '2:00', act: 'Steering Committee / Reporting', desc: 'Present RAG status, budget burn, milestone progress, risks, and decisions required to executive sponsors. The quality of your pack determines the quality of the decision you walk out with.', duration: '1.5 hrs', icon: <FileText size={14} /> },
+  { time: '3:30', act: 'Planning & Schedule Updates', desc: 'Update the project plan, rebaseline tasks, process approved change requests, and update the RAID log. Planning is never finished — it\'s continuously refined throughout the project lifecycle.', duration: '1 hr', icon: <Calendar size={14} /> },
+  { time: '4:30', act: 'Professional Development', desc: 'Study PMBOK chapters, track PMP PDUs, read PM blogs (PMI, PMI-ACP), or mentor a junior coordinator. The best PMs invest in their craft as deliberately as developers invest in code.', duration: '30 min', icon: <BookOpen size={14} /> },
 ]
 
 const TOOLS = [
-  { name: 'ServiceNow / Jira SM', cat: 'Ticketing' }, { name: 'Microsoft Intune', cat: 'MDM' },
-  { name: 'Active Directory', cat: 'Identity' }, { name: 'TeamViewer / AnyDesk', cat: 'Remote' },
-  { name: 'Microsoft 365 Admin', cat: 'Cloud' }, { name: 'Wireshark', cat: 'Network' },
-  { name: 'PowerShell ISE', cat: 'Scripting' }, { name: 'Windows Defender', cat: 'Security' },
+  { name: 'MS Project', cat: 'Scheduling' }, { name: 'Jira / Azure DevOps', cat: 'Agile' },
+  { name: 'Smartsheet', cat: 'Planning' }, { name: 'Confluence / Notion', cat: 'Documentation' },
+  { name: 'Power BI', cat: 'Reporting' }, { name: 'MS Teams / Slack', cat: 'Communication' },
+  { name: 'Excel', cat: 'Budget Tracking' }, { name: 'Miro', cat: 'Workshops' },
 ]
 
 const WORK_ENVS = [
-  { type: 'In-Office / On-Site', pct: 52 },
-  { type: 'Hybrid', pct: 37 },
-  { type: 'Fully Remote', pct: 11 },
+  { type: 'Hybrid', pct: 62 },
+  { type: 'In-Office', pct: 24 },
+  { type: 'Remote', pct: 14 },
 ]
 
 const AI_IMPACTS = [
   {
-    title: 'AI-Assisted Ticket Resolution', icon: <Sparkles size={20} />,
-    desc: 'AI tools like Copilot for Microsoft 365 and ServiceNow\'s Now Assist auto-suggest resolutions based on ticket content, prior solutions, and knowledge base articles. Support teams using AI report 40–60% faster Tier 1 resolution times and significantly lower escalation rates.',
-    tools: ['Copilot for M365', 'ServiceNow AI', 'Freshdesk AI', 'Zendesk AI'],
-    borderColor: 'rgba(3,105,161,0.18)', bgColor: '#eff6ff', icoBg: 'rgba(3,105,161,0.12)', icoColor: '#0369a1', tagBg: 'rgba(3,105,161,0.1)', tagColor: '#0369a1', titleColor: '#0369a1',
+    title: 'AI-Assisted Project Planning', icon: <Sparkles size={20} />,
+    desc: 'AI tools can now generate first-draft project plans from scope statements, identify missing tasks based on project type, flag unrealistic timelines, and suggest resource allocation patterns from historical data. PMs using AI planning tools report 35% faster project kick-off cycles.',
+    tools: ['Microsoft Copilot', 'Asana AI', 'ClickUp AI', 'Notion AI'],
+    borderColor: 'rgba(124,58,237,0.18)', bgColor: '#faf5ff', icoBg: 'rgba(124,58,237,0.12)', icoColor: '#7c3aed', tagBg: 'rgba(124,58,237,0.1)', tagColor: '#7c3aed', titleColor: '#7c3aed',
   },
   {
-    title: 'Intelligent Automation & Self-Service', icon: <Zap size={20} />,
-    desc: 'IT support professionals who can build AI-powered chatbots, configure automated provisioning workflows, and connect ITSM platforms to automation tools (Power Automate, Zapier) are in a completely different demand tier in 2026.',
-    tools: ['Power Automate', 'Microsoft Copilot Studio', 'Zapier', 'Azure Logic Apps'],
+    title: 'Predictive Risk Intelligence', icon: <Zap size={20} />,
+    desc: 'AI-powered portfolio tools analyse project health signals — velocity trends, issue escalation patterns, budget burn rates — and predict which projects are likely to go red weeks before they do. PMs who act on early warnings recover projects before executives escalate.',
+    tools: ['Planview AI', 'Workfront AI', 'Broadcom Clarity', 'Datadog'],
     borderColor: 'rgba(79,70,229,0.18)', bgColor: '#eef2ff', icoBg: 'rgba(79,70,229,0.12)', icoColor: '#4f46e5', tagBg: 'rgba(79,70,229,0.1)', tagColor: '#4f46e5', titleColor: '#4f46e5',
   },
   {
-    title: 'AI-Powered IT Monitoring', icon: <TrendingUp size={20} />,
-    desc: 'AIOps platforms now detect infrastructure anomalies, predict hardware failures before they impact users, and auto-route tickets based on historical patterns. Understanding these tools makes you a force multiplier for your entire IT team.',
-    tools: ['Microsoft Sentinel', 'Datadog', 'SolarWinds AI', 'PagerDuty AIOps'],
+    title: 'Automated Reporting & Status', icon: <TrendingUp size={20} />,
+    desc: 'AI can now aggregate data from Jira, Smartsheet, and financial systems to auto-generate weekly status reports, RAG dashboards, and executive summaries — reducing report preparation from 3 hours to 20 minutes and freeing PMs for actual delivery work.',
+    tools: ['Power BI AI', 'Tableau AI', 'Copilot for M365', 'ChatGPT'],
     borderColor: 'rgba(22,163,74,0.18)', bgColor: '#f0fdf4', icoBg: 'rgba(22,163,74,0.12)', icoColor: '#16a34a', tagBg: 'rgba(22,163,74,0.1)', tagColor: '#16a34a', titleColor: '#16a34a',
   },
 ]
 
 const FUTURE_SKILLS = [
-  'Microsoft Copilot Administration', 'Power Automate & Low-Code Workflows',
-  'Zero Trust Network Access (ZTNA)', 'Azure Virtual Desktop Support',
-  'AI Chatbot Configuration (Copilot Studio)', 'AIOps & Predictive Monitoring',
+  'AI-Augmented Project Planning', 'Sustainability & ESG Project Delivery',
+  'Portfolio-Level OKR Management', 'Agile at Scale (SAFe 6.0)',
+  'Benefits Realisation Frameworks', 'Digital Transformation Programme Management',
 ]
 
 const PROS = [
-  { title: 'Always in Demand — Everywhere', desc: 'Every organisation with computers needs IT support. Hospitals, banks, schools, government, retail — the demand is universal, recession-resistant, and geographically distributed across every city in South Africa.' },
-  { title: 'The Fastest Entry into IT', desc: 'Help desk is the most accessible entry point into the technology industry. CompTIA A+ certification and a few months of study can land your first role — no degree required at entry level.' },
-  { title: 'Exposure to the Entire IT Stack', desc: 'No other role gives you broader exposure faster. In a single week, a help desk technician might touch networking, identity management, cloud apps, hardware, security, and backup systems.' },
-  { title: 'Clear Paths to Specialisation', desc: 'IT support is a launchpad, not a ceiling. From here, experienced technicians branch into sysadmin, network engineering, cybersecurity, cloud architecture, or IT management — with every path well-marked.' },
-  { title: 'Strong Job Security', desc: 'Unlike many tech roles, IT support cannot be fully offshored or replaced by software. On-site hardware, physical network infrastructure, and user relationships require a local, trusted human presence.' },
-  { title: 'Fast Skill Development', desc: 'The variety of problems encountered in support accelerates learning faster than almost any other tech role. In two years you\'ll have solved more edge cases than most developers see in five.' },
+  { title: 'You Own the Outcome', desc: 'PMs are accountable for whether projects succeed or fail. This responsibility comes with visibility. A PM who delivers a R100M programme on time and budget is remembered — and rewarded — for years.' },
+  { title: 'Transferable Across Every Industry', desc: 'Project management works in construction, IT, healthcare, finance, government, and mining. Once you have the skill, you are never locked into one sector — an option almost no other career provides.' },
+  { title: 'Clear Certification & Career Path', desc: 'CAPM → PMP → Programme Director is one of the clearest, most globally recognised career paths in business. PMI certifications are understood and valued in over 200 countries.' },
+  { title: 'High Earning Potential', desc: 'Senior PMs and Programme Directors at large South African corporations and banks earn R1.8M–R3M+. International contracting for USD-paying clients significantly increases this ceiling.' },
+  { title: 'Constant Variety', desc: 'Every project is different — new problem, new team, new domain. PMs never stop learning. The variety of challenges keeps the role intellectually stimulating across an entire career.' },
+  { title: 'Natural Path to Executive Leadership', desc: 'Programme Director → Head of PMO → COO is a well-worn leadership path. PMs develop exactly the organisational, financial, and human skills that senior leadership requires.' },
 ]
 
 const CONS = [
-  { title: 'Emotionally Demanding Work', desc: 'Supporting frustrated users who can\'t work, managing an overflowing ticket queue, and being the first person blamed when systems fail takes a toll. Emotional resilience is as important as technical skill.' },
-  { title: 'Compensation Ceiling at Tier 1', desc: 'Entry-level help desk roles are among the lower-paid positions in IT. Breaking through to R400k+ requires active upskilling, certifications, and movement into specialist or senior roles.' },
-  { title: 'Repetitive Ticket Fatigue', desc: 'Password resets, "my printer isn\'t working," and Outlook crashes account for a large percentage of tickets. Without deliberate variety and growth goals, the work can become monotonous.' },
-  { title: 'On-Site Requirements', desc: 'Unlike backend or development roles, much IT support still requires physical presence. Hardware replacements, cabling, server room access, and in-person user support mean remote work is limited compared to other tech fields.' },
-  { title: 'Underappreciated Until It Breaks', desc: 'IT support is invisible when it works and immediately visible when it fails. Getting credit for preventing 300 incidents is harder than being blamed for the one that gets through. This is the reality of a support culture.' },
-  { title: 'Credential Treadmill', desc: 'Technology evolves quickly and certifications expire. Staying current in Microsoft, CompTIA, and cloud platforms requires ongoing study investment — both time and money — throughout your career.' },
+  { title: 'Everything That Goes Wrong Is Your Problem', desc: 'Vendor delivers late? Your problem. Developer quits mid-sprint? Your problem. Scope changes approved without budget? Still your problem. The PM carries the weight of every delivery failure regardless of the actual cause.' },
+  { title: 'Constant Stakeholder Pressure', desc: 'Sponsors want it faster. Finance wants it cheaper. The business wants more scope. Your team needs more time. Balancing these competing pressures without breaking any relationship is exhausting work.' },
+  { title: 'Meeting Fatigue is Real', desc: 'A PM\'s calendar fills with standups, steering committees, risk reviews, planning sessions, and status calls. Protecting time to actually do focused PM work requires deliberate boundary-setting.' },
+  { title: 'PMP is Expensive and Time-Gated', desc: 'The PMP requires 36 months of project management experience before you can even sit the exam. The entry barrier is real, and the cost (exam fees, study materials, PDUs) adds up to R20k–R50k.' },
+  { title: 'Accountability Without Full Control', desc: 'PMs are responsible for outcomes they cannot fully control. Team members report to functional managers. Budgets are controlled by finance. Timelines are dictated by business events. You own the result but not the levers.' },
+  { title: 'Scope Creep Never Stops', desc: '"While we\'re at it, can we just add..." is the sentence that has derailed more projects than any technical failure. Managing scope creep with discipline while maintaining stakeholder goodwill is an ongoing PM battle.' },
 ]
 
 const VIDEOS = [
-  { id: 'G7V2nqFRojA', title: 'CompTIA A+ Core 1 Full Course', desc: 'Complete preparation for the CompTIA A+ 220-1101 exam covering hardware, networking, and troubleshooting — the foundational certification for IT support professionals.', dur: '14:08:00', channel: 'Professor Messer' },
-  { id: 'qiQR5rTSshw', title: 'Google IT Support Professional Certificate', desc: 'Google\'s fully free IT support training program covering technical support fundamentals, networking, operating systems, system administration, and IT security.', dur: '6:32:00', channel: 'Google / Coursera' },
-  { id: 'ynbHdHrU5gs', title: 'CompTIA Network+ Full Course', desc: 'Complete Network+ study guide covering network infrastructure, protocols, troubleshooting, and security — essential for anyone moving beyond Tier 1 support.', dur: '12:16:00', channel: 'Professor Messer' },
+  { id: 'RDzHKGXix7Y', title: 'Project Management Full Course 2025', desc: 'Complete introduction to project management — covering PMBOK, Agile, risk, stakeholder management, and the PMP certification pathway for aspiring project managers.', dur: '6:20:00', channel: 'Simplilearn' },
+  { id: 'GnK_n9Cv0hk', title: 'How to Pass the PMP Exam on Your First Try', desc: 'Proven PMP exam strategy — domain breakdown, question types, application process, and the study plan that gets you certified without wasting months on the wrong material.', dur: '1:34:20', channel: 'Andrew Ramdayal' },
+  { id: 'Nj0bpMbqEkc', title: 'Agile Project Management Full Course', desc: 'Master Agile PM for modern delivery — sprints, ceremonies, velocity tracking, hybrid waterfall-agile delivery, and how PMs operate inside Scrum teams.', dur: '2:15:45', channel: 'freeCodeCamp' },
 ]
 
 const TAKEAWAYS = [
-  'Certifications open doors — CompTIA A+, Network+, and Security+ are worth every hour of study and every rand of exam fees',
-  'Build a home lab on spare hardware or free Azure credits — practical troubleshooting experience you created yourself impresses interviewers more than anything on paper',
-  'Every ticket is a teaching moment: document your solutions well enough that your past self could have solved the problem faster with them',
-  'Learn PowerShell early — a support professional who can automate 20 minutes of daily manual work is immediately more valuable than one who cannot',
-  'Treat every user interaction as a service experience, not a technical problem — the reputation you build with users is your most transferable career asset',
+  'The project plan is not the project — the conversations, decisions, and relationships around it are; keep the plan updated but never mistake documentation for delivery',
+  'Every scope change must go through formal change control — verbal approval from a sponsor is not approval, and undocumented changes will cost you at go-live',
+  'Build your stakeholder relationships before you need them — a sponsor who trusts you will defend your project in the budget meeting you\'re not invited to',
+  'Risk management is daily work, not a quarterly exercise — the risk you spotted and mitigated early is the crisis that never made headlines',
+  'PMP certification dramatically improves your salary and credibility — start accumulating your 36 months of documented experience from your very first project coordinator role',
 ]
 
-/* ─── NEW SECTIONS ─────────────────────────────────────────────────────────── */
+/* ─── NEW SECTIONS ────────────────────────────────────────────────────────── */
 
 const CAREER_FACTS = [
   {
-    icon: <Headphones size={20} />, title: 'What You Do',
-    desc: 'Diagnose and resolve hardware, software, and network issues. Manage user accounts and permissions, deploy and configure devices, handle IT service requests, and keep systems running so the business never stops.',
-    color: '#0369a1',
+    icon: <Target size={20} />, title: 'What You Deliver',
+    desc: 'Project charters, WBS plans, RAID logs, budget forecasts, Gantt charts, steering committee packs, stakeholder maps, risk registers, change control logs, lessons learned reports, and the final deliverable — on time, on budget, in scope.',
+    color: '#7c3aed',
   },
   {
     icon: <Workflow size={20} />, title: 'Core Activities',
-    desc: 'Ticket management and prioritisation, remote and on-site troubleshooting, OS and application support, account and identity management, endpoint deployment, patch management, knowledge base creation, and user training.',
+    desc: 'Project planning, scope definition, budget management, risk identification and mitigation, stakeholder communication, team coordination, change management, vendor management, reporting, and benefits realisation tracking.',
     color: '#16a34a',
   },
   {
-    icon: <Users size={20} />, title: 'Who You Support',
-    desc: 'Every employee in the organisation — from the CEO who can\'t connect to a Teams meeting to the accountant whose VPN won\'t authenticate. You are the human face of technology and the bridge between IT infrastructure and every user.',
+    icon: <Users size={20} />, title: 'Who You Work With',
+    desc: 'Executive sponsors approving funding, business owners defining requirements, technical teams delivering solutions, business analysts defining requirements, finance teams tracking budgets, vendors supplying services, and end users receiving the change.',
     color: '#4f46e5',
   },
   {
     icon: <TrendingUp size={20} />, title: 'Industry Demand',
-    desc: 'IT support is one of the most consistently in-demand roles in South Africa. Every sector — banking, healthcare, retail, education, mining, and government — employs IT support staff. Demand grew 18% in 2024 alone.',
+    desc: 'PMI estimates 25 million new project management roles will be needed globally by 2030. South African demand is strongest in banking, mining, telecommunications, and government infrastructure — all running large-scale transformation programmes.',
     color: '#ea580c',
   },
 ]
 
 const WHY_REASONS = [
-  { emoji: '🚪', title: 'The Best Door into IT', desc: 'Help desk is where thousands of successful IT careers begin. Network engineers, cloud architects, and CISOs often started here. It is the most accessible, fastest, and lowest-barrier entry point into a technology career.' },
-  { emoji: '💼', title: 'Hire-Ready in Months, Not Years', desc: 'A CompTIA A+ certification and three months of focused study can get you your first interview. No four-year degree required. IT support is one of the few fields where demonstrated competence beats paper qualifications at entry level.' },
-  { emoji: '🌐', title: 'The Widest Industry Exposure', desc: 'Support touches every part of the IT stack — networking, identity, security, cloud, hardware, and software. You\'ll understand how technology really works in ways most specialists never do.' },
-  { emoji: '🔐', title: 'Security Skills Are Table Stakes', desc: 'In 2026, every IT support role has a security component. You\'re the front line of phishing defence, the person who spots the compromised account, and the one who enforces password and device policies. This makes you essential.' },
-  { emoji: '📈', title: 'Multiple Paths Forward', desc: 'From help desk you can go into sysadmin, network engineering, cybersecurity, cloud, or IT management. This role is not a dead end — it is a crossroads with clearly signed paths to six-figure careers.' },
-  { emoji: '🤝', title: 'You Make a Real Difference Daily', desc: 'When you fix someone\'s laptop so they can present to a client, recover a corrupted file they worked on all week, or restore email during a crisis — you\'ve made a tangible, immediate difference to a real person\'s day.' },
+  { emoji: '🏆', title: 'You Own the Most Visible Work', desc: 'Projects are where strategy becomes reality. The PM who delivered the new core banking system, the national infrastructure programme, or the ERP migration is remembered at every company they\'ve ever worked for.' },
+  { emoji: '💰', title: 'Strong Earning Potential', desc: 'Senior PMs and Programme Directors earn R1.8M–R3M+ in South Africa. Global USD-paying contracting adds another multiplier. The PMP certification has one of the highest salary correlations of any professional credential.' },
+  { emoji: '🌐', title: 'Skills Travel Anywhere', desc: 'Project management certifications (PMP, PRINCE2) are globally recognised. South African PMs regularly work in the UK, UAE, and Australia — without retraining — because the skills are internationally portable.' },
+  { emoji: '🧩', title: 'A Different Problem Every Project', desc: 'Building a data centre, rolling out SAP, launching a new product, or implementing regulatory change — every project is a new puzzle. PMs who love variety will never be bored.' },
+  { emoji: '📈', title: 'Clear Progression to the C-Suite', desc: 'Programme Director → Head of PMO → COO or MD is a path that many business leaders have walked. PM experience builds exactly the financial, operational, and leadership skills executives need.' },
+  { emoji: '⚡', title: 'You Make Organisations Actually Change', desc: 'Strategies fail not because the strategy is wrong, but because execution fails. PMs are the execution layer — without you, nothing actually changes. That is a position of extraordinary organisational power.' },
 ]
 
 const FREE_RESOURCES = [
-  { category: 'Certifications', color: '#0369a1', bgColor: '#eff6ff', items: [
-    { name: 'Professor Messer — CompTIA A+ (free video course)', url: '#', type: 'Video', rating: 5 },
-    { name: 'Google IT Support Professional Cert (Coursera)', url: '#', type: 'Course', rating: 5 },
-    { name: 'Microsoft Learn — M365 & Azure fundamentals', url: '#', type: 'Docs', rating: 5 },
-    { name: 'CompTIA CertMaster Practice (paid, worth it)', url: '#', type: 'Practice', rating: 5 },
+  { category: 'Learning', color: '#7c3aed', bgColor: '#faf5ff', items: [
+    { name: 'PMI PMBOK Guide 7th Edition (PMI members)', url: '#', type: 'Guide', rating: 5 },
+    { name: 'Google Project Management Certificate (Coursera)', url: '#', type: 'Course', rating: 5 },
+    { name: 'PRINCE2 Foundation Free Study Guide', url: '#', type: 'Guide', rating: 4 },
+    { name: 'ProjectManagement.com — Free Articles', url: '#', type: 'Reference', rating: 5 },
   ]},
   { category: 'Practice', color: '#16a34a', bgColor: '#f0fdf4', items: [
-    { name: 'TryHackMe — IT fundamentals & security labs', url: '#', type: 'Lab', rating: 5 },
-    { name: 'Microsoft Learn sandbox environments (free)', url: '#', type: 'Lab', rating: 5 },
-    { name: 'Build a home lab with old hardware or VMs', url: '#', type: 'Project', rating: 5 },
-    { name: 'r/ITCareerQuestions study guides', url: '#', type: 'Forum', rating: 4 },
+    { name: 'PMP Exam Simulator — PM PrepCast (free trial)', url: '#', type: 'Practice', rating: 5 },
+    { name: 'PMI CAPM Practice Exams (PMI.org)', url: '#', type: 'Practice', rating: 5 },
+    { name: 'Smartsheet / Jira Free Plans (hands-on)', url: '#', type: 'Tool', rating: 4 },
+    { name: 'PM Templates — ProjectManagement.com', url: '#', type: 'Templates', rating: 5 },
   ]},
   { category: 'Community', color: '#4f46e5', bgColor: '#eef2ff', items: [
-    { name: 'NetworkChuck YouTube Channel', url: '#', type: 'YouTube', rating: 5 },
-    { name: 'r/sysadmin & r/helpdesk communities', url: '#', type: 'Forum', rating: 5 },
-    { name: 'Darknet Diaries Podcast (security stories)', url: '#', type: 'Podcast', rating: 5 },
-    { name: 'ITIL 4 Foundation Study Guide (free PDF)', url: '#', type: 'Book', rating: 4 },
+    { name: 'PMI South Africa Chapter (free events)', url: '#', type: 'Network', rating: 5 },
+    { name: 'r/projectmanagement — Active PM Community', url: '#', type: 'Forum', rating: 4 },
+    { name: 'Andrew Ramdayal YouTube (PMP prep)', url: '#', type: 'YouTube', rating: 5 },
+    { name: 'The Digital Project Manager Blog', url: '#', type: 'Blog', rating: 5 },
   ]},
 ]
 
 const SALARY_DATA = [
-  { role: 'Help Desk Technician (Tier 1)', range: 'R160k – R290k', midpoint: 225, yoe: '0–2 yrs', color: '#0891b2' },
-  { role: 'IT Support Specialist (Tier 2)', range: 'R290k – R540k', midpoint: 415, yoe: '2–5 yrs', color: '#16a34a' },
-  { role: 'Service Desk Analyst / Senior', range: 'R540k – R900k', midpoint: 720, yoe: '5–8 yrs', color: '#7c3aed' },
-  { role: 'IT Support Manager / Team Lead', range: 'R900k – R1.5M+', midpoint: 1150, yoe: '8+ yrs', color: '#ea580c' },
+  { role: 'Project Coordinator', range: 'R260k – R460k', midpoint: 360, yoe: '0–2 yrs', color: '#0891b2' },
+  { role: 'Project Manager', range: 'R580k – R1.0M', midpoint: 790, yoe: '2–5 yrs', color: '#16a34a' },
+  { role: 'Senior Project Manager', range: 'R1.0M – R1.8M', midpoint: 1400, yoe: '5–8 yrs', color: '#7c3aed' },
+  { role: 'Programme Director / PMO Head', range: 'R2M – R3.5M+', midpoint: 2600, yoe: '8+ yrs', color: '#ea580c' },
 ]
 
 const MISTAKES = [
   {
-    num: '01', title: 'Staying at Tier 1 Without Studying for Certs',
-    desc: 'Many technicians spend years in Tier 1 without progressing because they never formalise their skills with certifications. CompTIA A+ and Network+ are the explicit signal employers look for to promote to Tier 2 and beyond.',
-    fix: 'Set a certification target date within 90 days of starting your first role. Study 30 minutes per day minimum, without exception.',
+    num: '01', title: 'Skipping Proper Project Initiation',
+    desc: 'Jumping straight into planning and execution without a proper project charter, defined success criteria, and confirmed stakeholder buy-in. Projects without a clear mandate lose sponsor support at the first obstacle.',
+    fix: 'Write a project charter before a single task is created. Get it formally signed by the sponsor. Define what "done" means before you begin.',
   },
   {
-    num: '02', title: 'Treating Documentation as Optional',
-    desc: 'Solving the same problem four times because it was never documented wastes hours every week. Undocumented solutions exist only in one person\'s head — and walk out the door when they leave.',
-    fix: 'Write a KB article for every novel problem you solve. If it took more than 20 minutes to diagnose, document it. No exceptions.',
+    num: '02', title: 'Building a Plan and Never Updating It',
+    desc: 'A project plan that reflects the original baseline while the project has moved on is worse than no plan at all — it destroys your credibility when executives compare actuals to a fantasy document.',
+    fix: 'Update the project plan every week. Rebaseline only through formal change control. The plan is a living document, not a historical artefact.',
   },
   {
-    num: '03', title: 'Skipping the Networking Foundation',
-    desc: 'Most complex support issues — slow applications, connectivity failures, VPN problems, cloud service disruptions — have a network root cause. Technicians who can\'t read a ping output or trace a route are fundamentally limited.',
-    fix: 'Study subnetting until you can do it in your head. Complete Cisco\'s free NetAcad Networking Basics course alongside your A+ studies.',
+    num: '03', title: 'Managing Tasks Instead of Outcomes',
+    desc: 'A PM who tracks whether tasks are completed misses the point. Tasks being green doesn\'t mean the project is on track if the outputs aren\'t meeting quality standards or the business need has shifted.',
+    fix: 'Define measurable acceptance criteria for every deliverable. Track outcome quality, not just task completion. Ask "is this actually done?" not "is the task ticked off?"',
   },
   {
-    num: '04', title: 'Never Learning PowerShell',
-    desc: 'Manually resetting 50 passwords or onboarding 30 users one by one is a wasted afternoon. A single PowerShell script does it in five minutes. Technicians without scripting skills hit a hard ceiling in any Microsoft environment.',
-    fix: 'Automate one repetitive task per month using PowerShell. Start with bulk user creation or automated disk space reporting.',
+    num: '04', title: 'Avoiding Escalation',
+    desc: 'Junior PMs try to solve every problem themselves rather than escalating to sponsors. By the time the problem becomes visible, it\'s a crisis — not a manageable risk that the sponsor could have resolved in a five-minute conversation.',
+    fix: 'Escalate early. Frame escalations as "I need a decision" not "I have a problem." Sponsors want early warning, not late surprises.',
   },
   {
-    num: '05', title: 'Neglecting the User Relationship',
-    desc: 'IT support professionals who are technically brilliant but dismissive or impatient with users destroy team trust. The "I don\'t do hand-holding" attitude is career-limiting in any support function.',
-    fix: 'Treat every ticket as if a senior manager will read your notes later. Write updates in plain English. Follow up on closed tickets the next day.',
+    num: '05', title: 'No Formal Change Control',
+    desc: 'Accepting scope changes informally — verbally, over email, without budget or schedule impact assessment — is how projects become 40% larger than planned without any corresponding increase in resources or time.',
+    fix: 'Use a change request log from day one. Every change gets an impact assessment. Nothing is added to scope without formal sponsor approval and baseline adjustment.',
   },
   {
-    num: '06', title: 'Working Without a Home Lab',
-    desc: 'Reading about Active Directory is not the same as breaking it and fixing it. Technicians with home lab experience solve unfamiliar problems faster and interview far better than those who only know production environments.',
-    fix: 'Build a free lab using VirtualBox and Windows Server evaluation images. Spend two hours per week deliberately breaking and fixing things.',
+    num: '06', title: 'Ignoring Team Morale and Burnout',
+    desc: 'PMs who focus only on tasks and timelines and ignore the humans delivering them lose their best people mid-project. A team that is burning out will produce poor quality work and miss deadlines regardless of the plan.',
+    fix: 'Check in with team members individually, not just in standups. Watch for overallocation. Shield your team from unreasonable sponsor demands. People deliver plans.',
   },
 ]
 
 const CAREER_CHANGE_PATHS = [
   {
-    from: 'Customer Service / Call Centre',
-    ease: 'Natural Fit', easeColor: '#0369a1', easeBg: '#eff6ff',
-    desc: 'You already have the most underrated skill in IT support: dealing with frustrated people calmly and professionally. Add the technical layer — A+ certification and a home lab — and you transition more smoothly than most.',
-    steps: ['Study CompTIA A+ (3–4 months of focused prep)', 'Build a free home lab with VirtualBox + Windows Server eval', 'Apply for Tier 1 help desk roles emphasising your customer skills', 'Earn Network+ within your first year to accelerate to Tier 2'],
+    from: 'Business Analyst',
+    ease: 'Natural Fit', easeColor: '#7c3aed', easeBg: '#faf5ff',
+    desc: 'You understand requirements, stakeholder management, and project scopes deeply. Add scheduling, budget management, and governance skills — and you can step directly into a PM role, often on the same project where you were the BA.',
+    steps: ['Complete a CAPM or PRINCE2 Foundation course', 'Shadow a PM on your current project', 'Volunteer to run a small sub-project or workstream', 'Apply for junior PM or coordinator roles using your BA portfolio'],
   },
   {
-    from: 'General IT / Tech Hobbyist',
+    from: 'Team Lead / Tech Lead',
     ease: 'Strong Fit', easeColor: '#16a34a', easeBg: '#f0fdf4',
-    desc: 'If you\'ve been building PCs, fixing family members\' computers, or tinkering with routers for fun — you have more practical experience than most candidates. Certify what you already know and document your lab work for interviews.',
-    steps: ['Convert your hobby experience into CompTIA A+ certification', 'Add structured enterprise skills: Active Directory, M365, Intune', 'Build a home lab simulating an enterprise environment', 'Target SME IT support roles where breadth beats depth'],
+    desc: 'You understand delivery, technical complexity, and team dynamics. Add formal PM methodology, stakeholder management, and budget tracking skills — your technical credibility makes you an unusually effective technology project manager.',
+    steps: ['Study PMBOK and Agile PM fundamentals', 'Pursue CAPM certification as a starting credential', 'Apply your Scrum / Agile knowledge to PM ceremonies', 'Target IT Project Manager roles in your current domain'],
   },
   {
-    from: 'Business / Administrative Role',
+    from: 'Operations / Administration',
     ease: 'Very Achievable', easeColor: '#4f46e5', easeBg: '#eef2ff',
-    desc: 'Business acumen combined with IT skills is genuinely rare and valued in service desk management. Your understanding of how the business works — priorities, stakeholders, impact — makes you an unusually effective IT support professional.',
-    steps: ['Start with the Google IT Support Professional Certificate', 'Study for CompTIA A+ while working in your current role', 'Volunteer as informal IT contact in your current workplace', 'Apply to IT support roles in your current industry vertical'],
+    desc: 'You understand how organisations actually work, how to navigate bureaucracy, and how to coordinate across teams. Add formal PM methodology and certification — your organisational savvy is a genuine advantage over theory-only candidates.',
+    steps: ['Complete Google PM Certificate on Coursera (free)', 'Pursue CAPM certification (no experience required)', 'Volunteer for a coordinator role on a current company project', 'Apply to project coordinator roles — the natural entry point'],
   },
   {
-    from: 'Other Background',
+    from: 'Other Professional Background',
     ease: 'Achievable', easeColor: '#ea580c', easeBg: '#fff7ed',
-    desc: 'Domain expertise from healthcare, finance, legal, or education combined with IT support skills is extremely valuable in those verticals. Healthcare IT support, for example, pays a significant premium over general help desk roles.',
-    steps: ['Complete the Google IT Support Certificate (free/cheap)', 'Study A+ and N+ using Professor Messer\'s free courses', 'Target IT support roles in your previous industry', 'Leverage your domain knowledge as a differentiator in interviews'],
+    desc: 'Domain expertise combined with PM skills is highly valuable. A PM who genuinely understands construction, mining, healthcare, or financial services commands premium rates in those verticals — generalist PMs can\'t match the contextual credibility.',
+    steps: ['Start with PMBOK fundamentals and Google PM Certificate', 'Build a mini project case study from your domain', 'Pursue CAPM or PRINCE2 Foundation certification', 'Target PM roles in your previous industry sector'],
   },
 ]
 
 const THIRTY_DAY_PLAN = [
-  { week: 'Week 1', theme: 'Foundation & Setup', color: '#0369a1', bg: '#eff6ff', days: [
-    { day: 'Day 1–2', task: 'Install VirtualBox. Set up a Windows 10 VM and a Windows Server 2019 eval VM. Get comfortable with the interface.' },
-    { day: 'Day 3–4', task: 'Begin Professor Messer\'s free CompTIA A+ Core 1 video series. Complete the hardware and components modules.' },
-    { day: 'Day 5–6', task: 'Configure a free ServiceNow Developer Instance or set up a Freshdesk free trial. Create your first mock tickets.' },
-    { day: 'Day 7', task: 'Research local IT support job listings. Identify the 5 most common tools and requirements in your target market.' },
+  { week: 'Week 1', theme: 'Foundations & Framework', color: '#7c3aed', bg: '#faf5ff', days: [
+    { day: 'Day 1–2', task: 'Read PMI\'s PMBOK overview. Understand the five process groups and ten knowledge areas. Map how they relate to a real project you\'ve been involved in.' },
+    { day: 'Day 3–4', task: 'Study the triple constraint: scope, schedule, cost. Find a real project example of each constraint being traded off. Understand why no project ever escapes this triangle.' },
+    { day: 'Day 5–6', task: 'Sign up for a free Jira or Smartsheet account. Create a project board. Add tasks, assign owners, set due dates, and mark dependencies.' },
+    { day: 'Day 7', task: 'Write a one-page project charter for a project you could run — even hypothetically. Include scope, objectives, stakeholders, budget, and success criteria.' },
   ]},
-  { week: 'Week 2', theme: 'OS & Networking', color: '#16a34a', bg: '#f0fdf4', days: [
-    { day: 'Day 8–9', task: 'Windows Server lab: install Active Directory Domain Services, promote to domain controller, create 10 test users.' },
-    { day: 'Day 10–11', task: 'Networking fundamentals: study subnetting using the subnettingpractice.com tool. Do 30 minutes of subnetting drills per day.' },
-    { day: 'Day 12–13', task: 'Install Wireshark. Capture and analyse a DNS lookup, a ping, and a web page load. Understand what you\'re seeing.' },
-    { day: 'Day 14', task: 'CompTIA A+ Core 1 mock exam. Target 75%+. Identify knowledge gaps and revisit the weak sections.' },
+  { week: 'Week 2', theme: 'Planning & Risk', color: '#16a34a', bg: '#f0fdf4', days: [
+    { day: 'Day 8–9', task: 'Build a Work Breakdown Structure (WBS) for your charter project. Decompose deliverables into tasks. Learn how tasks roll up into milestones.' },
+    { day: 'Day 10–11', task: 'Create a simple Gantt chart in Excel or Smartsheet. Add dependencies using the critical path method. Identify the longest path through your project.' },
+    { day: 'Day 12–13', task: 'Build a RAID log: Risks, Assumptions, Issues, Dependencies. Add 5–10 realistic entries for your project. Write mitigation actions for each risk.' },
+    { day: 'Day 14', task: 'Build a simple budget tracker in Excel. Add resource costs, timeline, and burn rate. Practice forecasting Estimate at Completion (EAC) from a midpoint.' },
   ]},
-  { week: 'Week 3', theme: 'Cloud & Identity', color: '#4f46e5', bg: '#eef2ff', days: [
-    { day: 'Day 15–16', task: 'Create a free Microsoft 365 developer tenant. Set up users, assign licences, configure MFA. Simulate a real onboarding.' },
-    { day: 'Day 17–18', task: 'Complete the Microsoft Learn "Azure Fundamentals" learning path (AZ-900). It\'s free and takes about 10 hours.' },
-    { day: 'Day 19–20', task: 'Begin PowerShell: write scripts to create AD users in bulk, list all computers in the domain, and check disk space.' },
-    { day: 'Day 21', task: 'ITIL 4 Foundation overview: watch the free YouTube overview by AXELOS. Understand the core concepts and vocabulary.' },
+  { week: 'Week 3', theme: 'Agile & Stakeholders', color: '#4f46e5', bg: '#eef2ff', days: [
+    { day: 'Day 15–16', task: 'Complete a free Scrum fundamentals course. Understand sprint ceremonies: planning, standup, review, retrospective. Know the difference between a PM and a Scrum Master.' },
+    { day: 'Day 17–18', task: 'Build a stakeholder map for your project. Plot stakeholders on a power/interest grid. Write a one-line engagement strategy for each quadrant.' },
+    { day: 'Day 19–20', task: 'Write a one-page status report in RAG format. Practice the executive summary: what\'s green, what\'s amber, what decisions are needed this week.' },
+    { day: 'Day 21', task: 'Review CAPM eligibility on PMI.org. Plan your certification study path. If eligible, schedule your exam date to create accountability.' },
   ]},
-  { week: 'Week 4', theme: 'Polish & Apply', color: '#ea580c', bg: '#fff7ed', days: [
-    { day: 'Day 22–24', task: 'Build your IT support portfolio: document 3 lab scenarios with screenshots, problem descriptions, and step-by-step resolutions.' },
-    { day: 'Day 25–26', task: 'Rewrite your CV with IT language. List your home lab setup, tools used, and the specific skills you\'ve demonstrated.' },
-    { day: 'Day 27–28', task: 'Book your CompTIA A+ Core 1 exam date. Having a real target date forces productive study. Schedule Core 2 for 6 weeks after.' },
-    { day: 'Day 29–30', task: 'Apply to 5 junior IT support or help desk roles. Customise each CV. Follow up with a connection request to the hiring manager on LinkedIn.' },
+  { week: 'Week 4', theme: 'Portfolio & Job Application', color: '#ea580c', bg: '#fff7ed', days: [
+    { day: 'Day 22–24', task: 'Assemble your PM portfolio: project charter, WBS, Gantt, RAID log, budget tracker, stakeholder map, and status report. Export as a PDF case study.' },
+    { day: 'Day 25–26', task: 'Update your LinkedIn profile. Headline: "Aspiring Project Manager | CAPM Candidate | Agile | Planning | Stakeholder Management". Add your portfolio project.' },
+    { day: 'Day 27–28', task: 'Research 10 target companies hiring project coordinators or junior PMs. Identify the domain (IT, financial services, construction) matching your background.' },
+    { day: 'Day 29–30', task: 'Apply to 5 coordinator or junior PM roles with your portfolio attached. Connect with 3 PMs on LinkedIn and ask for a 20-minute informational conversation.' },
   ]},
 ]
 
@@ -398,7 +399,7 @@ const TOC_ITEMS = [
   { num: '16', label: 'Final Thoughts' },
 ]
 
-/* ─── SHARE BAR ─────────────────────────────────────────────────────────────── */
+/* ─── SHARE BAR ───────────────────────────────────────────────────────────── */
 function ShareBar() {
   const [copied, setCopied] = useState(false)
   const handleCopy = () => {
@@ -406,7 +407,7 @@ function ShareBar() {
   }
   const handleShare = async () => {
     if (navigator.share) {
-      try { await navigator.share({ title: 'Help Desk & IT Support Career Roadmap 2026', text: 'Complete step-by-step roadmap to become an IT Support Specialist in 2026', url: window.location.href }) }
+      try { await navigator.share({ title: 'Project Manager Career Roadmap 2026', text: 'Complete step-by-step roadmap to become a Project Manager in 2026', url: window.location.href }) }
       catch (_) {}
     } else { handleCopy() }
   }
@@ -424,13 +425,13 @@ function ShareBar() {
       </button>
       <div className="flex items-center gap-2 px-3 py-2 rounded-xl text-xs font-mono truncate max-w-xs" style={{ background: '#f1f5f9', color: C.textMuted, border: `1px solid ${C.border}` }}>
         <Link2 size={11} style={{ color: C.textFaint, flexShrink: 0 }} />
-        <span className="truncate">{typeof window !== 'undefined' ? window.location.href : '/roadmaps/help-desk-it-support'}</span>
+        <span className="truncate">{typeof window !== 'undefined' ? window.location.href : '/roadmaps/project-manager'}</span>
       </div>
     </div>
   )
 }
 
-/* ─── SECTION HEADER ──────────────────────────────────────────────────────── */
+/* ─── SECTION HEADER ─────────────────────────────────────────────────────── */
 function SectionHeader({ icon, title, subtitle, iconBg, iconColor }: { icon: React.ReactNode; title: string; subtitle: string; iconBg: string; iconColor: string }) {
   return (
     <div className="flex items-center gap-4 mb-10">
@@ -458,7 +459,7 @@ function useFade() {
 }
 
 /* ─── PAGE ────────────────────────────────────────────────────────────────── */
-export default function HelpDeskITSupportRoadmapPage() {
+export default function ProjectManagerRoadmapPage() {
   const progressRef = useRef<HTMLDivElement>(null)
   const tlSectionRef = useRef<HTMLElement>(null)
   const barsContainerRef = useRef<HTMLDivElement>(null)
@@ -509,22 +510,22 @@ export default function HelpDeskITSupportRoadmapPage() {
       <div className="relative w-full" style={{ background: C.bg }}>
         <div className="relative w-full overflow-hidden" style={{ height: '100vh', minHeight: 600 }}>
           <img
-            src="https://i.imgur.com/6rBm8j5.jpeg"
-            alt="IT Support technician at service desk"
+            src="https://images.unsplash.com/photo-1454165804606-c3d57bc86b40?w=1600&q=80"
+            alt="Project Manager leading team planning session"
             className="w-full h-full object-cover object-center block"
-            style={{ filter: 'saturate(0.45) brightness(1.1) hue-rotate(190deg)' }}
+            style={{ filter: 'saturate(0.55) brightness(1.05)' }}
           />
           <div className="absolute inset-0" style={{ background: 'linear-gradient(to bottom, rgba(255,255,255,0) 45%, rgba(255,255,255,0.75) 72%, rgba(255,255,255,1) 88%)' }} />
           <div className="absolute bottom-0 left-0 right-0 z-10">
             <div className="max-w-4xl mx-auto px-8 pb-12">
               <div className="inline-flex items-center gap-1.5 rounded-full px-3.5 py-1 mb-3 text-xs font-semibold" style={{ background: C.primaryLight, color: C.primary }}>
-                <Headphones size={12} /> Customer IT Support & Service Desk
+                <Briefcase size={12} /> Delivery & Leadership
               </div>
               <h1 className="font-extrabold leading-tight mb-2" style={{ fontFamily: 'Syne, sans-serif', fontSize: 'clamp(2.2rem, 5vw, 3.6rem)', color: '#0f172a', letterSpacing: '-0.03em' }}>
-                Help Desk & IT Support
+                Project Manager
               </h1>
               <span className="block font-normal mb-3" style={{ fontFamily: 'Syne, sans-serif', fontSize: 'clamp(0.95rem, 1.8vw, 1.2rem)', color: C.textMuted }}>
-                Career Roadmap 2026 — Technician · Specialist · Analyst · Manager
+                Career Roadmap 2026
               </span>
               <div className="flex items-center gap-4">
                 <div className="flex items-center gap-1.5 text-sm" style={{ color: C.textMuted }}><Clock size={14} style={{ color: C.textFaint }} /> 20 min read</div>
@@ -535,7 +536,7 @@ export default function HelpDeskITSupportRoadmapPage() {
         </div>
         <div className="max-w-4xl mx-auto px-8 pt-6 pb-16">
           <p className="text-base leading-relaxed" style={{ color: '#4b5563', maxWidth: 560, marginLeft: 140 }}>
-            Be the person who keeps every organisation running. IT support professionals solve real problems for real people every day — and use that experience as the launchpad to every specialisation in technology.
+            Turn strategy into reality. Project Managers are the people who make things actually happen — planning the work, coordinating the team, managing the budget, and steering the ship through every storm from kickoff to go-live.
           </p>
           <div className="h-px mt-10" style={{ background: C.border }} />
         </div>
@@ -562,10 +563,10 @@ export default function HelpDeskITSupportRoadmapPage() {
       <section className="border-b" style={{ ...sectionStyle, background: C.bg }}>
         <div className="max-w-4xl mx-auto px-8">
           <div ref={whatRef}>
-            <SectionHeader icon={<Layers size={22} />} title="What This Career Is" subtitle="The roles, responsibilities, and scope of IT Support" iconBg={C.primaryLight} iconColor={C.primary} />
-            <div className="rounded-2xl p-6 mb-8 border" style={{ background: '#eff6ff', borderColor: 'rgba(3,105,161,0.2)' }}>
+            <SectionHeader icon={<Layers size={22} />} title="What This Career Is" subtitle="The role, responsibilities, and scope of Project Management" iconBg={C.primaryLight} iconColor={C.primary} />
+            <div className="rounded-2xl p-6 mb-8 border" style={{ background: '#faf5ff', borderColor: 'rgba(124,58,237,0.2)' }}>
               <p className="text-base leading-relaxed" style={{ color: '#374151' }}>
-                <strong style={{ color: C.primary }}>IT Support & Help Desk professionals</strong> are the operational backbone of every technology-dependent organisation. Whether operating as a Help Desk Technician handling first-call resolution, an IT Support Specialist owning complex escalations, a Service Desk Analyst driving process improvement, or a Customer IT Support Engineer building long-term user relationships — these roles ensure that technology serves people, not the other way around.
+                A <strong style={{ color: C.primary }}>Project Manager</strong> plans, executes, and closes projects — ensuring they deliver the right outcome, within budget, on schedule, and within scope. They are the single point of accountability for everything from team coordination and stakeholder communication to risk management and budget control. While other roles contribute expertise to a project, the PM is responsible for the outcome as a whole. No project succeeds by accident — it succeeds because a great PM managed it.
               </p>
             </div>
             <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
@@ -589,7 +590,7 @@ export default function HelpDeskITSupportRoadmapPage() {
       <section className="border-b" style={{ ...sectionStyle, background: '#f8f9ff' }}>
         <div className="max-w-4xl mx-auto px-8">
           <div ref={whyRef}>
-            <SectionHeader icon={<Flame size={22} />} title="Why Choose This Career" subtitle="Six compelling reasons IT Support could be your best move" iconBg={C.orangeLight} iconColor={C.orange} />
+            <SectionHeader icon={<Flame size={22} />} title="Why Choose This Career" subtitle="Six compelling reasons Project Management could be your best move" iconBg={C.orangeLight} iconColor={C.orange} />
             <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
               {WHY_REASONS.map(r => (
                 <div key={r.title} className="rounded-2xl p-5 border transition-all duration-200 hover:-translate-y-0.5 hover:shadow-md" style={{ background: C.bg, borderColor: C.border }}>
@@ -611,13 +612,13 @@ export default function HelpDeskITSupportRoadmapPage() {
       <section className="border-b" style={{ ...sectionStyle, background: C.bg }}>
         <div className="max-w-4xl mx-auto px-8">
           <div ref={dayRef}>
-            <SectionHeader icon={<Briefcase size={22} />} title="A Day in the Life" subtitle="What a typical IT Support professional's workday looks like" iconBg={C.indigoLight} iconColor={C.indigo} />
+            <SectionHeader icon={<Briefcase size={22} />} title="A Day in the Life" subtitle="What a typical Project Manager workday looks like" iconBg={C.indigoLight} iconColor={C.indigo} />
             <div className="grid gap-7" style={{ gridTemplateColumns: '1fr 260px' }}>
               <div>
                 <p className="text-sm font-semibold mb-4" style={{ fontFamily: 'Syne, sans-serif', color: C.textMuted }}>Typical Daily Schedule</p>
                 {SCHEDULE.map(item => (
                   <div key={item.time} className="flex items-start gap-3.5 rounded-2xl p-4 border mb-2.5 transition-all duration-200" style={{ background: C.bg, borderColor: C.border }}
-                    onMouseEnter={e => { (e.currentTarget as HTMLElement).style.borderColor = 'rgba(3,105,161,0.3)'; (e.currentTarget as HTMLElement).style.background = '#eff6ff' }}
+                    onMouseEnter={e => { (e.currentTarget as HTMLElement).style.borderColor = 'rgba(124,58,237,0.3)'; (e.currentTarget as HTMLElement).style.background = '#faf5ff' }}
                     onMouseLeave={e => { (e.currentTarget as HTMLElement).style.borderColor = C.border; (e.currentTarget as HTMLElement).style.background = C.bg }}>
                     <div className="w-9 h-9 rounded-xl flex items-center justify-center flex-shrink-0" style={{ background: C.primaryLight, color: C.primary }}>{item.icon}</div>
                     <div className="flex-1 min-w-0">
@@ -670,7 +671,7 @@ export default function HelpDeskITSupportRoadmapPage() {
           <div ref={tlRef}>
             <SectionHeader icon={<Clock size={22} />} title="Career Timeline" subtitle="Time estimates and salary ranges for each level" iconBg={C.indigoLight} iconColor={C.indigo} />
             <div className="mb-10">
-              <div className="flex justify-between text-xs mb-2.5" style={{ color: C.textMuted }}><span>Career Progression</span><span>Technician → IT Manager</span></div>
+              <div className="flex justify-between text-xs mb-2.5" style={{ color: C.textMuted }}><span>Career Progression</span><span>Coordinator → Programme Director</span></div>
               <div className="h-1.5 rounded-full overflow-hidden" style={{ background: '#e2e8f0' }}>
                 <div ref={progressRef} className="h-1.5 rounded-full" style={{ width: '0%', background: 'linear-gradient(90deg, #0891b2 0%, #16a34a 33%, #7c3aed 66%, #ea580c 100%)' }} />
               </div>
@@ -701,8 +702,8 @@ export default function HelpDeskITSupportRoadmapPage() {
           <SectionHeader icon={<Target size={22} />} title="Step-by-Step Roadmap" subtitle="Your path from complete beginner to job-ready" iconBg={C.primaryLight} iconColor={C.primary} />
           <div className="relative flex flex-col items-center">
             {ROADMAP_STEPS.map((s, i) => {
-              const icons = ['💻', '🌐', '🏢', '📋', '🔐', '⚡']
-              const accentColors = ['#0369a1', '#16a34a', '#0369a1', '#16a34a', '#0369a1', '#16a34a']
+              const icons = ['📖', '📅', '💰', '⚡', '🤝', '🏅']
+              const accentColors = ['#7c3aed', '#16a34a', '#7c3aed', '#16a34a', '#7c3aed', '#16a34a']
               const accent = accentColors[i]; const isLast = i === ROADMAP_STEPS.length - 1; const isEven = i % 2 === 0
               return (
                 <div key={s.step} className="w-full flex flex-col items-center">
@@ -748,11 +749,11 @@ export default function HelpDeskITSupportRoadmapPage() {
                 </div>
               )
             })}
-            <div className="w-full rounded-3xl mt-2 py-8 px-8 text-center" style={{ background: `linear-gradient(135deg, ${C.primary} 0%, ${C.indigo} 100%)`, boxShadow: '0 8px 48px rgba(3,105,161,0.25)' }}>
+            <div className="w-full rounded-3xl mt-2 py-8 px-8 text-center" style={{ background: `linear-gradient(135deg, ${C.primary} 0%, ${C.indigo} 100%)`, boxShadow: '0 8px 48px rgba(124,58,237,0.25)' }}>
               <div className="text-4xl mb-3">🏆</div>
               <div className="font-extrabold text-white mb-1" style={{ fontFamily: 'Syne, sans-serif', fontSize: 'clamp(1.3rem, 3vw, 1.8rem)' }}>GO FROM ZERO to</div>
               <div className="font-extrabold mb-4" style={{ fontFamily: 'Syne, sans-serif', fontSize: 'clamp(1.3rem, 3vw, 1.8rem)', color: 'rgba(255,255,255,0.75)' }}>JOB-READY IN 2026</div>
-              <div className="text-sm" style={{ color: 'rgba(255,255,255,0.6)' }}>8–12 months · Consistent daily study · Certify as you learn</div>
+              <div className="text-sm" style={{ color: 'rgba(255,255,255,0.6)' }}>10–14 months · Consistent daily practice · Build and deliver real projects</div>
             </div>
           </div>
           <ShareBar />
@@ -865,9 +866,9 @@ export default function HelpDeskITSupportRoadmapPage() {
       <section className="border-b" style={{ ...sectionStyle, background: C.bg }}>
         <div className="max-w-4xl mx-auto px-8">
           <div ref={aiRef}>
-            <SectionHeader icon={<Sparkles size={22} />} title="AI-Enhanced Roadmap" subtitle="How AI is transforming IT Support in 2026" iconBg={C.primaryLight} iconColor={C.primary} />
-            <div className="rounded-2xl p-5 mb-7 text-sm leading-relaxed border" style={{ background: '#eff6ff', borderColor: 'rgba(3,105,161,0.2)', color: C.textMuted }}>
-              AI tools don't replace IT support professionals — they <em style={{ color: C.primary }}>amplify</em> them. Support teams using AI-assisted ticket resolution and automation handle 40–60% more tickets with the same headcount — freeing senior staff for complex incidents and strategic projects.
+            <SectionHeader icon={<Sparkles size={22} />} title="AI-Enhanced Roadmap" subtitle="How AI is transforming Project Management in 2026" iconBg={C.primaryLight} iconColor={C.primary} />
+            <div className="rounded-2xl p-5 mb-7 text-sm leading-relaxed border" style={{ background: '#faf5ff', borderColor: 'rgba(124,58,237,0.2)', color: C.textMuted }}>
+              AI tools don't replace Project Managers — they <em style={{ color: C.primary }}>amplify</em> them. PMs who use AI for automated reporting, predictive risk intelligence, and planning optimisation reclaim hours of administrative time — freeing capacity for the human work that no model can replicate: stakeholder trust, political judgement, and team leadership.
             </div>
             <div className="grid grid-cols-1 md:grid-cols-3 gap-4 mb-9">
               {AI_IMPACTS.map(item => (
@@ -935,7 +936,7 @@ export default function HelpDeskITSupportRoadmapPage() {
           <div ref={salaryRef}>
             <SectionHeader icon={<DollarSign size={22} />} title="Salary" subtitle="What you can realistically earn at each stage" iconBg={C.greenLight} iconColor={C.green} />
             <div className="rounded-2xl p-6 mb-6 border" style={{ background: '#f0fdf4', borderColor: 'rgba(22,163,74,0.2)' }}>
-              <p className="text-sm leading-relaxed" style={{ color: C.textMuted }}>Figures reflect South African total compensation. Sectors like financial services, mining, and large enterprise consistently pay 20–35% above these benchmarks for senior IT support professionals.</p>
+              <p className="text-sm leading-relaxed" style={{ color: C.textMuted }}>Figures reflect South African total compensation. PMs in banking, mining, and large infrastructure programmes earn at the top of each band. Contract rates are typically 30–50% higher than permanent equivalents.</p>
             </div>
             <div className="space-y-4">
               {SALARY_DATA.map(row => (
@@ -948,14 +949,14 @@ export default function HelpDeskITSupportRoadmapPage() {
                     <span className="text-sm font-bold" style={{ color: row.color }}>{row.range}</span>
                   </div>
                   <div className="h-2.5 rounded-full overflow-hidden" style={{ background: '#e2e8f0' }}>
-                    <div className="h-2.5 rounded-full" style={{ width: `${(row.midpoint / 1500) * 100}%`, background: row.color }} />
+                    <div className="h-2.5 rounded-full" style={{ width: `${(row.midpoint / 3200) * 100}%`, background: row.color }} />
                   </div>
                 </div>
               ))}
             </div>
-            <div className="mt-6 rounded-2xl p-5 border" style={{ background: '#eff6ff', borderColor: 'rgba(3,105,161,0.2)' }}>
+            <div className="mt-6 rounded-2xl p-5 border" style={{ background: '#faf5ff', borderColor: 'rgba(124,58,237,0.2)' }}>
               <p className="text-xs leading-relaxed" style={{ color: C.textMuted }}>
-                <strong style={{ color: C.primary }}>Pro tip:</strong> ITIL certification, PowerShell scripting skills, and Microsoft 365 administration experience consistently command a 15–25% salary premium over uncertified peers at the same experience level. Certifications are not optional — they are the salary lever in IT support.
+                <strong style={{ color: C.primary }}>Pro tip:</strong> PMP certification is correlated with a 20–25% salary premium over uncertified PMs at every level. The exam investment pays back within the first year at senior level. Contract PM work can push earnings 40–60% above permanent equivalent roles.
               </p>
             </div>
           </div>
@@ -966,7 +967,7 @@ export default function HelpDeskITSupportRoadmapPage() {
       <section className="border-b" style={{ ...sectionStyle, background: '#f8f9ff' }}>
         <div className="max-w-4xl mx-auto px-8">
           <div ref={mistakesRef}>
-            <SectionHeader icon={<AlertTriangle size={22} />} title="Common Mistakes" subtitle="Avoid the traps that slow down most aspiring IT support professionals" iconBg={C.orangeLight} iconColor={C.orange} />
+            <SectionHeader icon={<AlertTriangle size={22} />} title="Common Mistakes" subtitle="Avoid the traps that slow down most aspiring Project Managers" iconBg={C.orangeLight} iconColor={C.orange} />
             <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
               {MISTAKES.map(m => (
                 <div key={m.num} className="rounded-2xl p-5 border transition-all duration-200 hover:shadow-md" style={{ background: C.bg, borderColor: C.border }}>
@@ -992,7 +993,7 @@ export default function HelpDeskITSupportRoadmapPage() {
       <section className="border-b" style={{ ...sectionStyle, background: C.bg }}>
         <div className="max-w-4xl mx-auto px-8">
           <div ref={changeRef}>
-            <SectionHeader icon={<RefreshCw size={22} />} title="Career Change Guide" subtitle="How to break into IT Support from your current background" iconBg={C.primaryLight} iconColor={C.primary} />
+            <SectionHeader icon={<RefreshCw size={22} />} title="Career Change Guide" subtitle="How to break into Project Management from your current background" iconBg={C.primaryLight} iconColor={C.primary} />
             <div className="grid grid-cols-1 md:grid-cols-2 gap-5">
               {CAREER_CHANGE_PATHS.map(path => (
                 <div key={path.from} className="rounded-2xl p-6 border" style={{ background: path.easeBg, borderColor: `${path.easeColor}20` }}>
@@ -1049,7 +1050,7 @@ export default function HelpDeskITSupportRoadmapPage() {
       <section className="border-b" style={{ ...sectionStyle, background: C.bg }}>
         <div className="max-w-4xl mx-auto px-8">
           <div ref={vidsRef}>
-            <SectionHeader icon={<Play size={22} />} title="Video Resources" subtitle="Learn from the best educators in IT Support" iconBg={C.redLight} iconColor={C.red} />
+            <SectionHeader icon={<Play size={22} />} title="Video Resources" subtitle="Learn from the best educators in Project Management" iconBg={C.redLight} iconColor={C.red} />
             <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
               {VIDEOS.map(v => (
                 <div key={v.id} className="rounded-2xl overflow-hidden border transition-all duration-200" style={{ background: '#f8f9ff', borderColor: C.border }}
@@ -1088,10 +1089,10 @@ export default function HelpDeskITSupportRoadmapPage() {
             <SectionHeader icon={<Award size={22} />} title="Final Thoughts" subtitle="What we want you to take away from this guide" iconBg={C.primaryLight} iconColor={C.primary} />
             <div className="rounded-2xl p-6 border mb-8" style={{ background: C.bg, borderColor: C.border }}>
               <p className="text-base leading-relaxed mb-4" style={{ color: '#374151' }}>
-                IT support is <strong style={{ color: C.primary }}>where technology careers begin and where great careers are built</strong>. The help desk is not a waiting room for a "real" IT job — it is the most complete technology education available. In a single year, a driven help desk technician encounters more real-world IT problems than most CS graduates see in three years of lectures.
+                Project Management is <strong style={{ color: C.primary }}>the discipline that turns strategy into reality</strong>. Every ambitious plan, every transformation programme, every new product launch — without a great PM at the centre, they remain PowerPoint slides. With one, they become delivered outcomes that change organisations.
               </p>
               <p className="text-base leading-relaxed" style={{ color: '#374151' }}>
-                The professionals who thrive here are those who treat every ticket as a learning opportunity, every user as a valued customer, and every certification as a commitment to excellence. The field rewards curiosity, consistency, and care — and it rewards them generously.
+                The skills you build as a PM — planning, leadership, communication, risk management, and financial control — are among the most durable and transferable in all of professional life. They compound into executive authority in a way that few technical specialisations can match. Start managing something today, even if it's small. Your first project is the beginning of a career trajectory with no ceiling.
               </p>
             </div>
             <div className="grid grid-cols-1 gap-3">
@@ -1117,7 +1118,7 @@ export default function HelpDeskITSupportRoadmapPage() {
             Ready to Start Your Journey?
           </h2>
           <p className="text-sm mb-10 mx-auto leading-relaxed" style={{ color: 'rgba(255,255,255,0.65)', maxWidth: 440 }}>
-            You have the roadmap. You have the resources. You have the 30-day plan. All that's left is to open your browser, register for CompTIA A+, and take the first step.
+            You have the roadmap. You have the resources. You have the 30-day plan. All that's left is to open your planning tool and kick off your first project.
           </p>
           <div className="flex flex-wrap justify-center gap-3.5">
             <Link to="/roadmaps" className="inline-flex items-center gap-2 rounded-xl px-7 py-3.5 font-bold text-sm no-underline" style={{ fontFamily: 'Syne, sans-serif', background: '#fff', color: C.primary }}>
@@ -1127,7 +1128,7 @@ export default function HelpDeskITSupportRoadmapPage() {
               Get Career Advice
             </a>
           </div>
-          <p className="text-xs mt-5" style={{ color: 'rgba(255,255,255,0.35)' }}>Start studying today. Your future self will thank you.</p>
+          <p className="text-xs mt-5" style={{ color: 'rgba(255,255,255,0.35)' }}>Start managing something today. Your future self will thank you.</p>
         </div>
         <ShareBar />
       </div>

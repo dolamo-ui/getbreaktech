@@ -14,7 +14,7 @@ import {
   Award, Target, Flame, Database,
   Layers, FileText, Globe, Server, Layout,
   GitBranch, Terminal, Package, Shield,
-  Cloud, Workflow, Headphones, Wrench, Radio, PhoneCall,
+  Cloud, Workflow,
 } from 'lucide-react'
 
 gsap.registerPlugin(ScrollTrigger)
@@ -28,9 +28,9 @@ const C = {
   text: '#0f172a',
   textMuted: '#64748b',
   textFaint: '#94a3b8',
-  primary: '#0369a1',          // support blue — IT support brand colour
-  primaryLight: 'rgba(3,105,161,0.08)',
-  primaryMid: 'rgba(3,105,161,0.15)',
+  primary: '#0d9488',          // teal — QA brand colour
+  primaryLight: 'rgba(13,148,136,0.08)',
+  primaryMid: 'rgba(13,148,136,0.15)',
   violet: '#7c3aed',
   violetLight: 'rgba(124,58,237,0.08)',
   green: '#16a34a',
@@ -49,333 +49,333 @@ const C = {
 
 const CAREER_LEVELS = [
   {
-    level: 'Junior', title: 'Help Desk Technician', duration: '0–2 yrs', salary: 'R160k–R290k',
-    description: 'Handle Tier 1 support tickets, troubleshoot hardware and software issues, reset passwords, and escalate complex problems. Learn ticketing systems and ITIL basics.',
-    skills: ['Windows OS', 'Ticketing Tools', 'Basic Networking', 'Active Directory'],
+    level: 'Junior', title: 'Junior QA Engineer', duration: '0–2 yrs', salary: 'R220k–R400k',
+    description: 'Execute manual test cases, log and track bugs, understand the SDLC, and learn exploratory testing under mentorship. Contribute to test plans.',
+    skills: ['Manual Testing', 'Bug Tracking', 'Test Cases', 'JIRA'],
     accent: '#0891b2', accentBg: 'rgba(8,145,178,0.08)', accentBorder: 'rgba(8,145,178,0.18)',
   },
   {
-    level: 'Mid-Level', title: 'IT Support Specialist', duration: '2–5 yrs', salary: 'R290k–R540k',
-    description: 'Own Tier 2 escalations, manage endpoints at scale, configure network equipment, support cloud tools (Microsoft 365, Google Workspace), and mentor junior staff.',
-    skills: ['Microsoft 365', 'ITIL Foundation', 'Network Config', 'MDM / Intune'],
+    level: 'Mid-Level', title: 'QA Engineer', duration: '2–5 yrs', salary: 'R420k–R780k',
+    description: 'Own test automation frameworks, design regression suites, perform API and performance testing, and integrate tests into CI/CD pipelines.',
+    skills: ['Selenium/Playwright', 'API Testing', 'CI/CD', 'SQL'],
     accent: '#16a34a', accentBg: 'rgba(22,163,74,0.08)', accentBorder: 'rgba(22,163,74,0.18)',
   },
   {
-    level: 'Senior', title: 'Service Desk Analyst', duration: '5–8 yrs', salary: 'R540k–R900k',
-    description: 'Drive SLA compliance, lead incident and problem management, design knowledge base processes, and build automation that reduces ticket volume. Technical escalation lead.',
-    skills: ['ITIL Advanced', 'PowerShell', 'SIEM Basics', 'Process Design'],
+    level: 'Senior', title: 'Senior QA Engineer', duration: '5–8 yrs', salary: 'R850k–R1.4M',
+    description: 'Architect test strategies, lead automation guilds, define quality standards, mentor junior QAs, and drive shift-left testing culture across engineering.',
+    skills: ['Test Architecture', 'Performance Test', 'Security Testing', 'Mentoring'],
     accent: '#7c3aed', accentBg: 'rgba(124,58,237,0.08)', accentBorder: 'rgba(124,58,237,0.18)',
   },
   {
-    level: 'Expert', title: 'IT Support Manager', duration: '8+ yrs', salary: 'R900k+',
-    description: 'Lead the support function, define IT service strategy, manage vendor relationships, implement ITSM platforms, and align IT operations with business objectives.',
-    skills: ['ITSM Strategy', 'Team Leadership', 'Budget Mgmt', 'ITIL Expert'],
+    level: 'Expert', title: 'QA Lead / Architect', duration: '8+ yrs', salary: 'R1.5M+',
+    description: 'Define the quality vision for the entire engineering organisation, drive testing strategy across multiple teams, and own quality metrics at company level.',
+    skills: ['Quality Strategy', 'Eng Leadership', 'Observability', 'Coaching'],
     accent: '#ea580c', accentBg: 'rgba(234,88,12,0.08)', accentBorder: 'rgba(234,88,12,0.18)',
   },
 ]
 
 const ROADMAP_STEPS = [
   {
-    step: 1, title: 'IT Fundamentals & Operating Systems',
-    description: 'Build a solid base in how computers work. Learn Windows 10/11 administration inside out — installation, user accounts, Group Policy, file systems, and troubleshooting. Supplement with macOS and Linux basics. CompTIA A+ is the gold-standard certification for this stage and is widely recognised by employers.',
-    duration: '2–3 months', skills: ['Windows 10/11', 'macOS Basics', 'Linux CLI', 'CompTIA A+'],
+    step: 1, title: 'Software Testing Fundamentals',
+    description: 'Master the core concepts of quality assurance: the SDLC, STLC, testing principles, test types (unit, integration, system, acceptance), and the difference between verification and validation. Learn how bugs are found, classified, and tracked.',
+    duration: '1–2 months', skills: ['SDLC / STLC', 'Test Types', 'Bug Lifecycle', 'Test Design'],
   },
   {
-    step: 2, title: 'Networking Essentials',
-    description: 'Every support call eventually becomes a network problem. Learn TCP/IP, DNS, DHCP, subnetting, VLANs, Wi-Fi troubleshooting, and VPN concepts. Understand the OSI model at a practical level. CompTIA Network+ validates these skills and is required or preferred at most IT departments.',
-    duration: '2–3 months', skills: ['TCP/IP & DNS', 'Subnetting', 'Wi-Fi & VPN', 'CompTIA Network+'],
+    step: 2, title: 'Manual Testing & Test Case Design',
+    description: 'Learn how to write precise test cases, execute exploratory testing, perform regression testing, and document defects effectively. Master test design techniques: equivalence partitioning, boundary value analysis, and decision tables.',
+    duration: '1–2 months', skills: ['Test Case Writing', 'Exploratory Testing', 'Regression Testing', 'JIRA / Zephyr'],
   },
   {
-    step: 3, title: 'Active Directory, M365 & Identity',
-    description: 'Enterprise IT runs on Microsoft. Learn Active Directory — user and group management, OUs, Group Policy Objects, and domain structure. Then master Microsoft 365 administration: Exchange Online, Teams, SharePoint, and Intune for device management. These skills appear in nearly every job description.',
-    duration: '2–3 months', skills: ['Active Directory', 'Microsoft 365', 'Intune / MDM', 'Azure AD'],
+    step: 3, title: 'Programming for Testers - Python or JavaScript',
+    description: 'QA engineers who can code unlock a completely different level of impact. Learn Python or JavaScript to write test scripts, interact with APIs, parse responses, and build reusable test utilities. You dont need to be a developer — but you need to be code-literate.',
+    duration: '2–3 months', skills: ['Python / JS', 'Functions & OOP', 'File I/O', 'REST Concepts'],
   },
   {
-    step: 4, title: 'ITIL, Ticketing & Service Management',
-    description: 'IT support is a professional service, not just fixing computers. Learn ITIL 4 — incident, problem, change, and service request management. Get hands-on with a ticketing system (ServiceNow, Jira Service Management, or Freshdesk). Study SLA management and how to write knowledge base articles that reduce repeat tickets.',
-    duration: '1–2 months', skills: ['ITIL 4 Foundation', 'ServiceNow / Jira', 'SLA Management', 'Knowledge Mgmt'],
+    step: 4, title: 'Test Automation — Selenium, Playwright & Cypress',
+    description: 'Automate browser interactions with Playwright or Cypress for web UIs. Learn the Page Object Model for maintainable test code. Write reliable, fast, and parallelisable tests that survive UI changes. Understand when automation adds value and when it doesnt.',
+    duration: '2–3 months', skills: ['Playwright / Cypress', 'Selenium WebDriver', 'Page Object Model', 'Test Parallelism'],
   },
   {
-    step: 5, title: 'Security Fundamentals & Endpoint Protection',
-    description: 'Security is inseparable from IT support. Learn how to identify phishing attempts, configure Windows Defender and endpoint protection tools, manage BitLocker encryption, apply patches, and respond to a basic security incident. CompTIA Security+ is the entry-point certification into cybersecurity-adjacent IT roles.',
-    duration: '2–3 months', skills: ['CompTIA Security+', 'Endpoint Protection', 'Patch Management', 'Incident Response'],
+    step: 5, title: 'API Testing & Database Validation',
+    description: 'Most modern software fails at the API layer. Learn Postman and REST Assured (or requests in Python) for API testing. Write SQL queries to validate that backend operations produce correct database state. Understand JSON, XML, and response schema validation.',
+    duration: '1–2 months', skills: ['Postman / REST Assured', 'SQL for Testers', 'JSON Schema', 'Auth Testing'],
   },
   {
-    step: 6, title: 'Scripting, Automation & Cloud',
-    description: 'Senior support professionals automate repetitive tasks. Learn PowerShell to script Active Directory operations, user onboarding, and reporting. Add basics of Azure or AWS for cloud-hosted infrastructure support. Automation skills dramatically differentiate you from peers and open paths into sysadmin and cloud engineering roles.',
-    duration: '3–4 months', skills: ['PowerShell', 'Azure Fundamentals', 'Automation Scripts', 'Cloud Basics'],
+    step: 6, title: 'CI/CD, Performance & Security Testing',
+    description: 'Integrate your test suites into GitHub Actions or Jenkins CI/CD pipelines so tests run on every commit. Learn k6 or JMeter for performance testing. Understand OWASP basics and how to test for common web vulnerabilities. At this level, QA becomes indistinguishable from engineering excellence.',
+    duration: '2–3 months', skills: ['GitHub Actions / Jenkins', 'k6 / JMeter', 'OWASP Testing', 'Shift-Left Quality'],
   },
 ]
 
 const HARD_SKILLS = [
-  { name: 'Windows OS Administration', level: 95 },
-  { name: 'Microsoft 365 & Azure AD', level: 93 },
-  { name: 'Networking & TCP/IP', level: 88 },
-  { name: 'Active Directory & GPO', level: 85 },
-  { name: 'ITIL / ITSM Processes', level: 82 },
-  { name: 'Security & Endpoint Protection', level: 75 },
-  { name: 'PowerShell Scripting', level: 68 },
-  { name: 'Cloud Platforms (Azure/AWS)', level: 60 },
+  { name: 'Manual & Exploratory Testing', level: 95 },
+  { name: 'Test Case Design', level: 93 },
+  { name: 'Test Automation (Playwright/Cypress)', level: 88 },
+  { name: 'API Testing (Postman / REST Assured)', level: 85 },
+  { name: 'SQL & Database Validation', level: 80 },
+  { name: 'CI/CD Integration', level: 74 },
+  { name: 'Performance Testing (k6/JMeter)', level: 68 },
+  { name: 'Security & Penetration Testing', level: 58 },
 ]
 
 const SOFT_SKILLS = [
-  { name: 'Empathetic Communication', description: 'Users are often stressed when they call support. The ability to listen patiently, explain technical concepts in plain language, and make the person feel heard is what separates great support from merely functional support.' },
-  { name: 'Calm Under Pressure', description: 'Major outages affect hundreds of people simultaneously. The support professional who stays methodical, communicates clearly, and works the problem without panicking is irreplaceable during incidents.' },
-  { name: 'Systematic Troubleshooting', description: 'The best IT support people don\'t guess — they eliminate variables. A disciplined, hypothesis-driven approach to diagnosis gets to root causes faster and prevents repeat calls on the same issue.' },
-  { name: 'Documentation Discipline', description: 'Every ticket is an opportunity to create institutional knowledge. Support professionals who document problems and solutions thoroughly build the knowledge base that makes the whole team faster over time.' },
-  { name: 'Customer Service Mindset', description: 'IT support is a service. Treating users as internal customers — not as interruptions — builds trust, improves response quality, and makes you the person people actually want to call when things break.' },
-  { name: 'Continuous Self-Learning', description: 'Technology changes faster than any job description can capture. The best support professionals are perpetually curious — studying for the next cert, testing new tools in a home lab, and following IT news to stay ahead.' },
+  { name: 'Quality Mindset', description: 'Great QA engineers dont just find bugs — they think about what could go wrong before code is even written. This adversarial, curious mindset is the foundation of everything else.' },
+  { name: 'Attention to Detail', description: 'The defect that ships to production is the one nobody noticed was a defect. Edge cases, boundary values, unexpected inputs — a QA engineer notices what everyone else ignores.' },
+  { name: 'Communication & Bug Advocacy', description: 'A bug report is only as valuable as it is clear. The ability to describe a defect precisely, reproduce it reliably, and communicate its impact to a developer and product manager is an underrated professional skill.' },
+  { name: 'Analytical Thinking', description: 'Break down complex user journeys into testable conditions. Identify coverage gaps before they become production failures. Think systematically about risk and prioritise testing effort accordingly.' },
+  { name: 'Collaboration in Agile Teams', description: 'QA engineers who wait until the end of the sprint to test are a bottleneck. The best QAs are embedded in planning, refine acceptance criteria early, and test continuously throughout the sprint.' },
+  { name: 'Continuous Learning', description: 'Test tooling evolves rapidly — Playwright displaced Selenium in three years. QA engineers who stop learning become technical debt. The best ones are perpetually curious about new automation approaches.' },
 ]
 
 const EDU_PATHS = [
   {
-    type: 'Degree', title: 'IT / Computer Science Degree', duration: '3–4 years', cost: 'R400k – R1M+',
-    borderColor: 'rgba(3,105,161,0.2)', bgColor: '#eff6ff', typeBg: 'rgba(3,105,161,0.12)', typeColor: '#0369a1',
-    pros: ['Deepest theoretical foundation', 'Opens doors to management and specialisation faster', 'Graduate schemes at large corporates and banks', 'Strong peer network of future IT professionals'],
-    cons: ['Slow and expensive path to first salary', 'Practical hands-on lab time is limited', 'Many grads still need certifications to get hired', 'IT support roles rarely require a degree at entry level'],
+    type: 'Degree', title: 'Computer Science / IT Degree', duration: '3–4 years', cost: 'R400k – R1M+',
+    borderColor: 'rgba(13,148,136,0.2)', bgColor: '#f0fdfa', typeBg: 'rgba(13,148,136,0.12)', typeColor: '#0d9488',
+    pros: ['Deep CS fundamentals', 'Respected credential at enterprise companies', 'Access to internship pipelines', 'Strong peer network'],
+    cons: ['Rarely covers test automation directly', 'Slow and expensive path', 'QA-specific skills largely self-taught', 'Light on real agile workflow exposure'],
   },
   {
-    type: 'Certifications', title: 'CompTIA A+ → Network+ → Security+', duration: '6–18 months', cost: 'R15k – R60k',
+    type: 'Bootcamp', title: 'QA / SDET Bootcamp', duration: '3–6 months', cost: 'R50k – R120k',
     borderColor: 'rgba(22,163,74,0.2)', bgColor: '#f0fdf4', typeBg: 'rgba(22,163,74,0.12)', typeColor: '#16a34a',
-    pros: ['Vendor-neutral, globally recognised credentials', 'Directly maps to job descriptions and hiring filters', 'Much faster and cheaper than a degree', 'CompTIA A+ is explicitly required by many help desk roles'],
-    cons: ['Exams require dedicated study and exam fees', 'Credentials alone don\'t replace hands-on lab practice', 'Need to be renewed every 3 years via CEUs', 'Won\'t replace leadership experience for management roles'],
+    pros: ['Job-ready automation skills fast', 'Portfolio projects on exit', 'Career support included', 'Cohort accountability'],
+    cons: ['Variable programme quality', 'Credential not universally respected', 'Rarely covers CS depth', 'Competitive junior market entry'],
   },
   {
-    type: 'Self-Taught', title: 'Home Lab + Free Courses', duration: '12–24 months', cost: 'R2k – R10k',
+    type: 'Self-Taught', title: 'Online Courses & Projects', duration: '8–18 months', cost: 'R0 – R6k',
     borderColor: 'rgba(79,70,229,0.2)', bgColor: '#eef2ff', typeBg: 'rgba(79,70,229,0.12)', typeColor: '#4f46e5',
-    pros: ['Build real skills on real hardware', 'Microsoft Learn and Google IT Support cert are free/cheap', 'Immediate hands-on practice with no waiting', 'Home lab experience impresses interviewers who test practically'],
-    cons: ['No formal credential on CV without separate exam', 'Requires significant self-discipline and structure', 'Knowledge gaps can be dangerous without structured curriculum', 'Harder to demonstrate competence without certification'],
+    pros: ['Excellent free content available', 'Learn at your own pace', 'Build a real automation portfolio', 'ISTQB certification as credential'],
+    cons: ['Requires strong self-discipline', 'Easy to have dangerous gaps', 'No formal credential on CV initially', 'Imposter syndrome is real'],
   },
 ]
 
 const SCHEDULE = [
-  { time: '8:00', act: 'Queue Triage & Priority Setting', desc: 'Review the overnight ticket queue, identify P1/P2 incidents, assign team members to urgent items and communicate status to affected users before business starts', duration: '30 min', icon: <PhoneCall size={14} /> },
-  { time: '8:30', act: 'Active Incident Resolution', desc: 'Work through priority tickets — remote desktop sessions, on-site hardware swaps, account provisioning, software licensing issues, and connectivity problems', duration: '3 hrs', icon: <Wrench size={14} /> },
-  { time: '11:30', act: 'Escalation & Vendor Follow-up', desc: 'Escalate unresolved Tier 2 issues to sysadmin or vendor support, follow up on outstanding hardware replacements and software licences, update users on ETA', duration: '30 min', icon: <Radio size={14} /> },
-  { time: '12:00', act: 'Lunch & Recovery', desc: 'Step away from the screen. Complex technical problems benefit from a mental reset — some of the best diagnostic insights arrive after a proper break', duration: '1 hr', icon: <Coffee size={14} /> },
-  { time: '1:00', act: 'Knowledge Base & Documentation', desc: 'Write up solutions for recurring issues, update runbooks, improve existing KB articles, and document this morning\'s unusual fixes before the context is lost', duration: '1 hr', icon: <FileText size={14} /> },
-  { time: '2:00', act: 'Proactive Maintenance & Projects', desc: 'Run patch deployments, update endpoint agents, work on ongoing IT projects (e.g., hardware refresh, Office 365 migration), or build automation scripts for repetitive tasks', duration: '1.5 hrs', icon: <Shield size={14} /> },
-  { time: '3:30', act: 'Learning & Certification Study', desc: 'Work through CompTIA study material, practise PowerShell scripts in the home lab, complete a Microsoft Learn module, or test a new tool in a sandbox environment', duration: '30 min', icon: <BookOpen size={14} /> },
+  { time: '9:00', act: 'Standup & Sprint Review', desc: 'Sync with developers on what shipped overnight, review new acceptance criteria, and identify what needs test coverage today', duration: '30 min', icon: <GitBranch size={14} /> },
+  { time: '9:30', act: 'Exploratory & Manual Testing', desc: 'Deep exploratory sessions on new features — probing edge cases, negative flows, and boundary conditions that no automated test covers', duration: '2 hrs', icon: <Monitor size={14} /> },
+  { time: '11:30', act: 'Automation Suite Development', desc: 'Write new automated tests for features approved by the team, refactor flaky tests, update Page Object Models after UI changes', duration: '1.5 hrs', icon: <Terminal size={14} /> },
+  { time: '1:00', act: 'Lunch & Recovery', desc: 'Step away from the test suite. Fresh eyes catch more bugs than exhausted ones. Quality of testing declines with mental fatigue.', duration: '1 hr', icon: <Coffee size={14} /> },
+  { time: '2:00', act: 'Bug Reporting & Collaboration', desc: 'Write precise, reproducible bug reports. Pair with developers to reproduce tricky defects, clarify acceptance criteria, and review test plans', duration: '1 hr', icon: <FileText size={14} /> },
+  { time: '3:00', act: 'CI Pipeline & Test Maintenance', desc: 'Review CI test results, investigate pipeline failures, fix flaky tests, update test data, and ensure the automation suite stays healthy', duration: '1.5 hrs', icon: <Shield size={14} /> },
+  { time: '4:30', act: 'Learning & Community', desc: 'Read the Ministry of Testing blog, experiment with a new automation tool, study for ISTQB, or contribute to open-source testing projects', duration: '30 min', icon: <BookOpen size={14} /> },
 ]
 
 const TOOLS = [
-  { name: 'ServiceNow / Jira SM', cat: 'Ticketing' }, { name: 'Microsoft Intune', cat: 'MDM' },
-  { name: 'Active Directory', cat: 'Identity' }, { name: 'TeamViewer / AnyDesk', cat: 'Remote' },
-  { name: 'Microsoft 365 Admin', cat: 'Cloud' }, { name: 'Wireshark', cat: 'Network' },
-  { name: 'PowerShell ISE', cat: 'Scripting' }, { name: 'Windows Defender', cat: 'Security' },
+  { name: 'Playwright / Cypress', cat: 'UI Automation' }, { name: 'Postman', cat: 'API Testing' },
+  { name: 'JIRA / Zephyr', cat: 'Test Management' }, { name: 'GitHub Actions', cat: 'CI/CD' },
+  { name: 'k6 / JMeter', cat: 'Performance' }, { name: 'Selenium WebDriver', cat: 'Browser Automation' },
+  { name: 'BrowserStack', cat: 'Cross-Browser' }, { name: 'Allure', cat: 'Reporting' },
 ]
 
 const WORK_ENVS = [
-  { type: 'In-Office / On-Site', pct: 52 },
-  { type: 'Hybrid', pct: 37 },
-  { type: 'Fully Remote', pct: 11 },
+  { type: 'Remote', pct: 52 },
+  { type: 'Hybrid', pct: 36 },
+  { type: 'In-Office', pct: 12 },
 ]
 
 const AI_IMPACTS = [
   {
-    title: 'AI-Assisted Ticket Resolution', icon: <Sparkles size={20} />,
-    desc: 'AI tools like Copilot for Microsoft 365 and ServiceNow\'s Now Assist auto-suggest resolutions based on ticket content, prior solutions, and knowledge base articles. Support teams using AI report 40–60% faster Tier 1 resolution times and significantly lower escalation rates.',
-    tools: ['Copilot for M365', 'ServiceNow AI', 'Freshdesk AI', 'Zendesk AI'],
-    borderColor: 'rgba(3,105,161,0.18)', bgColor: '#eff6ff', icoBg: 'rgba(3,105,161,0.12)', icoColor: '#0369a1', tagBg: 'rgba(3,105,161,0.1)', tagColor: '#0369a1', titleColor: '#0369a1',
+    title: 'AI-Assisted Test Generation', icon: <Sparkles size={20} />,
+    desc: 'GitHub Copilot and Claude generate test cases from user stories, write automation scripts, and suggest edge cases. QA engineers using AI assistants report 40–60% productivity gains on test authoring and coverage analysis.',
+    tools: ['GitHub Copilot', 'Claude', 'Testim AI', 'Mabl'],
+    borderColor: 'rgba(13,148,136,0.18)', bgColor: '#f0fdfa', icoBg: 'rgba(13,148,136,0.12)', icoColor: '#0d9488', tagBg: 'rgba(13,148,136,0.1)', tagColor: '#0d9488', titleColor: '#0d9488',
   },
   {
-    title: 'Intelligent Automation & Self-Service', icon: <Zap size={20} />,
-    desc: 'IT support professionals who can build AI-powered chatbots, configure automated provisioning workflows, and connect ITSM platforms to automation tools (Power Automate, Zapier) are in a completely different demand tier in 2026.',
-    tools: ['Power Automate', 'Microsoft Copilot Studio', 'Zapier', 'Azure Logic Apps'],
+    title: 'Self-Healing Test Automation', icon: <Zap size={20} />,
+    desc: 'AI-powered testing platforms like Testim, Mabl, and Healenium automatically heal broken locators when the UI changes — reducing maintenance burden and keeping automation suites green without manual intervention.',
+    tools: ['Testim', 'Mabl', 'Healenium', 'Functionize'],
     borderColor: 'rgba(79,70,229,0.18)', bgColor: '#eef2ff', icoBg: 'rgba(79,70,229,0.12)', icoColor: '#4f46e5', tagBg: 'rgba(79,70,229,0.1)', tagColor: '#4f46e5', titleColor: '#4f46e5',
   },
   {
-    title: 'AI-Powered IT Monitoring', icon: <TrendingUp size={20} />,
-    desc: 'AIOps platforms now detect infrastructure anomalies, predict hardware failures before they impact users, and auto-route tickets based on historical patterns. Understanding these tools makes you a force multiplier for your entire IT team.',
-    tools: ['Microsoft Sentinel', 'Datadog', 'SolarWinds AI', 'PagerDuty AIOps'],
+    title: 'AI-Powered Test Analytics', icon: <TrendingUp size={20} />,
+    desc: 'AI tools now analyse test results for flakiness patterns, predict which tests are most likely to catch a given change, and surface risk areas in the codebase. Use them to run smarter, faster test suites with less maintenance.',
+    tools: ['Sentry AI', 'Datadog', 'ReportPortal AI', 'Launchable'],
     borderColor: 'rgba(22,163,74,0.18)', bgColor: '#f0fdf4', icoBg: 'rgba(22,163,74,0.12)', icoColor: '#16a34a', tagBg: 'rgba(22,163,74,0.1)', tagColor: '#16a34a', titleColor: '#16a34a',
   },
 ]
 
 const FUTURE_SKILLS = [
-  'Microsoft Copilot Administration', 'Power Automate & Low-Code Workflows',
-  'Zero Trust Network Access (ZTNA)', 'Azure Virtual Desktop Support',
-  'AI Chatbot Configuration (Copilot Studio)', 'AIOps & Predictive Monitoring',
+  'AI Test Generation (Copilot, Claude)', 'Visual Regression Testing (Percy)',
+  'Contract Testing (Pact)', 'Chaos Engineering Basics',
+  'Accessibility Testing (axe-core)', 'Shift-Left Security (SAST/DAST)',
 ]
 
 const PROS = [
-  { title: 'Always in Demand — Everywhere', desc: 'Every organisation with computers needs IT support. Hospitals, banks, schools, government, retail — the demand is universal, recession-resistant, and geographically distributed across every city in South Africa.' },
-  { title: 'The Fastest Entry into IT', desc: 'Help desk is the most accessible entry point into the technology industry. CompTIA A+ certification and a few months of study can land your first role — no degree required at entry level.' },
-  { title: 'Exposure to the Entire IT Stack', desc: 'No other role gives you broader exposure faster. In a single week, a help desk technician might touch networking, identity management, cloud apps, hardware, security, and backup systems.' },
-  { title: 'Clear Paths to Specialisation', desc: 'IT support is a launchpad, not a ceiling. From here, experienced technicians branch into sysadmin, network engineering, cybersecurity, cloud architecture, or IT management — with every path well-marked.' },
-  { title: 'Strong Job Security', desc: 'Unlike many tech roles, IT support cannot be fully offshored or replaced by software. On-site hardware, physical network infrastructure, and user relationships require a local, trusted human presence.' },
-  { title: 'Fast Skill Development', desc: 'The variety of problems encountered in support accelerates learning faster than almost any other tech role. In two years you\'ll have solved more edge cases than most developers see in five.' },
+  { title: 'The Guardian of Product Quality', desc: 'QA engineers are the last line of defence before a bug reaches a user. The pride of shipping a reliable, polished product rests significantly on the QA team\'s shoulders.' },
+  { title: 'Remote-Friendly Role', desc: 'QA engineering has no physical dependency. A large proportion of QA roles are hybrid or fully remote, with global companies actively hiring remote QA engineers from South Africa.' },
+  { title: 'Clear Automation Career Path', desc: 'QA engineers who master automation evolve into SDETs (Software Development Engineers in Test) — a role that commands developer-level salaries and demands genuine engineering skill.' },
+  { title: 'In Demand Across Every Industry', desc: 'Every company that ships software needs QA. From healthcare to fintech to e-commerce — the demand for quality engineers is universal, recession-resilient, and global.' },
+  { title: 'Great Entry Point into Tech', desc: 'QA is one of the most accessible entry points into the tech industry. Strong analytical skills and attention to detail matter more than a CS degree, especially for manual testing roles.' },
+  { title: 'Unique Business Impact', desc: 'A single critical bug in production can cost millions. QA engineers directly protect company revenue, user trust, and brand reputation — the ROI of great QA is measurable and significant.' },
 ]
 
 const CONS = [
-  { title: 'Emotionally Demanding Work', desc: 'Supporting frustrated users who can\'t work, managing an overflowing ticket queue, and being the first person blamed when systems fail takes a toll. Emotional resilience is as important as technical skill.' },
-  { title: 'Compensation Ceiling at Tier 1', desc: 'Entry-level help desk roles are among the lower-paid positions in IT. Breaking through to R400k+ requires active upskilling, certifications, and movement into specialist or senior roles.' },
-  { title: 'Repetitive Ticket Fatigue', desc: 'Password resets, "my printer isn\'t working," and Outlook crashes account for a large percentage of tickets. Without deliberate variety and growth goals, the work can become monotonous.' },
-  { title: 'On-Site Requirements', desc: 'Unlike backend or development roles, much IT support still requires physical presence. Hardware replacements, cabling, server room access, and in-person user support mean remote work is limited compared to other tech fields.' },
-  { title: 'Underappreciated Until It Breaks', desc: 'IT support is invisible when it works and immediately visible when it fails. Getting credit for preventing 300 incidents is harder than being blamed for the one that gets through. This is the reality of a support culture.' },
-  { title: 'Credential Treadmill', desc: 'Technology evolves quickly and certifications expire. Staying current in Microsoft, CompTIA, and cloud platforms requires ongoing study investment — both time and money — throughout your career.' },
+  { title: 'Undervalued in Some Cultures', desc: 'In engineering teams that don\'t have a quality culture, QA can feel like a second-class citizen. Finding teams that genuinely respect testing is important for long-term job satisfaction.' },
+  { title: 'Automation Debt is Exhausting', desc: 'Maintaining a large, flaky automation suite is demoralising. Flaky tests erode team trust in automation, and fixing them is unglamorous but essential work.' },
+  { title: 'Blamed for Escaped Defects', desc: 'When a bug ships to production, QA is often the first team questioned — even if the root cause was inadequate unit tests or poor requirements clarity. The blame can be unfair.' },
+  { title: 'Constant Context Switching', desc: 'Testing multiple features simultaneously, while managing automation maintenance and supporting developers with reproduction steps, demands significant mental load management.' },
+  { title: 'Tooling Churn', desc: 'The test automation landscape changes fast — Playwright emerged and displaced Selenium in years, not decades. QA engineers must continuously re-learn tools or risk becoming stale.' },
+  { title: 'Scope Can Feel Unbounded', desc: 'The definition of "done" in QA is fuzzy. There is always more test coverage to add, more edge cases to explore, and more risk to mitigate. Without strong scope management, QA becomes a bottleneck.' },
 ]
 
 const VIDEOS = [
-  { id: 'G7V2nqFRojA', title: 'CompTIA A+ Core 1 Full Course', desc: 'Complete preparation for the CompTIA A+ 220-1101 exam covering hardware, networking, and troubleshooting — the foundational certification for IT support professionals.', dur: '14:08:00', channel: 'Professor Messer' },
-  { id: 'qiQR5rTSshw', title: 'Google IT Support Professional Certificate', desc: 'Google\'s fully free IT support training program covering technical support fundamentals, networking, operating systems, system administration, and IT security.', dur: '6:32:00', channel: 'Google / Coursera' },
-  { id: 'ynbHdHrU5gs', title: 'CompTIA Network+ Full Course', desc: 'Complete Network+ study guide covering network infrastructure, protocols, troubleshooting, and security — essential for anyone moving beyond Tier 1 support.', dur: '12:16:00', channel: 'Professor Messer' },
+  { id: 'ztMr3JCVhRk', title: 'Complete QA Testing Course 2025', desc: 'A comprehensive introduction to software quality assurance — manual testing, test case design, bug reporting, and the full QA workflow for beginners.', dur: '6:02:15', channel: 'freeCodeCamp' },
+  { id: 'JM-o-ORvEp8', title: 'Playwright Automation Full Course', desc: 'Learn modern browser test automation with Microsoft Playwright — from setup to parallel execution, CI integration, and Page Object Model patterns.', dur: '3:14:22', channel: 'Traversy Media' },
+  { id: 'VqTiu-2MOrQ', title: 'API Testing with Postman — Full Guide', desc: 'Master API testing from basics to advanced: collections, environments, Newman CLI, and integrating Postman tests into CI/CD pipelines.', dur: '2:08:40', channel: 'TechWorld with Nana' },
 ]
 
 const TAKEAWAYS = [
-  'Certifications open doors — CompTIA A+, Network+, and Security+ are worth every hour of study and every rand of exam fees',
-  'Build a home lab on spare hardware or free Azure credits — practical troubleshooting experience you created yourself impresses interviewers more than anything on paper',
-  'Every ticket is a teaching moment: document your solutions well enough that your past self could have solved the problem faster with them',
-  'Learn PowerShell early — a support professional who can automate 20 minutes of daily manual work is immediately more valuable than one who cannot',
-  'Treat every user interaction as a service experience, not a technical problem — the reputation you build with users is your most transferable career asset',
+  'Test automation is only valuable if it is maintained — an ignored, flaky suite is worse than no automation at all',
+  'Shift left: the earlier you find a defect, the cheaper it is to fix — get involved in requirements and design, not just code review',
+  'Learn to code: QA engineers who automate fluently earn developer-level salaries and command respect across the engineering team',
+  'ISTQB Foundation certification is the global standard — it validates your testing knowledge and opens doors at enterprise employers',
+  'Measure your quality: track defect escape rate, test coverage, and automation ROI — data-driven QA gets invested in and promoted',
 ]
 
-/* ─── NEW SECTIONS ─────────────────────────────────────────────────────────── */
+/* ─── NEW SECTIONS ────────────────────────────────────────────────────────── */
 
 const CAREER_FACTS = [
   {
-    icon: <Headphones size={20} />, title: 'What You Do',
-    desc: 'Diagnose and resolve hardware, software, and network issues. Manage user accounts and permissions, deploy and configure devices, handle IT service requests, and keep systems running so the business never stops.',
-    color: '#0369a1',
+    icon: <Shield size={20} />, title: 'What You Build',
+    desc: 'Comprehensive test plans, automated regression suites, API test collections, performance benchmarks, CI/CD quality gates, bug report repositories, and the testing infrastructure that keeps products reliable.',
+    color: '#0d9488',
   },
   {
     icon: <Workflow size={20} />, title: 'Core Activities',
-    desc: 'Ticket management and prioritisation, remote and on-site troubleshooting, OS and application support, account and identity management, endpoint deployment, patch management, knowledge base creation, and user training.',
+    desc: 'Manual and exploratory testing, test case authoring, automation framework development, CI/CD integration, performance benchmarking, security validation, and production incident root-cause analysis.',
     color: '#16a34a',
   },
   {
-    icon: <Users size={20} />, title: 'Who You Support',
-    desc: 'Every employee in the organisation — from the CEO who can\'t connect to a Teams meeting to the accountant whose VPN won\'t authenticate. You are the human face of technology and the bridge between IT infrastructure and every user.',
+    icon: <Users size={20} />, title: 'Who You Work With',
+    desc: 'Backend and frontend developers whose code you test, product managers who define acceptance criteria, DevOps engineers who run pipelines, and stakeholders who depend on reliable release cycles.',
     color: '#4f46e5',
   },
   {
     icon: <TrendingUp size={20} />, title: 'Industry Demand',
-    desc: 'IT support is one of the most consistently in-demand roles in South Africa. Every sector — banking, healthcare, retail, education, mining, and government — employs IT support staff. Demand grew 18% in 2024 alone.',
+    desc: 'QA engineering demand grew 24% in 2024. Every team shipping software needs quality assurance. The transition from manual to automation testing has created a significant skills gap that benefits automation-capable QA engineers.',
     color: '#ea580c',
   },
 ]
 
 const WHY_REASONS = [
-  { emoji: '🚪', title: 'The Best Door into IT', desc: 'Help desk is where thousands of successful IT careers begin. Network engineers, cloud architects, and CISOs often started here. It is the most accessible, fastest, and lowest-barrier entry point into a technology career.' },
-  { emoji: '💼', title: 'Hire-Ready in Months, Not Years', desc: 'A CompTIA A+ certification and three months of focused study can get you your first interview. No four-year degree required. IT support is one of the few fields where demonstrated competence beats paper qualifications at entry level.' },
-  { emoji: '🌐', title: 'The Widest Industry Exposure', desc: 'Support touches every part of the IT stack — networking, identity, security, cloud, hardware, and software. You\'ll understand how technology really works in ways most specialists never do.' },
-  { emoji: '🔐', title: 'Security Skills Are Table Stakes', desc: 'In 2026, every IT support role has a security component. You\'re the front line of phishing defence, the person who spots the compromised account, and the one who enforces password and device policies. This makes you essential.' },
-  { emoji: '📈', title: 'Multiple Paths Forward', desc: 'From help desk you can go into sysadmin, network engineering, cybersecurity, cloud, or IT management. This role is not a dead end — it is a crossroads with clearly signed paths to six-figure careers.' },
-  { emoji: '🤝', title: 'You Make a Real Difference Daily', desc: 'When you fix someone\'s laptop so they can present to a client, recover a corrupted file they worked on all week, or restore email during a crisis — you\'ve made a tangible, immediate difference to a real person\'s day.' },
+  { emoji: '🛡️', title: 'You Are the Last Line of Defence', desc: 'Before a bug reaches a million users, it reaches you. QA engineers directly protect the user experience, brand reputation, and in regulated industries, legal compliance.' },
+  { emoji: '💰', title: 'Automation Engineers Earn Developer Salaries', desc: 'Senior SDETs (Software Development Engineers in Test) earn R850k–R1.4M+ in South Africa. Automation-capable QA engineers are in exceptionally high demand.' },
+  { emoji: '🌍', title: 'Remote Roles are Common', desc: 'QA engineering has no location dependency. Global companies regularly hire South African QA engineers on USD contracts for fully remote test automation roles.' },
+  { emoji: '🔍', title: 'Great Entry Point into Tech', desc: 'Strong analytical thinking and attention to detail matter more than a CS degree for junior QA roles. It\'s one of the most accessible paths into a tech engineering career.' },
+  { emoji: '📈', title: 'Clear Path to SDET and Beyond', desc: 'QA Engineer → SDET → Senior SDET → QA Architect is a well-defined, financially rewarding path. Code-literate QA engineers advance into engineering leadership naturally.' },
+  { emoji: '🧩', title: 'Every Day is a Puzzle', desc: 'Finding the one edge case that breaks a system is a genuinely satisfying intellectual challenge. The adversarial creativity of great testing is unlike any other engineering discipline.' },
 ]
 
 const FREE_RESOURCES = [
-  { category: 'Certifications', color: '#0369a1', bgColor: '#eff6ff', items: [
-    { name: 'Professor Messer — CompTIA A+ (free video course)', url: '#', type: 'Video', rating: 5 },
-    { name: 'Google IT Support Professional Cert (Coursera)', url: '#', type: 'Course', rating: 5 },
-    { name: 'Microsoft Learn — M365 & Azure fundamentals', url: '#', type: 'Docs', rating: 5 },
-    { name: 'CompTIA CertMaster Practice (paid, worth it)', url: '#', type: 'Practice', rating: 5 },
+  { category: 'Courses', color: '#0d9488', bgColor: '#f0fdfa', items: [
+    { name: 'Ministry of Testing — Free Learning Path', url: '#', type: 'Course', rating: 5 },
+    { name: 'Playwright Official Docs & Tutorials', url: '#', type: 'Docs', rating: 5 },
+    { name: 'Test Automation University (Applitools)', url: '#', type: 'Course', rating: 5 },
+    { name: 'freeCodeCamp — QA Certification', url: '#', type: 'Course', rating: 4 },
   ]},
   { category: 'Practice', color: '#16a34a', bgColor: '#f0fdf4', items: [
-    { name: 'TryHackMe — IT fundamentals & security labs', url: '#', type: 'Lab', rating: 5 },
-    { name: 'Microsoft Learn sandbox environments (free)', url: '#', type: 'Lab', rating: 5 },
-    { name: 'Build a home lab with old hardware or VMs', url: '#', type: 'Project', rating: 5 },
-    { name: 'r/ITCareerQuestions study guides', url: '#', type: 'Forum', rating: 4 },
+    { name: 'The-Internet (Heroku) — Automation Practice', url: '#', type: 'Practice', rating: 5 },
+    { name: 'DemoQA — Element Testing Practice Site', url: '#', type: 'Practice', rating: 4 },
+    { name: 'roadmap.sh — QA Engineer Path', url: '#', type: 'Reference', rating: 5 },
+    { name: 'ISTQB Foundation Syllabus (free PDF)', url: '#', type: 'Reference', rating: 5 },
   ]},
   { category: 'Community', color: '#4f46e5', bgColor: '#eef2ff', items: [
-    { name: 'NetworkChuck YouTube Channel', url: '#', type: 'YouTube', rating: 5 },
-    { name: 'r/sysadmin & r/helpdesk communities', url: '#', type: 'Forum', rating: 5 },
-    { name: 'Darknet Diaries Podcast (security stories)', url: '#', type: 'Podcast', rating: 5 },
-    { name: 'ITIL 4 Foundation Study Guide (free PDF)', url: '#', type: 'Book', rating: 4 },
+    { name: 'Ministry of Testing Community', url: '#', type: 'Forum', rating: 5 },
+    { name: 'r/QualityAssurance subreddit', url: '#', type: 'Forum', rating: 4 },
+    { name: 'Testing Peers Podcast', url: '#', type: 'Podcast', rating: 5 },
+    { name: 'Automation Step by Step (YouTube)', url: '#', type: 'YouTube', rating: 5 },
   ]},
 ]
 
 const SALARY_DATA = [
-  { role: 'Help Desk Technician (Tier 1)', range: 'R160k – R290k', midpoint: 225, yoe: '0–2 yrs', color: '#0891b2' },
-  { role: 'IT Support Specialist (Tier 2)', range: 'R290k – R540k', midpoint: 415, yoe: '2–5 yrs', color: '#16a34a' },
-  { role: 'Service Desk Analyst / Senior', range: 'R540k – R900k', midpoint: 720, yoe: '5–8 yrs', color: '#7c3aed' },
-  { role: 'IT Support Manager / Team Lead', range: 'R900k – R1.5M+', midpoint: 1150, yoe: '8+ yrs', color: '#ea580c' },
+  { role: 'Junior QA Engineer', range: 'R220k – R400k', midpoint: 310, yoe: '0–2 yrs', color: '#0891b2' },
+  { role: 'QA Engineer', range: 'R420k – R780k', midpoint: 600, yoe: '2–5 yrs', color: '#16a34a' },
+  { role: 'Senior QA / SDET', range: 'R850k – R1.4M', midpoint: 1125, yoe: '5–8 yrs', color: '#7c3aed' },
+  { role: 'QA Lead / Architect', range: 'R1.5M – R2.5M+', midpoint: 2000, yoe: '8+ yrs', color: '#ea580c' },
 ]
 
 const MISTAKES = [
   {
-    num: '01', title: 'Staying at Tier 1 Without Studying for Certs',
-    desc: 'Many technicians spend years in Tier 1 without progressing because they never formalise their skills with certifications. CompTIA A+ and Network+ are the explicit signal employers look for to promote to Tier 2 and beyond.',
-    fix: 'Set a certification target date within 90 days of starting your first role. Study 30 minutes per day minimum, without exception.',
+    num: '01', title: 'Only Testing the Happy Path',
+    desc: 'Writing test cases that only verify what should work misses the point. Production bugs almost always live in edge cases, boundary values, and error flows that nobody thought to test.',
+    fix: 'For every positive test case, write at least two negative ones. What happens with empty input? Invalid data? Expired sessions? Network failure?',
   },
   {
-    num: '02', title: 'Treating Documentation as Optional',
-    desc: 'Solving the same problem four times because it was never documented wastes hours every week. Undocumented solutions exist only in one person\'s head — and walk out the door when they leave.',
-    fix: 'Write a KB article for every novel problem you solve. If it took more than 20 minutes to diagnose, document it. No exceptions.',
+    num: '02', title: 'Building a Fragile Automation Suite',
+    desc: 'Tests that rely on hard-coded waits, brittle CSS selectors, and no structure break constantly. A flaky test suite destroys team trust in automation faster than anything.',
+    fix: 'Implement the Page Object Model from day one. Use data-testid attributes for selectors. Replace all Thread.sleep() with proper explicit waits.',
   },
   {
-    num: '03', title: 'Skipping the Networking Foundation',
-    desc: 'Most complex support issues — slow applications, connectivity failures, VPN problems, cloud service disruptions — have a network root cause. Technicians who can\'t read a ping output or trace a route are fundamentally limited.',
-    fix: 'Study subnetting until you can do it in your head. Complete Cisco\'s free NetAcad Networking Basics course alongside your A+ studies.',
+    num: '03', title: 'Testing Too Late in the Cycle',
+    desc: 'Waiting until code is "done" to start testing means bugs are expensive to fix and releases are delayed. Late testing makes QA the bottleneck and strains developer relationships.',
+    fix: 'Join sprint planning, review acceptance criteria before development starts, and write test cases during development — not after.',
   },
   {
-    num: '04', title: 'Never Learning PowerShell',
-    desc: 'Manually resetting 50 passwords or onboarding 30 users one by one is a wasted afternoon. A single PowerShell script does it in five minutes. Technicians without scripting skills hit a hard ceiling in any Microsoft environment.',
-    fix: 'Automate one repetitive task per month using PowerShell. Start with bulk user creation or automated disk space reporting.',
+    num: '04', title: 'Writing Vague Bug Reports',
+    desc: 'A bug report that says "it doesn\'t work" is useless. Developers can\'t reproduce it, product managers can\'t prioritise it, and it gets closed as "cannot reproduce."',
+    fix: 'Every bug report must include: exact steps to reproduce, expected vs actual behaviour, environment details, screenshots or screen recordings, and severity/priority assessment.',
   },
   {
-    num: '05', title: 'Neglecting the User Relationship',
-    desc: 'IT support professionals who are technically brilliant but dismissive or impatient with users destroy team trust. The "I don\'t do hand-holding" attitude is career-limiting in any support function.',
-    fix: 'Treat every ticket as if a senior manager will read your notes later. Write updates in plain English. Follow up on closed tickets the next day.',
+    num: '05', title: 'Avoiding Automation Because "Manual is Safer"',
+    desc: 'Manual regression testing at scale is unsustainable. Companies that rely entirely on manual QA become unable to release quickly — and QA engineers who can\'t automate become unemployable.',
+    fix: 'Start automating your most-run regression tests immediately. Even 20% automation coverage of critical paths dramatically improves release confidence.',
   },
   {
-    num: '06', title: 'Working Without a Home Lab',
-    desc: 'Reading about Active Directory is not the same as breaking it and fixing it. Technicians with home lab experience solve unfamiliar problems faster and interview far better than those who only know production environments.',
-    fix: 'Build a free lab using VirtualBox and Windows Server evaluation images. Spend two hours per week deliberately breaking and fixing things.',
+    num: '06', title: 'Ignoring Performance and Security Testing',
+    desc: 'Functional testing alone is insufficient. An app that works but crashes under load, or passes functional tests but leaks user data, is a product failure regardless of test pass rates.',
+    fix: 'Add at least one performance test scenario to every major feature. Review OWASP Top 10 and include security-relevant test cases in every API test suite.',
   },
 ]
 
 const CAREER_CHANGE_PATHS = [
   {
-    from: 'Customer Service / Call Centre',
-    ease: 'Natural Fit', easeColor: '#0369a1', easeBg: '#eff6ff',
-    desc: 'You already have the most underrated skill in IT support: dealing with frustrated people calmly and professionally. Add the technical layer — A+ certification and a home lab — and you transition more smoothly than most.',
-    steps: ['Study CompTIA A+ (3–4 months of focused prep)', 'Build a free home lab with VirtualBox + Windows Server eval', 'Apply for Tier 1 help desk roles emphasising your customer skills', 'Earn Network+ within your first year to accelerate to Tier 2'],
+    from: 'Manual Tester (Non-Tech)',
+    ease: 'Natural Fit', easeColor: '#0d9488', easeBg: '#f0fdfa',
+    desc: 'You already understand testing principles and the bug lifecycle. Adding automation skills — Python or JavaScript plus Playwright — transforms you from a manual tester into an SDET and dramatically increases your earning potential.',
+    steps: ['Learn Python fundamentals (variables, functions, loops)', 'Write your first Playwright automation script', 'Automate your existing manual regression suite', 'Target SDET or automation-focused QA roles'],
   },
   {
-    from: 'General IT / Tech Hobbyist',
+    from: 'Developer / Frontend Engineer',
     ease: 'Strong Fit', easeColor: '#16a34a', easeBg: '#f0fdf4',
-    desc: 'If you\'ve been building PCs, fixing family members\' computers, or tinkering with routers for fun — you have more practical experience than most candidates. Certify what you already know and document your lab work for interviews.',
-    steps: ['Convert your hobby experience into CompTIA A+ certification', 'Add structured enterprise skills: Active Directory, M365, Intune', 'Build a home lab simulating an enterprise environment', 'Target SME IT support roles where breadth beats depth'],
+    desc: 'You already write code and understand the system being tested. Add testing mindset, test design techniques, and framework-specific tooling — and you can transition into a senior SDET role with less effort than most.',
+    steps: ['Study ISTQB Foundation test design techniques', 'Learn Playwright and write tests for your own apps', 'Add API and performance testing to your skill set', 'Target senior SDET or QA architect roles'],
   },
   {
-    from: 'Business / Administrative Role',
+    from: 'Business Analyst / Product Manager',
     ease: 'Very Achievable', easeColor: '#4f46e5', easeBg: '#eef2ff',
-    desc: 'Business acumen combined with IT skills is genuinely rare and valued in service desk management. Your understanding of how the business works — priorities, stakeholders, impact — makes you an unusually effective IT support professional.',
-    steps: ['Start with the Google IT Support Professional Certificate', 'Study for CompTIA A+ while working in your current role', 'Volunteer as informal IT contact in your current workplace', 'Apply to IT support roles in your current industry vertical'],
+    desc: 'You deeply understand requirements, user journeys, and acceptance criteria — critical ingredients for great testing. Add technical testing skills and you become a uniquely valuable QA engineer who bridges business and engineering.',
+    steps: ['Learn manual testing and test case design formally', 'Get ISTQB Foundation certified', 'Learn basic automation (Playwright or Cypress)', 'Target QA roles at companies in your domain expertise'],
   },
   {
     from: 'Other Background',
     ease: 'Achievable', easeColor: '#ea580c', easeBg: '#fff7ed',
-    desc: 'Domain expertise from healthcare, finance, legal, or education combined with IT support skills is extremely valuable in those verticals. Healthcare IT support, for example, pays a significant premium over general help desk roles.',
-    steps: ['Complete the Google IT Support Certificate (free/cheap)', 'Study A+ and N+ using Professor Messer\'s free courses', 'Target IT support roles in your previous industry', 'Leverage your domain knowledge as a differentiator in interviews'],
+    desc: 'Domain expertise is a genuine QA superpower. A QA engineer who understands healthcare workflows, financial regulations, or logistics processes can find hidden bugs that a generalist engineer would never discover.',
+    steps: ['Start with ISTQB Foundation syllabus and certification', 'Practice on public testing sites (DemoQA, The-Internet)', 'Build automation skills with Playwright tutorials', 'Target QA roles in your previous industry vertical'],
   },
 ]
 
 const THIRTY_DAY_PLAN = [
-  { week: 'Week 1', theme: 'Foundation & Setup', color: '#0369a1', bg: '#eff6ff', days: [
-    { day: 'Day 1–2', task: 'Install VirtualBox. Set up a Windows 10 VM and a Windows Server 2019 eval VM. Get comfortable with the interface.' },
-    { day: 'Day 3–4', task: 'Begin Professor Messer\'s free CompTIA A+ Core 1 video series. Complete the hardware and components modules.' },
-    { day: 'Day 5–6', task: 'Configure a free ServiceNow Developer Instance or set up a Freshdesk free trial. Create your first mock tickets.' },
-    { day: 'Day 7', task: 'Research local IT support job listings. Identify the 5 most common tools and requirements in your target market.' },
+  { week: 'Week 1', theme: 'Testing Fundamentals', color: '#0d9488', bg: '#f0fdfa', days: [
+    { day: 'Day 1–2', task: 'Study SDLC and STLC. Understand the difference between verification and validation. Map the seven testing principles from ISTQB.' },
+    { day: 'Day 3–4', task: 'Learn test case design techniques: equivalence partitioning, boundary value analysis, and decision table testing.' },
+    { day: 'Day 5–6', task: 'Set up JIRA free tier. Create a test project. Write 10 test cases for a simple login form — positive and negative.' },
+    { day: 'Day 7', task: 'Perform exploratory testing on any live website (e.g. a public e-commerce site). Log 5 real bugs with full reproduction steps.' },
   ]},
-  { week: 'Week 2', theme: 'OS & Networking', color: '#16a34a', bg: '#f0fdf4', days: [
-    { day: 'Day 8–9', task: 'Windows Server lab: install Active Directory Domain Services, promote to domain controller, create 10 test users.' },
-    { day: 'Day 10–11', task: 'Networking fundamentals: study subnetting using the subnettingpractice.com tool. Do 30 minutes of subnetting drills per day.' },
-    { day: 'Day 12–13', task: 'Install Wireshark. Capture and analyse a DNS lookup, a ping, and a web page load. Understand what you\'re seeing.' },
-    { day: 'Day 14', task: 'CompTIA A+ Core 1 mock exam. Target 75%+. Identify knowledge gaps and revisit the weak sections.' },
+  { week: 'Week 2', theme: 'Automation Foundations', color: '#16a34a', bg: '#f0fdf4', days: [
+    { day: 'Day 8–9', task: 'Install Node.js and Playwright. Run the official getting-started tutorial. Inspect DOM selectors with browser dev tools.' },
+    { day: 'Day 10–11', task: 'Automate a login flow on a practice site. Use data-testid attributes. Add assertions on URL, text, and elements.' },
+    { day: 'Day 12–13', task: 'Implement the Page Object Model for your test suite. Refactor your existing tests to use POM structure.' },
+    { day: 'Day 14', task: 'Run tests in headed and headless mode. Generate an Allure HTML report. Push everything to GitHub.' },
   ]},
-  { week: 'Week 3', theme: 'Cloud & Identity', color: '#4f46e5', bg: '#eef2ff', days: [
-    { day: 'Day 15–16', task: 'Create a free Microsoft 365 developer tenant. Set up users, assign licences, configure MFA. Simulate a real onboarding.' },
-    { day: 'Day 17–18', task: 'Complete the Microsoft Learn "Azure Fundamentals" learning path (AZ-900). It\'s free and takes about 10 hours.' },
-    { day: 'Day 19–20', task: 'Begin PowerShell: write scripts to create AD users in bulk, list all computers in the domain, and check disk space.' },
-    { day: 'Day 21', task: 'ITIL 4 Foundation overview: watch the free YouTube overview by AXELOS. Understand the core concepts and vocabulary.' },
+  { week: 'Week 3', theme: 'API & Database Testing', color: '#4f46e5', bg: '#eef2ff', days: [
+    { day: 'Day 15–16', task: 'Install Postman. Test a public REST API (JSONPlaceholder or Reqres.in). Write tests for GET, POST, PUT, DELETE endpoints.' },
+    { day: 'Day 17–18', task: 'Add environment variables and collection-level pre-request scripts. Chain requests using variables from previous responses.' },
+    { day: 'Day 19–20', task: 'Set up a local PostgreSQL instance. Write SQL queries to validate that API operations create/update the correct database state.' },
+    { day: 'Day 21', task: 'Run your Postman collection via Newman CLI. Export the HTML report. Practice explaining your API test strategy aloud.' },
   ]},
-  { week: 'Week 4', theme: 'Polish & Apply', color: '#ea580c', bg: '#fff7ed', days: [
-    { day: 'Day 22–24', task: 'Build your IT support portfolio: document 3 lab scenarios with screenshots, problem descriptions, and step-by-step resolutions.' },
-    { day: 'Day 25–26', task: 'Rewrite your CV with IT language. List your home lab setup, tools used, and the specific skills you\'ve demonstrated.' },
-    { day: 'Day 27–28', task: 'Book your CompTIA A+ Core 1 exam date. Having a real target date forces productive study. Schedule Core 2 for 6 weeks after.' },
-    { day: 'Day 29–30', task: 'Apply to 5 junior IT support or help desk roles. Customise each CV. Follow up with a connection request to the hiring manager on LinkedIn.' },
+  { week: 'Week 4', theme: 'CI/CD & Ship', color: '#ea580c', bg: '#fff7ed', days: [
+    { day: 'Day 22–24', task: 'Set up GitHub Actions workflow. Run your Playwright test suite on every push. Fix any environment-dependent failures.' },
+    { day: 'Day 25–26', task: 'Add a basic k6 performance test for one API endpoint. Capture p95 response time. Set a pass/fail threshold.' },
+    { day: 'Day 27–28', task: 'Write a project README with architecture diagram, tech stack, and test coverage summary. Record a short demo video.' },
+    { day: 'Day 29–30', task: 'Share project on LinkedIn. Register for ISTQB Foundation exam. Apply to 5 QA or SDET roles. Update CV with GitHub link.' },
   ]},
 ]
 
@@ -398,7 +398,7 @@ const TOC_ITEMS = [
   { num: '16', label: 'Final Thoughts' },
 ]
 
-/* ─── SHARE BAR ─────────────────────────────────────────────────────────────── */
+/* ─── SHARE BAR ───────────────────────────────────────────────────────────── */
 function ShareBar() {
   const [copied, setCopied] = useState(false)
   const handleCopy = () => {
@@ -406,7 +406,7 @@ function ShareBar() {
   }
   const handleShare = async () => {
     if (navigator.share) {
-      try { await navigator.share({ title: 'Help Desk & IT Support Career Roadmap 2026', text: 'Complete step-by-step roadmap to become an IT Support Specialist in 2026', url: window.location.href }) }
+      try { await navigator.share({ title: 'QA Engineer Career Roadmap 2026', text: 'Complete step-by-step roadmap to become a QA Engineer in 2026', url: window.location.href }) }
       catch (_) {}
     } else { handleCopy() }
   }
@@ -424,13 +424,13 @@ function ShareBar() {
       </button>
       <div className="flex items-center gap-2 px-3 py-2 rounded-xl text-xs font-mono truncate max-w-xs" style={{ background: '#f1f5f9', color: C.textMuted, border: `1px solid ${C.border}` }}>
         <Link2 size={11} style={{ color: C.textFaint, flexShrink: 0 }} />
-        <span className="truncate">{typeof window !== 'undefined' ? window.location.href : '/roadmaps/help-desk-it-support'}</span>
+        <span className="truncate">{typeof window !== 'undefined' ? window.location.href : '/roadmaps/qa-engineer'}</span>
       </div>
     </div>
   )
 }
 
-/* ─── SECTION HEADER ──────────────────────────────────────────────────────── */
+/* ─── SECTION HEADER ─────────────────────────────────────────────────────── */
 function SectionHeader({ icon, title, subtitle, iconBg, iconColor }: { icon: React.ReactNode; title: string; subtitle: string; iconBg: string; iconColor: string }) {
   return (
     <div className="flex items-center gap-4 mb-10">
@@ -458,7 +458,7 @@ function useFade() {
 }
 
 /* ─── PAGE ────────────────────────────────────────────────────────────────── */
-export default function HelpDeskITSupportRoadmapPage() {
+export default function QAEngineerRoadmapPage() {
   const progressRef = useRef<HTMLDivElement>(null)
   const tlSectionRef = useRef<HTMLElement>(null)
   const barsContainerRef = useRef<HTMLDivElement>(null)
@@ -509,22 +509,22 @@ export default function HelpDeskITSupportRoadmapPage() {
       <div className="relative w-full" style={{ background: C.bg }}>
         <div className="relative w-full overflow-hidden" style={{ height: '100vh', minHeight: 600 }}>
           <img
-            src="https://i.imgur.com/6rBm8j5.jpeg"
-            alt="IT Support technician at service desk"
+            src="https://images.unsplash.com/photo-1555949963-aa79dcee981c?w=1600&auto=format&fit=crop&q=80"
+            alt="QA Engineer testing software"
             className="w-full h-full object-cover object-center block"
-            style={{ filter: 'saturate(0.45) brightness(1.1) hue-rotate(190deg)' }}
+            style={{ filter: 'saturate(0.55) brightness(1.05)' }}
           />
           <div className="absolute inset-0" style={{ background: 'linear-gradient(to bottom, rgba(255,255,255,0) 45%, rgba(255,255,255,0.75) 72%, rgba(255,255,255,1) 88%)' }} />
           <div className="absolute bottom-0 left-0 right-0 z-10">
             <div className="max-w-4xl mx-auto px-8 pb-12">
               <div className="inline-flex items-center gap-1.5 rounded-full px-3.5 py-1 mb-3 text-xs font-semibold" style={{ background: C.primaryLight, color: C.primary }}>
-                <Headphones size={12} /> Customer IT Support & Service Desk
+                <Shield size={12} /> Quality & Testing
               </div>
               <h1 className="font-extrabold leading-tight mb-2" style={{ fontFamily: 'Syne, sans-serif', fontSize: 'clamp(2.2rem, 5vw, 3.6rem)', color: '#0f172a', letterSpacing: '-0.03em' }}>
-                Help Desk & IT Support
+                QA Engineer
               </h1>
               <span className="block font-normal mb-3" style={{ fontFamily: 'Syne, sans-serif', fontSize: 'clamp(0.95rem, 1.8vw, 1.2rem)', color: C.textMuted }}>
-                Career Roadmap 2026 — Technician · Specialist · Analyst · Manager
+                Career Roadmap 2026
               </span>
               <div className="flex items-center gap-4">
                 <div className="flex items-center gap-1.5 text-sm" style={{ color: C.textMuted }}><Clock size={14} style={{ color: C.textFaint }} /> 20 min read</div>
@@ -535,7 +535,7 @@ export default function HelpDeskITSupportRoadmapPage() {
         </div>
         <div className="max-w-4xl mx-auto px-8 pt-6 pb-16">
           <p className="text-base leading-relaxed" style={{ color: '#4b5563', maxWidth: 560, marginLeft: 140 }}>
-            Be the person who keeps every organisation running. IT support professionals solve real problems for real people every day — and use that experience as the launchpad to every specialisation in technology.
+            Protect the product that users love. QA Engineers design the testing strategies, automation frameworks, and quality gates that ensure software ships reliably, securely, and on time — every sprint, every release.
           </p>
           <div className="h-px mt-10" style={{ background: C.border }} />
         </div>
@@ -562,10 +562,10 @@ export default function HelpDeskITSupportRoadmapPage() {
       <section className="border-b" style={{ ...sectionStyle, background: C.bg }}>
         <div className="max-w-4xl mx-auto px-8">
           <div ref={whatRef}>
-            <SectionHeader icon={<Layers size={22} />} title="What This Career Is" subtitle="The roles, responsibilities, and scope of IT Support" iconBg={C.primaryLight} iconColor={C.primary} />
-            <div className="rounded-2xl p-6 mb-8 border" style={{ background: '#eff6ff', borderColor: 'rgba(3,105,161,0.2)' }}>
+            <SectionHeader icon={<Layers size={22} />} title="What This Career Is" subtitle="The role, responsibilities, and scope of QA Engineering" iconBg={C.primaryLight} iconColor={C.primary} />
+            <div className="rounded-2xl p-6 mb-8 border" style={{ background: '#f0fdfa', borderColor: 'rgba(13,148,136,0.2)' }}>
               <p className="text-base leading-relaxed" style={{ color: '#374151' }}>
-                <strong style={{ color: C.primary }}>IT Support & Help Desk professionals</strong> are the operational backbone of every technology-dependent organisation. Whether operating as a Help Desk Technician handling first-call resolution, an IT Support Specialist owning complex escalations, a Service Desk Analyst driving process improvement, or a Customer IT Support Engineer building long-term user relationships — these roles ensure that technology serves people, not the other way around.
+                A <strong style={{ color: C.primary }}>QA Engineer</strong> is the guardian of software quality. They design and execute testing strategies that prevent bugs from reaching users, build automation frameworks that provide rapid feedback to development teams, and champion a culture of quality that spans the entire software delivery lifecycle. In modern engineering, great QA is inseparable from great engineering.
               </p>
             </div>
             <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
@@ -589,7 +589,7 @@ export default function HelpDeskITSupportRoadmapPage() {
       <section className="border-b" style={{ ...sectionStyle, background: '#f8f9ff' }}>
         <div className="max-w-4xl mx-auto px-8">
           <div ref={whyRef}>
-            <SectionHeader icon={<Flame size={22} />} title="Why Choose This Career" subtitle="Six compelling reasons IT Support could be your best move" iconBg={C.orangeLight} iconColor={C.orange} />
+            <SectionHeader icon={<Flame size={22} />} title="Why Choose This Career" subtitle="Six compelling reasons QA Engineering could be your best move" iconBg={C.orangeLight} iconColor={C.orange} />
             <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
               {WHY_REASONS.map(r => (
                 <div key={r.title} className="rounded-2xl p-5 border transition-all duration-200 hover:-translate-y-0.5 hover:shadow-md" style={{ background: C.bg, borderColor: C.border }}>
@@ -611,13 +611,13 @@ export default function HelpDeskITSupportRoadmapPage() {
       <section className="border-b" style={{ ...sectionStyle, background: C.bg }}>
         <div className="max-w-4xl mx-auto px-8">
           <div ref={dayRef}>
-            <SectionHeader icon={<Briefcase size={22} />} title="A Day in the Life" subtitle="What a typical IT Support professional's workday looks like" iconBg={C.indigoLight} iconColor={C.indigo} />
+            <SectionHeader icon={<Briefcase size={22} />} title="A Day in the Life" subtitle="What a typical QA Engineer workday looks like" iconBg={C.indigoLight} iconColor={C.indigo} />
             <div className="grid gap-7" style={{ gridTemplateColumns: '1fr 260px' }}>
               <div>
                 <p className="text-sm font-semibold mb-4" style={{ fontFamily: 'Syne, sans-serif', color: C.textMuted }}>Typical Daily Schedule</p>
                 {SCHEDULE.map(item => (
                   <div key={item.time} className="flex items-start gap-3.5 rounded-2xl p-4 border mb-2.5 transition-all duration-200" style={{ background: C.bg, borderColor: C.border }}
-                    onMouseEnter={e => { (e.currentTarget as HTMLElement).style.borderColor = 'rgba(3,105,161,0.3)'; (e.currentTarget as HTMLElement).style.background = '#eff6ff' }}
+                    onMouseEnter={e => { (e.currentTarget as HTMLElement).style.borderColor = 'rgba(13,148,136,0.3)'; (e.currentTarget as HTMLElement).style.background = '#f0fdfa' }}
                     onMouseLeave={e => { (e.currentTarget as HTMLElement).style.borderColor = C.border; (e.currentTarget as HTMLElement).style.background = C.bg }}>
                     <div className="w-9 h-9 rounded-xl flex items-center justify-center flex-shrink-0" style={{ background: C.primaryLight, color: C.primary }}>{item.icon}</div>
                     <div className="flex-1 min-w-0">
@@ -670,7 +670,7 @@ export default function HelpDeskITSupportRoadmapPage() {
           <div ref={tlRef}>
             <SectionHeader icon={<Clock size={22} />} title="Career Timeline" subtitle="Time estimates and salary ranges for each level" iconBg={C.indigoLight} iconColor={C.indigo} />
             <div className="mb-10">
-              <div className="flex justify-between text-xs mb-2.5" style={{ color: C.textMuted }}><span>Career Progression</span><span>Technician → IT Manager</span></div>
+              <div className="flex justify-between text-xs mb-2.5" style={{ color: C.textMuted }}><span>Career Progression</span><span>Junior → QA Architect</span></div>
               <div className="h-1.5 rounded-full overflow-hidden" style={{ background: '#e2e8f0' }}>
                 <div ref={progressRef} className="h-1.5 rounded-full" style={{ width: '0%', background: 'linear-gradient(90deg, #0891b2 0%, #16a34a 33%, #7c3aed 66%, #ea580c 100%)' }} />
               </div>
@@ -701,8 +701,8 @@ export default function HelpDeskITSupportRoadmapPage() {
           <SectionHeader icon={<Target size={22} />} title="Step-by-Step Roadmap" subtitle="Your path from complete beginner to job-ready" iconBg={C.primaryLight} iconColor={C.primary} />
           <div className="relative flex flex-col items-center">
             {ROADMAP_STEPS.map((s, i) => {
-              const icons = ['💻', '🌐', '🏢', '📋', '🔐', '⚡']
-              const accentColors = ['#0369a1', '#16a34a', '#0369a1', '#16a34a', '#0369a1', '#16a34a']
+              const icons = ['📋', '🔍', '🐍', '🤖', '🔌', '🚀']
+              const accentColors = ['#0d9488', '#16a34a', '#0d9488', '#16a34a', '#0d9488', '#16a34a']
               const accent = accentColors[i]; const isLast = i === ROADMAP_STEPS.length - 1; const isEven = i % 2 === 0
               return (
                 <div key={s.step} className="w-full flex flex-col items-center">
@@ -748,11 +748,11 @@ export default function HelpDeskITSupportRoadmapPage() {
                 </div>
               )
             })}
-            <div className="w-full rounded-3xl mt-2 py-8 px-8 text-center" style={{ background: `linear-gradient(135deg, ${C.primary} 0%, ${C.indigo} 100%)`, boxShadow: '0 8px 48px rgba(3,105,161,0.25)' }}>
+            <div className="w-full rounded-3xl mt-2 py-8 px-8 text-center" style={{ background: `linear-gradient(135deg, ${C.primary} 0%, ${C.indigo} 100%)`, boxShadow: '0 8px 48px rgba(13,148,136,0.25)' }}>
               <div className="text-4xl mb-3">🏆</div>
               <div className="font-extrabold text-white mb-1" style={{ fontFamily: 'Syne, sans-serif', fontSize: 'clamp(1.3rem, 3vw, 1.8rem)' }}>GO FROM ZERO to</div>
               <div className="font-extrabold mb-4" style={{ fontFamily: 'Syne, sans-serif', fontSize: 'clamp(1.3rem, 3vw, 1.8rem)', color: 'rgba(255,255,255,0.75)' }}>JOB-READY IN 2026</div>
-              <div className="text-sm" style={{ color: 'rgba(255,255,255,0.6)' }}>8–12 months · Consistent daily study · Certify as you learn</div>
+              <div className="text-sm" style={{ color: 'rgba(255,255,255,0.6)' }}>8–14 months · Consistent daily practice · Build and ship real test projects</div>
             </div>
           </div>
           <ShareBar />
@@ -865,9 +865,9 @@ export default function HelpDeskITSupportRoadmapPage() {
       <section className="border-b" style={{ ...sectionStyle, background: C.bg }}>
         <div className="max-w-4xl mx-auto px-8">
           <div ref={aiRef}>
-            <SectionHeader icon={<Sparkles size={22} />} title="AI-Enhanced Roadmap" subtitle="How AI is transforming IT Support in 2026" iconBg={C.primaryLight} iconColor={C.primary} />
-            <div className="rounded-2xl p-5 mb-7 text-sm leading-relaxed border" style={{ background: '#eff6ff', borderColor: 'rgba(3,105,161,0.2)', color: C.textMuted }}>
-              AI tools don't replace IT support professionals — they <em style={{ color: C.primary }}>amplify</em> them. Support teams using AI-assisted ticket resolution and automation handle 40–60% more tickets with the same headcount — freeing senior staff for complex incidents and strategic projects.
+            <SectionHeader icon={<Sparkles size={22} />} title="AI-Enhanced Roadmap" subtitle="How AI is transforming QA Engineering in 2026" iconBg={C.primaryLight} iconColor={C.primary} />
+            <div className="rounded-2xl p-5 mb-7 text-sm leading-relaxed border" style={{ background: '#f0fdfa', borderColor: 'rgba(13,148,136,0.2)', color: C.textMuted }}>
+              AI tools don't replace QA engineers — they <em style={{ color: C.primary }}>amplify</em> them. Engineers who integrate AI-assisted test generation and self-healing automation into their workflow ship more coverage with less maintenance — freeing time for the adversarial, creative testing that machines can't replicate.
             </div>
             <div className="grid grid-cols-1 md:grid-cols-3 gap-4 mb-9">
               {AI_IMPACTS.map(item => (
@@ -935,7 +935,7 @@ export default function HelpDeskITSupportRoadmapPage() {
           <div ref={salaryRef}>
             <SectionHeader icon={<DollarSign size={22} />} title="Salary" subtitle="What you can realistically earn at each stage" iconBg={C.greenLight} iconColor={C.green} />
             <div className="rounded-2xl p-6 mb-6 border" style={{ background: '#f0fdf4', borderColor: 'rgba(22,163,74,0.2)' }}>
-              <p className="text-sm leading-relaxed" style={{ color: C.textMuted }}>Figures reflect South African total compensation. Sectors like financial services, mining, and large enterprise consistently pay 20–35% above these benchmarks for senior IT support professionals.</p>
+              <p className="text-sm leading-relaxed" style={{ color: C.textMuted }}>Figures reflect South African total compensation. Global remote contracts — especially for senior SDET and QA Architect roles — can pay 2–4× these figures in USD.</p>
             </div>
             <div className="space-y-4">
               {SALARY_DATA.map(row => (
@@ -948,14 +948,14 @@ export default function HelpDeskITSupportRoadmapPage() {
                     <span className="text-sm font-bold" style={{ color: row.color }}>{row.range}</span>
                   </div>
                   <div className="h-2.5 rounded-full overflow-hidden" style={{ background: '#e2e8f0' }}>
-                    <div className="h-2.5 rounded-full" style={{ width: `${(row.midpoint / 1500) * 100}%`, background: row.color }} />
+                    <div className="h-2.5 rounded-full" style={{ width: `${(row.midpoint / 2500) * 100}%`, background: row.color }} />
                   </div>
                 </div>
               ))}
             </div>
-            <div className="mt-6 rounded-2xl p-5 border" style={{ background: '#eff6ff', borderColor: 'rgba(3,105,161,0.2)' }}>
+            <div className="mt-6 rounded-2xl p-5 border" style={{ background: '#f0fdfa', borderColor: 'rgba(13,148,136,0.2)' }}>
               <p className="text-xs leading-relaxed" style={{ color: C.textMuted }}>
-                <strong style={{ color: C.primary }}>Pro tip:</strong> ITIL certification, PowerShell scripting skills, and Microsoft 365 administration experience consistently command a 15–25% salary premium over uncertified peers at the same experience level. Certifications are not optional — they are the salary lever in IT support.
+                <strong style={{ color: C.primary }}>Pro tip:</strong> SDETs at product-led companies (fintech, SaaS, cloud) earn 30–50% more than QA engineers at agencies. Automation-capable QA engineers in regulated industries (healthcare, finance) command significant premiums.
               </p>
             </div>
           </div>
@@ -966,7 +966,7 @@ export default function HelpDeskITSupportRoadmapPage() {
       <section className="border-b" style={{ ...sectionStyle, background: '#f8f9ff' }}>
         <div className="max-w-4xl mx-auto px-8">
           <div ref={mistakesRef}>
-            <SectionHeader icon={<AlertTriangle size={22} />} title="Common Mistakes" subtitle="Avoid the traps that slow down most aspiring IT support professionals" iconBg={C.orangeLight} iconColor={C.orange} />
+            <SectionHeader icon={<AlertTriangle size={22} />} title="Common Mistakes" subtitle="Avoid the traps that slow down most aspiring QA engineers" iconBg={C.orangeLight} iconColor={C.orange} />
             <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
               {MISTAKES.map(m => (
                 <div key={m.num} className="rounded-2xl p-5 border transition-all duration-200 hover:shadow-md" style={{ background: C.bg, borderColor: C.border }}>
@@ -992,7 +992,7 @@ export default function HelpDeskITSupportRoadmapPage() {
       <section className="border-b" style={{ ...sectionStyle, background: C.bg }}>
         <div className="max-w-4xl mx-auto px-8">
           <div ref={changeRef}>
-            <SectionHeader icon={<RefreshCw size={22} />} title="Career Change Guide" subtitle="How to break into IT Support from your current background" iconBg={C.primaryLight} iconColor={C.primary} />
+            <SectionHeader icon={<RefreshCw size={22} />} title="Career Change Guide" subtitle="How to break into QA engineering from your current background" iconBg={C.primaryLight} iconColor={C.primary} />
             <div className="grid grid-cols-1 md:grid-cols-2 gap-5">
               {CAREER_CHANGE_PATHS.map(path => (
                 <div key={path.from} className="rounded-2xl p-6 border" style={{ background: path.easeBg, borderColor: `${path.easeColor}20` }}>
@@ -1049,7 +1049,7 @@ export default function HelpDeskITSupportRoadmapPage() {
       <section className="border-b" style={{ ...sectionStyle, background: C.bg }}>
         <div className="max-w-4xl mx-auto px-8">
           <div ref={vidsRef}>
-            <SectionHeader icon={<Play size={22} />} title="Video Resources" subtitle="Learn from the best educators in IT Support" iconBg={C.redLight} iconColor={C.red} />
+            <SectionHeader icon={<Play size={22} />} title="Video Resources" subtitle="Learn from the best educators in QA Engineering" iconBg={C.redLight} iconColor={C.red} />
             <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
               {VIDEOS.map(v => (
                 <div key={v.id} className="rounded-2xl overflow-hidden border transition-all duration-200" style={{ background: '#f8f9ff', borderColor: C.border }}
@@ -1088,10 +1088,10 @@ export default function HelpDeskITSupportRoadmapPage() {
             <SectionHeader icon={<Award size={22} />} title="Final Thoughts" subtitle="What we want you to take away from this guide" iconBg={C.primaryLight} iconColor={C.primary} />
             <div className="rounded-2xl p-6 border mb-8" style={{ background: C.bg, borderColor: C.border }}>
               <p className="text-base leading-relaxed mb-4" style={{ color: '#374151' }}>
-                IT support is <strong style={{ color: C.primary }}>where technology careers begin and where great careers are built</strong>. The help desk is not a waiting room for a "real" IT job — it is the most complete technology education available. In a single year, a driven help desk technician encounters more real-world IT problems than most CS graduates see in three years of lectures.
+                QA engineering is <strong style={{ color: C.primary }}>the conscience of every engineering team</strong>. Great QA engineers don't just find bugs — they prevent them, by shaping requirements, challenging assumptions, and building the automated safety nets that let teams ship with confidence.
               </p>
               <p className="text-base leading-relaxed" style={{ color: '#374151' }}>
-                The professionals who thrive here are those who treat every ticket as a learning opportunity, every user as a valued customer, and every certification as a commitment to excellence. The field rewards curiosity, consistency, and care — and it rewards them generously.
+                The path from manual tester to automation architect is one of the most rewarding in all of tech. The engineers who learn to code, think adversarially, and build trustworthy test infrastructure are indispensable — in any economy, at any company.
               </p>
             </div>
             <div className="grid grid-cols-1 gap-3">
@@ -1117,7 +1117,7 @@ export default function HelpDeskITSupportRoadmapPage() {
             Ready to Start Your Journey?
           </h2>
           <p className="text-sm mb-10 mx-auto leading-relaxed" style={{ color: 'rgba(255,255,255,0.65)', maxWidth: 440 }}>
-            You have the roadmap. You have the resources. You have the 30-day plan. All that's left is to open your browser, register for CompTIA A+, and take the first step.
+            You have the roadmap. You have the resources. You have the 30-day plan. All that's left is to open your browser, find a site to test, and write your first bug report.
           </p>
           <div className="flex flex-wrap justify-center gap-3.5">
             <Link to="/roadmaps" className="inline-flex items-center gap-2 rounded-xl px-7 py-3.5 font-bold text-sm no-underline" style={{ fontFamily: 'Syne, sans-serif', background: '#fff', color: C.primary }}>
@@ -1127,7 +1127,7 @@ export default function HelpDeskITSupportRoadmapPage() {
               Get Career Advice
             </a>
           </div>
-          <p className="text-xs mt-5" style={{ color: 'rgba(255,255,255,0.35)' }}>Start studying today. Your future self will thank you.</p>
+          <p className="text-xs mt-5" style={{ color: 'rgba(255,255,255,0.35)' }}>Start testing today. Your future self will thank you.</p>
         </div>
         <ShareBar />
       </div>

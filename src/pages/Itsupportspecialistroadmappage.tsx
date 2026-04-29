@@ -14,7 +14,7 @@ import {
   Award, Target, Flame, Database,
   Layers, FileText, Globe, Server, Layout,
   GitBranch, Terminal, Package, Shield,
-  Cloud, Workflow, Headphones, Wrench, Radio, PhoneCall,
+  Cloud, Workflow,
 } from 'lucide-react'
 
 gsap.registerPlugin(ScrollTrigger)
@@ -28,9 +28,9 @@ const C = {
   text: '#0f172a',
   textMuted: '#64748b',
   textFaint: '#94a3b8',
-  primary: '#0369a1',          // support blue — IT support brand colour
-  primaryLight: 'rgba(3,105,161,0.08)',
-  primaryMid: 'rgba(3,105,161,0.15)',
+  primary: '#2563eb',          // blue — IT Support brand colour
+  primaryLight: 'rgba(37,99,235,0.08)',
+  primaryMid: 'rgba(37,99,235,0.15)',
   violet: '#7c3aed',
   violetLight: 'rgba(124,58,237,0.08)',
   green: '#16a34a',
@@ -49,333 +49,333 @@ const C = {
 
 const CAREER_LEVELS = [
   {
-    level: 'Junior', title: 'Help Desk Technician', duration: '0–2 yrs', salary: 'R160k–R290k',
-    description: 'Handle Tier 1 support tickets, troubleshoot hardware and software issues, reset passwords, and escalate complex problems. Learn ticketing systems and ITIL basics.',
-    skills: ['Windows OS', 'Ticketing Tools', 'Basic Networking', 'Active Directory'],
+    level: 'Junior', title: 'IT Support Technician', duration: '0–2 yrs', salary: 'R180k–R320k',
+    description: 'Resolve Tier 1 helpdesk tickets, set up workstations, troubleshoot hardware and software, manage user accounts, and escalate complex issues under supervision.',
+    skills: ['Helpdesk', 'Windows/macOS', 'Active Directory', 'Hardware'],
     accent: '#0891b2', accentBg: 'rgba(8,145,178,0.08)', accentBorder: 'rgba(8,145,178,0.18)',
   },
   {
-    level: 'Mid-Level', title: 'IT Support Specialist', duration: '2–5 yrs', salary: 'R290k–R540k',
-    description: 'Own Tier 2 escalations, manage endpoints at scale, configure network equipment, support cloud tools (Microsoft 365, Google Workspace), and mentor junior staff.',
-    skills: ['Microsoft 365', 'ITIL Foundation', 'Network Config', 'MDM / Intune'],
+    level: 'Mid-Level', title: 'IT Support Specialist', duration: '2–5 yrs', salary: 'R340k–R600k',
+    description: 'Own Tier 2 escalations, manage network infrastructure, administer servers and cloud platforms, write automation scripts, and mentor junior technicians.',
+    skills: ['Networking', 'Azure/M365', 'PowerShell', 'Server Admin'],
     accent: '#16a34a', accentBg: 'rgba(22,163,74,0.08)', accentBorder: 'rgba(22,163,74,0.18)',
   },
   {
-    level: 'Senior', title: 'Service Desk Analyst', duration: '5–8 yrs', salary: 'R540k–R900k',
-    description: 'Drive SLA compliance, lead incident and problem management, design knowledge base processes, and build automation that reduces ticket volume. Technical escalation lead.',
-    skills: ['ITIL Advanced', 'PowerShell', 'SIEM Basics', 'Process Design'],
+    level: 'Senior', title: 'Senior IT Specialist', duration: '5–8 yrs', salary: 'R650k–R1.1M',
+    description: 'Architect IT infrastructure, lead migrations to cloud platforms, define security policies, manage vendor relationships, and drive digital transformation projects.',
+    skills: ['Cloud Architecture', 'Security Policy', 'ITIL', 'Project Mgmt'],
     accent: '#7c3aed', accentBg: 'rgba(124,58,237,0.08)', accentBorder: 'rgba(124,58,237,0.18)',
   },
   {
-    level: 'Expert', title: 'IT Support Manager', duration: '8+ yrs', salary: 'R900k+',
-    description: 'Lead the support function, define IT service strategy, manage vendor relationships, implement ITSM platforms, and align IT operations with business objectives.',
-    skills: ['ITSM Strategy', 'Team Leadership', 'Budget Mgmt', 'ITIL Expert'],
+    level: 'Expert', title: 'IT Manager / Director', duration: '8+ yrs', salary: 'R1.2M+',
+    description: 'Lead the entire IT function, set technology strategy, manage budgets and teams, own business continuity planning, and align IT investment with organisational goals.',
+    skills: ['IT Strategy', 'Budget & Vendors', 'Risk Management', 'Leadership'],
     accent: '#ea580c', accentBg: 'rgba(234,88,12,0.08)', accentBorder: 'rgba(234,88,12,0.18)',
   },
 ]
 
 const ROADMAP_STEPS = [
   {
-    step: 1, title: 'IT Fundamentals & Operating Systems',
-    description: 'Build a solid base in how computers work. Learn Windows 10/11 administration inside out — installation, user accounts, Group Policy, file systems, and troubleshooting. Supplement with macOS and Linux basics. CompTIA A+ is the gold-standard certification for this stage and is widely recognised by employers.',
-    duration: '2–3 months', skills: ['Windows 10/11', 'macOS Basics', 'Linux CLI', 'CompTIA A+'],
+    step: 1, title: 'Hardware, Operating Systems & Helpdesk Fundamentals',
+    description: 'Understand PC components, how to assemble and troubleshoot hardware, and master Windows 10/11 and macOS administration. Learn how helpdesks work: ticket systems, SLAs, escalation paths, and professional communication with end users.',
+    duration: '1–2 months', skills: ['PC Hardware', 'Windows 10/11', 'macOS Basics', 'JIRA / ServiceNow'],
   },
   {
-    step: 2, title: 'Networking Essentials',
-    description: 'Every support call eventually becomes a network problem. Learn TCP/IP, DNS, DHCP, subnetting, VLANs, Wi-Fi troubleshooting, and VPN concepts. Understand the OSI model at a practical level. CompTIA Network+ validates these skills and is required or preferred at most IT departments.',
-    duration: '2–3 months', skills: ['TCP/IP & DNS', 'Subnetting', 'Wi-Fi & VPN', 'CompTIA Network+'],
+    step: 2, title: 'Networking Fundamentals',
+    description: 'Networking is the backbone of all IT. Learn the OSI model, TCP/IP, subnetting, DNS, DHCP, VPNs, and how to configure switches and routers. Earn CompTIA Network+ to validate your knowledge — it\'s the industry-standard networking credential.',
+    duration: '2–3 months', skills: ['TCP/IP & DNS', 'Subnetting', 'Wi-Fi & VPN', 'Network+'],
   },
   {
-    step: 3, title: 'Active Directory, M365 & Identity',
-    description: 'Enterprise IT runs on Microsoft. Learn Active Directory — user and group management, OUs, Group Policy Objects, and domain structure. Then master Microsoft 365 administration: Exchange Online, Teams, SharePoint, and Intune for device management. These skills appear in nearly every job description.',
-    duration: '2–3 months', skills: ['Active Directory', 'Microsoft 365', 'Intune / MDM', 'Azure AD'],
+    step: 3, title: 'Microsoft 365, Active Directory & Identity Management',
+    description: 'The majority of enterprise IT runs on Microsoft technologies. Learn Active Directory user and group management, Microsoft 365 administration, Exchange Online, Teams, SharePoint, and Azure AD (Entra ID). This knowledge is required at virtually every corporate IT role.',
+    duration: '2–3 months', skills: ['Active Directory', 'Microsoft 365', 'Azure AD', 'Exchange Online'],
   },
   {
-    step: 4, title: 'ITIL, Ticketing & Service Management',
-    description: 'IT support is a professional service, not just fixing computers. Learn ITIL 4 — incident, problem, change, and service request management. Get hands-on with a ticketing system (ServiceNow, Jira Service Management, or Freshdesk). Study SLA management and how to write knowledge base articles that reduce repeat tickets.',
-    duration: '1–2 months', skills: ['ITIL 4 Foundation', 'ServiceNow / Jira', 'SLA Management', 'Knowledge Mgmt'],
+    step: 4, title: 'Scripting & Automation — PowerShell',
+    description: 'IT specialists who automate repetitive tasks with PowerShell earn significantly more and advance faster. Learn to write scripts that create users in bulk, query Active Directory, manage files, and automate onboarding/offboarding workflows. This is the single biggest differentiator between junior and mid-level IT specialists.',
+    duration: '2–3 months', skills: ['PowerShell', 'Automation Scripts', 'Task Scheduler', 'Bash Basics'],
   },
   {
-    step: 5, title: 'Security Fundamentals & Endpoint Protection',
-    description: 'Security is inseparable from IT support. Learn how to identify phishing attempts, configure Windows Defender and endpoint protection tools, manage BitLocker encryption, apply patches, and respond to a basic security incident. CompTIA Security+ is the entry-point certification into cybersecurity-adjacent IT roles.',
-    duration: '2–3 months', skills: ['CompTIA Security+', 'Endpoint Protection', 'Patch Management', 'Incident Response'],
+    step: 5, title: 'Cloud Platforms — Azure or AWS',
+    description: 'Enterprise IT has moved to the cloud. Learn Microsoft Azure (most relevant for Microsoft-centric environments) or AWS fundamentals. Understand virtual machines, storage, identity, and networking in the cloud. Earn AZ-900 or AWS Cloud Practitioner as your first cloud credential.',
+    duration: '2–3 months', skills: ['Azure / AWS', 'Virtual Machines', 'Cloud Storage', 'AZ-900 / CCP'],
   },
   {
-    step: 6, title: 'Scripting, Automation & Cloud',
-    description: 'Senior support professionals automate repetitive tasks. Learn PowerShell to script Active Directory operations, user onboarding, and reporting. Add basics of Azure or AWS for cloud-hosted infrastructure support. Automation skills dramatically differentiate you from peers and open paths into sysadmin and cloud engineering roles.',
-    duration: '3–4 months', skills: ['PowerShell', 'Azure Fundamentals', 'Automation Scripts', 'Cloud Basics'],
+    step: 6, title: 'Security, ITIL & Advanced Infrastructure',
+    description: 'Security is no longer optional in IT support. Learn CompTIA Security+ concepts, endpoint protection, patch management, and incident response. Study ITIL 4 Foundation to understand IT service management best practices. This knowledge unlocks senior specialist, sysadmin, and IT management roles.',
+    duration: '2–3 months', skills: ['Security+', 'ITIL 4', 'Patch Management', 'Endpoint Security'],
   },
 ]
 
 const HARD_SKILLS = [
-  { name: 'Windows OS Administration', level: 95 },
-  { name: 'Microsoft 365 & Azure AD', level: 93 },
-  { name: 'Networking & TCP/IP', level: 88 },
-  { name: 'Active Directory & GPO', level: 85 },
-  { name: 'ITIL / ITSM Processes', level: 82 },
-  { name: 'Security & Endpoint Protection', level: 75 },
-  { name: 'PowerShell Scripting', level: 68 },
-  { name: 'Cloud Platforms (Azure/AWS)', level: 60 },
+  { name: 'Windows & macOS Administration', level: 95 },
+  { name: 'Networking & TCP/IP', level: 90 },
+  { name: 'Microsoft 365 & Active Directory', level: 90 },
+  { name: 'PowerShell Scripting', level: 80 },
+  { name: 'Cloud Platforms (Azure/AWS)', level: 72 },
+  { name: 'IT Security & Endpoint Protection', level: 70 },
+  { name: 'Virtualisation (Hyper-V / VMware)', level: 65 },
+  { name: 'ITIL Service Management', level: 60 },
 ]
 
 const SOFT_SKILLS = [
-  { name: 'Empathetic Communication', description: 'Users are often stressed when they call support. The ability to listen patiently, explain technical concepts in plain language, and make the person feel heard is what separates great support from merely functional support.' },
-  { name: 'Calm Under Pressure', description: 'Major outages affect hundreds of people simultaneously. The support professional who stays methodical, communicates clearly, and works the problem without panicking is irreplaceable during incidents.' },
-  { name: 'Systematic Troubleshooting', description: 'The best IT support people don\'t guess — they eliminate variables. A disciplined, hypothesis-driven approach to diagnosis gets to root causes faster and prevents repeat calls on the same issue.' },
-  { name: 'Documentation Discipline', description: 'Every ticket is an opportunity to create institutional knowledge. Support professionals who document problems and solutions thoroughly build the knowledge base that makes the whole team faster over time.' },
-  { name: 'Customer Service Mindset', description: 'IT support is a service. Treating users as internal customers — not as interruptions — builds trust, improves response quality, and makes you the person people actually want to call when things break.' },
-  { name: 'Continuous Self-Learning', description: 'Technology changes faster than any job description can capture. The best support professionals are perpetually curious — studying for the next cert, testing new tools in a home lab, and following IT news to stay ahead.' },
+  { name: 'Patience & Empathy', description: 'IT support professionals work with non-technical users under stress. The ability to communicate calmly, explain solutions without jargon, and show genuine empathy for frustrated users defines great IT support.' },
+  { name: 'Systematic Troubleshooting', description: 'Great IT specialists don\'t guess — they methodically isolate variables, rule out causes, and follow a logical diagnostic process. This structured approach solves problems faster and prevents recurrence.' },
+  { name: 'Clear Written Communication', description: 'Ticket notes, knowledge base articles, and incident reports are read by colleagues and auditors. Precise, clear written communication is a professional skill that separates average and excellent IT specialists.' },
+  { name: 'Prioritisation Under Pressure', description: 'IT support involves constant context switching between tickets of varying urgency. The ability to triage effectively, focus on business-critical issues first, and manage user expectations is a daily requirement.' },
+  { name: 'Continuous Self-Learning', description: 'Technology changes faster than any training programme can keep up with. IT specialists who build a habit of continuous learning — certifications, YouTube, documentation — never become obsolete.' },
+  { name: 'Stakeholder Management', description: 'At senior levels, IT specialists liaise with vendors, executives, and department heads. The ability to translate technical constraints into business language and manage expectations is critical for career advancement.' },
 ]
 
 const EDU_PATHS = [
   {
-    type: 'Degree', title: 'IT / Computer Science Degree', duration: '3–4 years', cost: 'R400k – R1M+',
-    borderColor: 'rgba(3,105,161,0.2)', bgColor: '#eff6ff', typeBg: 'rgba(3,105,161,0.12)', typeColor: '#0369a1',
-    pros: ['Deepest theoretical foundation', 'Opens doors to management and specialisation faster', 'Graduate schemes at large corporates and banks', 'Strong peer network of future IT professionals'],
-    cons: ['Slow and expensive path to first salary', 'Practical hands-on lab time is limited', 'Many grads still need certifications to get hired', 'IT support roles rarely require a degree at entry level'],
+    type: 'Degree', title: 'IT / Computer Science Degree', duration: '3–4 years', cost: 'R300k – R900k',
+    borderColor: 'rgba(37,99,235,0.2)', bgColor: '#eff6ff', typeBg: 'rgba(37,99,235,0.12)', typeColor: '#2563eb',
+    pros: ['Strong CS and networking foundations', 'Respected at enterprise companies', 'Access to graduate IT programmes', 'Broader career options (dev, security, cloud)'],
+    cons: ['Slow and expensive', 'Rarely teaches practical helpdesk or M365 skills', 'Cert-based knowledge often more valued in IT support', 'Significant classroom-to-workplace gap'],
   },
   {
     type: 'Certifications', title: 'CompTIA A+ → Network+ → Security+', duration: '6–18 months', cost: 'R15k – R60k',
     borderColor: 'rgba(22,163,74,0.2)', bgColor: '#f0fdf4', typeBg: 'rgba(22,163,74,0.12)', typeColor: '#16a34a',
-    pros: ['Vendor-neutral, globally recognised credentials', 'Directly maps to job descriptions and hiring filters', 'Much faster and cheaper than a degree', 'CompTIA A+ is explicitly required by many help desk roles'],
-    cons: ['Exams require dedicated study and exam fees', 'Credentials alone don\'t replace hands-on lab practice', 'Need to be renewed every 3 years via CEUs', 'Won\'t replace leadership experience for management roles'],
+    pros: ['Industry-recognised globally', 'Faster to employment than a degree', 'Vendor-neutral technical validation', 'CompTIA A+ is widely required for junior roles'],
+    cons: ['Cert alone without hands-on experience may not be enough', 'Renewal required every 3 years', 'No credential for leadership skills', 'Cost adds up across multiple certs'],
   },
   {
-    type: 'Self-Taught', title: 'Home Lab + Free Courses', duration: '12–24 months', cost: 'R2k – R10k',
+    type: 'Self-Taught', title: 'Home Lab + Online Courses', duration: '6–12 months', cost: 'R5k – R20k',
     borderColor: 'rgba(79,70,229,0.2)', bgColor: '#eef2ff', typeBg: 'rgba(79,70,229,0.12)', typeColor: '#4f46e5',
-    pros: ['Build real skills on real hardware', 'Microsoft Learn and Google IT Support cert are free/cheap', 'Immediate hands-on practice with no waiting', 'Home lab experience impresses interviewers who test practically'],
-    cons: ['No formal credential on CV without separate exam', 'Requires significant self-discipline and structure', 'Knowledge gaps can be dangerous without structured curriculum', 'Harder to demonstrate competence without certification'],
+    pros: ['Hands-on learning from day one', 'Home lab builds real troubleshooting skills', 'Excellent free resources (Professor Messer, TryHackMe)', 'Can lead directly to certifications'],
+    cons: ['No formal credential without sitting exams', 'Self-discipline required', 'Home lab hardware costs money', 'Networking gaps without structured curriculum'],
   },
 ]
 
 const SCHEDULE = [
-  { time: '8:00', act: 'Queue Triage & Priority Setting', desc: 'Review the overnight ticket queue, identify P1/P2 incidents, assign team members to urgent items and communicate status to affected users before business starts', duration: '30 min', icon: <PhoneCall size={14} /> },
-  { time: '8:30', act: 'Active Incident Resolution', desc: 'Work through priority tickets — remote desktop sessions, on-site hardware swaps, account provisioning, software licensing issues, and connectivity problems', duration: '3 hrs', icon: <Wrench size={14} /> },
-  { time: '11:30', act: 'Escalation & Vendor Follow-up', desc: 'Escalate unresolved Tier 2 issues to sysadmin or vendor support, follow up on outstanding hardware replacements and software licences, update users on ETA', duration: '30 min', icon: <Radio size={14} /> },
-  { time: '12:00', act: 'Lunch & Recovery', desc: 'Step away from the screen. Complex technical problems benefit from a mental reset — some of the best diagnostic insights arrive after a proper break', duration: '1 hr', icon: <Coffee size={14} /> },
-  { time: '1:00', act: 'Knowledge Base & Documentation', desc: 'Write up solutions for recurring issues, update runbooks, improve existing KB articles, and document this morning\'s unusual fixes before the context is lost', duration: '1 hr', icon: <FileText size={14} /> },
-  { time: '2:00', act: 'Proactive Maintenance & Projects', desc: 'Run patch deployments, update endpoint agents, work on ongoing IT projects (e.g., hardware refresh, Office 365 migration), or build automation scripts for repetitive tasks', duration: '1.5 hrs', icon: <Shield size={14} /> },
-  { time: '3:30', act: 'Learning & Certification Study', desc: 'Work through CompTIA study material, practise PowerShell scripts in the home lab, complete a Microsoft Learn module, or test a new tool in a sandbox environment', duration: '30 min', icon: <BookOpen size={14} /> },
+  { time: '8:30', act: 'Ticket Queue Review', desc: 'Triage overnight helpdesk tickets, prioritise by SLA urgency and business impact, assign unresolved escalations from the previous day', duration: '30 min', icon: <FileText size={14} /> },
+  { time: '9:00', act: 'Tier 1 & 2 Support', desc: 'Resolve password resets, software installations, connectivity issues, printer problems, and VPN access — the daily bread of IT support at speed', duration: '2.5 hrs', icon: <Monitor size={14} /> },
+  { time: '11:30', act: 'Infrastructure & Maintenance', desc: 'Apply patch updates, manage Active Directory accounts, review Azure alerts, maintain backup jobs, and respond to monitoring dashboard anomalies', duration: '1 hr', icon: <Server size={14} /> },
+  { time: '1:00', act: 'Lunch & Recovery', desc: 'Step away from the queue. IT support has intense context-switching demands — mental recovery between peak periods maintains quality and accuracy', duration: '1 hr', icon: <Coffee size={14} /> },
+  { time: '2:00', act: 'Projects & Automation', desc: 'Work on longer-term infrastructure projects — new hardware rollouts, PowerShell automation scripts, user provisioning templates, or cloud migration tasks', duration: '1.5 hrs', icon: <Terminal size={14} /> },
+  { time: '3:30', act: 'Documentation & Knowledge Base', desc: 'Update ticket notes, write knowledge base articles for recurring issues, document SOPs for common procedures, and update asset management records', duration: '1 hr', icon: <BookOpen size={14} /> },
+  { time: '4:30', act: 'Learning & Certification Prep', desc: 'Study CompTIA, Microsoft, or Azure certification material. Home lab practice. Reading IT blogs (Spiceworks, The IT Pro). Building new automation scripts.', duration: '30 min', icon: <Globe size={14} /> },
 ]
 
 const TOOLS = [
-  { name: 'ServiceNow / Jira SM', cat: 'Ticketing' }, { name: 'Microsoft Intune', cat: 'MDM' },
-  { name: 'Active Directory', cat: 'Identity' }, { name: 'TeamViewer / AnyDesk', cat: 'Remote' },
-  { name: 'Microsoft 365 Admin', cat: 'Cloud' }, { name: 'Wireshark', cat: 'Network' },
-  { name: 'PowerShell ISE', cat: 'Scripting' }, { name: 'Windows Defender', cat: 'Security' },
+  { name: 'ServiceNow / JIRA', cat: 'Ticketing' }, { name: 'Microsoft 365 Admin', cat: 'Cloud Admin' },
+  { name: 'Active Directory', cat: 'Identity' }, { name: 'PowerShell / Bash', cat: 'Automation' },
+  { name: 'Azure Portal', cat: 'Cloud' }, { name: 'Wireshark / nmap', cat: 'Network' },
+  { name: 'Acronis / Veeam', cat: 'Backup' }, { name: 'Lansweeper', cat: 'Asset Mgmt' },
 ]
 
 const WORK_ENVS = [
-  { type: 'In-Office / On-Site', pct: 52 },
-  { type: 'Hybrid', pct: 37 },
-  { type: 'Fully Remote', pct: 11 },
+  { type: 'In-Office', pct: 48 },
+  { type: 'Hybrid', pct: 38 },
+  { type: 'Remote', pct: 14 },
 ]
 
 const AI_IMPACTS = [
   {
-    title: 'AI-Assisted Ticket Resolution', icon: <Sparkles size={20} />,
-    desc: 'AI tools like Copilot for Microsoft 365 and ServiceNow\'s Now Assist auto-suggest resolutions based on ticket content, prior solutions, and knowledge base articles. Support teams using AI report 40–60% faster Tier 1 resolution times and significantly lower escalation rates.',
-    tools: ['Copilot for M365', 'ServiceNow AI', 'Freshdesk AI', 'Zendesk AI'],
-    borderColor: 'rgba(3,105,161,0.18)', bgColor: '#eff6ff', icoBg: 'rgba(3,105,161,0.12)', icoColor: '#0369a1', tagBg: 'rgba(3,105,161,0.1)', tagColor: '#0369a1', titleColor: '#0369a1',
+    title: 'AI-Powered Help Desks', icon: <Sparkles size={20} />,
+    desc: 'Microsoft Copilot and ServiceNow AI now handle Tier 1 ticket resolution autonomously — password resets, software installs, and basic troubleshooting. IT specialists who understand AI tooling manage these systems rather than being replaced by them.',
+    tools: ['Microsoft Copilot', 'ServiceNow AI', 'Freshservice AI', 'Zendesk AI'],
+    borderColor: 'rgba(37,99,235,0.18)', bgColor: '#eff6ff', icoBg: 'rgba(37,99,235,0.12)', icoColor: '#2563eb', tagBg: 'rgba(37,99,235,0.1)', tagColor: '#2563eb', titleColor: '#2563eb',
   },
   {
-    title: 'Intelligent Automation & Self-Service', icon: <Zap size={20} />,
-    desc: 'IT support professionals who can build AI-powered chatbots, configure automated provisioning workflows, and connect ITSM platforms to automation tools (Power Automate, Zapier) are in a completely different demand tier in 2026.',
-    tools: ['Power Automate', 'Microsoft Copilot Studio', 'Zapier', 'Azure Logic Apps'],
+    title: 'AI-Assisted Script Generation', icon: <Zap size={20} />,
+    desc: 'GitHub Copilot and Claude generate PowerShell and Bash scripts on demand. IT specialists who use AI to write automation scripts dramatically accelerate infrastructure management — bulk user creation, policy deployment, and compliance reporting in minutes.',
+    tools: ['GitHub Copilot', 'Claude', 'PowerShell Copilot', 'Cursor'],
     borderColor: 'rgba(79,70,229,0.18)', bgColor: '#eef2ff', icoBg: 'rgba(79,70,229,0.12)', icoColor: '#4f46e5', tagBg: 'rgba(79,70,229,0.1)', tagColor: '#4f46e5', titleColor: '#4f46e5',
   },
   {
-    title: 'AI-Powered IT Monitoring', icon: <TrendingUp size={20} />,
-    desc: 'AIOps platforms now detect infrastructure anomalies, predict hardware failures before they impact users, and auto-route tickets based on historical patterns. Understanding these tools makes you a force multiplier for your entire IT team.',
-    tools: ['Microsoft Sentinel', 'Datadog', 'SolarWinds AI', 'PagerDuty AIOps'],
+    title: 'Intelligent Monitoring & AIOps', icon: <TrendingUp size={20} />,
+    desc: 'AI monitoring platforms detect anomalies, predict hardware failures, and correlate incidents before users notice them. IT specialists who master AIOps tooling prevent outages rather than just responding to them — a fundamental shift in the role.',
+    tools: ['Azure Monitor AI', 'Datadog AIOps', 'Dynatrace', 'SolarWinds AI'],
     borderColor: 'rgba(22,163,74,0.18)', bgColor: '#f0fdf4', icoBg: 'rgba(22,163,74,0.12)', icoColor: '#16a34a', tagBg: 'rgba(22,163,74,0.1)', tagColor: '#16a34a', titleColor: '#16a34a',
   },
 ]
 
 const FUTURE_SKILLS = [
-  'Microsoft Copilot Administration', 'Power Automate & Low-Code Workflows',
-  'Zero Trust Network Access (ZTNA)', 'Azure Virtual Desktop Support',
-  'AI Chatbot Configuration (Copilot Studio)', 'AIOps & Predictive Monitoring',
+  'Microsoft Copilot Administration', 'Zero Trust Network Architecture',
+  'Intune / MDM Cloud Management', 'PowerShell 7 & Azure Automation',
+  'SIEM Basics (Sentinel, Splunk)', 'Cloud Identity (Entra ID / IAM)',
 ]
 
 const PROS = [
-  { title: 'Always in Demand — Everywhere', desc: 'Every organisation with computers needs IT support. Hospitals, banks, schools, government, retail — the demand is universal, recession-resistant, and geographically distributed across every city in South Africa.' },
-  { title: 'The Fastest Entry into IT', desc: 'Help desk is the most accessible entry point into the technology industry. CompTIA A+ certification and a few months of study can land your first role — no degree required at entry level.' },
-  { title: 'Exposure to the Entire IT Stack', desc: 'No other role gives you broader exposure faster. In a single week, a help desk technician might touch networking, identity management, cloud apps, hardware, security, and backup systems.' },
-  { title: 'Clear Paths to Specialisation', desc: 'IT support is a launchpad, not a ceiling. From here, experienced technicians branch into sysadmin, network engineering, cybersecurity, cloud architecture, or IT management — with every path well-marked.' },
-  { title: 'Strong Job Security', desc: 'Unlike many tech roles, IT support cannot be fully offshored or replaced by software. On-site hardware, physical network infrastructure, and user relationships require a local, trusted human presence.' },
-  { title: 'Fast Skill Development', desc: 'The variety of problems encountered in support accelerates learning faster than almost any other tech role. In two years you\'ll have solved more edge cases than most developers see in five.' },
+  { title: 'The Most Accessible Tech Career Entry', desc: 'IT support has a lower barrier to entry than almost any other tech role. CompTIA A+ certification, a home lab, and good communication skills can land you a first job — no degree required.' },
+  { title: 'Job Security Everywhere', desc: 'Every company with computers needs IT support. From hospitals to banks to schools — IT support is one of the most stable, universally in-demand roles in the technology sector.' },
+  { title: 'The Broadest Tech Foundation', desc: 'IT support exposes you to networking, security, cloud, scripting, and systems administration simultaneously. It builds a broader technical foundation than almost any other entry-level tech role.' },
+  { title: 'Clear Paths in Multiple Directions', desc: 'From IT support you can specialise into cybersecurity, cloud engineering, networking, DevOps, or IT management. It is one of the most versatile launching pads in the tech industry.' },
+  { title: 'Real Problem-Solving Every Day', desc: 'No two days in IT support are the same. Every ticket is a new puzzle, every user a different communication challenge. The variety is genuinely stimulating for curious, analytical minds.' },
+  { title: 'Human Impact is Immediate', desc: 'When you fix someone\'s computer before their important presentation, restore lost data, or get an executive\'s email working again — the gratitude is immediate and the impact is real and personal.' },
 ]
 
 const CONS = [
-  { title: 'Emotionally Demanding Work', desc: 'Supporting frustrated users who can\'t work, managing an overflowing ticket queue, and being the first person blamed when systems fail takes a toll. Emotional resilience is as important as technical skill.' },
-  { title: 'Compensation Ceiling at Tier 1', desc: 'Entry-level help desk roles are among the lower-paid positions in IT. Breaking through to R400k+ requires active upskilling, certifications, and movement into specialist or senior roles.' },
-  { title: 'Repetitive Ticket Fatigue', desc: 'Password resets, "my printer isn\'t working," and Outlook crashes account for a large percentage of tickets. Without deliberate variety and growth goals, the work can become monotonous.' },
-  { title: 'On-Site Requirements', desc: 'Unlike backend or development roles, much IT support still requires physical presence. Hardware replacements, cabling, server room access, and in-person user support mean remote work is limited compared to other tech fields.' },
-  { title: 'Underappreciated Until It Breaks', desc: 'IT support is invisible when it works and immediately visible when it fails. Getting credit for preventing 300 incidents is harder than being blamed for the one that gets through. This is the reality of a support culture.' },
-  { title: 'Credential Treadmill', desc: 'Technology evolves quickly and certifications expire. Staying current in Microsoft, CompTIA, and cloud platforms requires ongoing study investment — both time and money — throughout your career.' },
+  { title: 'Underappreciated Until Things Break', desc: 'IT infrastructure is only noticed when it fails. Great IT support is invisible by design — which means the effort that goes into maintaining reliable systems is often invisible to the business.' },
+  { title: 'Repetitive Tier 1 Work', desc: 'Password resets, "have you tried turning it off and on again," and printer troubleshooting can feel relentless in a pure helpdesk role. Moving up the technical ladder requires proactively demonstrating broader skills.' },
+  { title: 'On-Call and After-Hours Demands', desc: 'Critical infrastructure failures happen outside business hours. Senior IT specialists and IT managers often carry on-call responsibilities and may need to respond to incidents evenings and weekends.' },
+  { title: 'Difficult Users', desc: 'Some users are frustrated, dismissive, or blame IT for problems outside your control. Managing these interactions with professionalism consistently is a genuine emotional labour requirement of the role.' },
+  { title: 'Certification Treadmill', desc: 'CompTIA certifications expire every three years. Microsoft certifications change frequently. Staying certified in a fast-moving field requires continuous time and financial investment.' },
+  { title: 'Career Ceiling Without Specialisation', desc: 'Generalist IT support has a relatively low salary ceiling. Significant salary growth requires specialising into cloud, security, networking, or management — which demands continuous upskilling beyond helpdesk work.' },
 ]
 
 const VIDEOS = [
-  { id: 'G7V2nqFRojA', title: 'CompTIA A+ Core 1 Full Course', desc: 'Complete preparation for the CompTIA A+ 220-1101 exam covering hardware, networking, and troubleshooting — the foundational certification for IT support professionals.', dur: '14:08:00', channel: 'Professor Messer' },
-  { id: 'qiQR5rTSshw', title: 'Google IT Support Professional Certificate', desc: 'Google\'s fully free IT support training program covering technical support fundamentals, networking, operating systems, system administration, and IT security.', dur: '6:32:00', channel: 'Google / Coursera' },
-  { id: 'ynbHdHrU5gs', title: 'CompTIA Network+ Full Course', desc: 'Complete Network+ study guide covering network infrastructure, protocols, troubleshooting, and security — essential for anyone moving beyond Tier 1 support.', dur: '12:16:00', channel: 'Professor Messer' },
+  { id: 'dGhFDfn8SEg', title: 'CompTIA A+ Core 1 Full Course', desc: 'The complete CompTIA A+ Core 1 (220-1101) certification course — covering hardware, networking, mobile devices, virtualisation, and cloud computing fundamentals.', dur: '14:01:45', channel: 'Professor Messer' },
+  { id: 'yZn3Z7jEWGI', title: 'Active Directory & Microsoft 365 Full Course', desc: 'Master Active Directory administration, Microsoft 365 setup, Azure AD, Exchange Online, and Group Policy — the essential Microsoft stack for every IT support specialist.', dur: '5:22:10', channel: 'John Savill' },
+  { id: 'qiQR5rTSshw', title: 'PowerShell for IT Professionals', desc: 'Learn PowerShell scripting from zero to automation hero — covering cmdlets, pipelines, Active Directory automation, and real-world IT administration scripts.', dur: '3:45:20', channel: 'NetworkChuck' },
 ]
 
 const TAKEAWAYS = [
-  'Certifications open doors — CompTIA A+, Network+, and Security+ are worth every hour of study and every rand of exam fees',
-  'Build a home lab on spare hardware or free Azure credits — practical troubleshooting experience you created yourself impresses interviewers more than anything on paper',
-  'Every ticket is a teaching moment: document your solutions well enough that your past self could have solved the problem faster with them',
-  'Learn PowerShell early — a support professional who can automate 20 minutes of daily manual work is immediately more valuable than one who cannot',
-  'Treat every user interaction as a service experience, not a technical problem — the reputation you build with users is your most transferable career asset',
+  'CompTIA A+ is the global entry credential — earn it before applying for your first IT role, it is widely required',
+  'Build a home lab from day one: old laptops, free Hyper-V or VMware, and a cheap managed switch teach more than any course',
+  'Learn PowerShell seriously — IT specialists who automate earn 40–60% more than those who do everything manually',
+  'Document everything: great ticket notes, runbooks, and SOPs are the difference between a specialist and an indispensable one',
+  'Treat every user interaction as a communication skill practice — empathy and clarity separate great IT support from average IT support',
 ]
 
-/* ─── NEW SECTIONS ─────────────────────────────────────────────────────────── */
+/* ─── NEW SECTIONS ────────────────────────────────────────────────────────── */
 
 const CAREER_FACTS = [
   {
-    icon: <Headphones size={20} />, title: 'What You Do',
-    desc: 'Diagnose and resolve hardware, software, and network issues. Manage user accounts and permissions, deploy and configure devices, handle IT service requests, and keep systems running so the business never stops.',
-    color: '#0369a1',
+    icon: <Monitor size={20} />, title: 'What You Build',
+    desc: 'IT infrastructure documentation, user provisioning workflows, automation scripts, knowledge base articles, network diagrams, backup and recovery procedures, and the operational systems that keep organisations running 24/7.',
+    color: '#2563eb',
   },
   {
     icon: <Workflow size={20} />, title: 'Core Activities',
-    desc: 'Ticket management and prioritisation, remote and on-site troubleshooting, OS and application support, account and identity management, endpoint deployment, patch management, knowledge base creation, and user training.',
+    desc: 'Helpdesk ticket resolution, hardware and software troubleshooting, user account management, network monitoring, patch management, cloud administration, and proactive infrastructure maintenance.',
     color: '#16a34a',
   },
   {
-    icon: <Users size={20} />, title: 'Who You Support',
-    desc: 'Every employee in the organisation — from the CEO who can\'t connect to a Teams meeting to the accountant whose VPN won\'t authenticate. You are the human face of technology and the bridge between IT infrastructure and every user.',
+    icon: <Users size={20} />, title: 'Who You Work With',
+    desc: 'End users from all departments who depend on IT, HR teams for onboarding and offboarding, management for IT project prioritisation, vendors for hardware and software procurement, and security teams for compliance.',
     color: '#4f46e5',
   },
   {
     icon: <TrendingUp size={20} />, title: 'Industry Demand',
-    desc: 'IT support is one of the most consistently in-demand roles in South Africa. Every sector — banking, healthcare, retail, education, mining, and government — employs IT support staff. Demand grew 18% in 2024 alone.',
+    desc: 'IT support is one of the most stable roles in technology. Every organisation with digital infrastructure needs IT specialists. Demand is structurally resilient across economic cycles and continues to grow with cloud adoption.',
     color: '#ea580c',
   },
 ]
 
 const WHY_REASONS = [
-  { emoji: '🚪', title: 'The Best Door into IT', desc: 'Help desk is where thousands of successful IT careers begin. Network engineers, cloud architects, and CISOs often started here. It is the most accessible, fastest, and lowest-barrier entry point into a technology career.' },
-  { emoji: '💼', title: 'Hire-Ready in Months, Not Years', desc: 'A CompTIA A+ certification and three months of focused study can get you your first interview. No four-year degree required. IT support is one of the few fields where demonstrated competence beats paper qualifications at entry level.' },
-  { emoji: '🌐', title: 'The Widest Industry Exposure', desc: 'Support touches every part of the IT stack — networking, identity, security, cloud, hardware, and software. You\'ll understand how technology really works in ways most specialists never do.' },
-  { emoji: '🔐', title: 'Security Skills Are Table Stakes', desc: 'In 2026, every IT support role has a security component. You\'re the front line of phishing defence, the person who spots the compromised account, and the one who enforces password and device policies. This makes you essential.' },
-  { emoji: '📈', title: 'Multiple Paths Forward', desc: 'From help desk you can go into sysadmin, network engineering, cybersecurity, cloud, or IT management. This role is not a dead end — it is a crossroads with clearly signed paths to six-figure careers.' },
-  { emoji: '🤝', title: 'You Make a Real Difference Daily', desc: 'When you fix someone\'s laptop so they can present to a client, recover a corrupted file they worked on all week, or restore email during a crisis — you\'ve made a tangible, immediate difference to a real person\'s day.' },
+  { emoji: '🖥️', title: 'The Most Accessible Tech Career', desc: 'CompTIA A+ certification and a willingness to learn can get you your first IT job — no degree required. It is the most accessible and fastest entry point into a long-term tech career.' },
+  { emoji: '💰', title: 'Strong Salary Progression', desc: 'Entry-level IT support is modest, but IT managers and cloud-specialised IT architects earn R1.2M+ in South Africa. The progression is clear, merit-based, and well-defined.' },
+  { emoji: '🌍', title: 'Job Security in Every Industry', desc: 'Hospitals, banks, schools, retailers, government — every sector needs IT support. Unemployment risk is exceptionally low compared to other technology roles.' },
+  { emoji: '🔧', title: 'Broad Skills, Multiple Exit Paths', desc: 'IT support exposes you to every technology domain — networking, security, cloud, scripting. From here you can transition into cybersecurity, DevOps, cloud engineering, or management.' },
+  { emoji: '📈', title: 'Cloud is Transforming the Role', desc: 'IT support specialists who add Azure, Intune, and PowerShell skills are in extraordinary demand as organisations migrate from on-premises infrastructure to cloud platforms.' },
+  { emoji: '🤝', title: 'Daily Human Impact', desc: 'Few tech roles have as immediate and visible an impact on real people. Fixing the problem that is blocking someone\'s work, restoring lost data, or keeping critical systems running creates tangible daily satisfaction.' },
 ]
 
 const FREE_RESOURCES = [
-  { category: 'Certifications', color: '#0369a1', bgColor: '#eff6ff', items: [
-    { name: 'Professor Messer — CompTIA A+ (free video course)', url: '#', type: 'Video', rating: 5 },
-    { name: 'Google IT Support Professional Cert (Coursera)', url: '#', type: 'Course', rating: 5 },
-    { name: 'Microsoft Learn — M365 & Azure fundamentals', url: '#', type: 'Docs', rating: 5 },
-    { name: 'CompTIA CertMaster Practice (paid, worth it)', url: '#', type: 'Practice', rating: 5 },
+  { category: 'Certifications', color: '#2563eb', bgColor: '#eff6ff', items: [
+    { name: 'Professor Messer — CompTIA A+ (free)', url: '#', type: 'Course', rating: 5 },
+    { name: 'Microsoft Learn — AZ-900 Path (free)', url: '#', type: 'Course', rating: 5 },
+    { name: 'CompTIA CertMaster Learn Trial', url: '#', type: 'Course', rating: 4 },
+    { name: 'TryHackMe — Pre-Security Path (free)', url: '#', type: 'Practice', rating: 5 },
   ]},
   { category: 'Practice', color: '#16a34a', bgColor: '#f0fdf4', items: [
-    { name: 'TryHackMe — IT fundamentals & security labs', url: '#', type: 'Lab', rating: 5 },
-    { name: 'Microsoft Learn sandbox environments (free)', url: '#', type: 'Lab', rating: 5 },
-    { name: 'Build a home lab with old hardware or VMs', url: '#', type: 'Project', rating: 5 },
-    { name: 'r/ITCareerQuestions study guides', url: '#', type: 'Forum', rating: 4 },
+    { name: 'Build a home lab (free with old hardware)', url: '#', type: 'Lab', rating: 5 },
+    { name: 'TechNet / Microsoft Docs (free)', url: '#', type: 'Reference', rating: 5 },
+    { name: 'Spiceworks Community Forum', url: '#', type: 'Community', rating: 4 },
+    { name: 'r/sysadmin — learn from the field', url: '#', type: 'Community', rating: 5 },
   ]},
-  { category: 'Community', color: '#4f46e5', bgColor: '#eef2ff', items: [
+  { category: 'Learning', color: '#4f46e5', bgColor: '#eef2ff', items: [
     { name: 'NetworkChuck YouTube Channel', url: '#', type: 'YouTube', rating: 5 },
-    { name: 'r/sysadmin & r/helpdesk communities', url: '#', type: 'Forum', rating: 5 },
-    { name: 'Darknet Diaries Podcast (security stories)', url: '#', type: 'Podcast', rating: 5 },
-    { name: 'ITIL 4 Foundation Study Guide (free PDF)', url: '#', type: 'Book', rating: 4 },
+    { name: 'John Savill Microsoft YouTube', url: '#', type: 'YouTube', rating: 5 },
+    { name: 'Practical Networking (free courses)', url: '#', type: 'Course', rating: 5 },
+    { name: 'IT Pro TV — Free Trial', url: '#', type: 'Course', rating: 4 },
   ]},
 ]
 
 const SALARY_DATA = [
-  { role: 'Help Desk Technician (Tier 1)', range: 'R160k – R290k', midpoint: 225, yoe: '0–2 yrs', color: '#0891b2' },
-  { role: 'IT Support Specialist (Tier 2)', range: 'R290k – R540k', midpoint: 415, yoe: '2–5 yrs', color: '#16a34a' },
-  { role: 'Service Desk Analyst / Senior', range: 'R540k – R900k', midpoint: 720, yoe: '5–8 yrs', color: '#7c3aed' },
-  { role: 'IT Support Manager / Team Lead', range: 'R900k – R1.5M+', midpoint: 1150, yoe: '8+ yrs', color: '#ea580c' },
+  { role: 'IT Support Technician (Tier 1)', range: 'R180k – R320k', midpoint: 250, yoe: '0–2 yrs', color: '#0891b2' },
+  { role: 'IT Support Specialist (Tier 2)', range: 'R340k – R600k', midpoint: 470, yoe: '2–5 yrs', color: '#16a34a' },
+  { role: 'Senior IT Specialist / Sysadmin', range: 'R650k – R1.1M', midpoint: 875, yoe: '5–8 yrs', color: '#7c3aed' },
+  { role: 'IT Manager / IT Director', range: 'R1.2M – R2M+', midpoint: 1600, yoe: '8+ yrs', color: '#ea580c' },
 ]
 
 const MISTAKES = [
   {
-    num: '01', title: 'Staying at Tier 1 Without Studying for Certs',
-    desc: 'Many technicians spend years in Tier 1 without progressing because they never formalise their skills with certifications. CompTIA A+ and Network+ are the explicit signal employers look for to promote to Tier 2 and beyond.',
-    fix: 'Set a certification target date within 90 days of starting your first role. Study 30 minutes per day minimum, without exception.',
+    num: '01', title: 'Treating Every Ticket as Isolated',
+    desc: 'Recurring issues that get resolved but never fixed at the root are a waste of everyone\'s time. If you see the same problem three times, there is a systemic cause that needs addressing — not another band-aid.',
+    fix: 'For any ticket you resolve more than twice, investigate the root cause and either write a permanent fix script or escalate to infrastructure for a real solution.',
   },
   {
-    num: '02', title: 'Treating Documentation as Optional',
-    desc: 'Solving the same problem four times because it was never documented wastes hours every week. Undocumented solutions exist only in one person\'s head — and walk out the door when they leave.',
-    fix: 'Write a KB article for every novel problem you solve. If it took more than 20 minutes to diagnose, document it. No exceptions.',
+    num: '02', title: 'Never Writing Documentation',
+    desc: 'Tribal knowledge that lives only in your head is a business risk and a career ceiling. Teams that don\'t document create bottlenecks, make onboarding new IT staff expensive, and suffer badly during staff turnover.',
+    fix: 'Write a knowledge base article for every issue you resolve more than once. Aim to make yourself replaceable — it\'s paradoxically what makes you most valuable.',
   },
   {
     num: '03', title: 'Skipping the Networking Foundation',
-    desc: 'Most complex support issues — slow applications, connectivity failures, VPN problems, cloud service disruptions — have a network root cause. Technicians who can\'t read a ping output or trace a route are fundamentally limited.',
-    fix: 'Study subnetting until you can do it in your head. Complete Cisco\'s free NetAcad Networking Basics course alongside your A+ studies.',
+    desc: 'Many IT support specialists can reset passwords but can\'t explain why DNS is failing or how DHCP works. Without networking fundamentals, you hit a ceiling that limits every advanced role.',
+    fix: 'Study TCP/IP, subnetting, DNS, and DHCP until you can explain them without looking anything up. CompTIA Network+ is the structured path to get there.',
   },
   {
-    num: '04', title: 'Never Learning PowerShell',
-    desc: 'Manually resetting 50 passwords or onboarding 30 users one by one is a wasted afternoon. A single PowerShell script does it in five minutes. Technicians without scripting skills hit a hard ceiling in any Microsoft environment.',
-    fix: 'Automate one repetitive task per month using PowerShell. Start with bulk user creation or automated disk space reporting.',
+    num: '04', title: 'Avoiding Scripting and Automation',
+    desc: 'IT specialists who do everything manually are slow, inconsistent, and increasingly less employable. Every task you repeat more than ten times should be automated — or someone else will, and they will earn more for it.',
+    fix: 'Learn PowerShell basics in your first year. Automate your most repetitive task — even if it\'s just creating users or resetting profiles. Build the habit early.',
   },
   {
-    num: '05', title: 'Neglecting the User Relationship',
-    desc: 'IT support professionals who are technically brilliant but dismissive or impatient with users destroy team trust. The "I don\'t do hand-holding" attitude is career-limiting in any support function.',
-    fix: 'Treat every ticket as if a senior manager will read your notes later. Write updates in plain English. Follow up on closed tickets the next day.',
+    num: '05', title: 'Ignoring Cloud Platforms',
+    desc: 'On-premises infrastructure is declining. Companies are migrating to Azure, Microsoft 365, and AWS. IT specialists who have no cloud skills are increasingly competing for a shrinking pool of legacy-environment jobs.',
+    fix: 'Start with AZ-900 (Azure Fundamentals) — it\'s the fastest, cheapest way to demonstrate cloud credibility. Then add M365 administration and Intune MDM to your skill set.',
   },
   {
-    num: '06', title: 'Working Without a Home Lab',
-    desc: 'Reading about Active Directory is not the same as breaking it and fixing it. Technicians with home lab experience solve unfamiliar problems faster and interview far better than those who only know production environments.',
-    fix: 'Build a free lab using VirtualBox and Windows Server evaluation images. Spend two hours per week deliberately breaking and fixing things.',
+    num: '06', title: 'Poor Communication with Users',
+    desc: 'Technical accuracy without communication skill is insufficient in IT support. Users who feel dismissed, confused, or talked down to become negative stakeholders — escalating small issues and damaging the IT team\'s reputation.',
+    fix: 'Practice plain-language explanations for every technical issue you resolve. Never use acronyms without explaining them. Follow up after resolutions to confirm satisfaction.',
   },
 ]
 
 const CAREER_CHANGE_PATHS = [
   {
-    from: 'Customer Service / Call Centre',
-    ease: 'Natural Fit', easeColor: '#0369a1', easeBg: '#eff6ff',
-    desc: 'You already have the most underrated skill in IT support: dealing with frustrated people calmly and professionally. Add the technical layer — A+ certification and a home lab — and you transition more smoothly than most.',
-    steps: ['Study CompTIA A+ (3–4 months of focused prep)', 'Build a free home lab with VirtualBox + Windows Server eval', 'Apply for Tier 1 help desk roles emphasising your customer skills', 'Earn Network+ within your first year to accelerate to Tier 2'],
+    from: 'Retail / Customer Service',
+    ease: 'Natural Fit', easeColor: '#2563eb', easeBg: '#eff6ff',
+    desc: 'Your customer communication skills, patience under pressure, and problem-solving experience translate directly to Tier 1 IT support. Add CompTIA A+ and a home lab, and you have everything needed for a first IT role.',
+    steps: ['Study CompTIA A+ with Professor Messer (free)', 'Build a basic home lab with an old PC and free Hyper-V', 'Sit the CompTIA A+ exam and add to your CV', 'Apply to Tier 1 helpdesk and IT support technician roles'],
   },
   {
-    from: 'General IT / Tech Hobbyist',
+    from: 'Office / Administrative Background',
     ease: 'Strong Fit', easeColor: '#16a34a', easeBg: '#f0fdf4',
-    desc: 'If you\'ve been building PCs, fixing family members\' computers, or tinkering with routers for fun — you have more practical experience than most candidates. Certify what you already know and document your lab work for interviews.',
-    steps: ['Convert your hobby experience into CompTIA A+ certification', 'Add structured enterprise skills: Active Directory, M365, Intune', 'Build a home lab simulating an enterprise environment', 'Target SME IT support roles where breadth beats depth'],
+    desc: 'You already understand how businesses use technology from a user perspective. Adding IT fundamentals and certification gives you a uniquely empathetic IT specialist who understands both the user side and the technical side.',
+    steps: ['Complete CompTIA A+ Core 1 and Core 2', 'Learn Microsoft 365 admin via Microsoft Learn (free)', 'Practise Active Directory in a home lab', 'Target IT support roles at companies in your previous industry'],
   },
   {
-    from: 'Business / Administrative Role',
+    from: 'Telecommunications / ISP Technician',
     ease: 'Very Achievable', easeColor: '#4f46e5', easeBg: '#eef2ff',
-    desc: 'Business acumen combined with IT skills is genuinely rare and valued in service desk management. Your understanding of how the business works — priorities, stakeholders, impact — makes you an unusually effective IT support professional.',
-    steps: ['Start with the Google IT Support Professional Certificate', 'Study for CompTIA A+ while working in your current role', 'Volunteer as informal IT contact in your current workplace', 'Apply to IT support roles in your current industry vertical'],
+    desc: 'Networking fundamentals, cable infrastructure, and customer-facing technical work are deeply transferable. Add Windows administration and Microsoft 365 skills and you can move into a corporate IT specialist role relatively quickly.',
+    steps: ['Add CompTIA Network+ to formalise your networking knowledge', 'Learn Windows Server and Active Directory administration', 'Study Microsoft 365 and Azure fundamentals', 'Target IT Specialist or sysadmin roles in enterprise environments'],
   },
   {
     from: 'Other Background',
     ease: 'Achievable', easeColor: '#ea580c', easeBg: '#fff7ed',
-    desc: 'Domain expertise from healthcare, finance, legal, or education combined with IT support skills is extremely valuable in those verticals. Healthcare IT support, for example, pays a significant premium over general help desk roles.',
-    steps: ['Complete the Google IT Support Certificate (free/cheap)', 'Study A+ and N+ using Professor Messer\'s free courses', 'Target IT support roles in your previous industry', 'Leverage your domain knowledge as a differentiator in interviews'],
+    desc: 'IT support is one of the most accessible career pivots into tech. Domain expertise from your previous career — healthcare, logistics, finance — makes you a more effective IT specialist in those industries and helps you get hired faster.',
+    steps: ['Start with Professor Messer CompTIA A+ (completely free)', 'Build a home lab and practise real troubleshooting', 'Sit CompTIA A+ and list it prominently on your CV', 'Target entry-level helpdesk roles in your previous industry vertical'],
   },
 ]
 
 const THIRTY_DAY_PLAN = [
-  { week: 'Week 1', theme: 'Foundation & Setup', color: '#0369a1', bg: '#eff6ff', days: [
-    { day: 'Day 1–2', task: 'Install VirtualBox. Set up a Windows 10 VM and a Windows Server 2019 eval VM. Get comfortable with the interface.' },
-    { day: 'Day 3–4', task: 'Begin Professor Messer\'s free CompTIA A+ Core 1 video series. Complete the hardware and components modules.' },
-    { day: 'Day 5–6', task: 'Configure a free ServiceNow Developer Instance or set up a Freshdesk free trial. Create your first mock tickets.' },
-    { day: 'Day 7', task: 'Research local IT support job listings. Identify the 5 most common tools and requirements in your target market.' },
+  { week: 'Week 1', theme: 'Hardware & OS Fundamentals', color: '#2563eb', bg: '#eff6ff', days: [
+    { day: 'Day 1–2', task: 'Download Professor Messer\'s CompTIA A+ study guide. Study PC components: CPU, RAM, storage types, motherboard, PSU. Draw and label a PC diagram from memory.' },
+    { day: 'Day 3–4', task: 'Install Windows 10 and Windows 11 in VirtualBox (free). Practise navigation, settings, Control Panel, and basic administration tasks.' },
+    { day: 'Day 5–6', task: 'Create a free ServiceNow Personal Developer Instance. Log 5 fictitious support tickets. Practice triage, assignment, and resolution notes.' },
+    { day: 'Day 7', task: 'Study IP addressing: IPv4 vs IPv6, subnets, default gateways, DNS, and DHCP. Practice subnetting with online tools until you can calculate subnet masks confidently.' },
   ]},
-  { week: 'Week 2', theme: 'OS & Networking', color: '#16a34a', bg: '#f0fdf4', days: [
-    { day: 'Day 8–9', task: 'Windows Server lab: install Active Directory Domain Services, promote to domain controller, create 10 test users.' },
-    { day: 'Day 10–11', task: 'Networking fundamentals: study subnetting using the subnettingpractice.com tool. Do 30 minutes of subnetting drills per day.' },
-    { day: 'Day 12–13', task: 'Install Wireshark. Capture and analyse a DNS lookup, a ping, and a web page load. Understand what you\'re seeing.' },
-    { day: 'Day 14', task: 'CompTIA A+ Core 1 mock exam. Target 75%+. Identify knowledge gaps and revisit the weak sections.' },
+  { week: 'Week 2', theme: 'Networking & Microsoft 365', color: '#16a34a', bg: '#f0fdf4', days: [
+    { day: 'Day 8–9', task: 'Set up a free Microsoft 365 Developer tenant. Create 5 user accounts, assign licences, configure mailboxes, and set a custom domain.' },
+    { day: 'Day 10–11', task: 'Install Windows Server 2022 Evaluation (free) in VirtualBox. Promote it to a Domain Controller. Create OUs, groups, and users in Active Directory.' },
+    { day: 'Day 12–13', task: 'Create Group Policy Objects: password policy, desktop wallpaper, and software restriction. Apply to an OU. Confirm with gpresult /r.' },
+    { day: 'Day 14', task: 'Run ipconfig, nslookup, ping, tracert, and netstat on your lab VMs. Document what each command tells you and when you would use it.' },
   ]},
-  { week: 'Week 3', theme: 'Cloud & Identity', color: '#4f46e5', bg: '#eef2ff', days: [
-    { day: 'Day 15–16', task: 'Create a free Microsoft 365 developer tenant. Set up users, assign licences, configure MFA. Simulate a real onboarding.' },
-    { day: 'Day 17–18', task: 'Complete the Microsoft Learn "Azure Fundamentals" learning path (AZ-900). It\'s free and takes about 10 hours.' },
-    { day: 'Day 19–20', task: 'Begin PowerShell: write scripts to create AD users in bulk, list all computers in the domain, and check disk space.' },
-    { day: 'Day 21', task: 'ITIL 4 Foundation overview: watch the free YouTube overview by AXELOS. Understand the core concepts and vocabulary.' },
+  { week: 'Week 3', theme: 'PowerShell & Cloud', color: '#4f46e5', bg: '#eef2ff', days: [
+    { day: 'Day 15–16', task: 'Open PowerShell ISE. Learn Get-Command, Get-Help, and the pipeline. Write a script that exports all Active Directory users to a CSV file.' },
+    { day: 'Day 17–18', task: 'Write a PowerShell onboarding script: creates a new user, sets a password, adds to a group, and creates a home folder.' },
+    { day: 'Day 19–20', task: 'Create a free Azure account. Deploy a Windows virtual machine. Connect via RDP. Explore the Azure portal: resource groups, storage, and networking.' },
+    { day: 'Day 21', task: 'Start AZ-900 study on Microsoft Learn. Complete Module 1: Cloud Concepts. Take the practice test and identify gaps to address in week 4.' },
   ]},
-  { week: 'Week 4', theme: 'Polish & Apply', color: '#ea580c', bg: '#fff7ed', days: [
-    { day: 'Day 22–24', task: 'Build your IT support portfolio: document 3 lab scenarios with screenshots, problem descriptions, and step-by-step resolutions.' },
-    { day: 'Day 25–26', task: 'Rewrite your CV with IT language. List your home lab setup, tools used, and the specific skills you\'ve demonstrated.' },
-    { day: 'Day 27–28', task: 'Book your CompTIA A+ Core 1 exam date. Having a real target date forces productive study. Schedule Core 2 for 6 weeks after.' },
-    { day: 'Day 29–30', task: 'Apply to 5 junior IT support or help desk roles. Customise each CV. Follow up with a connection request to the hiring manager on LinkedIn.' },
+  { week: 'Week 4', theme: 'Security & Apply', color: '#ea580c', bg: '#fff7ed', days: [
+    { day: 'Day 22–24', task: 'Study CompTIA Security+ Domains 1 and 2 using Professor Messer. Understand authentication types, encryption basics, and common attack vectors.' },
+    { day: 'Day 25–26', task: 'Install Wireshark. Capture network traffic in your home lab. Identify DNS queries, HTTP requests, and DHCP exchanges in the capture.' },
+    { day: 'Day 27–28', task: 'Write a 2-page IT support portfolio document: your home lab setup, skills practised, tools used, and problems solved. Add to GitHub and LinkedIn.' },
+    { day: 'Day 29–30', task: 'Register for CompTIA A+ exam. Apply to 5 IT support roles. Reach out to one IT professional on LinkedIn for a 15-minute informational chat.' },
   ]},
 ]
 
@@ -398,7 +398,7 @@ const TOC_ITEMS = [
   { num: '16', label: 'Final Thoughts' },
 ]
 
-/* ─── SHARE BAR ─────────────────────────────────────────────────────────────── */
+/* ─── SHARE BAR ───────────────────────────────────────────────────────────── */
 function ShareBar() {
   const [copied, setCopied] = useState(false)
   const handleCopy = () => {
@@ -406,7 +406,7 @@ function ShareBar() {
   }
   const handleShare = async () => {
     if (navigator.share) {
-      try { await navigator.share({ title: 'Help Desk & IT Support Career Roadmap 2026', text: 'Complete step-by-step roadmap to become an IT Support Specialist in 2026', url: window.location.href }) }
+      try { await navigator.share({ title: 'IT Support Specialist Career Roadmap 2026', text: 'Complete step-by-step roadmap to become an IT Support Specialist in 2026', url: window.location.href }) }
       catch (_) {}
     } else { handleCopy() }
   }
@@ -424,13 +424,12 @@ function ShareBar() {
       </button>
       <div className="flex items-center gap-2 px-3 py-2 rounded-xl text-xs font-mono truncate max-w-xs" style={{ background: '#f1f5f9', color: C.textMuted, border: `1px solid ${C.border}` }}>
         <Link2 size={11} style={{ color: C.textFaint, flexShrink: 0 }} />
-        <span className="truncate">{typeof window !== 'undefined' ? window.location.href : '/roadmaps/help-desk-it-support'}</span>
+        <span className="truncate">{typeof window !== 'undefined' ? window.location.href : '/roadmaps/it-support-specialist'}</span>
       </div>
     </div>
   )
 }
 
-/* ─── SECTION HEADER ──────────────────────────────────────────────────────── */
 function SectionHeader({ icon, title, subtitle, iconBg, iconColor }: { icon: React.ReactNode; title: string; subtitle: string; iconBg: string; iconColor: string }) {
   return (
     <div className="flex items-center gap-4 mb-10">
@@ -445,7 +444,6 @@ function SectionHeader({ icon, title, subtitle, iconBg, iconColor }: { icon: Rea
   )
 }
 
-/* ─── FADE HOOK ──────────────────────────────────────────────────────────── */
 function useFade() {
   const ref = useRef<HTMLDivElement>(null)
   useEffect(() => {
@@ -457,8 +455,7 @@ function useFade() {
   return ref
 }
 
-/* ─── PAGE ────────────────────────────────────────────────────────────────── */
-export default function HelpDeskITSupportRoadmapPage() {
+export default function ITSupportSpecialistRoadmapPage() {
   const progressRef = useRef<HTMLDivElement>(null)
   const tlSectionRef = useRef<HTMLElement>(null)
   const barsContainerRef = useRef<HTMLDivElement>(null)
@@ -499,7 +496,6 @@ export default function HelpDeskITSupportRoadmapPage() {
   return (
     <div className="min-h-screen" style={{ background: C.bg, color: C.text, fontFamily: 'Inter, sans-serif' }}>
 
-      {/* Back button */}
       <Link to="/roadmaps" className="fixed top-5 left-5 z-50 flex items-center gap-2 px-4 py-2 rounded-xl text-xs font-semibold no-underline transition-all duration-200"
         style={{ background: 'rgba(255,255,255,0.9)', backdropFilter: 'blur(12px)', border: `1px solid ${C.border}`, color: C.textMuted, boxShadow: '0 2px 12px rgba(0,0,0,0.08)' }}>
         <ArrowLeft size={14} /> All Roadmaps
@@ -509,22 +505,22 @@ export default function HelpDeskITSupportRoadmapPage() {
       <div className="relative w-full" style={{ background: C.bg }}>
         <div className="relative w-full overflow-hidden" style={{ height: '100vh', minHeight: 600 }}>
           <img
-            src="https://i.imgur.com/6rBm8j5.jpeg"
-            alt="IT Support technician at service desk"
+            src="https://i.imgur.com/LmCPx9H.jpeg"
+            alt="IT Support Specialist at help desk"
             className="w-full h-full object-cover object-center block"
-            style={{ filter: 'saturate(0.45) brightness(1.1) hue-rotate(190deg)' }}
+            style={{ filter: 'saturate(0.55) brightness(1.05)' }}
           />
           <div className="absolute inset-0" style={{ background: 'linear-gradient(to bottom, rgba(255,255,255,0) 45%, rgba(255,255,255,0.75) 72%, rgba(255,255,255,1) 88%)' }} />
           <div className="absolute bottom-0 left-0 right-0 z-10">
             <div className="max-w-4xl mx-auto px-8 pb-12">
               <div className="inline-flex items-center gap-1.5 rounded-full px-3.5 py-1 mb-3 text-xs font-semibold" style={{ background: C.primaryLight, color: C.primary }}>
-                <Headphones size={12} /> Customer IT Support & Service Desk
+                <Monitor size={12} /> Infrastructure & Support
               </div>
               <h1 className="font-extrabold leading-tight mb-2" style={{ fontFamily: 'Syne, sans-serif', fontSize: 'clamp(2.2rem, 5vw, 3.6rem)', color: '#0f172a', letterSpacing: '-0.03em' }}>
-                Help Desk & IT Support
+                IT Support Specialist
               </h1>
               <span className="block font-normal mb-3" style={{ fontFamily: 'Syne, sans-serif', fontSize: 'clamp(0.95rem, 1.8vw, 1.2rem)', color: C.textMuted }}>
-                Career Roadmap 2026 — Technician · Specialist · Analyst · Manager
+                Career Roadmap 2026
               </span>
               <div className="flex items-center gap-4">
                 <div className="flex items-center gap-1.5 text-sm" style={{ color: C.textMuted }}><Clock size={14} style={{ color: C.textFaint }} /> 20 min read</div>
@@ -535,7 +531,7 @@ export default function HelpDeskITSupportRoadmapPage() {
         </div>
         <div className="max-w-4xl mx-auto px-8 pt-6 pb-16">
           <p className="text-base leading-relaxed" style={{ color: '#4b5563', maxWidth: 560, marginLeft: 140 }}>
-            Be the person who keeps every organisation running. IT support professionals solve real problems for real people every day — and use that experience as the launchpad to every specialisation in technology.
+            Keep the world working. IT Support Specialists maintain the hardware, networks, and systems that every organisation depends on — the most accessible, most in-demand, and most diverse launchpad into a lifelong technology career.
           </p>
           <div className="h-px mt-10" style={{ background: C.border }} />
         </div>
@@ -562,10 +558,10 @@ export default function HelpDeskITSupportRoadmapPage() {
       <section className="border-b" style={{ ...sectionStyle, background: C.bg }}>
         <div className="max-w-4xl mx-auto px-8">
           <div ref={whatRef}>
-            <SectionHeader icon={<Layers size={22} />} title="What This Career Is" subtitle="The roles, responsibilities, and scope of IT Support" iconBg={C.primaryLight} iconColor={C.primary} />
-            <div className="rounded-2xl p-6 mb-8 border" style={{ background: '#eff6ff', borderColor: 'rgba(3,105,161,0.2)' }}>
+            <SectionHeader icon={<Layers size={22} />} title="What This Career Is" subtitle="The role, responsibilities, and scope of IT Support" iconBg={C.primaryLight} iconColor={C.primary} />
+            <div className="rounded-2xl p-6 mb-8 border" style={{ background: '#eff6ff', borderColor: 'rgba(37,99,235,0.2)' }}>
               <p className="text-base leading-relaxed" style={{ color: '#374151' }}>
-                <strong style={{ color: C.primary }}>IT Support & Help Desk professionals</strong> are the operational backbone of every technology-dependent organisation. Whether operating as a Help Desk Technician handling first-call resolution, an IT Support Specialist owning complex escalations, a Service Desk Analyst driving process improvement, or a Customer IT Support Engineer building long-term user relationships — these roles ensure that technology serves people, not the other way around.
+                An <strong style={{ color: C.primary }}>IT Support Specialist</strong> is the person who keeps every organisation's technology running. From resolving helpdesk tickets and managing user accounts to administering servers, cloud platforms, and network infrastructure — IT support specialists are the operational backbone of digital business. It is the most accessible entry into a tech career and one of the broadest in scope.
               </p>
             </div>
             <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
@@ -611,13 +607,13 @@ export default function HelpDeskITSupportRoadmapPage() {
       <section className="border-b" style={{ ...sectionStyle, background: C.bg }}>
         <div className="max-w-4xl mx-auto px-8">
           <div ref={dayRef}>
-            <SectionHeader icon={<Briefcase size={22} />} title="A Day in the Life" subtitle="What a typical IT Support professional's workday looks like" iconBg={C.indigoLight} iconColor={C.indigo} />
+            <SectionHeader icon={<Briefcase size={22} />} title="A Day in the Life" subtitle="What a typical IT Support Specialist workday looks like" iconBg={C.indigoLight} iconColor={C.indigo} />
             <div className="grid gap-7" style={{ gridTemplateColumns: '1fr 260px' }}>
               <div>
                 <p className="text-sm font-semibold mb-4" style={{ fontFamily: 'Syne, sans-serif', color: C.textMuted }}>Typical Daily Schedule</p>
                 {SCHEDULE.map(item => (
                   <div key={item.time} className="flex items-start gap-3.5 rounded-2xl p-4 border mb-2.5 transition-all duration-200" style={{ background: C.bg, borderColor: C.border }}
-                    onMouseEnter={e => { (e.currentTarget as HTMLElement).style.borderColor = 'rgba(3,105,161,0.3)'; (e.currentTarget as HTMLElement).style.background = '#eff6ff' }}
+                    onMouseEnter={e => { (e.currentTarget as HTMLElement).style.borderColor = 'rgba(37,99,235,0.3)'; (e.currentTarget as HTMLElement).style.background = '#eff6ff' }}
                     onMouseLeave={e => { (e.currentTarget as HTMLElement).style.borderColor = C.border; (e.currentTarget as HTMLElement).style.background = C.bg }}>
                     <div className="w-9 h-9 rounded-xl flex items-center justify-center flex-shrink-0" style={{ background: C.primaryLight, color: C.primary }}>{item.icon}</div>
                     <div className="flex-1 min-w-0">
@@ -670,7 +666,7 @@ export default function HelpDeskITSupportRoadmapPage() {
           <div ref={tlRef}>
             <SectionHeader icon={<Clock size={22} />} title="Career Timeline" subtitle="Time estimates and salary ranges for each level" iconBg={C.indigoLight} iconColor={C.indigo} />
             <div className="mb-10">
-              <div className="flex justify-between text-xs mb-2.5" style={{ color: C.textMuted }}><span>Career Progression</span><span>Technician → IT Manager</span></div>
+              <div className="flex justify-between text-xs mb-2.5" style={{ color: C.textMuted }}><span>Career Progression</span><span>Technician → IT Director</span></div>
               <div className="h-1.5 rounded-full overflow-hidden" style={{ background: '#e2e8f0' }}>
                 <div ref={progressRef} className="h-1.5 rounded-full" style={{ width: '0%', background: 'linear-gradient(90deg, #0891b2 0%, #16a34a 33%, #7c3aed 66%, #ea580c 100%)' }} />
               </div>
@@ -701,8 +697,8 @@ export default function HelpDeskITSupportRoadmapPage() {
           <SectionHeader icon={<Target size={22} />} title="Step-by-Step Roadmap" subtitle="Your path from complete beginner to job-ready" iconBg={C.primaryLight} iconColor={C.primary} />
           <div className="relative flex flex-col items-center">
             {ROADMAP_STEPS.map((s, i) => {
-              const icons = ['💻', '🌐', '🏢', '📋', '🔐', '⚡']
-              const accentColors = ['#0369a1', '#16a34a', '#0369a1', '#16a34a', '#0369a1', '#16a34a']
+              const icons = ['🖥️', '🌐', '☁️', '⚡', '🏗️', '🔒']
+              const accentColors = ['#2563eb', '#16a34a', '#2563eb', '#16a34a', '#2563eb', '#16a34a']
               const accent = accentColors[i]; const isLast = i === ROADMAP_STEPS.length - 1; const isEven = i % 2 === 0
               return (
                 <div key={s.step} className="w-full flex flex-col items-center">
@@ -748,11 +744,11 @@ export default function HelpDeskITSupportRoadmapPage() {
                 </div>
               )
             })}
-            <div className="w-full rounded-3xl mt-2 py-8 px-8 text-center" style={{ background: `linear-gradient(135deg, ${C.primary} 0%, ${C.indigo} 100%)`, boxShadow: '0 8px 48px rgba(3,105,161,0.25)' }}>
+            <div className="w-full rounded-3xl mt-2 py-8 px-8 text-center" style={{ background: `linear-gradient(135deg, ${C.primary} 0%, ${C.indigo} 100%)`, boxShadow: '0 8px 48px rgba(37,99,235,0.25)' }}>
               <div className="text-4xl mb-3">🏆</div>
               <div className="font-extrabold text-white mb-1" style={{ fontFamily: 'Syne, sans-serif', fontSize: 'clamp(1.3rem, 3vw, 1.8rem)' }}>GO FROM ZERO to</div>
               <div className="font-extrabold mb-4" style={{ fontFamily: 'Syne, sans-serif', fontSize: 'clamp(1.3rem, 3vw, 1.8rem)', color: 'rgba(255,255,255,0.75)' }}>JOB-READY IN 2026</div>
-              <div className="text-sm" style={{ color: 'rgba(255,255,255,0.6)' }}>8–12 months · Consistent daily study · Certify as you learn</div>
+              <div className="text-sm" style={{ color: 'rgba(255,255,255,0.6)' }}>6–12 months · Consistent daily practice · Home lab + certification</div>
             </div>
           </div>
           <ShareBar />
@@ -866,8 +862,8 @@ export default function HelpDeskITSupportRoadmapPage() {
         <div className="max-w-4xl mx-auto px-8">
           <div ref={aiRef}>
             <SectionHeader icon={<Sparkles size={22} />} title="AI-Enhanced Roadmap" subtitle="How AI is transforming IT Support in 2026" iconBg={C.primaryLight} iconColor={C.primary} />
-            <div className="rounded-2xl p-5 mb-7 text-sm leading-relaxed border" style={{ background: '#eff6ff', borderColor: 'rgba(3,105,161,0.2)', color: C.textMuted }}>
-              AI tools don't replace IT support professionals — they <em style={{ color: C.primary }}>amplify</em> them. Support teams using AI-assisted ticket resolution and automation handle 40–60% more tickets with the same headcount — freeing senior staff for complex incidents and strategic projects.
+            <div className="rounded-2xl p-5 mb-7 text-sm leading-relaxed border" style={{ background: '#eff6ff', borderColor: 'rgba(37,99,235,0.2)', color: C.textMuted }}>
+              AI tools don't replace IT specialists — they <em style={{ color: C.primary }}>amplify</em> them. IT professionals who understand and manage AI helpdesk tools, use Copilot for automation, and deploy AIOps monitoring become significantly more valuable than those who resist these technologies.
             </div>
             <div className="grid grid-cols-1 md:grid-cols-3 gap-4 mb-9">
               {AI_IMPACTS.map(item => (
@@ -935,7 +931,7 @@ export default function HelpDeskITSupportRoadmapPage() {
           <div ref={salaryRef}>
             <SectionHeader icon={<DollarSign size={22} />} title="Salary" subtitle="What you can realistically earn at each stage" iconBg={C.greenLight} iconColor={C.green} />
             <div className="rounded-2xl p-6 mb-6 border" style={{ background: '#f0fdf4', borderColor: 'rgba(22,163,74,0.2)' }}>
-              <p className="text-sm leading-relaxed" style={{ color: C.textMuted }}>Figures reflect South African total compensation. Sectors like financial services, mining, and large enterprise consistently pay 20–35% above these benchmarks for senior IT support professionals.</p>
+              <p className="text-sm leading-relaxed" style={{ color: C.textMuted }}>Figures reflect South African total compensation. Cloud-specialised IT architects and IT directors at large organisations can exceed R2M+.</p>
             </div>
             <div className="space-y-4">
               {SALARY_DATA.map(row => (
@@ -948,14 +944,14 @@ export default function HelpDeskITSupportRoadmapPage() {
                     <span className="text-sm font-bold" style={{ color: row.color }}>{row.range}</span>
                   </div>
                   <div className="h-2.5 rounded-full overflow-hidden" style={{ background: '#e2e8f0' }}>
-                    <div className="h-2.5 rounded-full" style={{ width: `${(row.midpoint / 1500) * 100}%`, background: row.color }} />
+                    <div className="h-2.5 rounded-full" style={{ width: `${(row.midpoint / 2000) * 100}%`, background: row.color }} />
                   </div>
                 </div>
               ))}
             </div>
-            <div className="mt-6 rounded-2xl p-5 border" style={{ background: '#eff6ff', borderColor: 'rgba(3,105,161,0.2)' }}>
+            <div className="mt-6 rounded-2xl p-5 border" style={{ background: '#eff6ff', borderColor: 'rgba(37,99,235,0.2)' }}>
               <p className="text-xs leading-relaxed" style={{ color: C.textMuted }}>
-                <strong style={{ color: C.primary }}>Pro tip:</strong> ITIL certification, PowerShell scripting skills, and Microsoft 365 administration experience consistently command a 15–25% salary premium over uncertified peers at the same experience level. Certifications are not optional — they are the salary lever in IT support.
+                <strong style={{ color: C.primary }}>Pro tip:</strong> IT specialists who add Azure and PowerShell skills earn 30–50% more than generalist helpdesk engineers. Specialising into cloud, security, or networking dramatically accelerates salary growth.
               </p>
             </div>
           </div>
@@ -966,7 +962,7 @@ export default function HelpDeskITSupportRoadmapPage() {
       <section className="border-b" style={{ ...sectionStyle, background: '#f8f9ff' }}>
         <div className="max-w-4xl mx-auto px-8">
           <div ref={mistakesRef}>
-            <SectionHeader icon={<AlertTriangle size={22} />} title="Common Mistakes" subtitle="Avoid the traps that slow down most aspiring IT support professionals" iconBg={C.orangeLight} iconColor={C.orange} />
+            <SectionHeader icon={<AlertTriangle size={22} />} title="Common Mistakes" subtitle="Avoid the traps that slow down most aspiring IT specialists" iconBg={C.orangeLight} iconColor={C.orange} />
             <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
               {MISTAKES.map(m => (
                 <div key={m.num} className="rounded-2xl p-5 border transition-all duration-200 hover:shadow-md" style={{ background: C.bg, borderColor: C.border }}>
@@ -992,7 +988,7 @@ export default function HelpDeskITSupportRoadmapPage() {
       <section className="border-b" style={{ ...sectionStyle, background: C.bg }}>
         <div className="max-w-4xl mx-auto px-8">
           <div ref={changeRef}>
-            <SectionHeader icon={<RefreshCw size={22} />} title="Career Change Guide" subtitle="How to break into IT Support from your current background" iconBg={C.primaryLight} iconColor={C.primary} />
+            <SectionHeader icon={<RefreshCw size={22} />} title="Career Change Guide" subtitle="How to break into IT support from your current background" iconBg={C.primaryLight} iconColor={C.primary} />
             <div className="grid grid-cols-1 md:grid-cols-2 gap-5">
               {CAREER_CHANGE_PATHS.map(path => (
                 <div key={path.from} className="rounded-2xl p-6 border" style={{ background: path.easeBg, borderColor: `${path.easeColor}20` }}>
@@ -1088,10 +1084,10 @@ export default function HelpDeskITSupportRoadmapPage() {
             <SectionHeader icon={<Award size={22} />} title="Final Thoughts" subtitle="What we want you to take away from this guide" iconBg={C.primaryLight} iconColor={C.primary} />
             <div className="rounded-2xl p-6 border mb-8" style={{ background: C.bg, borderColor: C.border }}>
               <p className="text-base leading-relaxed mb-4" style={{ color: '#374151' }}>
-                IT support is <strong style={{ color: C.primary }}>where technology careers begin and where great careers are built</strong>. The help desk is not a waiting room for a "real" IT job — it is the most complete technology education available. In a single year, a driven help desk technician encounters more real-world IT problems than most CS graduates see in three years of lectures.
+                IT support is <strong style={{ color: C.primary }}>the most accessible door into the technology industry</strong>. It asks less of you upfront than any other tech career — and gives you back more in breadth of knowledge, career options, and human impact than almost any other starting point.
               </p>
               <p className="text-base leading-relaxed" style={{ color: '#374151' }}>
-                The professionals who thrive here are those who treat every ticket as a learning opportunity, every user as a valued customer, and every certification as a commitment to excellence. The field rewards curiosity, consistency, and care — and it rewards them generously.
+                The IT specialists who grow into IT managers, cloud architects, and cybersecurity professionals are not the ones who waited for their employer to train them. They are the ones who built home labs, earned certifications in their own time, and treated every ticket as an opportunity to understand the system a little better.
               </p>
             </div>
             <div className="grid grid-cols-1 gap-3">
@@ -1117,7 +1113,7 @@ export default function HelpDeskITSupportRoadmapPage() {
             Ready to Start Your Journey?
           </h2>
           <p className="text-sm mb-10 mx-auto leading-relaxed" style={{ color: 'rgba(255,255,255,0.65)', maxWidth: 440 }}>
-            You have the roadmap. You have the resources. You have the 30-day plan. All that's left is to open your browser, register for CompTIA A+, and take the first step.
+            You have the roadmap. You have the resources. You have the 30-day plan. All that's left is to download Professor Messer and build your first home lab.
           </p>
           <div className="flex flex-wrap justify-center gap-3.5">
             <Link to="/roadmaps" className="inline-flex items-center gap-2 rounded-xl px-7 py-3.5 font-bold text-sm no-underline" style={{ fontFamily: 'Syne, sans-serif', background: '#fff', color: C.primary }}>
@@ -1127,7 +1123,7 @@ export default function HelpDeskITSupportRoadmapPage() {
               Get Career Advice
             </a>
           </div>
-          <p className="text-xs mt-5" style={{ color: 'rgba(255,255,255,0.35)' }}>Start studying today. Your future self will thank you.</p>
+          <p className="text-xs mt-5" style={{ color: 'rgba(255,255,255,0.35)' }}>Start learning today. Your future self will thank you.</p>
         </div>
         <ShareBar />
       </div>

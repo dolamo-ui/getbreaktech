@@ -1,15 +1,13 @@
 import React from 'react'
 import { Link } from 'react-router-dom'
 import {
-  ArrowLeft, MapPin, GitBranch, Link2, ExternalLink,
+  ArrowLeft, MapPin, Link2, ExternalLink,
   Rocket, BookOpen, Users, Zap, Star, Target, Heart
 } from 'lucide-react'
+import { FaTiktok } from 'react-icons/fa'
 
-// ── YOUR PHOTO ────────────────────────────────────────────────────────────────
-// Option 1: import myPhoto from '../assets/my-photo.jpg'  → set MY_PHOTO_URL = myPhoto
-// Option 2: paste a hosted image URL as a string
-// Option 3: leave as '' → shows your initials in a styled avatar
-const MY_PHOTO_URL = ''   // ← REPLACE WITH YOUR PHOTO URL OR IMPORT
+
+const MY_PHOTO_URL = 'https://i.imgur.com/EwwsHnz_d.webp?maxwidth=1520&fidelity=grand'   // ← REPLACE WITH YOUR PHOTO URL OR IMPORT
 
 const AboutPage: React.FC = () => {
   return (
@@ -298,7 +296,7 @@ const AboutPage: React.FC = () => {
               }
 
               <div>
-                <p className="hero-eyebrow">Founder · CareerPathGuide</p>
+                <p className="hero-eyebrow">Founder · GetBreakTech</p>
                 {/* ── CHANGE: name ── */}
                 <h1 className="hero-name">Nyakallo<br/>Dolamo</h1>
                 <p className="hero-title">Self-Taught Developer &amp; Career Transition Guide</p>
@@ -306,17 +304,17 @@ const AboutPage: React.FC = () => {
 
                 {/* ── CHANGE: social URLs ── */}
                 <div className="hero-socials">
-                  <a href="https://github.com/yourusername"
+                  <a href="https://www.tiktok.com/@getbreaktech"
                      target="_blank" rel="noopener noreferrer"
-                     className="hs-btn" aria-label="GitHub" title="GitHub">
-                    <GitBranch size={15}/>
+                     className="hs-btn" aria-label="Tiktok" title="Tiktok">
+                    <FaTiktok size={15}/>
                   </a>
-                  <a href="https://linkedin.com/in/yourprofile"
+                  <a href="https://www.linkedin.com/in/nyakallo-dolamo-8192aa324/?lipi=urn%3Ali%3Apage%3Ad_flagship3_profile_view_base_contact_details%3BiOoK7Sh9Th6VahJraATNig%3D%3D"
                      target="_blank" rel="noopener noreferrer"
                      className="hs-btn" aria-label="LinkedIn" title="LinkedIn">
                     <Link2 size={15}/>
                   </a>
-                  <a href="https://x.com/yourhandle"
+                  <a href="https://x.com/getbreakget"
                      target="_blank" rel="noopener noreferrer"
                      className="hs-btn" aria-label="X / Twitter" title="X (Twitter)">
                     <ExternalLink size={15}/>
@@ -363,7 +361,7 @@ const AboutPage: React.FC = () => {
             <p className="card-p">
               When I finally figured it out — when the pieces clicked and things started moving — the
               very first thing I did was write everything down. Every shortcut I found. Every mistake I
-              made. Every resource that actually helped. That document became CareerPathGuide.
+              made. Every resource that actually helped. That document became GetBreakTech.
             </p>
             <p className="card-p">
               This site is a <strong>solo project</strong>. No investors. No team of writers. No

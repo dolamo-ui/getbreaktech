@@ -7,10 +7,18 @@ import {
   Code2, Database, Brain, Layers, Globe, Zap, ChevronRight
 } from "lucide-react"
 import { Navbar } from "../components/Navbar"
+import { Newsletter, Footer } from "../components/Footer"
 
 /* ─── TYPES ─────────────────────────────────────────────── */
 interface Step { step: number; title: string; description: string; color: string }
-interface Transition { from: string; to: string; description: string; icon: React.ElementType; accent: string }
+interface Transition {
+  from: string
+  to: string
+  description: string
+  icon: React.ElementType
+  accent: string
+  route: string
+}
 interface Tip { icon: React.ElementType; title: string; description: string }
 
 /* ─── DATA ─────────────────────────────────────────────── */
@@ -49,34 +57,52 @@ const steps: Step[] = [
 
 const popularTransitions: Transition[] = [
   {
-    from: "Retail Manager", to: "Frontend Developer",
+    from: "Retail Manager",
+    to: "Frontend Developer",
     description: "Your experience with customer UX, inventory systems, and fast decision-making maps directly to product thinking and UI problem-solving.",
-    icon: Code2, accent: "#2563eb"
+    icon: Code2,
+    accent: "#2563eb",
+    route: "/retail-frontend-developer",
   },
   {
-    from: "IT Support Specialist", to: "Cybersecurity Analyst",
+    from: "IT Support Specialist",
+    to: "Cybersecurity Analyst",
     description: "You already understand network infrastructure, user access patterns, and incident response. The jump to security is a natural progression, not a leap.",
-    icon: Shield, accent: "#059669"
+    icon: Shield,
+    accent: "#059669",
+    route: "/it-support-cybersecurity-analyst",
   },
   {
-    from: "Customer Service Rep", to: "QA / Software Tester",
+    from: "Customer Service Rep",
+    to: "QA / Software Tester",
     description: "Documenting bugs, reproducing edge cases, and empathizing with user frustration — this is your job description, just in a different language.",
-    icon: Headphones, accent: "#7c3aed"
+    icon: Headphones,
+    accent: "#7c3aed",
+    route: "/customer-service-qa",
   },
   {
-    from: "Call Centre Team Lead", to: "Product Manager",
+    from: "Call Centre Team Lead",
+    to: "Product Manager",
     description: "You've managed SLAs, tracked KPIs, handled escalations, and coordinated teams. That's product operations with a different job title.",
-    icon: Phone, accent: "#d97706"
+    icon: Phone,
+    accent: "#d97706",
+    route: "/call-center",
   },
   {
-    from: "Graphic Designer", to: "UX / UI Designer",
+    from: "Graphic Designer",
+    to: "UX / UI Designer",
     description: "You already think visually and understand layout hierarchy. Adding Figma, user research basics, and interaction design closes the gap fast.",
-    icon: Palette, accent: "#dc2626"
+    icon: Palette,
+    accent: "#dc2626",
+    route: "/graphic-designer",
   },
   {
-    from: "Marketing Analyst", to: "Data Analyst",
+    from: "Marketing Analyst",
+    to: "Data Analyst",
     description: "Campaign metrics, A/B testing, funnel analysis — you've been doing data work. Formalise it with SQL and Python and the title follows.",
-    icon: BarChart3, accent: "#0891b2"
+    icon: BarChart3,
+    accent: "#0891b2",
+    route: "/marketing-analyst-data-analyst",
   },
 ]
 
@@ -206,10 +232,33 @@ export default function CareerChangePage(): React.ReactElement {
         .trans-card {
           background: #fff; border-radius: 16px; padding: 1.75rem;
           border: 1px solid #e8e8e8;
-          transition: box-shadow 0.25s, transform 0.25s;
+          transition: box-shadow 0.25s, transform 0.25s, border-color 0.25s;
           cursor: pointer;
+          height: 100%;
         }
-        .trans-card:hover { box-shadow: 0 16px 48px rgba(0,0,0,0.09); transform: translateY(-4px); }
+        .trans-card:hover { box-shadow: 0 16px 48px rgba(0,0,0,0.09); transform: translateY(-4px); border-color: #d0d0d0; }
+
+        .trans-link {
+          display: block;
+          text-decoration: none;
+          color: inherit;
+          height: 100%;
+        }
+
+        .view-roadmap-btn {
+          display: inline-flex;
+          align-items: center;
+          gap: 5px;
+          font-size: 0.85rem;
+          font-weight: 600;
+          text-decoration: none;
+          transition: gap 0.2s ease, opacity 0.2s ease;
+          margin-top: auto;
+        }
+        .view-roadmap-btn:hover {
+          gap: 9px;
+          opacity: 0.8;
+        }
 
         .tip-card {
           background: #fafafa; border-radius: 16px; padding: 1.75rem;
@@ -433,35 +482,71 @@ export default function CareerChangePage(): React.ReactElement {
                 Where people like you<br />are going
               </h2>
             </div>
-            <a href="/roadmaps" style={{ display: "flex", alignItems: "center", gap: 6, fontSize: "0.88rem", fontWeight: 600, color: "#2563eb", textDecoration: "none" }}>
+            <Link to="/roadmaps" style={{ display: "flex", alignItems: "center", gap: 6, fontSize: "0.88rem", fontWeight: 600, color: "#2563eb", textDecoration: "none" }}>
               All roadmaps <ArrowRight size={15} />
-            </a>
+            </Link>
           </div>
 
-          <div ref={transRef} style={{ display: "grid", gridTemplateColumns: "repeat(3, 1fr)", gap: "1rem" }} className="trans-grid">
+          <div
+            ref={transRef}
+            style={{ display: "grid", gridTemplateColumns: "repeat(3, 1fr)", gap: "1rem" }}
+            className="trans-grid"
+          >
             {popularTransitions.map((t, i) => {
               const Icon = t.icon
               return (
-                <div key={i} className={`trans-card ${transIn ? "fade-up" : ""}`}
-                  style={{ opacity: transIn ? 1 : 0, animationDelay: `${i * 0.07}s` }}>
-                  <div style={{
-                    width: 44, height: 44, borderRadius: 12,
-                    background: `${t.accent}12`, border: `1.5px solid ${t.accent}25`,
-                    display: "flex", alignItems: "center", justifyContent: "center", marginBottom: "1.25rem",
-                  }}>
-                    <Icon size={20} color={t.accent} strokeWidth={1.75} />
+                <Link
+                  key={i}
+                  to={t.route}
+                  className="trans-link"
+                >
+                  <div
+                    className={`trans-card ${transIn ? "fade-up" : ""}`}
+                    style={{
+                      opacity: transIn ? 1 : 0,
+                      animationDelay: `${i * 0.07}s`,
+                      display: "flex",
+                      flexDirection: "column",
+                    }}
+                  >
+                    <div style={{
+                      width: 44, height: 44, borderRadius: 12,
+                      background: `${t.accent}12`, border: `1.5px solid ${t.accent}25`,
+                      display: "flex", alignItems: "center", justifyContent: "center",
+                      marginBottom: "1.25rem", flexShrink: 0,
+                    }}>
+                      <Icon size={20} color={t.accent} strokeWidth={1.75} />
+                    </div>
+
+                    <div style={{
+                      fontSize: "0.72rem", fontWeight: 700, color: "#94a3b8",
+                      textTransform: "uppercase", letterSpacing: "0.08em", marginBottom: "0.4rem",
+                    }}>
+                      {t.from}
+                    </div>
+
+                    <h3 style={{
+                      fontSize: "1rem", fontWeight: 700, color: "#0a0a0a",
+                      marginBottom: "0.625rem", fontFamily: "'Syne', sans-serif",
+                    }}>
+                      → {t.to}
+                    </h3>
+
+                    <p style={{
+                      fontSize: "0.875rem", color: "#64748b", lineHeight: 1.75,
+                      marginBottom: "1.25rem", flexGrow: 1,
+                    }}>
+                      {t.description}
+                    </p>
+
+                    <span
+                      className="view-roadmap-btn"
+                      style={{ color: t.accent }}
+                    >
+                      View Roadmap <ChevronRight size={14} />
+                    </span>
                   </div>
-                  <div style={{ fontSize: "0.72rem", fontWeight: 700, color: "#94a3b8", textTransform: "uppercase", letterSpacing: "0.08em", marginBottom: "0.4rem" }}>
-                    {t.from}
-                  </div>
-                  <h3 style={{ fontSize: "1rem", fontWeight: 700, color: "#0a0a0a", marginBottom: "0.625rem", fontFamily: "'Syne', sans-serif" }}>
-                    → {t.to}
-                  </h3>
-                  <p style={{ fontSize: "0.875rem", color: "#64748b", lineHeight: 1.75, marginBottom: "1.25rem" }}>{t.description}</p>
-                  <div style={{ display: "flex", alignItems: "center", gap: 5, fontSize: "0.85rem", fontWeight: 600, color: t.accent }}>
-                    View Roadmap <ChevronRight size={14} />
-                  </div>
-                </div>
+                </Link>
               )
             })}
           </div>
@@ -595,15 +680,24 @@ export default function CareerChangePage(): React.ReactElement {
                 Browse detailed, role-specific roadmaps that show exactly what to learn, in what order, with the best free resources for each step.
               </p>
               <div style={{ display: "flex", gap: 12, justifyContent: "center", flexWrap: "wrap" }}>
-                <Link to="/roadmaps" style={{
-                  display: "inline-flex", alignItems: "center", gap: 8,
-                  background: "#fff", color: "#0a0a0a", padding: "0.875rem 1.75rem",
-                  borderRadius: 10, fontWeight: 700, fontSize: "0.95rem", textDecoration: "none",
-                  boxShadow: "0 4px 20px rgba(0,0,0,0.3)",
-                  transition: "transform 0.2s, box-shadow 0.2s",
-                }}
-                onMouseEnter={e => { (e.currentTarget as HTMLElement).style.transform = "translateY(-2px)"; (e.currentTarget as HTMLElement).style.boxShadow = "0 8px 32px rgba(0,0,0,0.4)" }}
-                onMouseLeave={e => { (e.currentTarget as HTMLElement).style.transform = "translateY(0)"; (e.currentTarget as HTMLElement).style.boxShadow = "0 4px 20px rgba(0,0,0,0.3)" }}>
+                <Link
+                  to="/roadmaps"
+                  style={{
+                    display: "inline-flex", alignItems: "center", gap: 8,
+                    background: "#fff", color: "#0a0a0a", padding: "0.875rem 1.75rem",
+                    borderRadius: 10, fontWeight: 700, fontSize: "0.95rem", textDecoration: "none",
+                    boxShadow: "0 4px 20px rgba(0,0,0,0.3)",
+                    transition: "transform 0.2s, box-shadow 0.2s",
+                  }}
+                  onMouseEnter={e => {
+                    ;(e.currentTarget as HTMLElement).style.transform = "translateY(-2px)"
+                    ;(e.currentTarget as HTMLElement).style.boxShadow = "0 8px 32px rgba(0,0,0,0.4)"
+                  }}
+                  onMouseLeave={e => {
+                    ;(e.currentTarget as HTMLElement).style.transform = "translateY(0)"
+                    ;(e.currentTarget as HTMLElement).style.boxShadow = "0 4px 20px rgba(0,0,0,0.3)"
+                  }}
+                >
                   Browse Roadmaps <ArrowRight size={16} />
                 </Link>
               </div>
@@ -612,6 +706,9 @@ export default function CareerChangePage(): React.ReactElement {
         </div>
       </section>
 
+      {/* ── NEWSLETTER + FOOTER ── */}
+      <Newsletter />
+      <Footer />
     </div>
   )
 }

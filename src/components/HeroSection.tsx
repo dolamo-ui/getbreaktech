@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import styled, { keyframes } from 'styled-components';
-import { ArrowRight, Sparkles } from 'lucide-react';
+import { Sparkles } from 'lucide-react';
+import { Link } from 'react-router-dom';
 import { CardCarousel } from './CardCarousel';
 
 // ─── Keyframes ───────────────────────────────────────────────────────────────
@@ -204,6 +205,7 @@ const SparkleWrap = styled.div`
     white-space: nowrap;
     border-radius: 12px;
     position: relative;
+    text-decoration: none;
     box-shadow:
       0 0 calc(var(--active) * 3em) calc(var(--active) * 1em) hsl(260 97% 61% / 0.75),
       0 0em 0 0 hsl(260 calc(var(--active) * 97%) calc((var(--active) * 50%) + 30%)) inset,
@@ -350,7 +352,7 @@ const SparkleWrap = styled.div`
 
 // ─── Secondary Underline Button ───────────────────────────────────────────────
 
-const UnderlineBtn = styled.button`
+const UnderlineBtn = styled(Link)`
   font-size: 0.95rem;
   color: var(--charcoal);
   font-family: var(--font-display, inherit);
@@ -362,6 +364,10 @@ const UnderlineBtn = styled.button`
   background: transparent;
   padding: 0.85em 1.6em;
   border-radius: 12px;
+  text-decoration: none;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
   transition-timing-function: cubic-bezier(0.25, 0.8, 0.25, 1);
   transition-duration: 400ms;
   transition-property: color, border-color, background;
@@ -600,14 +606,18 @@ export const HeroSection: React.FC = () => {
 
         {/* CTA Buttons */}
         <CTAGroup className="flex-col sm:flex-row justify-center md:justify-start w-full sm:w-auto">
+
           {/* ── Primary: Sparkle button ── */}
           <SparkleWrap className="w-full sm:w-auto">
-            <button className="sparkle-button w-full sm:w-auto justify-center">
+            <Link
+              to="/roadmaps"
+              className="sparkle-button w-full sm:w-auto justify-center"
+            >
               <span className="spark" />
               <span className="backdrop" />
               <SparkleSVG />
               <span className="btn-text">Start Your Journey</span>
-            </button>
+            </Link>
             <span aria-hidden="true" className="particle-pen">
               {Array.from({ length: 20 }).map((_, i) => (
                 <ParticleSVG key={i} />
@@ -616,9 +626,13 @@ export const HeroSection: React.FC = () => {
           </SparkleWrap>
 
           {/* ── Secondary: Underline hover button ── */}
-          <UnderlineBtn className="w-full sm:w-auto">
+          <UnderlineBtn
+            to="/roadmaps"
+            className="w-full sm:w-auto"
+          >
             Explore Roadmaps
           </UnderlineBtn>
+
         </CTAGroup>
 
         {/* Stats */}

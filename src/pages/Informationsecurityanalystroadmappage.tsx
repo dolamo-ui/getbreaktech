@@ -14,12 +14,11 @@ import {
   Award, Target, Flame, Database,
   Layers, FileText, Globe, Server, Layout,
   GitBranch, Terminal, Package, Shield,
-  Cloud, Workflow, Headphones, Wrench, Radio, PhoneCall,
+  Cloud, Workflow,
 } from 'lucide-react'
 
 gsap.registerPlugin(ScrollTrigger)
 
-/* ─── COLORS ──────────────────────────────────────────────────────────────── */
 const C = {
   bg: '#ffffff',
   bgAlt: '#f8f9ff',
@@ -28,9 +27,9 @@ const C = {
   text: '#0f172a',
   textMuted: '#64748b',
   textFaint: '#94a3b8',
-  primary: '#0369a1',          // support blue — IT support brand colour
-  primaryLight: 'rgba(3,105,161,0.08)',
-  primaryMid: 'rgba(3,105,161,0.15)',
+  primary: '#0f766e',
+  primaryLight: 'rgba(15,118,110,0.08)',
+  primaryMid: 'rgba(15,118,110,0.15)',
   violet: '#7c3aed',
   violetLight: 'rgba(124,58,237,0.08)',
   green: '#16a34a',
@@ -45,337 +44,336 @@ const C = {
   cyanLight: 'rgba(8,145,178,0.08)',
 }
 
-/* ─── DATA ────────────────────────────────────────────────────────────────── */
-
 const CAREER_LEVELS = [
   {
-    level: 'Junior', title: 'Help Desk Technician', duration: '0–2 yrs', salary: 'R160k–R290k',
-    description: 'Handle Tier 1 support tickets, troubleshoot hardware and software issues, reset passwords, and escalate complex problems. Learn ticketing systems and ITIL basics.',
-    skills: ['Windows OS', 'Ticketing Tools', 'Basic Networking', 'Active Directory'],
+    level: 'Junior', title: 'Junior Security Analyst', duration: '0–2 yrs', salary: 'R280k–R480k',
+    description: 'Monitor SIEM dashboards, triage security alerts, assist with vulnerability scans, and document incidents under mentorship. Learn the fundamentals of network and endpoint security.',
+    skills: ['SIEM Tools', 'Log Analysis', 'Networking', 'CompTIA Sec+'],
     accent: '#0891b2', accentBg: 'rgba(8,145,178,0.08)', accentBorder: 'rgba(8,145,178,0.18)',
   },
   {
-    level: 'Mid-Level', title: 'IT Support Specialist', duration: '2–5 yrs', salary: 'R290k–R540k',
-    description: 'Own Tier 2 escalations, manage endpoints at scale, configure network equipment, support cloud tools (Microsoft 365, Google Workspace), and mentor junior staff.',
-    skills: ['Microsoft 365', 'ITIL Foundation', 'Network Config', 'MDM / Intune'],
+    level: 'Mid-Level', title: 'Security Analyst', duration: '2–5 yrs', salary: 'R550k–R980k',
+    description: 'Own incident response end-to-end, conduct vulnerability assessments, write security policies, perform threat hunting, and lead security awareness initiatives across the organisation.',
+    skills: ['Incident Response', 'Threat Hunting', 'Vulnerability Mgmt', 'SOAR'],
     accent: '#16a34a', accentBg: 'rgba(22,163,74,0.08)', accentBorder: 'rgba(22,163,74,0.18)',
   },
   {
-    level: 'Senior', title: 'Service Desk Analyst', duration: '5–8 yrs', salary: 'R540k–R900k',
-    description: 'Drive SLA compliance, lead incident and problem management, design knowledge base processes, and build automation that reduces ticket volume. Technical escalation lead.',
-    skills: ['ITIL Advanced', 'PowerShell', 'SIEM Basics', 'Process Design'],
+    level: 'Senior', title: 'Senior Security Analyst', duration: '5–8 yrs', salary: 'R1M–R1.65M',
+    description: 'Architect security monitoring frameworks, lead blue team operations, define incident response playbooks, mentor junior analysts, and engage with executive leadership on risk posture.',
+    skills: ['SOC Leadership', 'Threat Intelligence', 'Risk Management', 'DFIR'],
     accent: '#7c3aed', accentBg: 'rgba(124,58,237,0.08)', accentBorder: 'rgba(124,58,237,0.18)',
   },
   {
-    level: 'Expert', title: 'IT Support Manager', duration: '8+ yrs', salary: 'R900k+',
-    description: 'Lead the support function, define IT service strategy, manage vendor relationships, implement ITSM platforms, and align IT operations with business objectives.',
-    skills: ['ITSM Strategy', 'Team Leadership', 'Budget Mgmt', 'ITIL Expert'],
+    level: 'Expert', title: 'CISO / Security Director', duration: '8+ yrs', salary: 'R2M+',
+    description: 'Define the organisational security strategy, manage regulatory compliance programmes, oversee all security operations, and represent security risk to boards and stakeholders.',
+    skills: ['Security Strategy', 'GRC', 'Board Reporting', 'Team Leadership'],
     accent: '#ea580c', accentBg: 'rgba(234,88,12,0.08)', accentBorder: 'rgba(234,88,12,0.18)',
   },
 ]
 
 const ROADMAP_STEPS = [
   {
-    step: 1, title: 'IT Fundamentals & Operating Systems',
-    description: 'Build a solid base in how computers work. Learn Windows 10/11 administration inside out — installation, user accounts, Group Policy, file systems, and troubleshooting. Supplement with macOS and Linux basics. CompTIA A+ is the gold-standard certification for this stage and is widely recognised by employers.',
-    duration: '2–3 months', skills: ['Windows 10/11', 'macOS Basics', 'Linux CLI', 'CompTIA A+'],
+    step: 1, title: 'Networking & Operating System Fundamentals',
+    description: 'Security starts with understanding what you are protecting. Master TCP/IP, DNS, HTTP/S, firewalls, VPNs, and the OSI model. Learn Linux and Windows administration — most attacks and defences live at the OS level. Platforms like TryHackMe and Professor Messer are excellent starting points.',
+    duration: '2–3 months', skills: ['TCP/IP & DNS', 'Linux Admin', 'Windows Admin', 'Firewall Basics'],
   },
   {
-    step: 2, title: 'Networking Essentials',
-    description: 'Every support call eventually becomes a network problem. Learn TCP/IP, DNS, DHCP, subnetting, VLANs, Wi-Fi troubleshooting, and VPN concepts. Understand the OSI model at a practical level. CompTIA Network+ validates these skills and is required or preferred at most IT departments.',
-    duration: '2–3 months', skills: ['TCP/IP & DNS', 'Subnetting', 'Wi-Fi & VPN', 'CompTIA Network+'],
+    step: 2, title: 'Security Fundamentals & Core Certifications',
+    description: 'Learn the foundational concepts: CIA triad, authentication, encryption, PKI, access control, and the types of threats organisations face. CompTIA Security+ is the industry-standard entry certification and is valued by virtually every employer hiring junior analysts.',
+    duration: '2–3 months', skills: ['CIA Triad', 'Cryptography', 'Access Control', 'CompTIA Sec+'],
   },
   {
-    step: 3, title: 'Active Directory, M365 & Identity',
-    description: 'Enterprise IT runs on Microsoft. Learn Active Directory — user and group management, OUs, Group Policy Objects, and domain structure. Then master Microsoft 365 administration: Exchange Online, Teams, SharePoint, and Intune for device management. These skills appear in nearly every job description.',
-    duration: '2–3 months', skills: ['Active Directory', 'Microsoft 365', 'Intune / MDM', 'Azure AD'],
+    step: 3, title: 'SIEM, Log Analysis & Threat Detection',
+    description: 'Security analysts live in SIEM platforms. Learn Splunk, Microsoft Sentinel, or IBM QRadar. Understand how to write detection rules, correlate logs from multiple sources, reduce false positives, and triage real alerts from noise. Practice with free Splunk and Elastic labs.',
+    duration: '2–3 months', skills: ['Splunk / Sentinel', 'Log Correlation', 'Detection Rules', 'Alert Triage'],
   },
   {
-    step: 4, title: 'ITIL, Ticketing & Service Management',
-    description: 'IT support is a professional service, not just fixing computers. Learn ITIL 4 — incident, problem, change, and service request management. Get hands-on with a ticketing system (ServiceNow, Jira Service Management, or Freshdesk). Study SLA management and how to write knowledge base articles that reduce repeat tickets.',
-    duration: '1–2 months', skills: ['ITIL 4 Foundation', 'ServiceNow / Jira', 'SLA Management', 'Knowledge Mgmt'],
+    step: 4, title: 'Incident Response & Digital Forensics',
+    description: 'When a breach occurs, analysts must respond with speed and precision. Study the NIST incident response lifecycle: Preparation, Detection, Containment, Eradication, Recovery, and Lessons Learned. Learn memory and disk forensics with tools like Autopsy, Volatility, and FTK.',
+    duration: '2–3 months', skills: ['IR Lifecycle', 'Memory Forensics', 'Disk Analysis', 'Chain of Custody'],
   },
   {
-    step: 5, title: 'Security Fundamentals & Endpoint Protection',
-    description: 'Security is inseparable from IT support. Learn how to identify phishing attempts, configure Windows Defender and endpoint protection tools, manage BitLocker encryption, apply patches, and respond to a basic security incident. CompTIA Security+ is the entry-point certification into cybersecurity-adjacent IT roles.',
-    duration: '2–3 months', skills: ['CompTIA Security+', 'Endpoint Protection', 'Patch Management', 'Incident Response'],
+    step: 5, title: 'Vulnerability Management & Threat Intelligence',
+    description: 'Learn to run vulnerability scans with Nessus and OpenVAS, interpret CVSS scores, and prioritise remediation based on business risk. Study threat intelligence frameworks like MITRE ATT&CK and how to consume threat feeds to proactively detect adversary TTPs.',
+    duration: '2–3 months', skills: ['Nessus / OpenVAS', 'CVSS Scoring', 'MITRE ATT&CK', 'Threat Feeds'],
   },
   {
-    step: 6, title: 'Scripting, Automation & Cloud',
-    description: 'Senior support professionals automate repetitive tasks. Learn PowerShell to script Active Directory operations, user onboarding, and reporting. Add basics of Azure or AWS for cloud-hosted infrastructure support. Automation skills dramatically differentiate you from peers and open paths into sysadmin and cloud engineering roles.',
-    duration: '3–4 months', skills: ['PowerShell', 'Azure Fundamentals', 'Automation Scripts', 'Cloud Basics'],
+    step: 6, title: 'GRC, Cloud Security & Advanced Specialisation',
+    description: 'Enterprise security requires governance. Study ISO 27001, NIST CSF, POPIA, and GDPR compliance frameworks. Add cloud security skills for AWS or Azure — most modern attacks target cloud misconfigurations. Consider advanced certifications: GCIH, GCFE, or CEH for specialisation.',
+    duration: '3–4 months', skills: ['ISO 27001 / NIST', 'Cloud Security', 'Compliance', 'GCIH / GCFE'],
   },
 ]
 
 const HARD_SKILLS = [
-  { name: 'Windows OS Administration', level: 95 },
-  { name: 'Microsoft 365 & Azure AD', level: 93 },
-  { name: 'Networking & TCP/IP', level: 88 },
-  { name: 'Active Directory & GPO', level: 85 },
-  { name: 'ITIL / ITSM Processes', level: 82 },
-  { name: 'Security & Endpoint Protection', level: 75 },
-  { name: 'PowerShell Scripting', level: 68 },
-  { name: 'Cloud Platforms (Azure/AWS)', level: 60 },
+  { name: 'SIEM & Log Analysis', level: 95 },
+  { name: 'Incident Response', level: 92 },
+  { name: 'Network Security', level: 90 },
+  { name: 'Vulnerability Management', level: 88 },
+  { name: 'Threat Intelligence', level: 82 },
+  { name: 'Digital Forensics', level: 75 },
+  { name: 'Cloud Security (AWS/Azure)', level: 70 },
+  { name: 'GRC & Compliance', level: 65 },
 ]
 
 const SOFT_SKILLS = [
-  { name: 'Empathetic Communication', description: 'Users are often stressed when they call support. The ability to listen patiently, explain technical concepts in plain language, and make the person feel heard is what separates great support from merely functional support.' },
-  { name: 'Calm Under Pressure', description: 'Major outages affect hundreds of people simultaneously. The support professional who stays methodical, communicates clearly, and works the problem without panicking is irreplaceable during incidents.' },
-  { name: 'Systematic Troubleshooting', description: 'The best IT support people don\'t guess — they eliminate variables. A disciplined, hypothesis-driven approach to diagnosis gets to root causes faster and prevents repeat calls on the same issue.' },
-  { name: 'Documentation Discipline', description: 'Every ticket is an opportunity to create institutional knowledge. Support professionals who document problems and solutions thoroughly build the knowledge base that makes the whole team faster over time.' },
-  { name: 'Customer Service Mindset', description: 'IT support is a service. Treating users as internal customers — not as interruptions — builds trust, improves response quality, and makes you the person people actually want to call when things break.' },
-  { name: 'Continuous Self-Learning', description: 'Technology changes faster than any job description can capture. The best support professionals are perpetually curious — studying for the next cert, testing new tools in a home lab, and following IT news to stay ahead.' },
+  { name: 'Analytical Thinking', description: 'Security analysts must find patterns in vast noise. The ability to sift through thousands of log lines and identify the one anomaly that signals a real attack is what separates excellent analysts from average ones.' },
+  { name: 'Calm Under Pressure', description: 'Incidents are chaotic by nature. The ability to execute a structured response plan calmly while stakeholders panic and systems are down is a priceless and rare professional quality.' },
+  { name: 'Written Communication', description: 'Every incident ends with a report. Your ability to explain a complex attack chain, its business impact, and remediation steps clearly to non-technical executives is as important as finding the breach.' },
+  { name: 'Continuous Learning', description: 'The threat landscape evolves daily. Analysts who stop learning fall behind within 18 months. The best in the field treat staying current as a professional obligation — not a burden.' },
+  { name: 'Attention to Detail', description: 'A single misconfigured firewall rule or an overlooked log entry can mean the difference between catching an intrusion early and discovering it six months later during a forensic investigation.' },
+  { name: 'Ethical Judgement', description: 'Security analysts have privileged access to sensitive data and systems. The highest integrity and ethical judgement is non-negotiable — this is the role that sees everything and must be trusted completely.' },
 ]
 
 const EDU_PATHS = [
   {
-    type: 'Degree', title: 'IT / Computer Science Degree', duration: '3–4 years', cost: 'R400k – R1M+',
-    borderColor: 'rgba(3,105,161,0.2)', bgColor: '#eff6ff', typeBg: 'rgba(3,105,161,0.12)', typeColor: '#0369a1',
-    pros: ['Deepest theoretical foundation', 'Opens doors to management and specialisation faster', 'Graduate schemes at large corporates and banks', 'Strong peer network of future IT professionals'],
-    cons: ['Slow and expensive path to first salary', 'Practical hands-on lab time is limited', 'Many grads still need certifications to get hired', 'IT support roles rarely require a degree at entry level'],
+    type: 'Degree', title: 'Information Security / IT Degree', duration: '3–4 years', cost: 'R400k – R1M+',
+    borderColor: 'rgba(15,118,110,0.2)', bgColor: '#f0fdfa', typeBg: 'rgba(15,118,110,0.12)', typeColor: '#0f766e',
+    pros: ['Deep foundation in networks, OS, and cryptography', 'High credibility with government and financial sector employers', 'Access to graduate and internship programmes', 'Strong theoretical grounding for advanced certifications'],
+    cons: ['Slow path to first security role', 'Curriculum often lags behind current threats', 'Light on hands-on lab and SOC experience', 'Vendor-specific tools largely self-taught'],
   },
   {
-    type: 'Certifications', title: 'CompTIA A+ → Network+ → Security+', duration: '6–18 months', cost: 'R15k – R60k',
+    type: 'Bootcamp', title: 'Cybersecurity Bootcamp', duration: '3–6 months', cost: 'R60k – R130k',
     borderColor: 'rgba(22,163,74,0.2)', bgColor: '#f0fdf4', typeBg: 'rgba(22,163,74,0.12)', typeColor: '#16a34a',
-    pros: ['Vendor-neutral, globally recognised credentials', 'Directly maps to job descriptions and hiring filters', 'Much faster and cheaper than a degree', 'CompTIA A+ is explicitly required by many help desk roles'],
-    cons: ['Exams require dedicated study and exam fees', 'Credentials alone don\'t replace hands-on lab practice', 'Need to be renewed every 3 years via CEUs', 'Won\'t replace leadership experience for management roles'],
+    pros: ['Fast path to Security+ and SOC readiness', 'Hands-on labs with real SIEM and forensics tools', 'Career placement support included', 'Cohort accountability accelerates learning'],
+    cons: ['Programme quality varies significantly', 'Credential not universally accepted', 'Rarely develops deep forensics or GRC knowledge', 'Competitive junior market on exit'],
   },
   {
-    type: 'Self-Taught', title: 'Home Lab + Free Courses', duration: '12–24 months', cost: 'R2k – R10k',
+    type: 'Self-Taught', title: 'Certifications & Labs', duration: '12–24 months', cost: 'R3k – R25k',
     borderColor: 'rgba(79,70,229,0.2)', bgColor: '#eef2ff', typeBg: 'rgba(79,70,229,0.12)', typeColor: '#4f46e5',
-    pros: ['Build real skills on real hardware', 'Microsoft Learn and Google IT Support cert are free/cheap', 'Immediate hands-on practice with no waiting', 'Home lab experience impresses interviewers who test practically'],
-    cons: ['No formal credential on CV without separate exam', 'Requires significant self-discipline and structure', 'Knowledge gaps can be dangerous without structured curriculum', 'Harder to demonstrate competence without certification'],
+    pros: ['CompTIA Sec+, CySA+, and GCIH widely respected', 'TryHackMe and HackTheBox provide real lab experience', 'Completely self-paced', 'Certifications are the real currency in security hiring'],
+    cons: ['Requires exceptional self-discipline', 'Easy to have dangerous skill gaps', 'No formal degree on CV', 'Imposter syndrome is very common in this field'],
   },
 ]
 
 const SCHEDULE = [
-  { time: '8:00', act: 'Queue Triage & Priority Setting', desc: 'Review the overnight ticket queue, identify P1/P2 incidents, assign team members to urgent items and communicate status to affected users before business starts', duration: '30 min', icon: <PhoneCall size={14} /> },
-  { time: '8:30', act: 'Active Incident Resolution', desc: 'Work through priority tickets — remote desktop sessions, on-site hardware swaps, account provisioning, software licensing issues, and connectivity problems', duration: '3 hrs', icon: <Wrench size={14} /> },
-  { time: '11:30', act: 'Escalation & Vendor Follow-up', desc: 'Escalate unresolved Tier 2 issues to sysadmin or vendor support, follow up on outstanding hardware replacements and software licences, update users on ETA', duration: '30 min', icon: <Radio size={14} /> },
-  { time: '12:00', act: 'Lunch & Recovery', desc: 'Step away from the screen. Complex technical problems benefit from a mental reset — some of the best diagnostic insights arrive after a proper break', duration: '1 hr', icon: <Coffee size={14} /> },
-  { time: '1:00', act: 'Knowledge Base & Documentation', desc: 'Write up solutions for recurring issues, update runbooks, improve existing KB articles, and document this morning\'s unusual fixes before the context is lost', duration: '1 hr', icon: <FileText size={14} /> },
-  { time: '2:00', act: 'Proactive Maintenance & Projects', desc: 'Run patch deployments, update endpoint agents, work on ongoing IT projects (e.g., hardware refresh, Office 365 migration), or build automation scripts for repetitive tasks', duration: '1.5 hrs', icon: <Shield size={14} /> },
-  { time: '3:30', act: 'Learning & Certification Study', desc: 'Work through CompTIA study material, practise PowerShell scripts in the home lab, complete a Microsoft Learn module, or test a new tool in a sandbox environment', duration: '30 min', icon: <BookOpen size={14} /> },
+  { time: '8:30', act: 'SOC Briefing & Shift Handover', desc: 'Review overnight alerts, open incidents from the previous shift, and receive briefing on new threat intelligence relevant to the organisation', duration: '30 min', icon: <Shield size={14} /> },
+  { time: '9:00', act: 'Alert Triage & Investigation', desc: 'Work through the SIEM alert queue — classify, investigate, and escalate genuine incidents. Dismiss false positives with documented reasoning', duration: '2.5 hrs', icon: <Terminal size={14} /> },
+  { time: '11:30', act: 'Threat Hunting', desc: 'Proactively search for indicators of compromise that automated detection may have missed, using threat intelligence feeds and MITRE ATT&CK', duration: '1 hr', icon: <Target size={14} /> },
+  { time: '12:30', act: 'Lunch & Recovery', desc: 'Mental recovery is critical in security work — the stakes are high and sustained concentration is taxing. Step away from the screens.', duration: '1 hr', icon: <Coffee size={14} /> },
+  { time: '1:30', act: 'Vulnerability Management', desc: 'Review scan results from Nessus or Qualys, update risk register, coordinate remediation with IT teams, and track patch compliance', duration: '1.5 hrs', icon: <Database size={14} /> },
+  { time: '3:00', act: 'Documentation & Reporting', desc: 'Write up incident reports, update security runbooks and playbooks, prepare weekly metrics for management, and log all work in ticketing system', duration: '1.5 hrs', icon: <FileText size={14} /> },
+  { time: '4:30', act: 'Learning & Intelligence Review', desc: 'Read threat intelligence bulletins (CISA, SANS ISC), review new CVEs, study for the next certification, or contribute to detection rule improvements', duration: '30 min', icon: <BookOpen size={14} /> },
 ]
 
 const TOOLS = [
-  { name: 'ServiceNow / Jira SM', cat: 'Ticketing' }, { name: 'Microsoft Intune', cat: 'MDM' },
-  { name: 'Active Directory', cat: 'Identity' }, { name: 'TeamViewer / AnyDesk', cat: 'Remote' },
-  { name: 'Microsoft 365 Admin', cat: 'Cloud' }, { name: 'Wireshark', cat: 'Network' },
-  { name: 'PowerShell ISE', cat: 'Scripting' }, { name: 'Windows Defender', cat: 'Security' },
+  { name: 'Splunk / Sentinel', cat: 'SIEM' }, { name: 'Nessus / OpenVAS', cat: 'Vuln Scan' },
+  { name: 'Wireshark', cat: 'Network' }, { name: 'Autopsy / FTK', cat: 'Forensics' },
+  { name: 'Volatility', cat: 'Memory' }, { name: 'CrowdStrike', cat: 'EDR' },
+  { name: 'TheHive', cat: 'IR Platform' }, { name: 'MISP', cat: 'Threat Intel' },
 ]
 
 const WORK_ENVS = [
-  { type: 'In-Office / On-Site', pct: 52 },
-  { type: 'Hybrid', pct: 37 },
-  { type: 'Fully Remote', pct: 11 },
+  { type: 'Hybrid', pct: 52 },
+  { type: 'In-Office / SOC', pct: 35 },
+  { type: 'Remote', pct: 13 },
 ]
 
 const AI_IMPACTS = [
   {
-    title: 'AI-Assisted Ticket Resolution', icon: <Sparkles size={20} />,
-    desc: 'AI tools like Copilot for Microsoft 365 and ServiceNow\'s Now Assist auto-suggest resolutions based on ticket content, prior solutions, and knowledge base articles. Support teams using AI report 40–60% faster Tier 1 resolution times and significantly lower escalation rates.',
-    tools: ['Copilot for M365', 'ServiceNow AI', 'Freshdesk AI', 'Zendesk AI'],
-    borderColor: 'rgba(3,105,161,0.18)', bgColor: '#eff6ff', icoBg: 'rgba(3,105,161,0.12)', icoColor: '#0369a1', tagBg: 'rgba(3,105,161,0.1)', tagColor: '#0369a1', titleColor: '#0369a1',
+    title: 'AI-Powered Threat Detection', icon: <Sparkles size={20} />,
+    desc: 'Machine learning models in modern SIEMs now detect anomalous behaviour patterns that rule-based detection misses entirely. Analysts who understand how to tune and interpret AI-driven alerts catch significantly more threats with fewer false positives.',
+    tools: ['Microsoft Sentinel AI', 'Darktrace', 'CrowdStrike Falcon', 'Vectra AI'],
+    borderColor: 'rgba(15,118,110,0.18)', bgColor: '#f0fdfa', icoBg: 'rgba(15,118,110,0.12)', icoColor: '#0f766e', tagBg: 'rgba(15,118,110,0.1)', tagColor: '#0f766e', titleColor: '#0f766e',
   },
   {
-    title: 'Intelligent Automation & Self-Service', icon: <Zap size={20} />,
-    desc: 'IT support professionals who can build AI-powered chatbots, configure automated provisioning workflows, and connect ITSM platforms to automation tools (Power Automate, Zapier) are in a completely different demand tier in 2026.',
-    tools: ['Power Automate', 'Microsoft Copilot Studio', 'Zapier', 'Azure Logic Apps'],
+    title: 'Generative AI for Security Operations', icon: <Zap size={20} />,
+    desc: 'AI copilots like Microsoft Security Copilot and Google Chronicle AI now assist analysts in summarising incidents, generating detection queries, explaining malware behaviour, and drafting incident reports — dramatically accelerating SOC productivity.',
+    tools: ['Microsoft Security Copilot', 'Chronicle AI', 'IBM QRadar AI', 'Elastic AI'],
     borderColor: 'rgba(79,70,229,0.18)', bgColor: '#eef2ff', icoBg: 'rgba(79,70,229,0.12)', icoColor: '#4f46e5', tagBg: 'rgba(79,70,229,0.1)', tagColor: '#4f46e5', titleColor: '#4f46e5',
   },
   {
-    title: 'AI-Powered IT Monitoring', icon: <TrendingUp size={20} />,
-    desc: 'AIOps platforms now detect infrastructure anomalies, predict hardware failures before they impact users, and auto-route tickets based on historical patterns. Understanding these tools makes you a force multiplier for your entire IT team.',
-    tools: ['Microsoft Sentinel', 'Datadog', 'SolarWinds AI', 'PagerDuty AIOps'],
+    title: 'AI-Augmented Threat Intelligence', icon: <TrendingUp size={20} />,
+    desc: 'AI systems now correlate threat intelligence from thousands of sources in real time, identifying relevant adversary campaigns targeting your industry before they reach your organisation. Analysts who can operate these platforms add extraordinary value.',
+    tools: ['Recorded Future AI', 'ThreatConnect', 'OpenCTI', 'MISP with ML'],
     borderColor: 'rgba(22,163,74,0.18)', bgColor: '#f0fdf4', icoBg: 'rgba(22,163,74,0.12)', icoColor: '#16a34a', tagBg: 'rgba(22,163,74,0.1)', tagColor: '#16a34a', titleColor: '#16a34a',
   },
 ]
 
 const FUTURE_SKILLS = [
-  'Microsoft Copilot Administration', 'Power Automate & Low-Code Workflows',
-  'Zero Trust Network Access (ZTNA)', 'Azure Virtual Desktop Support',
-  'AI Chatbot Configuration (Copilot Studio)', 'AIOps & Predictive Monitoring',
+  'AI/ML Security & Adversarial Attack Detection',
+  'Cloud Security Posture Management (CSPM)',
+  'SOAR Automation & Playbook Development',
+  'Zero Trust Architecture Implementation',
+  'OT/ICS & Critical Infrastructure Security',
+  'Supply Chain Attack Detection & Response',
 ]
 
 const PROS = [
-  { title: 'Always in Demand — Everywhere', desc: 'Every organisation with computers needs IT support. Hospitals, banks, schools, government, retail — the demand is universal, recession-resistant, and geographically distributed across every city in South Africa.' },
-  { title: 'The Fastest Entry into IT', desc: 'Help desk is the most accessible entry point into the technology industry. CompTIA A+ certification and a few months of study can land your first role — no degree required at entry level.' },
-  { title: 'Exposure to the Entire IT Stack', desc: 'No other role gives you broader exposure faster. In a single week, a help desk technician might touch networking, identity management, cloud apps, hardware, security, and backup systems.' },
-  { title: 'Clear Paths to Specialisation', desc: 'IT support is a launchpad, not a ceiling. From here, experienced technicians branch into sysadmin, network engineering, cybersecurity, cloud architecture, or IT management — with every path well-marked.' },
-  { title: 'Strong Job Security', desc: 'Unlike many tech roles, IT support cannot be fully offshored or replaced by software. On-site hardware, physical network infrastructure, and user relationships require a local, trusted human presence.' },
-  { title: 'Fast Skill Development', desc: 'The variety of problems encountered in support accelerates learning faster than almost any other tech role. In two years you\'ll have solved more edge cases than most developers see in five.' },
+  { title: 'Mission-Critical Organisational Role', desc: 'Information security analysts protect the data, systems, and reputation of their employers. Few roles carry this level of responsibility and strategic importance — it is a career that truly matters.' },
+  { title: 'Exceptional Job Security', desc: 'Cybercrime costs are projected to reach $10.5 trillion annually by 2025. Every organisation needs analysts. Demand consistently outstrips supply by a significant margin globally.' },
+  { title: 'Highly Competitive Salaries', desc: 'Senior security analysts earn R1M–R1.65M in South Africa. CISO-level roles at major organisations pay R2M–R4M+. International remote security roles pay USD rates that are transformational for South African professionals.' },
+  { title: 'Intellectually Stimulating Work', desc: 'Every attack is different. Threat actors are creative, sophisticated, and adapt constantly. The investigative and analytical nature of security work attracts people who love puzzles and hate boredom.' },
+  { title: 'Clear Certification Pathway', desc: 'Unlike many careers, security has a well-defined certification track: Sec+ → CySA+ → GCIH → CISSP. Each certification is a measurable, respected milestone that directly increases your market value.' },
+  { title: 'Diverse Specialisation Options', desc: 'From digital forensics to threat intelligence, cloud security to GRC, penetration testing to SOC operations — security offers specialisations to match nearly every professional personality and interest.' },
 ]
 
 const CONS = [
-  { title: 'Emotionally Demanding Work', desc: 'Supporting frustrated users who can\'t work, managing an overflowing ticket queue, and being the first person blamed when systems fail takes a toll. Emotional resilience is as important as technical skill.' },
-  { title: 'Compensation Ceiling at Tier 1', desc: 'Entry-level help desk roles are among the lower-paid positions in IT. Breaking through to R400k+ requires active upskilling, certifications, and movement into specialist or senior roles.' },
-  { title: 'Repetitive Ticket Fatigue', desc: 'Password resets, "my printer isn\'t working," and Outlook crashes account for a large percentage of tickets. Without deliberate variety and growth goals, the work can become monotonous.' },
-  { title: 'On-Site Requirements', desc: 'Unlike backend or development roles, much IT support still requires physical presence. Hardware replacements, cabling, server room access, and in-person user support mean remote work is limited compared to other tech fields.' },
-  { title: 'Underappreciated Until It Breaks', desc: 'IT support is invisible when it works and immediately visible when it fails. Getting credit for preventing 300 incidents is harder than being blamed for the one that gets through. This is the reality of a support culture.' },
-  { title: 'Credential Treadmill', desc: 'Technology evolves quickly and certifications expire. Staying current in Microsoft, CompTIA, and cloud platforms requires ongoing study investment — both time and money — throughout your career.' },
+  { title: 'High Stress & Burnout Risk', desc: 'Operating in a constant state of alertness, managing real breaches with serious consequences, and the weight of protecting sensitive data creates significant psychological pressure. Burnout rates in SOC roles are among the highest in tech.' },
+  { title: 'On-Call & Shift Requirements', desc: 'Attacks happen at 3am on Christmas Eve. Many security roles involve after-hours on-call rotations, 24/7 SOC shift work, and the expectation of immediate response to critical incidents regardless of the hour.' },
+  { title: 'The Adversary Always Has the Initiative', desc: 'Attackers only need to succeed once. Defenders must be right every time. This asymmetry is psychologically demanding — the best security teams still get breached, and the responsibility is real.' },
+  { title: 'Certification Costs & Continuous Learning', desc: 'Top security certifications cost R20k–R80k each. The threat landscape evolves so rapidly that continuous investment in learning and recertification is not optional — it is required to remain effective.' },
+  { title: 'False Positive Fatigue', desc: 'Analysts in busy SOCs triage hundreds of alerts daily, the vast majority of which are false positives. The monotony of alert fatigue can dull vigilance — making it harder to catch the real threats hiding in the noise.' },
+  { title: 'Ethical and Legal Complexity', desc: 'Security analysts operate in legally sensitive territory. The boundaries between authorised testing, incident response, and activities that cross legal lines require careful judgment and robust organisational policies.' },
 ]
 
 const VIDEOS = [
-  { id: 'G7V2nqFRojA', title: 'CompTIA A+ Core 1 Full Course', desc: 'Complete preparation for the CompTIA A+ 220-1101 exam covering hardware, networking, and troubleshooting — the foundational certification for IT support professionals.', dur: '14:08:00', channel: 'Professor Messer' },
-  { id: 'qiQR5rTSshw', title: 'Google IT Support Professional Certificate', desc: 'Google\'s fully free IT support training program covering technical support fundamentals, networking, operating systems, system administration, and IT security.', dur: '6:32:00', channel: 'Google / Coursera' },
-  { id: 'ynbHdHrU5gs', title: 'CompTIA Network+ Full Course', desc: 'Complete Network+ study guide covering network infrastructure, protocols, troubleshooting, and security — essential for anyone moving beyond Tier 1 support.', dur: '12:16:00', channel: 'Professor Messer' },
+  { id: 'inWWhr5tnEA', title: 'SOC Analyst Full Career Guide 2025', desc: 'A comprehensive walkthrough of the Security Operations Centre analyst role — tools, responsibilities, certifications, and daily work in a real SOC environment.', dur: '18:45', channel: 'Josh Madakor' },
+  { id: 'a83ASGn_V_s', title: 'TryHackMe SOC Level 1 Path Review', desc: 'Hands-on walkthrough of the TryHackMe SOC Analyst path — the most popular free training route for breaking into information security analysis.', dur: '12:30', channel: 'NetworkChuck' },
+  { id: 'lpa8uy4DyMo', title: 'CompTIA Security+ Full Study Course', desc: 'Complete preparation course for the CompTIA Security+ certification — the industry-standard entry credential for information security analysts.', dur: '25:33:00', channel: 'Professor Messer' },
 ]
 
 const TAKEAWAYS = [
-  'Certifications open doors — CompTIA A+, Network+, and Security+ are worth every hour of study and every rand of exam fees',
-  'Build a home lab on spare hardware or free Azure credits — practical troubleshooting experience you created yourself impresses interviewers more than anything on paper',
-  'Every ticket is a teaching moment: document your solutions well enough that your past self could have solved the problem faster with them',
-  'Learn PowerShell early — a support professional who can automate 20 minutes of daily manual work is immediately more valuable than one who cannot',
-  'Treat every user interaction as a service experience, not a technical problem — the reputation you build with users is your most transferable career asset',
+  'Build a home lab immediately — a Raspberry Pi running Security Onion teaches more than any textbook on log analysis',
+  'TryHackMe and HackTheBox are not optional extras; they are the practical training ground every analyst must use before applying for roles',
+  'The MITRE ATT&CK framework is the lingua franca of modern security — learn it deeply and think in its terms',
+  'Every certification is a milestone, not a destination — keep your skills current because the threat landscape waits for no one',
+  'Document everything: your incident responses, your lab work, your threat hunting hypotheses — your portfolio is your professional credibility',
 ]
-
-/* ─── NEW SECTIONS ─────────────────────────────────────────────────────────── */
 
 const CAREER_FACTS = [
   {
-    icon: <Headphones size={20} />, title: 'What You Do',
-    desc: 'Diagnose and resolve hardware, software, and network issues. Manage user accounts and permissions, deploy and configure devices, handle IT service requests, and keep systems running so the business never stops.',
-    color: '#0369a1',
+    icon: <Shield size={20} />, title: 'What You Protect',
+    desc: 'Confidential data, financial systems, employee identities, operational infrastructure, intellectual property, and customer trust — everything an organisation values most lives behind the security controls you build and monitor.',
+    color: '#0f766e',
   },
   {
     icon: <Workflow size={20} />, title: 'Core Activities',
-    desc: 'Ticket management and prioritisation, remote and on-site troubleshooting, OS and application support, account and identity management, endpoint deployment, patch management, knowledge base creation, and user training.',
+    desc: 'SIEM monitoring, alert triage, incident response, threat hunting, vulnerability scanning, forensic investigation, security policy writing, awareness training, and compliance audit support.',
     color: '#16a34a',
   },
   {
-    icon: <Users size={20} />, title: 'Who You Support',
-    desc: 'Every employee in the organisation — from the CEO who can\'t connect to a Teams meeting to the accountant whose VPN won\'t authenticate. You are the human face of technology and the bridge between IT infrastructure and every user.',
+    icon: <Users size={20} />, title: 'Who You Work With',
+    desc: 'IT teams for remediation, DevOps for security tooling, legal and compliance for regulatory requirements, HR for policy enforcement, and executive leadership for risk reporting and security investment decisions.',
     color: '#4f46e5',
   },
   {
     icon: <TrendingUp size={20} />, title: 'Industry Demand',
-    desc: 'IT support is one of the most consistently in-demand roles in South Africa. Every sector — banking, healthcare, retail, education, mining, and government — employs IT support staff. Demand grew 18% in 2024 alone.',
+    desc: 'The global cybersecurity workforce gap exceeds 3.5 million unfilled positions. South African demand is growing rapidly, driven by POPIA compliance requirements and escalating ransomware targeting of local enterprises.',
     color: '#ea580c',
   },
 ]
 
 const WHY_REASONS = [
-  { emoji: '🚪', title: 'The Best Door into IT', desc: 'Help desk is where thousands of successful IT careers begin. Network engineers, cloud architects, and CISOs often started here. It is the most accessible, fastest, and lowest-barrier entry point into a technology career.' },
-  { emoji: '💼', title: 'Hire-Ready in Months, Not Years', desc: 'A CompTIA A+ certification and three months of focused study can get you your first interview. No four-year degree required. IT support is one of the few fields where demonstrated competence beats paper qualifications at entry level.' },
-  { emoji: '🌐', title: 'The Widest Industry Exposure', desc: 'Support touches every part of the IT stack — networking, identity, security, cloud, hardware, and software. You\'ll understand how technology really works in ways most specialists never do.' },
-  { emoji: '🔐', title: 'Security Skills Are Table Stakes', desc: 'In 2026, every IT support role has a security component. You\'re the front line of phishing defence, the person who spots the compromised account, and the one who enforces password and device policies. This makes you essential.' },
-  { emoji: '📈', title: 'Multiple Paths Forward', desc: 'From help desk you can go into sysadmin, network engineering, cybersecurity, cloud, or IT management. This role is not a dead end — it is a crossroads with clearly signed paths to six-figure careers.' },
-  { emoji: '🤝', title: 'You Make a Real Difference Daily', desc: 'When you fix someone\'s laptop so they can present to a client, recover a corrupted file they worked on all week, or restore email during a crisis — you\'ve made a tangible, immediate difference to a real person\'s day.' },
+  { emoji: '🛡️', title: 'You Protect What Matters Most', desc: 'Security analysts defend organisations from real criminal attacks targeting real people\'s data. Few careers provide the combination of intellectual challenge and genuine societal impact that this role delivers.' },
+  { emoji: '💰', title: 'Top-Tier Compensation', desc: 'Senior analysts earn R1M–R1.65M in South Africa. CISO roles pay R2M–R4M+. USD-denominated international remote security roles are achievable by mid-career and completely transformational financially.' },
+  { emoji: '🌍', title: 'Global Demand & Portability', desc: 'Security skills are valued identically in Johannesburg, London, Singapore, and Toronto. The 3.5 million global workforce gap means skilled analysts can work remotely for international employers from South Africa.' },
+  { emoji: '🧩', title: 'Endlessly Interesting Problems', desc: 'Every breach investigation is a unique puzzle. Threat actors are sophisticated, creative, and constantly evolving. This is one of the rare careers where the work itself never becomes routine.' },
+  { emoji: '📈', title: 'Multiple Advancement Paths', desc: 'Analyst → Senior Analyst → Threat Intelligence → SOC Manager → CISO, or pivot to penetration testing, GRC, cloud security, or digital forensics. The career tree branches in every direction.' },
+  { emoji: '🔒', title: 'Exceptional Job Security', desc: 'Cybercrime is not going away. Every digitised organisation needs protection. Security is arguably the most recession-resistant specialisation in all of technology — organisations cut budgets everywhere else first.' },
 ]
 
 const FREE_RESOURCES = [
-  { category: 'Certifications', color: '#0369a1', bgColor: '#eff6ff', items: [
-    { name: 'Professor Messer — CompTIA A+ (free video course)', url: '#', type: 'Video', rating: 5 },
-    { name: 'Google IT Support Professional Cert (Coursera)', url: '#', type: 'Course', rating: 5 },
-    { name: 'Microsoft Learn — M365 & Azure fundamentals', url: '#', type: 'Docs', rating: 5 },
-    { name: 'CompTIA CertMaster Practice (paid, worth it)', url: '#', type: 'Practice', rating: 5 },
+  { category: 'Courses', color: '#0f766e', bgColor: '#f0fdfa', items: [
+    { name: 'TryHackMe SOC Level 1 Path (free tier)', url: '#', type: 'Platform', rating: 5 },
+    { name: 'CS50 Cybersecurity — Harvard (free)', url: '#', type: 'Course', rating: 5 },
+    { name: 'SANS Cyber Aces Online (free)', url: '#', type: 'Course', rating: 5 },
+    { name: 'Blue Team Labs Online (free tier)', url: '#', type: 'Platform', rating: 4 },
   ]},
   { category: 'Practice', color: '#16a34a', bgColor: '#f0fdf4', items: [
-    { name: 'TryHackMe — IT fundamentals & security labs', url: '#', type: 'Lab', rating: 5 },
-    { name: 'Microsoft Learn sandbox environments (free)', url: '#', type: 'Lab', rating: 5 },
-    { name: 'Build a home lab with old hardware or VMs', url: '#', type: 'Project', rating: 5 },
-    { name: 'r/ITCareerQuestions study guides', url: '#', type: 'Forum', rating: 4 },
+    { name: 'HackTheBox Defender & Fortress labs', url: '#', type: 'Practice', rating: 5 },
+    { name: 'Splunk Free Training (Splunk Fundamentals 1)', url: '#', type: 'Course', rating: 5 },
+    { name: 'LetsDefend.io (SOC simulation platform)', url: '#', type: 'Practice', rating: 5 },
+    { name: 'MITRE ATT&CK Navigator (free framework)', url: '#', type: 'Reference', rating: 5 },
   ]},
   { category: 'Community', color: '#4f46e5', bgColor: '#eef2ff', items: [
-    { name: 'NetworkChuck YouTube Channel', url: '#', type: 'YouTube', rating: 5 },
-    { name: 'r/sysadmin & r/helpdesk communities', url: '#', type: 'Forum', rating: 5 },
-    { name: 'Darknet Diaries Podcast (security stories)', url: '#', type: 'Podcast', rating: 5 },
-    { name: 'ITIL 4 Foundation Study Guide (free PDF)', url: '#', type: 'Book', rating: 4 },
+    { name: 'Gerald Auger — Simply Cyber YouTube', url: '#', type: 'YouTube', rating: 5 },
+    { name: 'r/cybersecurity & r/netsec community', url: '#', type: 'Forum', rating: 5 },
+    { name: 'Darknet Diaries Podcast (real incidents)', url: '#', type: 'Podcast', rating: 5 },
+    { name: 'SANS Internet Storm Center Blog', url: '#', type: 'Blog', rating: 5 },
   ]},
 ]
 
 const SALARY_DATA = [
-  { role: 'Help Desk Technician (Tier 1)', range: 'R160k – R290k', midpoint: 225, yoe: '0–2 yrs', color: '#0891b2' },
-  { role: 'IT Support Specialist (Tier 2)', range: 'R290k – R540k', midpoint: 415, yoe: '2–5 yrs', color: '#16a34a' },
-  { role: 'Service Desk Analyst / Senior', range: 'R540k – R900k', midpoint: 720, yoe: '5–8 yrs', color: '#7c3aed' },
-  { role: 'IT Support Manager / Team Lead', range: 'R900k – R1.5M+', midpoint: 1150, yoe: '8+ yrs', color: '#ea580c' },
+  { role: 'Junior Security Analyst', range: 'R280k – R480k', midpoint: 380, yoe: '0–2 yrs', color: '#0891b2' },
+  { role: 'Security Analyst', range: 'R550k – R980k', midpoint: 760, yoe: '2–5 yrs', color: '#16a34a' },
+  { role: 'Senior Security Analyst', range: 'R1M – R1.65M', midpoint: 1325, yoe: '5–8 yrs', color: '#7c3aed' },
+  { role: 'CISO / Security Director', range: 'R2M – R4M+', midpoint: 2800, yoe: '8+ yrs', color: '#ea580c' },
 ]
 
 const MISTAKES = [
   {
-    num: '01', title: 'Staying at Tier 1 Without Studying for Certs',
-    desc: 'Many technicians spend years in Tier 1 without progressing because they never formalise their skills with certifications. CompTIA A+ and Network+ are the explicit signal employers look for to promote to Tier 2 and beyond.',
-    fix: 'Set a certification target date within 90 days of starting your first role. Study 30 minutes per day minimum, without exception.',
+    num: '01', title: 'Chasing Certs Without Building Lab Skills',
+    desc: 'Candidates who memorise CompTIA Security+ without ever running Wireshark, configuring a SIEM, or investigating a real alert are unprepared for actual analyst work. Employers test practical skills in interviews.',
+    fix: 'Build a home lab on day one. Use TryHackMe and Security Onion alongside every certification you study for.',
   },
   {
-    num: '02', title: 'Treating Documentation as Optional',
-    desc: 'Solving the same problem four times because it was never documented wastes hours every week. Undocumented solutions exist only in one person\'s head — and walk out the door when they leave.',
-    fix: 'Write a KB article for every novel problem you solve. If it took more than 20 minutes to diagnose, document it. No exceptions.',
+    num: '02', title: 'Ignoring Networking Fundamentals',
+    desc: 'Most attacks travel over networks. Analysts who cannot read a packet capture, understand TCP handshakes, or identify anomalous DNS behaviour are blind to 60% of attack techniques they will face.',
+    fix: 'Complete the entire Cisco CCNA networking content or the Professor Messer Network+ course before anything else.',
   },
   {
-    num: '03', title: 'Skipping the Networking Foundation',
-    desc: 'Most complex support issues — slow applications, connectivity failures, VPN problems, cloud service disruptions — have a network root cause. Technicians who can\'t read a ping output or trace a route are fundamentally limited.',
-    fix: 'Study subnetting until you can do it in your head. Complete Cisco\'s free NetAcad Networking Basics course alongside your A+ studies.',
+    num: '03', title: 'Skipping Documentation Habits',
+    desc: 'Incident response without rigorous documentation creates legal risk, prevents post-incident learning, and makes the next analyst\'s job harder. Poor documentation is a professional liability in security.',
+    fix: 'Document every lab exercise, every investigation, and every alert triage as if it will be read in court. Because one day, it might be.',
   },
   {
-    num: '04', title: 'Never Learning PowerShell',
-    desc: 'Manually resetting 50 passwords or onboarding 30 users one by one is a wasted afternoon. A single PowerShell script does it in five minutes. Technicians without scripting skills hit a hard ceiling in any Microsoft environment.',
-    fix: 'Automate one repetitive task per month using PowerShell. Start with bulk user creation or automated disk space reporting.',
+    num: '04', title: 'Not Learning the Adversary\'s Perspective',
+    desc: 'Analysts who understand only defensive tools are limited. The best analysts think like attackers — understanding how phishing, privilege escalation, and lateral movement actually work in practice.',
+    fix: 'Spend at least 20% of your lab time on offensive techniques in HackTheBox or TryHackMe attack paths. Know what you\'re defending against.',
   },
   {
-    num: '05', title: 'Neglecting the User Relationship',
-    desc: 'IT support professionals who are technically brilliant but dismissive or impatient with users destroy team trust. The "I don\'t do hand-holding" attitude is career-limiting in any support function.',
-    fix: 'Treat every ticket as if a senior manager will read your notes later. Write updates in plain English. Follow up on closed tickets the next day.',
+    num: '05', title: 'Alert Fatigue Without Tuning',
+    desc: 'New analysts often accept a high false positive rate as normal. High-volume noisy alerts desensitise analysts and increase the risk of missing real threats buried in the noise.',
+    fix: 'Learn detection rule tuning from your first SIEM lab. Measure your false positive rate and work to reduce it systematically.',
   },
   {
-    num: '06', title: 'Working Without a Home Lab',
-    desc: 'Reading about Active Directory is not the same as breaking it and fixing it. Technicians with home lab experience solve unfamiliar problems faster and interview far better than those who only know production environments.',
-    fix: 'Build a free lab using VirtualBox and Windows Server evaluation images. Spend two hours per week deliberately breaking and fixing things.',
+    num: '06', title: 'Neglecting Soft Skills and Communication',
+    desc: 'Technical excellence without communication skills limits career progression. Security analysts who cannot write a clear incident report or present risk findings to management stay junior indefinitely.',
+    fix: 'Write a post-mortem for every lab exercise you complete. Practice explaining technical findings in plain English to non-technical friends.',
   },
 ]
 
 const CAREER_CHANGE_PATHS = [
   {
-    from: 'Customer Service / Call Centre',
-    ease: 'Natural Fit', easeColor: '#0369a1', easeBg: '#eff6ff',
-    desc: 'You already have the most underrated skill in IT support: dealing with frustrated people calmly and professionally. Add the technical layer — A+ certification and a home lab — and you transition more smoothly than most.',
-    steps: ['Study CompTIA A+ (3–4 months of focused prep)', 'Build a free home lab with VirtualBox + Windows Server eval', 'Apply for Tier 1 help desk roles emphasising your customer skills', 'Earn Network+ within your first year to accelerate to Tier 2'],
+    from: 'IT Support / Help Desk',
+    ease: 'Natural Fit', easeColor: '#0f766e', easeBg: '#f0fdfa',
+    desc: 'You already understand user endpoints, ticketing systems, and organisational IT environments. Add SIEM training, incident response knowledge, and the Security+ certification to move directly into a junior analyst role.',
+    steps: ['Complete CompTIA Security+ study and exam', 'Build a SIEM lab with Security Onion or Splunk Free', 'Complete TryHackMe SOC Level 1 path', 'Apply to junior SOC analyst roles in your current organisation first'],
   },
   {
-    from: 'General IT / Tech Hobbyist',
+    from: 'Network / Systems Administrator',
     ease: 'Strong Fit', easeColor: '#16a34a', easeBg: '#f0fdf4',
-    desc: 'If you\'ve been building PCs, fixing family members\' computers, or tinkering with routers for fun — you have more practical experience than most candidates. Certify what you already know and document your lab work for interviews.',
-    steps: ['Convert your hobby experience into CompTIA A+ certification', 'Add structured enterprise skills: Active Directory, M365, Intune', 'Build a home lab simulating an enterprise environment', 'Target SME IT support roles where breadth beats depth'],
+    desc: 'Your networking and systems knowledge is the foundation of security. Add security monitoring, threat detection, and incident response skills — and you can transition into senior analyst roles faster than most.',
+    steps: ['Learn SIEM fundamentals and write your first detection rules', 'Study MITRE ATT&CK and apply it to your existing network knowledge', 'Earn CompTIA CySA+ or eJPT for security validation', 'Target network security or infrastructure security analyst roles'],
   },
   {
-    from: 'Business / Administrative Role',
+    from: 'Software Developer',
     ease: 'Very Achievable', easeColor: '#4f46e5', easeBg: '#eef2ff',
-    desc: 'Business acumen combined with IT skills is genuinely rare and valued in service desk management. Your understanding of how the business works — priorities, stakeholders, impact — makes you an unusually effective IT support professional.',
-    steps: ['Start with the Google IT Support Professional Certificate', 'Study for CompTIA A+ while working in your current role', 'Volunteer as informal IT contact in your current workplace', 'Apply to IT support roles in your current industry vertical'],
+    desc: 'Your coding skills are a significant advantage in security automation, SOAR playbook development, and understanding how vulnerabilities are introduced in code. AppSec and SIEM automation roles are natural targets.',
+    steps: ['Learn OWASP Top 10 and how to apply them as a defender', 'Build SOAR automations using Python for alert triage', 'Study SAST/DAST tools and integrate security into CI/CD', 'Target AppSec analyst or security engineering roles'],
   },
   {
     from: 'Other Background',
     ease: 'Achievable', easeColor: '#ea580c', easeBg: '#fff7ed',
-    desc: 'Domain expertise from healthcare, finance, legal, or education combined with IT support skills is extremely valuable in those verticals. Healthcare IT support, for example, pays a significant premium over general help desk roles.',
-    steps: ['Complete the Google IT Support Certificate (free/cheap)', 'Study A+ and N+ using Professor Messer\'s free courses', 'Target IT support roles in your previous industry', 'Leverage your domain knowledge as a differentiator in interviews'],
+    desc: 'Domain expertise from finance, healthcare, or law can be a powerful differentiator. Security analysts with industry knowledge become indispensable in regulated sectors that struggle to find technical staff who understand the business.',
+    steps: ['Start with TryHackMe Pre-Security and Security Fundamentals paths', 'Earn CompTIA Security+ as your first certification', 'Build a home lab and document everything on GitHub or a blog', 'Target security roles in your previous industry vertical'],
   },
 ]
 
 const THIRTY_DAY_PLAN = [
-  { week: 'Week 1', theme: 'Foundation & Setup', color: '#0369a1', bg: '#eff6ff', days: [
-    { day: 'Day 1–2', task: 'Install VirtualBox. Set up a Windows 10 VM and a Windows Server 2019 eval VM. Get comfortable with the interface.' },
-    { day: 'Day 3–4', task: 'Begin Professor Messer\'s free CompTIA A+ Core 1 video series. Complete the hardware and components modules.' },
-    { day: 'Day 5–6', task: 'Configure a free ServiceNow Developer Instance or set up a Freshdesk free trial. Create your first mock tickets.' },
-    { day: 'Day 7', task: 'Research local IT support job listings. Identify the 5 most common tools and requirements in your target market.' },
+  { week: 'Week 1', theme: 'Foundations & Environment', color: '#0f766e', bg: '#f0fdfa', days: [
+    { day: 'Day 1–2', task: 'Create a TryHackMe account and complete the Pre-Security path. Set up a Kali Linux VM. Install Wireshark and capture your first network traffic.' },
+    { day: 'Day 3–4', task: 'Study the OSI model, TCP/IP stack, DNS, HTTP/S, and common ports in depth. Practise packet analysis in Wireshark — identify GET requests, DNS lookups, and TCP handshakes.' },
+    { day: 'Day 5–6', task: 'Study the CIA Triad, authentication methods, cryptography basics, and access control models. Begin the CompTIA Security+ study materials.' },
+    { day: 'Day 7', task: 'Complete TryHackMe SOC Level 1 — Introduction to SIEM module. Document your notes on a GitHub repo or personal blog.' },
   ]},
-  { week: 'Week 2', theme: 'OS & Networking', color: '#16a34a', bg: '#f0fdf4', days: [
-    { day: 'Day 8–9', task: 'Windows Server lab: install Active Directory Domain Services, promote to domain controller, create 10 test users.' },
-    { day: 'Day 10–11', task: 'Networking fundamentals: study subnetting using the subnettingpractice.com tool. Do 30 minutes of subnetting drills per day.' },
-    { day: 'Day 12–13', task: 'Install Wireshark. Capture and analyse a DNS lookup, a ping, and a web page load. Understand what you\'re seeing.' },
-    { day: 'Day 14', task: 'CompTIA A+ Core 1 mock exam. Target 75%+. Identify knowledge gaps and revisit the weak sections.' },
+  { week: 'Week 2', theme: 'SIEM & Log Analysis', color: '#16a34a', bg: '#f0fdf4', days: [
+    { day: 'Day 8–9', task: 'Install Splunk Free on a local VM. Ingest sample Windows event logs and web server logs. Write your first 3 SPL search queries.' },
+    { day: 'Day 10–11', task: 'Complete the TryHackMe Splunk room. Practise log correlation. Identify at least 5 distinct attack patterns from sample log data.' },
+    { day: 'Day 12–13', task: 'Study the MITRE ATT&CK framework. Map 10 techniques to logs you would see in a real SIEM. Document your analysis process.' },
+    { day: 'Day 14', task: 'Complete a LetsDefend.io challenge. Triage 10 simulated alerts. Write a triage report for each one as if submitting to a manager.' },
   ]},
-  { week: 'Week 3', theme: 'Cloud & Identity', color: '#4f46e5', bg: '#eef2ff', days: [
-    { day: 'Day 15–16', task: 'Create a free Microsoft 365 developer tenant. Set up users, assign licences, configure MFA. Simulate a real onboarding.' },
-    { day: 'Day 17–18', task: 'Complete the Microsoft Learn "Azure Fundamentals" learning path (AZ-900). It\'s free and takes about 10 hours.' },
-    { day: 'Day 19–20', task: 'Begin PowerShell: write scripts to create AD users in bulk, list all computers in the domain, and check disk space.' },
-    { day: 'Day 21', task: 'ITIL 4 Foundation overview: watch the free YouTube overview by AXELOS. Understand the core concepts and vocabulary.' },
+  { week: 'Week 3', theme: 'Incident Response & Forensics', color: '#4f46e5', bg: '#eef2ff', days: [
+    { day: 'Day 15–16', task: 'Study the NIST Incident Response lifecycle. Build an IR playbook template for a phishing incident in a Google Doc or Notion.' },
+    { day: 'Day 17–18', task: 'Install Autopsy and analyse a forensic disk image from a DFIR practice challenge (CyberDefenders.org provides free ones).' },
+    { day: 'Day 19–20', task: 'Install Volatility 3. Analyse a memory dump for malicious processes, network connections, and injected shellcode. Document your findings.' },
+    { day: 'Day 21', task: 'Complete TryHackMe\'s Advent of Cyber forensics section or a CyberDefenders blue team challenge. Write a full incident report from findings.' },
   ]},
-  { week: 'Week 4', theme: 'Polish & Apply', color: '#ea580c', bg: '#fff7ed', days: [
-    { day: 'Day 22–24', task: 'Build your IT support portfolio: document 3 lab scenarios with screenshots, problem descriptions, and step-by-step resolutions.' },
-    { day: 'Day 25–26', task: 'Rewrite your CV with IT language. List your home lab setup, tools used, and the specific skills you\'ve demonstrated.' },
-    { day: 'Day 27–28', task: 'Book your CompTIA A+ Core 1 exam date. Having a real target date forces productive study. Schedule Core 2 for 6 weeks after.' },
-    { day: 'Day 29–30', task: 'Apply to 5 junior IT support or help desk roles. Customise each CV. Follow up with a connection request to the hiring manager on LinkedIn.' },
+  { week: 'Week 4', theme: 'Apply & Launch Career', color: '#ea580c', bg: '#fff7ed', days: [
+    { day: 'Day 22–24', task: 'Register for CompTIA Security+ exam. Set a date 60 days out. Create a study schedule. Begin Professor Messer\'s free video course.' },
+    { day: 'Day 25–26', task: 'Polish GitHub: add a README to your security lab repo. Write a 500-word blog post about a technique you learned this month.' },
+    { day: 'Day 27–28', task: 'Build a simple home SOC using Elastic SIEM (free). Ingest pfSense firewall logs. Write 3 detection rules. Document with screenshots.' },
+    { day: 'Day 29–30', task: 'Update LinkedIn with your TryHackMe profile, GitHub lab, and Sec+ exam date. Apply to 5 junior analyst roles. Send 3 LinkedIn messages to working analysts asking for a 15-minute call.' },
   ]},
 ]
 
@@ -398,7 +396,6 @@ const TOC_ITEMS = [
   { num: '16', label: 'Final Thoughts' },
 ]
 
-/* ─── SHARE BAR ─────────────────────────────────────────────────────────────── */
 function ShareBar() {
   const [copied, setCopied] = useState(false)
   const handleCopy = () => {
@@ -406,7 +403,7 @@ function ShareBar() {
   }
   const handleShare = async () => {
     if (navigator.share) {
-      try { await navigator.share({ title: 'Help Desk & IT Support Career Roadmap 2026', text: 'Complete step-by-step roadmap to become an IT Support Specialist in 2026', url: window.location.href }) }
+      try { await navigator.share({ title: 'Information Security Analyst Career Roadmap 2026', text: 'Complete step-by-step roadmap to become an Information Security Analyst in 2026', url: window.location.href }) }
       catch (_) {}
     } else { handleCopy() }
   }
@@ -424,13 +421,12 @@ function ShareBar() {
       </button>
       <div className="flex items-center gap-2 px-3 py-2 rounded-xl text-xs font-mono truncate max-w-xs" style={{ background: '#f1f5f9', color: C.textMuted, border: `1px solid ${C.border}` }}>
         <Link2 size={11} style={{ color: C.textFaint, flexShrink: 0 }} />
-        <span className="truncate">{typeof window !== 'undefined' ? window.location.href : '/roadmaps/help-desk-it-support'}</span>
+        <span className="truncate">{typeof window !== 'undefined' ? window.location.href : '/roadmaps/information-security-analyst'}</span>
       </div>
     </div>
   )
 }
 
-/* ─── SECTION HEADER ──────────────────────────────────────────────────────── */
 function SectionHeader({ icon, title, subtitle, iconBg, iconColor }: { icon: React.ReactNode; title: string; subtitle: string; iconBg: string; iconColor: string }) {
   return (
     <div className="flex items-center gap-4 mb-10">
@@ -445,7 +441,6 @@ function SectionHeader({ icon, title, subtitle, iconBg, iconColor }: { icon: Rea
   )
 }
 
-/* ─── FADE HOOK ──────────────────────────────────────────────────────────── */
 function useFade() {
   const ref = useRef<HTMLDivElement>(null)
   useEffect(() => {
@@ -457,8 +452,7 @@ function useFade() {
   return ref
 }
 
-/* ─── PAGE ────────────────────────────────────────────────────────────────── */
-export default function HelpDeskITSupportRoadmapPage() {
+export default function InformationSecurityAnalystRoadmapPage() {
   const progressRef = useRef<HTMLDivElement>(null)
   const tlSectionRef = useRef<HTMLElement>(null)
   const barsContainerRef = useRef<HTMLDivElement>(null)
@@ -499,7 +493,6 @@ export default function HelpDeskITSupportRoadmapPage() {
   return (
     <div className="min-h-screen" style={{ background: C.bg, color: C.text, fontFamily: 'Inter, sans-serif' }}>
 
-      {/* Back button */}
       <Link to="/roadmaps" className="fixed top-5 left-5 z-50 flex items-center gap-2 px-4 py-2 rounded-xl text-xs font-semibold no-underline transition-all duration-200"
         style={{ background: 'rgba(255,255,255,0.9)', backdropFilter: 'blur(12px)', border: `1px solid ${C.border}`, color: C.textMuted, boxShadow: '0 2px 12px rgba(0,0,0,0.08)' }}>
         <ArrowLeft size={14} /> All Roadmaps
@@ -509,22 +502,22 @@ export default function HelpDeskITSupportRoadmapPage() {
       <div className="relative w-full" style={{ background: C.bg }}>
         <div className="relative w-full overflow-hidden" style={{ height: '100vh', minHeight: 600 }}>
           <img
-            src="https://i.imgur.com/6rBm8j5.jpeg"
-            alt="IT Support technician at service desk"
+            src="https://images.unsplash.com/photo-1614064641938-3bbee52942c7?w=1600&q=80"
+            alt="Information Security Analyst cybersecurity operations"
             className="w-full h-full object-cover object-center block"
-            style={{ filter: 'saturate(0.45) brightness(1.1) hue-rotate(190deg)' }}
+            style={{ filter: 'saturate(0.55) brightness(1.05)' }}
           />
           <div className="absolute inset-0" style={{ background: 'linear-gradient(to bottom, rgba(255,255,255,0) 45%, rgba(255,255,255,0.75) 72%, rgba(255,255,255,1) 88%)' }} />
           <div className="absolute bottom-0 left-0 right-0 z-10">
             <div className="max-w-4xl mx-auto px-8 pb-12">
               <div className="inline-flex items-center gap-1.5 rounded-full px-3.5 py-1 mb-3 text-xs font-semibold" style={{ background: C.primaryLight, color: C.primary }}>
-                <Headphones size={12} /> Customer IT Support & Service Desk
+                <Shield size={12} /> Security & Defence
               </div>
               <h1 className="font-extrabold leading-tight mb-2" style={{ fontFamily: 'Syne, sans-serif', fontSize: 'clamp(2.2rem, 5vw, 3.6rem)', color: '#0f172a', letterSpacing: '-0.03em' }}>
-                Help Desk & IT Support
+                Information Security Analyst
               </h1>
               <span className="block font-normal mb-3" style={{ fontFamily: 'Syne, sans-serif', fontSize: 'clamp(0.95rem, 1.8vw, 1.2rem)', color: C.textMuted }}>
-                Career Roadmap 2026 — Technician · Specialist · Analyst · Manager
+                Career Roadmap 2026
               </span>
               <div className="flex items-center gap-4">
                 <div className="flex items-center gap-1.5 text-sm" style={{ color: C.textMuted }}><Clock size={14} style={{ color: C.textFaint }} /> 20 min read</div>
@@ -535,7 +528,7 @@ export default function HelpDeskITSupportRoadmapPage() {
         </div>
         <div className="max-w-4xl mx-auto px-8 pt-6 pb-16">
           <p className="text-base leading-relaxed" style={{ color: '#4b5563', maxWidth: 560, marginLeft: 140 }}>
-            Be the person who keeps every organisation running. IT support professionals solve real problems for real people every day — and use that experience as the launchpad to every specialisation in technology.
+            Defend the digital perimeter. Information security analysts monitor, detect, and respond to threats that target organisations every second of every day — invisible guardians of the data and systems that modern business runs on.
           </p>
           <div className="h-px mt-10" style={{ background: C.border }} />
         </div>
@@ -562,10 +555,10 @@ export default function HelpDeskITSupportRoadmapPage() {
       <section className="border-b" style={{ ...sectionStyle, background: C.bg }}>
         <div className="max-w-4xl mx-auto px-8">
           <div ref={whatRef}>
-            <SectionHeader icon={<Layers size={22} />} title="What This Career Is" subtitle="The roles, responsibilities, and scope of IT Support" iconBg={C.primaryLight} iconColor={C.primary} />
-            <div className="rounded-2xl p-6 mb-8 border" style={{ background: '#eff6ff', borderColor: 'rgba(3,105,161,0.2)' }}>
+            <SectionHeader icon={<Layers size={22} />} title="What This Career Is" subtitle="The role, responsibilities, and scope of Information Security Analysis" iconBg={C.primaryLight} iconColor={C.primary} />
+            <div className="rounded-2xl p-6 mb-8 border" style={{ background: '#f0fdfa', borderColor: 'rgba(15,118,110,0.2)' }}>
               <p className="text-base leading-relaxed" style={{ color: '#374151' }}>
-                <strong style={{ color: C.primary }}>IT Support & Help Desk professionals</strong> are the operational backbone of every technology-dependent organisation. Whether operating as a Help Desk Technician handling first-call resolution, an IT Support Specialist owning complex escalations, a Service Desk Analyst driving process improvement, or a Customer IT Support Engineer building long-term user relationships — these roles ensure that technology serves people, not the other way around.
+                An <strong style={{ color: C.primary }}>Information Security Analyst</strong> is the frontline defender of an organisation's digital assets. Working within Security Operations Centres (SOCs) or as standalone security professionals, analysts monitor systems for threats, investigate incidents, manage vulnerabilities, and ensure compliance with security policies and regulations. They are the people who stand between adversaries and the data that organisations — and the customers they serve — depend upon.
               </p>
             </div>
             <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
@@ -589,7 +582,7 @@ export default function HelpDeskITSupportRoadmapPage() {
       <section className="border-b" style={{ ...sectionStyle, background: '#f8f9ff' }}>
         <div className="max-w-4xl mx-auto px-8">
           <div ref={whyRef}>
-            <SectionHeader icon={<Flame size={22} />} title="Why Choose This Career" subtitle="Six compelling reasons IT Support could be your best move" iconBg={C.orangeLight} iconColor={C.orange} />
+            <SectionHeader icon={<Flame size={22} />} title="Why Choose This Career" subtitle="Six compelling reasons Information Security could be your best move" iconBg={C.orangeLight} iconColor={C.orange} />
             <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
               {WHY_REASONS.map(r => (
                 <div key={r.title} className="rounded-2xl p-5 border transition-all duration-200 hover:-translate-y-0.5 hover:shadow-md" style={{ background: C.bg, borderColor: C.border }}>
@@ -611,13 +604,13 @@ export default function HelpDeskITSupportRoadmapPage() {
       <section className="border-b" style={{ ...sectionStyle, background: C.bg }}>
         <div className="max-w-4xl mx-auto px-8">
           <div ref={dayRef}>
-            <SectionHeader icon={<Briefcase size={22} />} title="A Day in the Life" subtitle="What a typical IT Support professional's workday looks like" iconBg={C.indigoLight} iconColor={C.indigo} />
+            <SectionHeader icon={<Briefcase size={22} />} title="A Day in the Life" subtitle="What a typical Information Security Analyst workday looks like" iconBg={C.indigoLight} iconColor={C.indigo} />
             <div className="grid gap-7" style={{ gridTemplateColumns: '1fr 260px' }}>
               <div>
                 <p className="text-sm font-semibold mb-4" style={{ fontFamily: 'Syne, sans-serif', color: C.textMuted }}>Typical Daily Schedule</p>
                 {SCHEDULE.map(item => (
                   <div key={item.time} className="flex items-start gap-3.5 rounded-2xl p-4 border mb-2.5 transition-all duration-200" style={{ background: C.bg, borderColor: C.border }}
-                    onMouseEnter={e => { (e.currentTarget as HTMLElement).style.borderColor = 'rgba(3,105,161,0.3)'; (e.currentTarget as HTMLElement).style.background = '#eff6ff' }}
+                    onMouseEnter={e => { (e.currentTarget as HTMLElement).style.borderColor = 'rgba(15,118,110,0.3)'; (e.currentTarget as HTMLElement).style.background = '#f0fdfa' }}
                     onMouseLeave={e => { (e.currentTarget as HTMLElement).style.borderColor = C.border; (e.currentTarget as HTMLElement).style.background = C.bg }}>
                     <div className="w-9 h-9 rounded-xl flex items-center justify-center flex-shrink-0" style={{ background: C.primaryLight, color: C.primary }}>{item.icon}</div>
                     <div className="flex-1 min-w-0">
@@ -670,7 +663,7 @@ export default function HelpDeskITSupportRoadmapPage() {
           <div ref={tlRef}>
             <SectionHeader icon={<Clock size={22} />} title="Career Timeline" subtitle="Time estimates and salary ranges for each level" iconBg={C.indigoLight} iconColor={C.indigo} />
             <div className="mb-10">
-              <div className="flex justify-between text-xs mb-2.5" style={{ color: C.textMuted }}><span>Career Progression</span><span>Technician → IT Manager</span></div>
+              <div className="flex justify-between text-xs mb-2.5" style={{ color: C.textMuted }}><span>Career Progression</span><span>Junior → CISO</span></div>
               <div className="h-1.5 rounded-full overflow-hidden" style={{ background: '#e2e8f0' }}>
                 <div ref={progressRef} className="h-1.5 rounded-full" style={{ width: '0%', background: 'linear-gradient(90deg, #0891b2 0%, #16a34a 33%, #7c3aed 66%, #ea580c 100%)' }} />
               </div>
@@ -701,8 +694,8 @@ export default function HelpDeskITSupportRoadmapPage() {
           <SectionHeader icon={<Target size={22} />} title="Step-by-Step Roadmap" subtitle="Your path from complete beginner to job-ready" iconBg={C.primaryLight} iconColor={C.primary} />
           <div className="relative flex flex-col items-center">
             {ROADMAP_STEPS.map((s, i) => {
-              const icons = ['💻', '🌐', '🏢', '📋', '🔐', '⚡']
-              const accentColors = ['#0369a1', '#16a34a', '#0369a1', '#16a34a', '#0369a1', '#16a34a']
+              const icons = ['🌐', '🔐', '📊', '🔍', '🎯', '📋']
+              const accentColors = ['#0f766e', '#16a34a', '#0f766e', '#16a34a', '#0f766e', '#16a34a']
               const accent = accentColors[i]; const isLast = i === ROADMAP_STEPS.length - 1; const isEven = i % 2 === 0
               return (
                 <div key={s.step} className="w-full flex flex-col items-center">
@@ -748,11 +741,11 @@ export default function HelpDeskITSupportRoadmapPage() {
                 </div>
               )
             })}
-            <div className="w-full rounded-3xl mt-2 py-8 px-8 text-center" style={{ background: `linear-gradient(135deg, ${C.primary} 0%, ${C.indigo} 100%)`, boxShadow: '0 8px 48px rgba(3,105,161,0.25)' }}>
+            <div className="w-full rounded-3xl mt-2 py-8 px-8 text-center" style={{ background: `linear-gradient(135deg, ${C.primary} 0%, ${C.indigo} 100%)`, boxShadow: '0 8px 48px rgba(15,118,110,0.25)' }}>
               <div className="text-4xl mb-3">🏆</div>
               <div className="font-extrabold text-white mb-1" style={{ fontFamily: 'Syne, sans-serif', fontSize: 'clamp(1.3rem, 3vw, 1.8rem)' }}>GO FROM ZERO to</div>
               <div className="font-extrabold mb-4" style={{ fontFamily: 'Syne, sans-serif', fontSize: 'clamp(1.3rem, 3vw, 1.8rem)', color: 'rgba(255,255,255,0.75)' }}>JOB-READY IN 2026</div>
-              <div className="text-sm" style={{ color: 'rgba(255,255,255,0.6)' }}>8–12 months · Consistent daily study · Certify as you learn</div>
+              <div className="text-sm" style={{ color: 'rgba(255,255,255,0.6)' }}>10–14 months · Consistent daily practice · Build real security labs and get certified</div>
             </div>
           </div>
           <ShareBar />
@@ -865,9 +858,9 @@ export default function HelpDeskITSupportRoadmapPage() {
       <section className="border-b" style={{ ...sectionStyle, background: C.bg }}>
         <div className="max-w-4xl mx-auto px-8">
           <div ref={aiRef}>
-            <SectionHeader icon={<Sparkles size={22} />} title="AI-Enhanced Roadmap" subtitle="How AI is transforming IT Support in 2026" iconBg={C.primaryLight} iconColor={C.primary} />
-            <div className="rounded-2xl p-5 mb-7 text-sm leading-relaxed border" style={{ background: '#eff6ff', borderColor: 'rgba(3,105,161,0.2)', color: C.textMuted }}>
-              AI tools don't replace IT support professionals — they <em style={{ color: C.primary }}>amplify</em> them. Support teams using AI-assisted ticket resolution and automation handle 40–60% more tickets with the same headcount — freeing senior staff for complex incidents and strategic projects.
+            <SectionHeader icon={<Sparkles size={22} />} title="AI-Enhanced Roadmap" subtitle="How AI is transforming Information Security in 2026" iconBg={C.primaryLight} iconColor={C.primary} />
+            <div className="rounded-2xl p-5 mb-7 text-sm leading-relaxed border" style={{ background: '#f0fdfa', borderColor: 'rgba(15,118,110,0.2)', color: C.textMuted }}>
+              AI tools don't replace security analysts — they <em style={{ color: C.primary }}>amplify</em> them. Analysts who use AI-driven SIEM tools, threat intelligence platforms, and copilots for report writing detect more threats, respond faster, and spend more time on strategic security work.
             </div>
             <div className="grid grid-cols-1 md:grid-cols-3 gap-4 mb-9">
               {AI_IMPACTS.map(item => (
@@ -935,7 +928,7 @@ export default function HelpDeskITSupportRoadmapPage() {
           <div ref={salaryRef}>
             <SectionHeader icon={<DollarSign size={22} />} title="Salary" subtitle="What you can realistically earn at each stage" iconBg={C.greenLight} iconColor={C.green} />
             <div className="rounded-2xl p-6 mb-6 border" style={{ background: '#f0fdf4', borderColor: 'rgba(22,163,74,0.2)' }}>
-              <p className="text-sm leading-relaxed" style={{ color: C.textMuted }}>Figures reflect South African total compensation. Sectors like financial services, mining, and large enterprise consistently pay 20–35% above these benchmarks for senior IT support professionals.</p>
+              <p className="text-sm leading-relaxed" style={{ color: C.textMuted }}>Figures reflect South African total compensation. USD-denominated international remote security roles — especially senior analyst and DFIR positions — can pay 2–4× these figures.</p>
             </div>
             <div className="space-y-4">
               {SALARY_DATA.map(row => (
@@ -948,14 +941,14 @@ export default function HelpDeskITSupportRoadmapPage() {
                     <span className="text-sm font-bold" style={{ color: row.color }}>{row.range}</span>
                   </div>
                   <div className="h-2.5 rounded-full overflow-hidden" style={{ background: '#e2e8f0' }}>
-                    <div className="h-2.5 rounded-full" style={{ width: `${(row.midpoint / 1500) * 100}%`, background: row.color }} />
+                    <div className="h-2.5 rounded-full" style={{ width: `${(row.midpoint / 4200) * 100}%`, background: row.color }} />
                   </div>
                 </div>
               ))}
             </div>
-            <div className="mt-6 rounded-2xl p-5 border" style={{ background: '#eff6ff', borderColor: 'rgba(3,105,161,0.2)' }}>
+            <div className="mt-6 rounded-2xl p-5 border" style={{ background: '#f0fdfa', borderColor: 'rgba(15,118,110,0.2)' }}>
               <p className="text-xs leading-relaxed" style={{ color: C.textMuted }}>
-                <strong style={{ color: C.primary }}>Pro tip:</strong> ITIL certification, PowerShell scripting skills, and Microsoft 365 administration experience consistently command a 15–25% salary premium over uncertified peers at the same experience level. Certifications are not optional — they are the salary lever in IT support.
+                <strong style={{ color: C.primary }}>Pro tip:</strong> Security analysts at financial institutions, healthcare companies, and critical infrastructure operators earn a 20–40% premium over equivalent roles at general companies. Regulated sectors pay more because the cost of a breach is catastrophically high.
               </p>
             </div>
           </div>
@@ -966,7 +959,7 @@ export default function HelpDeskITSupportRoadmapPage() {
       <section className="border-b" style={{ ...sectionStyle, background: '#f8f9ff' }}>
         <div className="max-w-4xl mx-auto px-8">
           <div ref={mistakesRef}>
-            <SectionHeader icon={<AlertTriangle size={22} />} title="Common Mistakes" subtitle="Avoid the traps that slow down most aspiring IT support professionals" iconBg={C.orangeLight} iconColor={C.orange} />
+            <SectionHeader icon={<AlertTriangle size={22} />} title="Common Mistakes" subtitle="Avoid the traps that slow down most aspiring security analysts" iconBg={C.orangeLight} iconColor={C.orange} />
             <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
               {MISTAKES.map(m => (
                 <div key={m.num} className="rounded-2xl p-5 border transition-all duration-200 hover:shadow-md" style={{ background: C.bg, borderColor: C.border }}>
@@ -992,7 +985,7 @@ export default function HelpDeskITSupportRoadmapPage() {
       <section className="border-b" style={{ ...sectionStyle, background: C.bg }}>
         <div className="max-w-4xl mx-auto px-8">
           <div ref={changeRef}>
-            <SectionHeader icon={<RefreshCw size={22} />} title="Career Change Guide" subtitle="How to break into IT Support from your current background" iconBg={C.primaryLight} iconColor={C.primary} />
+            <SectionHeader icon={<RefreshCw size={22} />} title="Career Change Guide" subtitle="How to break into information security from your current background" iconBg={C.primaryLight} iconColor={C.primary} />
             <div className="grid grid-cols-1 md:grid-cols-2 gap-5">
               {CAREER_CHANGE_PATHS.map(path => (
                 <div key={path.from} className="rounded-2xl p-6 border" style={{ background: path.easeBg, borderColor: `${path.easeColor}20` }}>
@@ -1049,7 +1042,7 @@ export default function HelpDeskITSupportRoadmapPage() {
       <section className="border-b" style={{ ...sectionStyle, background: C.bg }}>
         <div className="max-w-4xl mx-auto px-8">
           <div ref={vidsRef}>
-            <SectionHeader icon={<Play size={22} />} title="Video Resources" subtitle="Learn from the best educators in IT Support" iconBg={C.redLight} iconColor={C.red} />
+            <SectionHeader icon={<Play size={22} />} title="Video Resources" subtitle="Learn from the best educators in Information Security" iconBg={C.redLight} iconColor={C.red} />
             <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
               {VIDEOS.map(v => (
                 <div key={v.id} className="rounded-2xl overflow-hidden border transition-all duration-200" style={{ background: '#f8f9ff', borderColor: C.border }}
@@ -1088,10 +1081,10 @@ export default function HelpDeskITSupportRoadmapPage() {
             <SectionHeader icon={<Award size={22} />} title="Final Thoughts" subtitle="What we want you to take away from this guide" iconBg={C.primaryLight} iconColor={C.primary} />
             <div className="rounded-2xl p-6 border mb-8" style={{ background: C.bg, borderColor: C.border }}>
               <p className="text-base leading-relaxed mb-4" style={{ color: '#374151' }}>
-                IT support is <strong style={{ color: C.primary }}>where technology careers begin and where great careers are built</strong>. The help desk is not a waiting room for a "real" IT job — it is the most complete technology education available. In a single year, a driven help desk technician encounters more real-world IT problems than most CS graduates see in three years of lectures.
+                Information security analysis is the career that <strong style={{ color: C.primary }}>keeps everything else safe</strong>. In a world where every organisation is a potential target and the cost of a breach is measured in millions — the professionals who can detect, respond to, and prevent attacks are among the most valued in technology.
               </p>
               <p className="text-base leading-relaxed" style={{ color: '#374151' }}>
-                The professionals who thrive here are those who treat every ticket as a learning opportunity, every user as a valued customer, and every certification as a commitment to excellence. The field rewards curiosity, consistency, and care — and it rewards them generously.
+                The certifications are achievable, the labs are free, and the demand has never been higher. What separates those who make it is not raw intelligence — it is consistent practice, rigorous documentation, and an unrelenting curiosity about how adversaries think.
               </p>
             </div>
             <div className="grid grid-cols-1 gap-3">
@@ -1117,7 +1110,7 @@ export default function HelpDeskITSupportRoadmapPage() {
             Ready to Start Your Journey?
           </h2>
           <p className="text-sm mb-10 mx-auto leading-relaxed" style={{ color: 'rgba(255,255,255,0.65)', maxWidth: 440 }}>
-            You have the roadmap. You have the resources. You have the 30-day plan. All that's left is to open your browser, register for CompTIA A+, and take the first step.
+            You have the roadmap. You have the resources. You have the 30-day plan. All that's left is to open TryHackMe and start your first security lab.
           </p>
           <div className="flex flex-wrap justify-center gap-3.5">
             <Link to="/roadmaps" className="inline-flex items-center gap-2 rounded-xl px-7 py-3.5 font-bold text-sm no-underline" style={{ fontFamily: 'Syne, sans-serif', background: '#fff', color: C.primary }}>
@@ -1127,7 +1120,7 @@ export default function HelpDeskITSupportRoadmapPage() {
               Get Career Advice
             </a>
           </div>
-          <p className="text-xs mt-5" style={{ color: 'rgba(255,255,255,0.35)' }}>Start studying today. Your future self will thank you.</p>
+          <p className="text-xs mt-5" style={{ color: 'rgba(255,255,255,0.35)' }}>Start defending today. Your future self will thank you.</p>
         </div>
         <ShareBar />
       </div>
