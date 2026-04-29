@@ -1,10 +1,9 @@
 import React, { useState, useRef } from 'react';
 import { Link } from 'react-router-dom';
 import { motion, useInView, AnimatePresence } from 'framer-motion';
-import { X } from 'lucide-react';
 import { Navbar }    from '../components/Navbar';
 import { Footer }    from '../components/Footer';
-import { saveEmail } from '../services/emailService'; // ← NEW: Firebase helper
+import { saveEmail } from '../services/emailService';
 
 // ════════════════════════════════════════════════════════════════
 //  TYPES
@@ -145,96 +144,6 @@ const statusConfig: Record<
 };
 
 // ════════════════════════════════════════════════════════════════
-//  VIDEO MODAL
-// ════════════════════════════════════════════════════════════════
-
-const OVERVIEW_VIDEO_URL = 'https://www.youtube.com/embed/AD6H5GKE4U4?autoplay=1';
-
-interface VideoModalProps {
-  onClose: () => void;
-}
-
-const VideoModal: React.FC<VideoModalProps> = ({ onClose }) => (
-  <AnimatePresence>
-    <motion.div
-      key="backdrop"
-      initial={{ opacity: 0 }}
-      animate={{ opacity: 1 }}
-      exit={{ opacity: 0 }}
-      onClick={onClose}
-      style={{
-        position: 'fixed', inset: 0, zIndex: 1000,
-        background: 'rgba(0,0,0,0.82)',
-        display: 'flex', alignItems: 'center', justifyContent: 'center',
-        padding: '20px',
-      }}
-    >
-      <motion.div
-        key="modal"
-        initial={{ opacity: 0, scale: 0.93, y: 20 }}
-        animate={{ opacity: 1, scale: 1, y: 0 }}
-        exit={{ opacity: 0, scale: 0.93, y: 20 }}
-        transition={{ duration: 0.3, ease: [0.22, 1, 0.36, 1] }}
-        onClick={(e: React.MouseEvent) => e.stopPropagation()}
-        style={{
-          background: '#111827',
-          borderRadius: 20,
-          overflow: 'hidden',
-          width: '100%',
-          maxWidth: 860,
-          boxShadow: '0 32px 80px rgba(0,0,0,0.6)',
-          position: 'relative',
-        }}
-      >
-        <button
-          onClick={onClose}
-          style={{
-            position: 'absolute', top: 14, right: 14, zIndex: 10,
-            width: 36, height: 36, borderRadius: '50%',
-            background: 'rgba(255,255,255,0.12)',
-            border: '1px solid rgba(255,255,255,0.2)',
-            display: 'flex', alignItems: 'center', justifyContent: 'center',
-            cursor: 'pointer', color: '#fff', transition: 'background 0.2s',
-          }}
-          aria-label="Close video"
-        >
-          <X size={16} />
-        </button>
-
-        <div style={{ padding: '20px 24px 0', display: 'flex', alignItems: 'center', gap: 10 }}>
-          <div style={{
-            width: 8, height: 8, borderRadius: '50%', background: '#10b981',
-            animation: 'pulse-dot 2s ease-in-out infinite',
-          }} />
-          <span style={{ fontSize: 11, fontWeight: 700, color: 'rgba(255,255,255,0.5)', letterSpacing: 1.4, textTransform: 'uppercase' }}>
-            AI Career Overview
-          </span>
-        </div>
-        <div style={{ padding: '10px 24px 16px' }}>
-          <h3 style={{ fontSize: 18, fontWeight: 800, color: '#fff', margin: 0 }}>
-            The AI Revolution — What It Means for Your Career
-          </h3>
-        </div>
-
-        <div style={{ position: 'relative', paddingBottom: '56.25%', height: 0, background: '#000' }}>
-          <iframe
-            src={OVERVIEW_VIDEO_URL}
-            title="AI Career Overview"
-            allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
-            allowFullScreen
-            style={{
-              position: 'absolute', top: 0, left: 0,
-              width: '100%', height: '100%',
-              border: 'none',
-            }}
-          />
-        </div>
-      </motion.div>
-    </motion.div>
-  </AnimatePresence>
-);
-
-// ════════════════════════════════════════════════════════════════
 //  SUB-COMPONENTS
 // ════════════════════════════════════════════════════════════════
 
@@ -349,12 +258,9 @@ const CareerCard: React.FC<{ c: Career; index: number }> = ({ c, index }) => {
 const AICareerPage: React.FC = () => {
   const [tab,       setTab]       = useState<TabKey>('all');
   const [email,     setEmail]     = useState<string>('');
-  const [videoOpen, setVideoOpen] = useState<boolean>(false);
 
-  // ── NEW: proper status state instead of a simple boolean ──────────────────
   const [ctaStatus, setCtaStatus] = useState<'idle' | 'loading' | 'done' | 'dup' | 'err'>('idle');
 
-  // ── helper so we don't repeat the save logic twice ────────────────────────
   const handleCtaSubscribe = async () => {
     if (!email.trim()) return;
     setCtaStatus('loading');
@@ -363,6 +269,11 @@ const AICareerPage: React.FC = () => {
       result === 'saved'     ? 'done' :
       result === 'duplicate' ? 'dup'  : 'err'
     );
+  };
+
+  // ── smooth scroll to stats section ───────────────────────────
+  const handleViewStats = () => {
+    document.getElementById('stats-section')?.scrollIntoView({ behavior: 'smooth' });
   };
 
   const filtered: Career[] =
@@ -462,8 +373,6 @@ const AICareerPage: React.FC = () => {
         }
       `}</style>
 
-      {videoOpen && <VideoModal onClose={() => setVideoOpen(false)} />}
-
       <Navbar />
 
       {/* ── HERO ─────────────────────────────────────────────────────── */}
@@ -527,12 +436,10 @@ const AICareerPage: React.FC = () => {
                 <Link to="/roadmaps" className="hero-btn-primary">
                   Explore AI Roadmaps →
                 </Link>
-                <button className="hero-btn-secondary" onClick={() => setVideoOpen(true)}>
-                  <svg width="18" height="18" viewBox="0 0 18 18" fill="none" style={{ flexShrink: 0 }}>
-                    <circle cx="9" cy="9" r="9" fill="#111827" />
-                    <polygon points="7,5.5 14,9 7,12.5" fill="#fff" />
-                  </svg>
-                  Watch Overview
+
+                {/* ── REPLACED: Watch Overview → View Key Stats ── */}
+                <button className="hero-btn-secondary" onClick={handleViewStats}>
+                  📊 View Key Stats
                 </button>
               </motion.div>
             </div>
@@ -570,7 +477,8 @@ const AICareerPage: React.FC = () => {
       </section>
 
       {/* ── TICKER ──────────────────────────────────────────────────── */}
-      <div style={{ background: '#111827', padding: '13px 0', overflow: 'hidden' }}>
+      {/* ↓ id="stats-section" added here so the scroll target works ↓ */}
+      <div id="stats-section" style={{ background: '#111827', padding: '13px 0', overflow: 'hidden' }}>
         <div style={{ display: 'flex', animation: 'ticker 35s linear infinite', whiteSpace: 'nowrap' }}>
           {[...Array(4)].map((_, r: number) => (
             <span key={r} style={{ display: 'inline-flex', gap: 48, paddingRight: 48 }}>
@@ -877,9 +785,7 @@ const AICareerPage: React.FC = () => {
         </div>
       </section>
 
-      {/* ══════════════════════════════════════════════════════════════
-           ── CTA / NEWSLETTER  (FIXED — saves to Firebase) ──────────
-         ══════════════════════════════════════════════════════════════ */}
+      {/* ── CTA / NEWSLETTER ─────────────────────────────────────────── */}
       <section style={{ padding: '96px 40px', background: '#fff' }}>
         <div style={{ maxWidth: 680, margin: '0 auto', textAlign: 'center' }}>
           <motion.div
@@ -922,7 +828,7 @@ const AICareerPage: React.FC = () => {
                 <p style={{ fontSize: 16, fontWeight: 700, color: '#065f46' }}>
                   {ctaStatus === 'done'
                     ? "🎉 You're in! Check your inbox for a confirmation."
-                    : '✓ You\'re already subscribed — thanks!'}
+                    : "✓ You're already subscribed — thanks!"}
                 </p>
               </div>
             )}
@@ -945,7 +851,7 @@ const AICareerPage: React.FC = () => {
               </div>
             )}
 
-            {/* ── FORM (hides after success or duplicate) ── */}
+            {/* ── FORM ── */}
             {ctaStatus !== 'done' && ctaStatus !== 'dup' && (
               <div>
                 <div

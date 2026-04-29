@@ -431,7 +431,7 @@ export default function SystemsEngineerRoadmapPage() {
       {/* HERO */}
       <div className="relative w-full" style={{ background: C.bg }}>
         <div className="relative w-full overflow-hidden" style={{ height: '100vh', minHeight: 600 }}>
-          <img src="https://i.imgur.com/hyv0AoI.jpeg" alt="Systems Engineer server infrastructure" className="w-full h-full object-cover object-center block" style={{ filter: 'saturate(0.55) brightness(1.05)' }} />
+          <img src="https://i.imgur.com/FO6AGoY.jpeg" alt="Systems Engineer server infrastructure" className="w-full h-full object-cover object-center block" style={{ filter: 'saturate(0.55) brightness(1.05)' }} />
           <div className="absolute inset-0" style={{ background: 'linear-gradient(to bottom, rgba(255,255,255,0) 45%, rgba(255,255,255,0.75) 72%, rgba(255,255,255,1) 88%)' }} />
           <div className="absolute bottom-0 left-0 right-0 z-10">
             <div className="max-w-4xl mx-auto px-8 pb-12">
