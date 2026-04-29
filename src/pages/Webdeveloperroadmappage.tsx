@@ -14,7 +14,7 @@ import {
   Award, Target, Flame, BarChart2,
   Layers, FileText, Globe, Layout,
   GitBranch, Package, Cpu, Shield,
-  Cloud, Workflow, Eye, Server, Database, Smartphone,
+  Cloud, Workflow, Eye, Server, Database,
 } from 'lucide-react'
 
 gsap.registerPlugin(ScrollTrigger)

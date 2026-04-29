@@ -58,7 +58,9 @@ interface AdvantageItem {
   desc: string
 }
 
-function useInView(): [React.RefObject<HTMLDivElement | null>, boolean] {
+type DivRef = React.RefObject<HTMLDivElement | null>
+
+function useInView(): [DivRef, boolean] {
   const ref = useRef<HTMLDivElement | null>(null)
   const [inView, setInView] = useState<boolean>(false)
   useEffect(() => {
