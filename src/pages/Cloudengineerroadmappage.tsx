@@ -12,9 +12,8 @@ import {
   Link2, Download, Share2, Copy, CheckCheck,
   BookOpen, AlertTriangle, RefreshCw, Star, Calendar,
   Award, Target, Flame,
-  Layers, GitBranch, Terminal, Shield,
-  Cloud, Server, Database, Network,
-  Box, Cpu, Globe, Lock,
+  Layers, GitBranch, Terminal,
+  Cloud, 
   BarChart2, Settings, Activity, Workflow,
 } from 'lucide-react'
 

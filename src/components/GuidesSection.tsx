@@ -1,5 +1,5 @@
 import { useEffect, useRef } from "react"
-import { Clock, TrendingUp, ArrowRight, DollarSign } from "lucide-react"
+import { Clock, TrendingUp, ArrowRight, } from "lucide-react"
 import gsap from "gsap"
 import { ScrollTrigger } from "gsap/ScrollTrigger"
 

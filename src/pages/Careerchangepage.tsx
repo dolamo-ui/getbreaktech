@@ -1,10 +1,10 @@
 import React, { useState, useEffect, useRef } from "react"
 import { Link } from "react-router-dom"
 import {
-  ArrowRight, CheckCircle2, Target, Lightbulb, Users, Sparkles,
-  TrendingUp, Headphones, Shield, Phone, Palette,
-  BarChart3, BookOpen, Award, Clock, MapPin, Menu, X, Star,
-  Code2, Database, Brain, Layers, Globe, Zap, ChevronRight
+  ArrowRight, Target, Lightbulb, Users,
+  Headphones, Shield, Phone, Palette,
+  BarChart3, BookOpen, Award, Clock, Star,
+  Code2, Globe, Zap, ChevronRight
 } from "lucide-react"
 import { Navbar } from "../components/Navbar"
 import { Newsletter, Footer } from "../components/Footer"

@@ -1,5 +1,5 @@
 import React from 'react';
-import styled, { keyframes, css } from 'styled-components';
+import styled, { keyframes, } from 'styled-components';
 
 import img1 from '../assets/DevOps Engineer.jpg';
 import img2 from '../assets/Cloud Engineer.jpg';

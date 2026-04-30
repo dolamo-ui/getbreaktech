@@ -11,7 +11,7 @@ import {
   Bot, Sparkles, Zap, TrendingUp,
   Link2, Download, Share2, Copy, CheckCheck,
   BookOpen, AlertTriangle, RefreshCw, Star, Calendar,
-  Award, Target, ChevronRight, Flame, Cpu, Globe,
+  Award, Target, Flame, Cpu,
 } from 'lucide-react'
 
 gsap.registerPlugin(ScrollTrigger)

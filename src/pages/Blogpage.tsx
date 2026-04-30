@@ -5,7 +5,7 @@ import gsap from 'gsap'
 import { ScrollTrigger } from 'gsap/ScrollTrigger'
 import { Navbar }                from '../components/Navbar'
 import { Newsletter, Footer }    from '../components/Footer'
-import { BlogSidebarNewsletter } from '../components/BlogSidebarNewsletter' // ← connected
+import { BlogSidebarNewsletter } from '../components/Blogsidebarnewsletter' // ← connected
 
 gsap.registerPlugin(ScrollTrigger)
 

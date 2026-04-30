@@ -1,5 +1,5 @@
 import React, { useState, useEffect, useRef } from "react"
-import { ArrowRight, Code2, Database, Server, GitBranch, Package, ChevronDown, Clock, TrendingUp, DollarSign, BookOpen, Award, Zap, Heart, Cpu, Layers } from "lucide-react"
+import { ArrowRight, Code2, Database, Server, Package, ChevronDown, Clock, TrendingUp, DollarSign, BookOpen, Award, Zap, Heart, Layers } from "lucide-react"
 
 function useInView(): [React.RefObject<HTMLDivElement | null>, boolean] {
   const ref = useRef<HTMLDivElement | null>(null)

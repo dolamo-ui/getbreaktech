@@ -11,10 +11,9 @@ import {
   Sparkles, Zap, TrendingUp,
   Link2, Download, Share2, Copy, CheckCheck,
   BookOpen, AlertTriangle, RefreshCw, Star, Calendar,
-  Award, Target, Flame, Database,
-  Layers, FileText, Globe, Server, Layout,
-  GitBranch, Terminal, Package, Shield,
-  Cloud, Workflow, Headphones, Phone,
+  Award, Target, Flame,
+  Layers, FileText,
+  Workflow, Headphones, Phone,
 } from 'lucide-react'
 
 gsap.registerPlugin(ScrollTrigger)

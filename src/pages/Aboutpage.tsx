@@ -2,7 +2,7 @@ import React from 'react'
 import { Link } from 'react-router-dom'
 import {
   ArrowLeft, MapPin, Link2, ExternalLink,
-  Rocket, BookOpen, Users, Zap, Star, Target, Heart
+  Rocket, Users, Zap, Target, Heart
 } from 'lucide-react'
 import { FaTiktok } from 'react-icons/fa'
 

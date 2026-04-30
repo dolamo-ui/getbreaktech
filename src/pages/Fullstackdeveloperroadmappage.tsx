@@ -7,14 +7,14 @@ import {
   Clock, DollarSign, Rocket,
   CheckCircle2, Code, MessageSquare, Play, ExternalLink,
   GraduationCap, Scale, ThumbsUp, ThumbsDown,
-  Briefcase, Coffee, Users, Lightbulb, Monitor, Home,
+  Briefcase, Coffee, Users, 
   Sparkles, Zap, TrendingUp,
   Link2, Download, Share2, Copy, CheckCheck,
   BookOpen, AlertTriangle, RefreshCw, Star, Calendar,
-  Award, Target, Flame, BarChart2, Database,
-  Layers, FileText, Globe, Server, Layout,
-  GitBranch, Terminal, Package, Cpu, Shield,
-  Cloud, Boxes, Workflow,
+  Award, Target, Flame, 
+  Layers, Layout,
+  GitBranch, Terminal, Shield,
+  Workflow,
 } from 'lucide-react'
 
 gsap.registerPlugin(ScrollTrigger)

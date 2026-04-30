@@ -11,9 +11,9 @@ import {
   Sparkles, Zap, TrendingUp,
   Link2, Download, Share2, Copy, CheckCheck,
   BookOpen, AlertTriangle, RefreshCw, Star, Calendar,
-  Award, Target, Flame, Database,
-  Layers, FileText, Globe, Server, Layout,
-  GitBranch, Terminal, Package, Shield,
+  Award, Target, Flame,
+  Layers, FileText,
+  GitBranch, 
   Cloud, Workflow,
 } from 'lucide-react'
 

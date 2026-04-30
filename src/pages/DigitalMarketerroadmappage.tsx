@@ -5,16 +5,16 @@ import { ScrollTrigger } from 'gsap/ScrollTrigger'
 import {
   ArrowLeft, ArrowRight, Check, X,
   Clock, DollarSign, Rocket,
-  CheckCircle2, Code, MessageSquare, Play, ExternalLink,
+  CheckCircle2, MessageSquare, Play, ExternalLink,
   GraduationCap, Scale, ThumbsUp, ThumbsDown,
-  Briefcase, Coffee, Users, Lightbulb, Monitor, Home,
+  Briefcase, Coffee, Users, 
   Sparkles, Zap, TrendingUp,
   Link2, Download, Share2, Copy, CheckCheck,
   BookOpen, AlertTriangle, RefreshCw, Star, Calendar,
   Award, Target, Flame, BarChart2,
-  Layers, FileText, Globe, Layout,
-  GitBranch, Package, Shield, Megaphone,
-  Cpu, Workflow, Eye,
+  Layers, Layout,
+  Megaphone,
+  Cpu, Workflow, 
 } from 'lucide-react'
 
 gsap.registerPlugin(ScrollTrigger)

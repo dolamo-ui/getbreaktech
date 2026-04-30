@@ -11,7 +11,7 @@ import {
   Bot, Sparkles, Zap, TrendingUp,
   Link2, Download, Share2, Copy, CheckCheck,
   BookOpen, AlertTriangle, RefreshCw, Star, Calendar,
-  Award, Target, ChevronRight, Flame,
+  Award, Target,  Flame,
 } from 'lucide-react'
 
 gsap.registerPlugin(ScrollTrigger)
@@ -518,7 +518,7 @@ export default function AiMlRoadmapPage() {
           <div ref={whyRef}>
             <SectionHeader icon={<Flame size={22} />} title="Why Choose This Career" subtitle="Six compelling reasons ML Engineering could be your best move" iconBg="rgba(234,88,12,0.1)" iconColor={C.orange} />
             <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-              {WHY_REASONS.map((r, i) => (
+              {WHY_REASONS.map((r, ) => (
                 <div key={r.title} className="rounded-2xl p-5 border transition-all duration-200 hover:-translate-y-0.5 hover:shadow-md" style={{ background: C.bg, borderColor: C.border }}>
                   <div className="flex items-start gap-3">
                     <div className="text-2xl flex-shrink-0">{r.emoji}</div>

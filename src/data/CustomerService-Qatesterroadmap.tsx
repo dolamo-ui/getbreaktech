@@ -83,31 +83,31 @@ const phases: Phase[] = [
   {
     number: "01",
     title: "Understand What QA Actually Is",
-    duration: "Weeks 1–3",
+    duration: "Weeks 1\u20133",
     color: "#6366f1",
     bg: "#eef2ff",
     border: "#c7d2fe",
     icon: Search,
-    tagline: "You already do half of this job — you just haven't been paid for it",
+    tagline: "You already do half of this job \u2014 you just haven't been paid for it",
     skills: [
       {
         name: "The QA Mindset",
-        desc: "QA is the art of thinking adversarially — asking 'what could go wrong here?' before the user does. In call centre work, you spent every shift answering exactly that question after the fact. Now you'll answer it first.",
+        desc: "QA is the art of thinking adversarially \u2014 asking 'what could go wrong here?' before the user does. In call centre work, you spent every shift answering exactly that question after the fact. Now you'll answer it first.",
         time: "3 days",
       },
       {
         name: "Software Testing Fundamentals",
-        desc: "Functional, regression, smoke, sanity, exploratory testing — the core testing types and when each applies. This is the vocabulary that QA job descriptions are written in. Learn it and postings start making sense.",
+        desc: "Functional, regression, smoke, sanity, exploratory testing \u2014 the core testing types and when each applies. This is the vocabulary that QA job descriptions are written in. Learn it and postings start making sense.",
         time: "1 week",
       },
       {
         name: "Bug Lifecycle & Reporting",
-        desc: "How a bug is found, documented, prioritised, fixed, and verified. JIRA, Linear, Trello — the tracking tools that every QA team uses. A well-written bug report is the primary deliverable of this role.",
+        desc: "How a bug is found, documented, prioritised, fixed, and verified. JIRA, Linear, Trello \u2014 the tracking tools that every QA team uses. A well-written bug report is the primary deliverable of this role.",
         time: "1 week",
       },
       {
         name: "How Software Gets Built",
-        desc: "Agile, sprints, standups, user stories, acceptance criteria — the development process that QA lives inside. You cannot test effectively without understanding the lifecycle you are part of.",
+        desc: "Agile, sprints, standups, user stories, acceptance criteria \u2014 the development process that QA lives inside. You cannot test effectively without understanding the lifecycle you are part of.",
         time: "4 days",
       },
     ],
@@ -117,13 +117,13 @@ const phases: Phase[] = [
       "Software Testing Help (free blog)",
     ],
     milestone:
-      "Write 10 detailed, professional bug reports for any app you use daily — be ruthlessly specific about reproduction steps",
+      "Write 10 detailed, professional bug reports for any app you use daily \u2014 be ruthlessly specific about reproduction steps",
     tip: "Every escalation you handled in the call centre was a bug report in disguise. You described the problem, the steps to reproduce it, what the customer expected, and what actually happened. That is the exact structure of a professional QA defect report.",
   },
   {
     number: "02",
     title: "Learn Manual Testing Deeply",
-    duration: "Weeks 4–10",
+    duration: "Weeks 4\u201310",
     color: "#0891b2",
     bg: "#ecfeff",
     border: "#a5f3fc",
@@ -132,7 +132,7 @@ const phases: Phase[] = [
     skills: [
       {
         name: "Writing Test Cases",
-        desc: "Test case IDs, preconditions, step-by-step instructions, expected results — structured and reproducible so anyone on the team can execute them. This is the primary written output of a manual QA role.",
+        desc: "Test case IDs, preconditions, step-by-step instructions, expected results \u2014 structured and reproducible so anyone on the team can execute them. This is the primary written output of a manual QA role.",
         time: "1.5 weeks",
       },
       {
@@ -142,12 +142,12 @@ const phases: Phase[] = [
       },
       {
         name: "Equivalence Partitioning & Boundary Testing",
-        desc: "Smart test design techniques — testing one representative value from each class of inputs rather than every possible value. Work smarter, not just harder. These techniques appear in almost every QA interview.",
+        desc: "Smart test design techniques \u2014 testing one representative value from each class of inputs rather than every possible value. Work smarter, not just harder. These techniques appear in almost every QA interview.",
         time: "1 week",
       },
       {
         name: "Exploratory Testing",
-        desc: "Unscripted testing guided by intuition, curiosity, and experience — the most creative, human part of QA that no script can fully replace. Your years of handling unpredictable customer situations give you an exceptional foundation for this.",
+        desc: "Unscripted testing guided by intuition, curiosity, and experience \u2014 the most creative, human part of QA that no script can fully replace. Your years of handling unpredictable customer situations give you an exceptional foundation for this.",
         time: "1 week",
       },
     ],
@@ -158,36 +158,36 @@ const phases: Phase[] = [
     ],
     milestone:
       "Write a complete test plan with 30 or more test cases for a free application like Todoist or Notion",
-    tip: "Manual testing is the heart of QA. Automation is a tool — judgment is the skill. Your years of noticing when something feels wrong, when a process doesn't make sense, when a customer's complaint reveals a systemic issue — that judgment makes you better at exploratory testing than most fresh graduates.",
+    tip: "Manual testing is the heart of QA. Automation is a tool \u2014 judgment is the skill. Your years of noticing when something feels wrong, when a process doesn't make sense, when a customer's complaint reveals a systemic issue \u2014 that judgment makes you better at exploratory testing than most fresh graduates.",
   },
   {
     number: "03",
     title: "Learn the Tools of the Trade",
-    duration: "Weeks 11–18",
+    duration: "Weeks 11\u201318",
     color: "#059669",
     bg: "#ecfdf5",
     border: "#a7f3d0",
     icon: TestTube2,
-    tagline: "The platforms that appear in every QA job listing — learn them now",
+    tagline: "The platforms that appear in every QA job listing \u2014 learn them now",
     skills: [
       {
         name: "JIRA for QA",
-        desc: "Create and manage bug tickets, link defects to test cases, track sprint progress, manage backlog — the single most common tool in QA job listings globally. If you know JIRA well, you are immediately more employable.",
+        desc: "Create and manage bug tickets, link defects to test cases, track sprint progress, manage backlog \u2014 the single most common tool in QA job listings globally. If you know JIRA well, you are immediately more employable.",
         time: "1 week",
       },
       {
-        name: "Postman — API Testing Basics",
-        desc: "Test the backend layer that users never see. Send HTTP requests, check responses, verify data structures, validate error handling — no code required. API testing skills add 20 to 30 percent to your salary ceiling at the junior level.",
+        name: "Postman \u2014 API Testing Basics",
+        desc: "Test the backend layer that users never see. Send HTTP requests, check responses, verify data structures, validate error handling \u2014 no code required. API testing skills add 20 to 30 percent to your salary ceiling at the junior level.",
         time: "2 weeks",
       },
       {
         name: "TestRail or Zephyr",
-        desc: "Professional test management platforms — create test suites, execute test runs, generate coverage reports. Knowing these tools signals professional-level experience to any hiring manager reviewing your resume.",
+        desc: "Professional test management platforms \u2014 create test suites, execute test runs, generate coverage reports. Knowing these tools signals professional-level experience to any hiring manager reviewing your resume.",
         time: "1 week",
       },
       {
         name: "Basic SQL for QA",
-        desc: "SELECT, WHERE, JOIN — just enough to query a database and verify that what the UI shows matches what was actually stored. You do not need to be a developer. You need to be able to check the data.",
+        desc: "SELECT, WHERE, JOIN \u2014 just enough to query a database and verify that what the UI shows matches what was actually stored. You do not need to be a developer. You need to be able to check the data.",
         time: "2 weeks",
       },
     ],
@@ -197,13 +197,13 @@ const phases: Phase[] = [
       "JIRA Free Tier (free)",
     ],
     milestone:
-      "Test a public API such as OpenWeather or the Pokémon API — document 15 test cases with expected and actual results",
+      "Test a public API such as OpenWeather or the Pok\u00e9mon API \u2014 document 15 test cases with expected and actual results",
     tip: "API testing feels intimidating until you realise it is just asking a server questions and checking whether it answers correctly. You already know how to ask the right questions and recognise a wrong answer. That instinct transfers directly.",
   },
   {
     number: "04",
     title: "Introduction to Test Automation",
-    duration: "Weeks 19–28",
+    duration: "Weeks 19\u201328",
     color: "#d97706",
     bg: "#fffbeb",
     border: "#fde68a",
@@ -212,12 +212,12 @@ const phases: Phase[] = [
     skills: [
       {
         name: "Python Basics for Testers",
-        desc: "Variables, loops, functions, conditional logic — just enough Python to write test scripts. This is not a full programming course. It is the minimum viable coding knowledge that unlocks automation testing.",
+        desc: "Variables, loops, functions, conditional logic \u2014 just enough Python to write test scripts. This is not a full programming course. It is the minimum viable coding knowledge that unlocks automation testing.",
         time: "3 weeks",
       },
       {
         name: "Selenium WebDriver",
-        desc: "Automate browser actions — open URLs, click buttons, fill forms, assert page content, handle alerts. The industry standard for UI automation and the most commonly required automation skill in junior QA postings.",
+        desc: "Automate browser actions \u2014 open URLs, click buttons, fill forms, assert page content, handle alerts. The industry standard for UI automation and the most commonly required automation skill in junior QA postings.",
         time: "2 weeks",
       },
       {
@@ -237,22 +237,22 @@ const phases: Phase[] = [
       "Test Automation University (free)",
     ],
     milestone:
-      "Write 5 end-to-end automated tests for a website — structured with Page Object Model, passing in CI",
-    tip: "You do not need to become a programmer. You need to become fluent enough in Python to automate the repetitive parts of testing so you can focus on the parts that require human judgment. Think of it as creating macros for quality — you are teaching the machine to do the boring checks so you can do the clever ones.",
+      "Write 5 end-to-end automated tests for a website \u2014 structured with Page Object Model, passing in CI",
+    tip: "You do not need to become a programmer. You need to become fluent enough in Python to automate the repetitive parts of testing so you can focus on the parts that require human judgment. Think of it as creating macros for quality \u2014 you are teaching the machine to do the boring checks so you can do the clever ones.",
   },
   {
     number: "05",
     title: "Build Your QA Portfolio",
-    duration: "Weeks 29–36",
+    duration: "Weeks 29\u201336",
     color: "#7c3aed",
     bg: "#f5f3ff",
     border: "#ddd6fe",
     icon: BarChart2,
-    tagline: "Show your work — make employers find you before you even apply",
+    tagline: "Show your work \u2014 make employers find you before you even apply",
     skills: [
       {
         name: "Test an Open Source Application",
-        desc: "Find a real open-source app on GitHub and build a complete test suite for it — test plan, test cases, automated scripts, and a bug report document. This is the centrepiece of your portfolio and the evidence that closes most interviews.",
+        desc: "Find a real open-source app on GitHub and build a complete test suite for it \u2014 test plan, test cases, automated scripts, and a bug report document. This is the centrepiece of your portfolio and the evidence that closes most interviews.",
         time: "2 weeks",
       },
       {
@@ -262,12 +262,12 @@ const phases: Phase[] = [
       },
       {
         name: "Professional Bug Report Document",
-        desc: "A curated collection of your 10 best bug reports — formatted, detailed, with reproduction steps and severity ratings. This document is often more impressive to non-technical hiring managers than a GitHub full of code.",
+        desc: "A curated collection of your 10 best bug reports \u2014 formatted, detailed, with reproduction steps and severity ratings. This document is often more impressive to non-technical hiring managers than a GitHub full of code.",
         time: "1 week",
       },
       {
         name: "LinkedIn & Resume Translation",
-        desc: "Map your call centre experience into QA language: issue verification, systematic troubleshooting, escalation documentation, resolution tracking, user empathy testing. The experience is real — it just needs the right vocabulary.",
+        desc: "Map your call centre experience into QA language: issue verification, systematic troubleshooting, escalation documentation, resolution tracking, user empathy testing. The experience is real \u2014 it just needs the right vocabulary.",
         time: "4 days",
       },
     ],
@@ -278,36 +278,36 @@ const phases: Phase[] = [
     ],
     milestone:
       "Public GitHub repository with 20 or more automated tests plus a polished bug report portfolio document",
-    tip: "Your call centre experience is not a gap in your resume — it is a feature. You have real-world, externally validated evidence of finding problems, documenting them clearly, communicating them to technical teams, and following them to resolution. That is QA. You have just been doing it unpaid.",
+    tip: "Your call centre experience is not a gap in your resume \u2014 it is a feature. You have real-world, externally validated evidence of finding problems, documenting them clearly, communicating them to technical teams, and following them to resolution. That is QA. You have just been doing it unpaid.",
   },
   {
     number: "06",
     title: "Land Your First QA Role",
-    duration: "Weeks 37–48",
+    duration: "Weeks 37\u201348",
     color: "#dc2626",
     bg: "#fef2f2",
     border: "#fecaca",
     icon: Rocket,
-    tagline: "The right first role is closer than you think — apply strategically, not broadly",
+    tagline: "The right first role is closer than you think \u2014 apply strategically, not broadly",
     skills: [
       {
         name: "QA Interview Preparation",
-        desc: "Testing fundamentals questions, SDLC explanations, live test case writing exercises, bug prioritisation scenarios — the standard set that every QA interviewer draws from. Prepare specific answers for each and practice them out loud.",
+        desc: "Testing fundamentals questions, SDLC explanations, live test case writing exercises, bug prioritisation scenarios \u2014 the standard set that every QA interviewer draws from. Prepare specific answers for each and practice them out loud.",
         time: "2 weeks",
       },
       {
         name: "Target Startups & Mid-Size Companies",
-        desc: "Small and medium companies need generalist manual testers first — not specialised automation engineers. This is where almost every successful QA career begins. Do not apply to enterprise companies before getting your first role elsewhere.",
+        desc: "Small and medium companies need generalist manual testers first \u2014 not specialised automation engineers. This is where almost every successful QA career begins. Do not apply to enterprise companies before getting your first role elsewhere.",
         time: "Ongoing",
       },
       {
         name: "Paid Testing Platforms",
-        desc: "uTest and Testlio pay testers to test real apps for real companies — no job offer required. This gets you legitimate, paid QA experience to put on your resume while your job search is still running.",
+        desc: "uTest and Testlio pay testers to test real apps for real companies \u2014 no job offer required. This gets you legitimate, paid QA experience to put on your resume while your job search is still running.",
         time: "Ongoing",
       },
       {
         name: "ISTQB Foundation Certificate",
-        desc: "Optional but genuinely respected — many companies still list it as preferred. It validates your knowledge to hiring managers who are not themselves technical. Three weeks of study, one exam, lifetime credential.",
+        desc: "Optional but genuinely respected \u2014 many companies still list it as preferred. It validates your knowledge to hiring managers who are not themselves technical. Three weeks of study, one exam, lifetime credential.",
         time: "2 weeks",
       },
     ],
@@ -317,33 +317,33 @@ const phases: Phase[] = [
       "ISTQB.org (official study guides free)",
     ],
     milestone:
-      "First QA Analyst role — the moment your call centre experience officially becomes a technical superpower",
-    tip: "QA roles have significantly lower application competition than developer roles. A strong portfolio, clear written communication — which you demonstrably have — and a coherent career narrative will set you apart from candidates who have technical skills but cannot explain their work. You can do both.",
+      "First QA Analyst role \u2014 the moment your call centre experience officially becomes a technical superpower",
+    tip: "QA roles have significantly lower application competition than developer roles. A strong portfolio, clear written communication \u2014 which you demonstrably have \u2014 and a coherent career narrative will set you apart from candidates who have technical skills but cannot explain their work. You can do both.",
   },
 ]
 
 const salaryData: SalaryRow[] = [
   {
-    label: "Junior QA Analyst (0–2 yrs)",
-    range: "$45K–$65K",
+    label: "Junior QA Analyst (0\u20132 yrs)",
+    range: "$45K\u2013$65K",
     bar: 38,
     color: "#6366f1",
   },
   {
-    label: "QA Engineer (2–4 yrs)",
-    range: "$65K–$90K",
+    label: "QA Engineer (2\u20134 yrs)",
+    range: "$65K\u2013$90K",
     bar: 56,
     color: "#0891b2",
   },
   {
-    label: "Senior QA / Automation (4–7 yrs)",
-    range: "$90K–$130K",
+    label: "Senior QA / Automation (4\u20137 yrs)",
+    range: "$90K\u2013$130K",
     bar: 76,
     color: "#059669",
   },
   {
     label: "QA Lead / Manager",
-    range: "$120K–$180K+",
+    range: "$120K\u2013$180K+",
     bar: 100,
     color: "#7c3aed",
   },
@@ -360,11 +360,11 @@ const advantages: AdvantageItem[] = [
   },
   {
     title: "You Stay Calm Under Pressure",
-    desc: "Call centre shifts are relentlessly demanding. A QA sprint deadline with a release on the line is pressured — but it is a different kind of pressure. You have already been trained for composure under fire in a way most technical candidates have not.",
+    desc: "Call centre shifts are relentlessly demanding. A QA sprint deadline with a release on the line is pressured \u2014 but it is a different kind of pressure. You have already been trained for composure under fire in a way most technical candidates have not.",
   },
   {
     title: "You Think Systematically",
-    desc: "Verification scripts, troubleshooting procedures, following escalation processes — QA is structured, methodical thinking applied to software. You have been doing structured, methodical thinking in a different domain. The transfer is direct.",
+    desc: "Verification scripts, troubleshooting procedures, following escalation processes \u2014 QA is structured, methodical thinking applied to software. You have been doing structured, methodical thinking in a different domain. The transfer is direct.",
   },
 ]
 
@@ -423,7 +423,7 @@ export default function CustomerServiceQATesterRoadmapPage(): React.ReactElement
       <section style={{ background: "linear-gradient(160deg, #f8f9ff 0%, #eef2ff 50%, #ecfeff 100%)", padding: "4.5rem 6% 3.5rem", borderBottom: "1px solid #e2e8f0" }}>
         <div style={{ maxWidth: 800, margin: "0 auto" }}>
           <button className="back-btn" onClick={() => navigate("/career-change")}>
-            ← Back to Career Paths
+            {"\u2190"} Back to Career Paths
           </button>
 
           <div style={{ display: "flex", alignItems: "center", gap: 10, marginBottom: "1.5rem" }}>
@@ -444,7 +444,7 @@ export default function CustomerServiceQATesterRoadmapPage(): React.ReactElement
           </h1>
 
           <p style={{ fontSize: "1.2rem", color: "#475569", lineHeight: 1.85, marginBottom: "2rem", fontStyle: "italic", fontFamily: "'IBM Plex Serif', Georgia, serif" }}>
-            You've spent years being the person who notices when something goes wrong. Now let's turn that into a career — and a salary that reflects the skill.
+            {"You\u2019ve spent years being the person who notices when something goes wrong. Now let\u2019s turn that into a career \u2014 and a salary that reflects the skill."}
           </p>
 
           <div style={{ display: "flex", gap: 16, flexWrap: "wrap", marginBottom: "2.5rem", alignItems: "center" }}>
@@ -474,30 +474,30 @@ export default function CustomerServiceQATesterRoadmapPage(): React.ReactElement
           <div className="section-tag" style={{ marginBottom: "1.5rem" }}>Before We Begin</div>
 
           <h2 className="sans" style={{ fontSize: "clamp(1.6rem, 3vw, 2.2rem)", fontWeight: 800, letterSpacing: "-0.025em", marginBottom: "1.5rem", lineHeight: 1.2, color: "#0d1117" }}>
-            Call centre agents are already QA testers. The industry just hasn't been paying them like it.
+            {"Call centre agents are already QA testers. The industry just hasn\u2019t been paying them like it."}
           </h2>
 
           <p style={{ fontSize: "1.05rem", color: "#334155", lineHeight: 1.9, marginBottom: "1.25rem" }}>
-            Think about a typical shift. A customer calls: "I clicked the button three times and nothing happened." You ask: what browser? What were you doing before that? Did an error message appear? Without knowing the term, you were gathering reproduction steps for a bug report. Every single day.
+            {"Think about a typical shift. A customer calls: \u201CI clicked the button three times and nothing happened.\u201D You ask: what browser? What were you doing before that? Did an error message appear? Without knowing the term, you were gathering reproduction steps for a bug report. Every single day."}
           </p>
 
           <p style={{ fontSize: "1.05rem", color: "#334155", lineHeight: 1.9, marginBottom: "1.25rem" }}>
-            Quality Assurance is, at its core, the discipline of asking "what could go wrong here?" and then systematically checking every answer before the user encounters it. You have been doing that — reactively, after users hit the bug — for your entire career. This roadmap teaches you to do it proactively, before the code ships. The shift in timing is the entire job change.
+            {"Quality Assurance is, at its core, the discipline of asking \u201Cwhat could go wrong here?\u201D and then systematically checking every answer before the user encounters it. You have been doing that \u2014 reactively, after users hit the bug \u2014 for your entire career. This roadmap teaches you to do it proactively, before the code ships. The shift in timing is the entire job change."}
           </p>
 
           <div className="data-quote">
-            "The best bug report I ever read was written by someone who came from customer support. She didn't know any code, but she described the issue so precisely — every step, every condition, every error message — that our developer fixed it in 20 minutes. Most engineers on my team can't write like that."
+            {"\u201CThe best bug report I ever read was written by someone who came from customer support. She didn\u2019t know any code, but she described the issue so precisely \u2014 every step, every condition, every error message \u2014 that our developer fixed it in 20 minutes. Most engineers on my team can\u2019t write like that.\u201D"}
             <div className="sans" style={{ marginTop: "0.75rem", fontSize: "0.85rem", color: "#6366f1", fontStyle: "normal", fontWeight: 600 }}>
-              — Engineering Manager at a Series A SaaS startup
+              {"\u2014 Engineering Manager at a Series A SaaS startup"}
             </div>
           </div>
 
           <p style={{ fontSize: "1.05rem", color: "#334155", lineHeight: 1.9, marginBottom: "1.25rem" }}>
-            The roadmap below bridges one specific gap: giving you the vocabulary, tools, and formal skills to walk into a QA role with evidence of capability. The core instincts — systematic thinking, precise communication, empathy with frustrated users — you already have. Those take years to develop. You have already spent those years.
+            {"The roadmap below bridges one specific gap: giving you the vocabulary, tools, and formal skills to walk into a QA role with evidence of capability. The core instincts \u2014 systematic thinking, precise communication, empathy with frustrated users \u2014 you already have. Those take years to develop. You have already spent those years."}
           </p>
 
           <div className="callout-indigo">
-            <strong>The honest picture:</strong> QA is one of the most accessible entry points into the technology industry. It requires no computer science degree, no advanced mathematics, and no years of programming experience. It requires precision, patience, curiosity, and the ability to see software through the eyes of someone who doesn't understand how it was built. That is exactly what years of call centre work produce.
+            <strong>The honest picture:</strong>{" QA is one of the most accessible entry points into the technology industry. It requires no computer science degree, no advanced mathematics, and no years of programming experience. It requires precision, patience, curiosity, and the ability to see software through the eyes of someone who doesn\u2019t understand how it was built. That is exactly what years of call centre work produce."}
           </div>
         </div>
       </section>
@@ -538,7 +538,7 @@ export default function CustomerServiceQATesterRoadmapPage(): React.ReactElement
                 {isOpen && (
                   <div style={{ padding: "0 1.5rem 1.5rem", borderTop: `1px solid ${phase.color}18` }}>
                     <div style={{ marginTop: "1.25rem", marginBottom: "1.5rem" }}>
-                      <div className="section-tag" style={{ marginBottom: "0.75rem" }}>What You'll Learn</div>
+                      <div className="section-tag" style={{ marginBottom: "0.75rem" }}>What You&apos;ll Learn</div>
                       {phase.skills.map((skill: Skill, j: number) => (
                         <div key={j} style={{ display: "flex", gap: 12, alignItems: "flex-start", padding: "11px 0", borderBottom: "1px solid #f1f5f9" }}>
                           <div style={{ width: 7, height: 7, borderRadius: "50%", background: phase.color, flexShrink: 0, marginTop: 7 }} />
@@ -570,7 +570,7 @@ export default function CustomerServiceQATesterRoadmapPage(): React.ReactElement
 
                     <div style={{ background: "#fffbeb", border: "1px solid #fde68a", borderRadius: 12, padding: "1rem 1.25rem", display: "flex", gap: 10, alignItems: "flex-start" }}>
                       <Zap size={14} color="#d97706" style={{ flexShrink: 0, marginTop: 2 }} />
-                      <div style={{ fontSize: "0.875rem", color: "#78350f", lineHeight: 1.7, fontStyle: "italic" }}>"{phase.tip}"</div>
+                      <div style={{ fontSize: "0.875rem", color: "#78350f", lineHeight: 1.7, fontStyle: "italic" }}>{`"${phase.tip}"`}</div>
                     </div>
                   </div>
                 )}
@@ -585,10 +585,10 @@ export default function CustomerServiceQATesterRoadmapPage(): React.ReactElement
         <div style={{ maxWidth: 760, margin: "0 auto" }}>
           <div className="section-tag" style={{ marginBottom: "1.5rem" }}>Your Unfair Advantage</div>
           <h2 className="sans" style={{ fontSize: "clamp(1.5rem, 3vw, 2rem)", fontWeight: 800, letterSpacing: "-0.025em", marginBottom: "1.25rem", color: "#0d1117" }}>
-            What you bring that a computer science graduate doesn't
+            What you bring that a computer science graduate doesn&apos;t
           </h2>
           <p style={{ fontSize: "1.05rem", color: "#334155", lineHeight: 1.9, marginBottom: "2rem" }}>
-            The technology industry has a persistent blind spot: it overhires people who can code and underhires people who understand users. QA is the discipline that sits directly at that intersection. You are exactly the person this discipline needs — you have just been working in the wrong building.
+            {"The technology industry has a persistent blind spot: it overhires people who can code and underhires people who understand users. QA is the discipline that sits directly at that intersection. You are exactly the person this discipline needs \u2014 you have just been working in the wrong building."}
           </p>
           <div className="adv-grid" style={{ marginBottom: "2rem" }}>
             {advantages.map((item: AdvantageItem, i: number) => (
@@ -606,10 +606,10 @@ export default function CustomerServiceQATesterRoadmapPage(): React.ReactElement
         <div ref={salRef} style={{ maxWidth: 680, margin: "0 auto" }}>
           <div className="section-tag" style={{ marginBottom: "0.75rem" }}>Earning Potential</div>
           <h2 className="sans" style={{ fontSize: "clamp(1.5rem, 3vw, 2rem)", fontWeight: 800, letterSpacing: "-0.025em", marginBottom: "0.5rem", color: "#0d1117" }}>
-            What You'll Earn
+            What You&apos;ll Earn
           </h2>
           <p className="sans" style={{ color: "#94a3b8", marginBottom: "2.5rem", fontSize: "0.9rem" }}>
-            QA salaries grow steadily — and accelerate sharply once automation skills are added
+            QA salaries grow steadily &mdash; and accelerate sharply once automation skills are added
           </p>
           <div style={{ display: "flex", flexDirection: "column", gap: "1.25rem" }}>
             {salaryData.map((s: SalaryRow, i: number) => (
@@ -635,20 +635,20 @@ export default function CustomerServiceQATesterRoadmapPage(): React.ReactElement
             The person who finds the bug is just as valuable as the person who wrote the code.
           </h2>
           <p style={{ fontSize: "1.05rem", color: "#334155", lineHeight: 1.9, marginBottom: "1.25rem" }}>
-            There is a persistent myth in technology that the only people worth paying well are the ones writing code. That myth exists because the industry forgets what happens when QA isn't there. Products ship with broken checkout flows. Authentication systems lock out real users. Buttons that do the opposite of what they label. Every one of those bugs generates a call to someone exactly like you.
+            {"There is a persistent myth in technology that the only people worth paying well are the ones writing code. That myth exists because the industry forgets what happens when QA isn\u2019t there. Products ship with broken checkout flows. Authentication systems lock out real users. Buttons that do the opposite of what they label. Every one of those bugs generates a call to someone exactly like you."}
           </p>
           <p style={{ fontSize: "1.05rem", color: "#334155", lineHeight: 1.9, marginBottom: "1.25rem" }}>
-            With this roadmap, you can be the person who prevents that call from ever happening. You become the last line of defence before the user — the person whose systematic curiosity protects the product, the team's reputation, and every user who would otherwise have hit that bug on a Tuesday morning.
+            {"With this roadmap, you can be the person who prevents that call from ever happening. You become the last line of defence before the user \u2014 the person whose systematic curiosity protects the product, the team\u2019s reputation, and every user who would otherwise have hit that bug on a Tuesday morning."}
           </p>
           <div className="data-quote">
-            That is not a small thing. That is protecting the experience of every person who uses the product. That is worth paying for — and the industry is, finally, starting to pay for it properly.
+            {"That is not a small thing. That is protecting the experience of every person who uses the product. That is worth paying for \u2014 and the industry is, finally, starting to pay for it properly."}
           </div>
           <div style={{ marginTop: "2.5rem", display: "flex", gap: "1rem", flexWrap: "wrap", alignItems: "center" }}>
             <a href="#roadmap" className="cta-btn">
               Start Phase 01 Today <ArrowRight size={16} />
             </a>
             <a href="/roadmaps" className="sans" style={{ fontSize: "0.9rem", fontWeight: 600, color: "#94a3b8", textDecoration: "none" }}>
-              ← Browse All Paths
+              {"\u2190"} Browse All Paths
             </a>
           </div>
         </div>

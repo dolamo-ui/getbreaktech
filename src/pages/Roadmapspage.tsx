@@ -1,15 +1,15 @@
 import React, { useState, useEffect, useRef } from 'react'
 import { Link } from 'react-router-dom'
 import {
-  ArrowRight, ChevronDown,
+  ArrowRight,
   Shield, Cloud, BarChart2, Bot, Code2, Palette,
   Briefcase, Megaphone, Sparkles, TrendingUp,
-  CheckCircle2, Users, Zap, BookOpen, Award,
-  Globe, Monitor, Activity, Clock,
+  Users, BookOpen, Award,
+  Monitor, Activity, Clock,
   Database, Layers, Network, Gamepad2, Smartphone,
   Bug, ServerCog, Fingerprint, AlertTriangle,
   Blocks, ChevronLeft,
-  Star, ChevronRight, Cpu, HardDrive,
+  Cpu, HardDrive,
   LifeBuoy, Settings, Lock, Search, Radio,
   ShieldCheck, UserCheck, HeadphonesIcon, Wrench,
 } from 'lucide-react'
