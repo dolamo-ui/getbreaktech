@@ -1,4 +1,5 @@
 import { useEffect, useRef } from "react"
+import { Link } from "react-router-dom"
 import { Map, RefreshCw, Bot, ArrowRight } from "lucide-react"
 import gsap from "gsap"
 import { ScrollTrigger } from "gsap/ScrollTrigger"
@@ -7,7 +8,8 @@ gsap.registerPlugin(ScrollTrigger)
 
 const categories = [
   {
-    href: "/roadmaps",
+    // ✅ FIX: unified to "to" prop for React Router
+    to: "/roadmaps",
     icon: Map,
     title: "Career Roadmaps",
     description: "Step-by-step guides to help you navigate from beginner to expert in your chosen field.",
@@ -17,7 +19,7 @@ const categories = [
     cta: "View Roadmaps",
   },
   {
-    href: "/career-change",
+    to: "/career-change",
     icon: RefreshCw,
     title: "Career Change",
     description: "Transition smoothly between careers with tailored guidance and transferable skills mapping.",
@@ -27,7 +29,7 @@ const categories = [
     cta: "Pivot Now",
   },
   {
-    href: "/ai-career",
+    to: "/ai-career",
     icon: Bot,
     title: "AI & Future Careers",
     description: "Explore emerging roles in AI and discover how technology is reshaping the job market.",
@@ -91,17 +93,17 @@ export function CategoriesSection() {
           className="mx-auto mt-12 grid max-w-5xl gap-6 md:grid-cols-3"
         >
           {categories.map((category) => (
-            <a
-              key={category.href}
-              href={category.href}
+            // ✅ FIX: Use React Router <Link to=...> instead of <a href=...>
+            // Also removed style={{ opacity: 0 }} — GSAP sets this via fromTo
+            <Link
+              key={category.to}
+              to={category.to}
               className="group relative flex flex-col rounded-2xl border border-border bg-card p-6 shadow-sm transition-all duration-300 hover:-translate-y-1 hover:shadow-xl"
-              style={{ opacity: 0 }}
               onMouseEnter={(e) =>
                 (e.currentTarget.style.borderColor = category.hoverBorderColor)
               }
               onMouseLeave={(e) => (e.currentTarget.style.borderColor = "")}
             >
-              {/* Icon circle with explicit background + icon color */}
               <div
                 className="flex h-14 w-14 items-center justify-center rounded-xl"
                 style={{
@@ -127,7 +129,7 @@ export function CategoriesSection() {
                 <span>{category.cta}</span>
                 <ArrowRight className="ml-1 h-4 w-4 transition-transform group-hover:translate-x-1" />
               </div>
-            </a>
+            </Link>
           ))}
         </div>
       </div>
