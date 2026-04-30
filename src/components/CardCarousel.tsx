@@ -7,7 +7,7 @@ import img3 from '../assets/Cybersecurity Specialist2.jpg';
 import img4 from '../assets/Data Scientist.jpg';
 import img5 from '../assets/Data Analyst.jpg';
 import img6 from '../assets/Software Developer.jpg';
-import img7 from '../assets/AI Engineer1.jpg';
+import img7 from '../assets/Ai Engineer1.jpg';
 import img8 from '../assets/Product Manager.jpg';
 import img9 from '../assets/IT Support Specialist.jpg';
 import img10 from '../assets/Business Analyst.jpg';
