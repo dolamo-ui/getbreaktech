@@ -5,7 +5,7 @@ import gsap from 'gsap'
 import { ScrollTrigger } from 'gsap/ScrollTrigger'
 import { Navbar }                from '../components/Navbar'
 import { Newsletter, Footer }    from '../components/Footer'
-import { BlogSidebarNewsletter } from '../components/Blogsidebarnewsletter' // ← connected
+import { BlogSidebarNewsletter } from '../components/Blogsidebarnewsletter'
 
 gsap.registerPlugin(ScrollTrigger)
 
@@ -332,13 +332,14 @@ const BlogPage: React.FC = () => {
               Honest, practical content written by people who've actually made the leap into tech.
               No fluff, no paid promotions.
             </p>
+            {/* ✅ FIX: Corrected stats to reflect actual content */}
             <div className="blog-stats">
               <div className="blog-stat">
                 <div className="blog-stat-icon" style={{ background: '#dbeafe' }}>
                   <BookOpen size={16} color="#2563eb" />
                 </div>
                 <div>
-                  <div className="blog-stat-val">51</div>
+                  <div className="blog-stat-val">{posts.length}</div>
                   <div className="blog-stat-label">Articles published</div>
                 </div>
               </div>
@@ -347,8 +348,8 @@ const BlogPage: React.FC = () => {
                   <Users size={16} color="#059669" />
                 </div>
                 <div>
-                  <div className="blog-stat-val">120K+</div>
-                  <div className="blog-stat-label">Monthly readers</div>
+                  <div className="blog-stat-val">Growing</div>
+                  <div className="blog-stat-label">Reader community</div>
                 </div>
               </div>
               <div className="blog-stat">
@@ -357,7 +358,7 @@ const BlogPage: React.FC = () => {
                 </div>
                 <div>
                   <div className="blog-stat-val">New</div>
-                  <div className="blog-stat-label">Every week</div>
+                  <div className="blog-stat-label">Content regularly</div>
                 </div>
               </div>
             </div>
@@ -502,12 +503,6 @@ const BlogPage: React.FC = () => {
 
               {/* ── Sidebar ────────────────────────────────────────────────── */}
               <aside className="blog-sidebar">
-
-                {/*
-                  ✅ THIS IS THE FIX:
-                  We removed the old fake form that was here and replaced it
-                  with <BlogSidebarNewsletter /> which actually saves to Firebase.
-                */}
                 <BlogSidebarNewsletter />
 
                 {/* Most read this week */}
