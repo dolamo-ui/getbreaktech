@@ -508,7 +508,7 @@ export default function ScrumMasterRoadmapPage() {
       <div className="relative w-full" style={{ background: C.bg }}>
         <div className="relative w-full overflow-hidden" style={{ height: '100vh', minHeight: 600 }}>
           <img
-            src="https://i.imgur.com/hyv0AoI.jpeg"
+            src="https://i.imgur.com/7zZYMW9.jpeg"
             alt="Scrum Master agile team collaboration"
             className="w-full h-full object-cover object-center block"
             style={{ filter: 'saturate(0.55) brightness(1.05)' }}
