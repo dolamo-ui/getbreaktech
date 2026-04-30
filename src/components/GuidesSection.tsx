@@ -1,5 +1,6 @@
 import { useEffect, useRef } from "react"
-import { Clock, TrendingUp, ArrowRight, } from "lucide-react"
+import { Link } from "react-router-dom"
+import { Clock, TrendingUp, ArrowRight } from "lucide-react"
 import gsap from "gsap"
 import { ScrollTrigger } from "gsap/ScrollTrigger"
 
@@ -153,7 +154,6 @@ export function GuidesSection() {
       const cards = cardsRef.current?.children
       if (!cards) return
 
-      // Ensure all cards are visible immediately as a fallback
       Array.from(cards).forEach((card) => {
         (card as HTMLElement).style.opacity = "1"
       })
@@ -467,17 +467,19 @@ export function GuidesSection() {
                 Beginner-friendly guides to help you break into tech — no degree or experience required.
               </p>
             </div>
-            <a href="/roadmaps" className="fgs-btn">
+            {/* ✅ FIX: Use React Router <Link> instead of <a href> */}
+            <Link to="/roadmaps" className="fgs-btn">
               View All Roadmaps
               <ArrowRight size={15} />
-            </a>
+            </Link>
           </div>
 
           <div ref={cardsRef} className="fgs-grid">
             {featuredGuides.map((guide) => (
-              <a
+              // ✅ FIX: Use React Router <Link to=...> instead of <a href=...>
+              <Link
                 key={guide.slug}
-                href={`/roadmaps/${guide.slug}`}
+                to={`/roadmaps/${guide.slug}`}
                 className="fgs-card"
               >
                 <div
@@ -527,7 +529,7 @@ export function GuidesSection() {
                     </span>
                   </div>
                 </div>
-              </a>
+              </Link>
             ))}
           </div>
         </div>
