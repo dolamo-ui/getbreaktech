@@ -4,7 +4,7 @@ import {
   ArrowRight, Target, Lightbulb, Users,
   Headphones, Shield, Phone, Palette,
   BarChart3, BookOpen, Award, Clock, Star,
-  Code2, Globe, Zap, ChevronRight
+  Code2, Globe, ChevronRight
 } from "lucide-react"
 import { Navbar } from "../components/Navbar"
 import { Newsletter, Footer } from "../components/Footer"
@@ -334,17 +334,7 @@ export default function CareerChangePage(): React.ReactElement {
       {/* ── IMPORTED NAVBAR ── */}
       <Navbar />
 
-      {/* ── ANNOUNCEMENT BANNER ── */}
-      <div style={{
-        marginTop: 76,
-        background: "#1e1e2e", color: "#e2e8f0",
-        textAlign: "center", padding: "10px 16px",
-        fontSize: "0.82rem", fontWeight: 500, letterSpacing: "0.01em",
-        display: "flex", alignItems: "center", justifyContent: "center", gap: 10,
-      }}>
-        <Zap size={13} color="#fbbf24" />
-        <span>New: AI & Data paths added for 2025 — <a href="/roadmaps" style={{ color: "#93c5fd", textDecoration: "underline", fontWeight: 600 }}>explore them →</a></span>
-      </div>
+      
 
       {/* ── HERO ── */}
       <section style={{ padding: "6rem 5% 5rem", background: "#fff", borderBottom: "1px solid #f0f0f0" }}>
