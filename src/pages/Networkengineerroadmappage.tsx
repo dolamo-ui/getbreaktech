@@ -499,7 +499,7 @@ export default function NetworkEngineerRoadmapPage() {
       <div className="relative w-full" style={{ background: C.bg }}>
         <div className="relative w-full overflow-hidden" style={{ height: '100vh', minHeight: 600 }}>
           <img
-            src="https://images.unsplash.com/photo-1558494949-ef010cbdcc31?w=1600&q=80"
+            src="https://i.imgur.com/LEGq8US.jpeg"
             alt="Network Engineer server room cables"
             className="w-full h-full object-cover object-center block"
             style={{ filter: 'saturate(0.55) brightness(1.05)' }}
