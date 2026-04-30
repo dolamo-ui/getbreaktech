@@ -645,7 +645,7 @@ export const HeroSection: React.FC = () => {
           </StatItem>
           <StatDivider className="hidden sm:block" />
           <StatItem>
-            <span className="number">50+</span>
+            <span className="number">30+</span>
             <span className="label">Career Roadmaps</span>
           </StatItem>
           <StatDivider className="hidden sm:block" />
