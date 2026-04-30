@@ -530,7 +530,7 @@ export function FAQSection() {
                 {/* Quick stats */}
                 <div className="fqs-stats-grid">
                   <div className="fqs-stat-card">
-                    <div className="fqs-stat-number">50+</div>
+                    <div className="fqs-stat-number">30+</div>
                     <div className="fqs-stat-label">Roadmaps available</div>
                   </div>
                   <div className="fqs-stat-card">
