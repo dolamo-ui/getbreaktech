@@ -507,7 +507,7 @@ export default function CloudSecurityEngineerRoadmapPage() {
       <div className="relative w-full" style={{ background: C.bg }}>
         <div className="relative w-full overflow-hidden" style={{ height: '100vh', minHeight: 600 }}>
           <img
-            src="https://i.imgur.com/XhE2Tt9.jpeg"
+            src="https://i.imgur.com/LEGq8US.jpeg"
             alt="Cloud Security Engineer workspace"
             className="w-full h-full object-cover object-center block"
             style={{ filter: 'saturate(0.55) brightness(1.05)' }}
