@@ -117,17 +117,14 @@ const GlobalStyles = () => (
     .ap-select-option.selected { color: #2563eb; font-weight: 700; background: #eff6ff; }
     .ap-clear-link { background: none; border: none; font-size: 0.78rem; color: #ef4444; cursor: pointer; font-weight: 600; font-family: 'Plus Jakarta Sans', sans-serif; padding: 8px 4px; transition: color 0.15s; }
     .ap-clear-link:hover { color: #dc2626; }
-    .ap-hero-stats { display: flex; gap: 28px; flex-wrap: wrap; margin-bottom: 20px; animation: ap-fadeslide 0.6s ease 0.4s both; }
-    .ap-hero-stat { display: flex; align-items: center; gap: 9px; }
-    .ap-hero-stat-icon { width: 36px; height: 36px; border-radius: 9px; background: #fff; border: 1.5px solid #e2e8f0; display: flex; align-items: center; justify-content: center; flex-shrink: 0; box-shadow: 0 1px 4px rgba(0,0,0,0.06); }
-    .ap-hero-stat-val { font-size: 1.05rem; font-weight: 800; color: #0f172a; line-height: 1; }
-    .ap-hero-stat-lbl { font-size: 0.7rem; color: #94a3b8; margin-top: 2px; }
-    .ap-hero-trust { display: flex; align-items: center; gap: 10px; animation: ap-fadeslide 0.6s ease 0.45s both; }
-    .ap-avatar-stack { display: flex; }
-    .ap-avatar { width: 28px; height: 28px; border-radius: 50%; border: 2px solid #f8fafc; margin-left: -8px; font-size: 0.6rem; font-weight: 700; color: #fff; display: flex; align-items: center; justify-content: center; }
-    .ap-avatar:first-child { margin-left: 0; }
-    .ap-trust-text { font-size: 0.75rem; color: #94a3b8; }
-    .ap-trust-text strong { color: #1e293b; }
+
+    /* ✅ FIX: Removed fake stats row — replaced with simple honest info strip */
+    .ap-hero-info { display: flex; gap: 24px; flex-wrap: wrap; margin-bottom: 20px; animation: ap-fadeslide 0.6s ease 0.4s both; }
+    .ap-hero-info-item { display: flex; align-items: center; gap: 7px; }
+    .ap-hero-info-icon { width: 32px; height: 32px; border-radius: 8px; background: #fff; border: 1.5px solid #e2e8f0; display: flex; align-items: center; justify-content: center; flex-shrink: 0; box-shadow: 0 1px 4px rgba(0,0,0,0.06); }
+    .ap-hero-info-val { font-size: 1.05rem; font-weight: 800; color: #0f172a; line-height: 1; }
+    .ap-hero-info-lbl { font-size: 0.7rem; color: #94a3b8; margin-top: 2px; }
+
     .ap-hero-right { display: flex; align-items: center; justify-content: center; animation: ap-fadeslide 0.7s ease 0.3s both; }
     .ap-hero-illustration { width: 100%; max-width: 460px; height: auto; object-fit: contain; filter: drop-shadow(0 8px 32px rgba(0,0,0,0.08)); }
 
@@ -384,7 +381,6 @@ const LEVEL_OPTIONS     = ['All Levels', 'Beginner', 'Intermediate', 'Advanced']
 const WORKSTYLE_OPTIONS = ['Any Style', 'Remote', 'On-site', 'Hybrid', 'Freelance']
 const CARDS_PER_PAGE    = 12
 const MARQUEE_ITEMS     = ['AI & ML Engineer', 'Frontend Developer', 'Cybersecurity Specialist', 'Data Scientist', 'Cloud & DevOps', 'UX/UI Designer', 'Backend Developer', 'Product Manager', 'Digital Marketer', 'Full Stack Dev', 'Data Analyst', 'Blockchain Dev', 'IT Support Specialist', 'SOC Analyst', 'AI Engineer', 'Systems Admin']
-const AVATARS = [{ bg: '#6366f1', letter: 'S' }, { bg: '#ec4899', letter: 'T' }, { bg: '#f59e0b', letter: 'A' }, { bg: '#10b981', letter: 'M' }]
 
 /* ─── PAGE ────────────────────────────────────────────────────────────────── */
 export default function RoadmapsPage() {
@@ -443,7 +439,7 @@ export default function RoadmapsPage() {
         <div className="ap-hero-blob1" /><div className="ap-hero-blob2" /><div className="ap-hero-blob3" />
         <div className="ap-hero-inner">
           <div className="ap-hero-left">
-            <div className="ap-hero-badge"><Sparkles size={11} /> New Paths Added Weekly</div>
+            <div className="ap-hero-badge"><Sparkles size={11} /> New Paths Added Regularly</div>
             <h1>Explore <em>Career</em><br />Roadmaps 🚀</h1>
             <p>Search, filter, and find the right path. Your journey from zero to hired — mapped out step by step.</p>
 
@@ -478,27 +474,21 @@ export default function RoadmapsPage() {
               )}
             </div>
 
-            <div className="ap-hero-stats">
+            {/* ✅ FIX: Replaced fake stats (28k learners, 94% placement) with real, honest info */}
+            <div className="ap-hero-info">
               {[
-                { icon: <BookOpen size={16} color="#818cf8" />, val: `${CARDS.length}+`,  lbl: 'Career Roadmaps' },
-                { icon: <Users    size={16} color="#34d399" />, val: '28k+', lbl: 'Active Learners'  },
-                { icon: <Award    size={16} color="#fbbf24" />, val: '94%',  lbl: 'Job Placement'    },
+                { icon: <BookOpen size={16} color="#818cf8" />, val: `${CARDS.length}+`, lbl: 'Career Roadmaps' },
+                { icon: <Award    size={16} color="#fbbf24" />, val: 'Free',              lbl: 'No paywalls, ever' },
+                { icon: <Users    size={16} color="#34d399" />, val: 'SA-focused',        lbl: 'Salary data' },
               ].map(s => (
-                <div key={s.lbl} className="ap-hero-stat">
-                  <div className="ap-hero-stat-icon">{s.icon}</div>
+                <div key={s.lbl} className="ap-hero-info-item">
+                  <div className="ap-hero-info-icon">{s.icon}</div>
                   <div>
-                    <div className="ap-hero-stat-val">{s.val}</div>
-                    <div className="ap-hero-stat-lbl">{s.lbl}</div>
+                    <div className="ap-hero-info-val">{s.val}</div>
+                    <div className="ap-hero-info-lbl">{s.lbl}</div>
                   </div>
                 </div>
               ))}
-            </div>
-
-            <div className="ap-hero-trust">
-              <div className="ap-avatar-stack">
-                {AVATARS.map(a => <div key={a.letter} className="ap-avatar" style={{ background: a.bg }}>{a.letter}</div>)}
-              </div>
-              <span className="ap-trust-text">Trusted by <strong>28,000+</strong> learners worldwide</span>
             </div>
           </div>
 
