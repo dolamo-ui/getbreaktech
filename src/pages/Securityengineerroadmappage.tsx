@@ -505,7 +505,7 @@ export default function SecurityEngineerRoadmapPage() {
       <div className="relative w-full" style={{ background: C.bg }}>
         <div className="relative w-full overflow-hidden" style={{ height: '100vh', minHeight: 600 }}>
           <img
-            src="https://images.unsplash.com/photo-1550751827-4bd374c3f58b?w=1600&q=80"
+            src="https://i.imgur.com/mVJonou.jpeg"
             alt="Security Engineer — cybersecurity and server infrastructure"
             className="w-full h-full object-cover object-center block"
             style={{ filter: 'saturate(0.55) brightness(1.05)' }}
