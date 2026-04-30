@@ -48,7 +48,7 @@ const PrivacyPolicyPage: React.FC = () => {
 
             <div className="legal-section">
               <p className="legal-p">
-                CareerPathGuide ("we", "our", or "us") is committed to protecting your privacy. This Privacy Policy explains how we collect, use, disclose, and safeguard your information when you visit our website careerpathguide.com (the "Site").
+                GetBreakTech ("we", "our", or "us") is committed to protecting your privacy. This Privacy Policy explains how we collect, use, disclose, and safeguard your information when you visit our website getbreaktech.co.za (the "Site").
               </p>
               <p className="legal-p">
                 Please read this policy carefully. If you disagree with its terms, please discontinue use of the Site.
@@ -60,7 +60,7 @@ const PrivacyPolicyPage: React.FC = () => {
             <div className="legal-section">
               <h2 className="legal-h2">1. Information we collect</h2>
               <p className="legal-p">We may collect information about you in the following ways:</p>
-              <p className="legal-p"><strong>Information you provide voluntarily:</strong> If you subscribe to our newsletter, we collect your email address. We do not collect payment information; all payments (if applicable) are handled by third-party processors.</p>
+              <p className="legal-p"><strong>Information you provide voluntarily:</strong> If you subscribe to our newsletter or submit a contact form, we collect your email address and any other details you provide. We do not collect payment information; all payments (if applicable) are handled by third-party processors.</p>
               <p className="legal-p"><strong>Automatically collected data:</strong> When you visit our Site, certain information is collected automatically, including your IP address, browser type, operating system, referring URLs, and pages viewed. This is standard data collected by most websites.</p>
               <p className="legal-p"><strong>Cookies and tracking technologies:</strong> We use cookies and similar tracking technologies to track activity on our Site and store certain information. See our Cookie section below for more detail.</p>
             </div>
@@ -72,6 +72,7 @@ const PrivacyPolicyPage: React.FC = () => {
               <p className="legal-p">We use the information we collect to:</p>
               <ul className="legal-ul">
                 <li>Deliver the newsletter and career content you subscribed to</li>
+                <li>Respond to contact form enquiries</li>
                 <li>Improve, operate, and maintain our Site</li>
                 <li>Understand how visitors use the Site (analytics)</li>
                 <li>Comply with legal obligations</li>
@@ -116,11 +117,12 @@ const PrivacyPolicyPage: React.FC = () => {
 
             <div className="legal-section">
               <h2 className="legal-h2">5. Third-party services</h2>
-              <p className="legal-p">Our Site may contain links to third-party websites. We are not responsible for the privacy practices of those sites. This policy applies only to information collected by CareerPathGuide.</p>
+              <p className="legal-p">Our Site may contain links to third-party websites. We are not responsible for the privacy practices of those sites. This policy applies only to information collected by GetBreakTech.</p>
               <p className="legal-p">We may use the following third-party services:</p>
               <ul className="legal-ul">
                 <li>Google Analytics (website analytics)</li>
                 <li>Google AdSense (advertising)</li>
+                <li>Firebase (contact form and newsletter data storage)</li>
                 <li>Email service provider (newsletter delivery)</li>
               </ul>
             </div>
@@ -130,7 +132,7 @@ const PrivacyPolicyPage: React.FC = () => {
             <div className="legal-section">
               <h2 className="legal-h2">6. Data retention</h2>
               <p className="legal-p">
-                We retain your email address for as long as you are subscribed to our newsletter. You may unsubscribe at any time using the link in any newsletter email, and your address will be removed promptly.
+                We retain your email address for as long as you are subscribed to our newsletter. You may unsubscribe at any time using the link in any newsletter email, and your address will be removed promptly. Contact form submissions are retained for a reasonable period to allow us to respond and for record-keeping purposes.
               </p>
             </div>
 
@@ -146,7 +148,7 @@ const PrivacyPolicyPage: React.FC = () => {
                 <li>The right to opt out of marketing communications</li>
                 <li>The right to lodge a complaint with a supervisory authority</li>
               </ul>
-              <p className="legal-p">To exercise any of these rights, contact us at <a className="legal-link" href="mailto:privacy@careerpathguide.com">privacy@careerpathguide.com</a>.</p>
+              <p className="legal-p">To exercise any of these rights, contact us at <a className="legal-link" href="mailto:dolamonyakallo07@gmail.com">dolamonyakallo07@gmail.com</a>.</p>
             </div>
 
             <hr className="legal-divider" />
@@ -170,10 +172,19 @@ const PrivacyPolicyPage: React.FC = () => {
             <hr className="legal-divider" />
 
             <div className="legal-section">
-              <h2 className="legal-h2">10. Contact us</h2>
+              <h2 className="legal-h2">10. Governing law</h2>
+              <p className="legal-p">
+                This Privacy Policy is governed by the laws of the <strong>Republic of South Africa</strong>. By using this Site, you consent to the collection and use of your information as described in this policy.
+              </p>
+            </div>
+
+            <hr className="legal-divider" />
+
+            <div className="legal-section">
+              <h2 className="legal-h2">11. Contact us</h2>
               <p className="legal-p">
                 If you have questions about this Privacy Policy, please contact us at:<br />
-                <a className="legal-link" href="mailto:privacy@careerpathguide.com">privacy@careerpathguide.com</a>
+                <a className="legal-link" href="mailto:dolamonyakallo07@gmail.com">dolamonyakallo07@gmail.com</a>
               </p>
             </div>
 
