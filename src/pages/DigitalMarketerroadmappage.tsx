@@ -753,7 +753,7 @@ export default function DigitalMarketerRoadmapPage() {
               <div className="text-sm" style={{ color: 'rgba(255,255,255,0.6)' }}>12–16 weeks · Hands-on campaigns · Real results</div>
             </div>
           </div>
-          <ShareBar />
+          
         </div>
       </section>
 

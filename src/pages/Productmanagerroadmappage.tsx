@@ -637,7 +637,7 @@ export default function ProductManagerRoadmapPage() {
               <div className="text-sm" style={{ color: 'rgba(255,255,255,0.6)' }}>8–12 months · Consistent daily practice · Build real PM artefacts</div>
             </div>
           </div>
-          <ShareBar />
+          
         </div>
       </section>
 

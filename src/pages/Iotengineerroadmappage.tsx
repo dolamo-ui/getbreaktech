@@ -756,7 +756,7 @@ export default function IoTEngineerRoadmapPage() {
               <div className="text-sm" style={{ color: 'rgba(255,255,255,0.6)' }}>12–16 months · Consistent daily practice · Build and deploy real IoT systems</div>
             </div>
           </div>
-          <ShareBar />
+         
         </div>
       </section>
 

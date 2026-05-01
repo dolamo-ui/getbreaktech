@@ -753,7 +753,7 @@ export default function DataAnalystRoadmapPage() {
               <div className="text-sm" style={{ color: 'rgba(255,255,255,0.6)' }}>9–14 months · Consistent daily practice · Build and publish real analyses</div>
             </div>
           </div>
-          <ShareBar />
+          
         </div>
       </section>
 

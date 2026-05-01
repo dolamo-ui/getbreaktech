@@ -755,7 +755,7 @@ export default function BusinessAnalystRoadmapPage() {
               <div className="text-sm" style={{ color: 'rgba(255,255,255,0.6)' }}>10–14 months · Consistent daily practice · Build a real requirements portfolio</div>
             </div>
           </div>
-          
+         
         </div>
       </section>
 
@@ -1128,7 +1128,7 @@ export default function BusinessAnalystRoadmapPage() {
           </div>
           <p className="text-xs mt-5" style={{ color: 'rgba(255,255,255,0.35)' }}>Start asking the right questions today. Your future self will thank you.</p>
         </div>
-        
+        <ShareBar />
       </div>
 
     </div>

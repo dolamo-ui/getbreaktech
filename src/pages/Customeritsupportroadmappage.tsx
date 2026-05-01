@@ -752,7 +752,7 @@ export default function CustomerITSupportRoadmapPage() {
               <div className="text-sm" style={{ color: 'rgba(255,255,255,0.6)' }}>6–12 months · Consistent daily study · Pass your A+ and build your home lab</div>
             </div>
           </div>
-          <ShareBar />
+          
         </div>
       </section>
 

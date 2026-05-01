@@ -755,7 +755,7 @@ export default function CybersecuritySpecialistRoadmapPage() {
               <div className="text-sm" style={{ color: 'rgba(255,255,255,0.6)' }}>12–18 months · Consistent daily practice · Build and document real lab work</div>
             </div>
           </div>
-          <ShareBar />
+          
         </div>
       </section>
 

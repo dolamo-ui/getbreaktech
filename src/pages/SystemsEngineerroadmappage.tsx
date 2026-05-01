@@ -526,7 +526,7 @@ export default function SystemsEngineerRoadmapPage() {
               <div className="text-sm" style={{ color: 'rgba(255,255,255,0.6)' }}>12–16 months · Build real infrastructure · Automate everything you touch</div>
             </div>
           </div>
-          <ShareBar />
+          
         </div>
       </section>
 
@@ -634,7 +634,7 @@ export default function SystemsEngineerRoadmapPage() {
           <p className="text-sm mb-10 mx-auto leading-relaxed" style={{ color: 'rgba(255,255,255,0.65)', maxWidth: 440 }}>You have the roadmap. You have the resources. You have the 30-day plan. Open your terminal, spin up Ubuntu, and build something that runs in production today.</p>
           <div className="flex flex-wrap justify-center gap-3.5">
             <Link to="/roadmaps" className="inline-flex items-center gap-2 rounded-xl px-7 py-3.5 font-bold text-sm no-underline" style={{ fontFamily: 'Syne, sans-serif', background: '#fff', color: C.primary }}>Explore More Roadmaps <ArrowRight size={16} /></Link>
-            <a href="/contact" className="inline-flex items-center gap-2 rounded-xl px-7 py-3.5 text-sm font-semibold text-white no-underline" style={{ background: 'rgba(255,255,255,0.1)', border: '1px solid rgba(255,255,255,0.2)' }}>Get Career Advice</a>
+           <Link to="/contact" className="inline-flex items-center gap-2 rounded-xl px-7 py-3.5 text-sm font-semibold text-white no-underline" style={{ background: 'rgba(255,255,255,0.1)', border: '1px solid rgba(255,255,255,0.2)' }}> Get Career Advice </Link>
           </div>
           <p className="text-xs mt-5" style={{ color: 'rgba(255,255,255,0.35)' }}>Start building today. Your future self — and your production systems — will thank you.</p>
         </div>

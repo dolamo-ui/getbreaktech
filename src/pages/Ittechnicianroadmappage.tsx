@@ -750,7 +750,7 @@ export default function ITTechnicianRoadmapPage() {
               <div className="text-sm" style={{ color: 'rgba(255,255,255,0.6)' }}>8–12 months · Daily hands-on practice · Build a real home lab</div>
             </div>
           </div>
-          <ShareBar />
+          
         </div>
       </section>
 

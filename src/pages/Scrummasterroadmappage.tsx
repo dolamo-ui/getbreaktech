@@ -754,7 +754,7 @@ export default function ScrumMasterRoadmapPage() {
               <div className="text-sm" style={{ color: 'rgba(255,255,255,0.6)' }}>8–12 months · Consistent daily practice · Facilitate real teams from day one</div>
             </div>
           </div>
-          <ShareBar />
+          
         </div>
       </section>
 

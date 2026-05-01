@@ -745,7 +745,7 @@ export default function NetworkEngineerRoadmapPage() {
               <div className="text-sm" style={{ color: 'rgba(255,255,255,0.6)' }}>10–14 months · Consistent daily practice · Build and lab real networks</div>
             </div>
           </div>
-          <ShareBar />
+          
         </div>
       </section>
 

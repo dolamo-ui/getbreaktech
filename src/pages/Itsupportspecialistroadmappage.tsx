@@ -751,7 +751,7 @@ export default function ITSupportSpecialistRoadmapPage() {
               <div className="text-sm" style={{ color: 'rgba(255,255,255,0.6)' }}>6–12 months · Consistent daily practice · Home lab + certification</div>
             </div>
           </div>
-          <ShareBar />
+          
         </div>
       </section>
 

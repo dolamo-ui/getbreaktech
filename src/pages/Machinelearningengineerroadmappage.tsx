@@ -932,7 +932,7 @@ export default function MachineLearningEngineerRoadmapPage(): React.ReactElement
               <div className="text-sm" style={{ color: 'rgba(255,255,255,0.6)' }}>12–18 months · Consistent daily practice · Build and ship real ML projects</div>
             </div>
           </div>
-          <ShareBar />
+          
         </div>
       </section>
 

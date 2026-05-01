@@ -788,7 +788,7 @@ export default function SOCAnalystRoadmapPage() {
               <div className="text-sm" style={{ color: 'rgba(255,255,255,0.6)' }}>9–13 months · Consistent daily practice · Build real detection skills</div>
             </div>
           </div>
-          <ShareBar />
+         
         </div>
       </section>
 

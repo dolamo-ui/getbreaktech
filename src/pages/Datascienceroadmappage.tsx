@@ -634,7 +634,7 @@ export default function DataScienceRoadmapPage() {
               <div className="text-sm" style={{ color: 'rgba(255,255,255,0.6)' }}>9–13 months · Consistent daily practice · Build real projects</div>
             </div>
           </div>
-          <ShareBar />
+          
         </div>
       </section>
 

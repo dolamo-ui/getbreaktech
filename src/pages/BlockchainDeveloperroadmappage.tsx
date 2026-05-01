@@ -756,7 +756,7 @@ export default function BlockchainDeveloperRoadmapPage() {
               <div className="text-sm" style={{ color: 'rgba(255,255,255,0.6)' }}>12–18 months · Security-first mindset · Deploy real contracts to mainnet</div>
             </div>
           </div>
-          <ShareBar />
+          
         </div>
       </section>
 

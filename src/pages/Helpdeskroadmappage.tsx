@@ -755,7 +755,7 @@ export default function HelpDeskITSupportRoadmapPage() {
               <div className="text-sm" style={{ color: 'rgba(255,255,255,0.6)' }}>8–12 months · Consistent daily study · Certify as you learn</div>
             </div>
           </div>
-          <ShareBar />
+         
         </div>
       </section>
 

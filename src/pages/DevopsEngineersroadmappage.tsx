@@ -743,7 +743,7 @@ export default function DevopsEngineersRoadmapPage() {
               <div className="text-sm" style={{ color: 'rgba(255,255,255,0.6)' }}>18–24 months · Hands-on experience · Real production systems</div>
             </div>
           </div>
-          <ShareBar />
+          
         </div>
       </section>
 

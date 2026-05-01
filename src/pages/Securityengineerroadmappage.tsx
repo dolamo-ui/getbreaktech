@@ -751,7 +751,7 @@ export default function SecurityEngineerRoadmapPage() {
               <div className="text-sm" style={{ color: 'rgba(255,255,255,0.6)' }}>12–16 months · Daily lab practice · Build and document real projects</div>
             </div>
           </div>
-          <ShareBar />
+         
         </div>
       </section>
 

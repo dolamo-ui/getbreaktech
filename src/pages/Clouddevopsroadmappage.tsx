@@ -696,7 +696,7 @@ export default function CloudDevOpsRoadmapPage() {
               <div className="text-sm" style={{ color: 'rgba(255,255,255,0.6)' }}>10–14 months · Daily hands-on practice · Build real infrastructure</div>
             </div>
           </div>
-          <ShareBar />
+          
         </div>
       </section>
 

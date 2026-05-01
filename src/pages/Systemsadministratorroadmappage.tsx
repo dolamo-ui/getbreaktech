@@ -3,7 +3,7 @@ import { Link } from 'react-router-dom'
 import gsap from 'gsap'
 import { ScrollTrigger } from 'gsap/ScrollTrigger'
 import {
-  ArrowLeft, ArrowRight, Check, X,
+  ArrowLeft, Check, X,
   Clock, DollarSign, Rocket,
   CheckCircle2, Code, MessageSquare, Play, ExternalLink,
   GraduationCap, Scale, ThumbsUp, ThumbsDown,
@@ -711,7 +711,7 @@ export default function SystemsAdministratorRoadmapPage() {
               <div className="text-sm" style={{ color: 'rgba(255,255,255,0.6)' }}>10–14 months · Consistent daily practice · Build and manage real infrastructure</div>
             </div>
           </div>
-          <ShareBar />
+          
         </div>
       </section>
 
@@ -1028,10 +1028,7 @@ export default function SystemsAdministratorRoadmapPage() {
             You have the roadmap. You have the resources. You have the 30-day plan. All that's left is to spin up a VM and promote your first domain controller.
           </p>
           <div className="flex flex-wrap justify-center gap-3.5">
-            <Link to="/roadmaps" className="inline-flex items-center gap-2 rounded-xl px-7 py-3.5 font-bold text-sm no-underline" style={{ fontFamily: 'Syne, sans-serif', background: '#fff', color: C.primary }}>
-              Explore More Roadmaps <ArrowRight size={16} />
-            </Link>
-            <a href="/contact" className="inline-flex items-center gap-2 rounded-xl px-7 py-3.5 text-sm font-semibold text-white no-underline" style={{ background: 'rgba(255,255,255,0.1)', border: '1px solid rgba(255,255,255,0.2)' }}>Get Career Advice</a>
+          <Link to="/contact" className="inline-flex items-center gap-2 rounded-xl px-7 py-3.5 text-sm font-semibold text-white no-underline" style={{ background: 'rgba(255,255,255,0.1)', border: '1px solid rgba(255,255,255,0.2)' }}> Get Career Advice </Link>
           </div>
           <p className="text-xs mt-5" style={{ color: 'rgba(255,255,255,0.35)' }}>Start building today. Your future self will thank you.</p>
         </div>

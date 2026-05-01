@@ -753,7 +753,7 @@ export default function CloudSecurityEngineerRoadmapPage() {
               <div className="text-sm" style={{ color: 'rgba(255,255,255,0.6)' }}>12–18 months · Hands-on labs · Real cloud architecture</div>
             </div>
           </div>
-          <ShareBar />
+          
         </div>
       </section>
 
