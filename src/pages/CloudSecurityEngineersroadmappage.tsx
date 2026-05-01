@@ -507,7 +507,7 @@ export default function CloudSecurityEngineerRoadmapPage() {
       <div className="relative w-full" style={{ background: C.bg }}>
         <div className="relative w-full overflow-hidden" style={{ height: '100vh', minHeight: 600 }}>
           <img
-            src="https://i.imgur.com/LEGq8US.jpeg"
+            src="https://i.imgur.com/XhE2Tt9.jpeg"
             alt="Cloud Security Engineer workspace"
             className="w-full h-full object-cover object-center block"
             style={{ filter: 'saturate(0.55) brightness(1.05)' }}
@@ -1121,9 +1121,9 @@ export default function CloudSecurityEngineerRoadmapPage() {
             <Link to="/roadmaps" className="inline-flex items-center gap-2 rounded-xl px-7 py-3.5 font-bold text-sm no-underline" style={{ fontFamily: 'Syne, sans-serif', background: '#fff', color: C.primary }}>
               Explore More Roadmaps <ArrowRight size={16} />
             </Link>
-            <a href="/contact" className="inline-flex items-center gap-2 rounded-xl px-7 py-3.5 text-sm font-semibold text-white no-underline" style={{ background: 'rgba(255,255,255,0.1)', border: '1px solid rgba(255,255,255,0.2)' }}>
-              Get Career Advice
-            </a>
+           <Link to="/contact" className="inline-flex items-center gap-2 rounded-xl px-7 py-3.5 text-sm font-semibold text-white no-underline" style={{ background: 'rgba(255,255,255,0.1)', border: '1px solid rgba(255,255,255,0.2)' }}> Get Career Advice </Link>
+           
+           
           </div>
           <p className="text-xs mt-5" style={{ color: 'rgba(255,255,255,0.35)' }}>Start your cloud security journey today. The industry needs you.</p>
         </div>

@@ -9,11 +9,12 @@ import {
   BookOpen,
   Award,
   Zap,
-  Shield,
-  Server,
-  Eye,
-  Terminal,
-  AlertTriangle,
+  Database,
+  Code2,
+  Search,
+  FileSpreadsheet,
+  PieChart,
+  Rocket,
 } from "lucide-react"
 
 interface Skill {
@@ -78,268 +79,253 @@ function useInView(): [React.RefObject<HTMLDivElement | null>, boolean] {
 const phases: Phase[] = [
   {
     number: "01",
-    title: "Solidify Your IT Foundations",
-    duration: "Weeks 1–4",
+    title: "Reframe What You Already Know",
+    duration: "Weeks 1–3",
     color: "#6366f1",
     bg: "#eef2ff",
     border: "#c7d2fe",
-    icon: Server,
-    tagline: "Your IT background is already a head start — now make it airtight",
+    icon: Search,
+    tagline: "You've been doing data analysis — without the title",
     skills: [
       {
-        name: "Networking Deep Dive",
-        desc: "TCP/IP, DNS, DHCP, VLANs, firewalls, subnetting — the protocols that underpin every attack and every defence. If you've been doing IT support, you already know most of this. Now understand it at the packet level.",
-        time: "1.5 weeks",
+        name: "The Data Analyst Mindset",
+        desc: "Data analysis is the art of turning numbers into decisions. Every campaign report you've written, every A/B test you've read, every attribution model you've argued about — that's data analysis. Learn to recognise what you already know.",
+        time: "3 days",
       },
       {
-        name: "OS Internals",
-        desc: "Windows Active Directory, Linux CLI, file systems, process management, registry — attackers exploit OS behaviour. Defenders need to understand it just as deeply. Your helpdesk experience here is genuinely worth years.",
+        name: "The Analytics Workflow",
+        desc: "Ask → Collect → Clean → Analyse → Visualise → Communicate. This is the data analyst's loop. It mirrors the campaign lifecycle you already know: brief, research, execute, measure, report.",
         time: "1 week",
       },
       {
-        name: "Virtualisation Labs",
-        desc: "Set up your home lab using VirtualBox or VMware. One Windows machine, one Kali Linux. This is your private range — where you break things, test attacks, and learn without consequences. Every serious analyst has one.",
+        name: "Key Metrics & KPIs",
+        desc: "CAC, LTV, conversion rate, CTR, attribution models, cohort analysis — you've seen these in marketing dashboards. Now understand the math behind them and how analysts build them from raw data.",
         time: "1 week",
-      },
-      {
-        name: "CompTIA Network+ Review",
-        desc: "If you don't already hold Network+, close any gaps now. The exam is less important than the knowledge — subnetting, switching, routing, wireless protocols. Cybersecurity is applied networking.",
-        time: "0.5 weeks",
       },
     ],
     resources: [
-      "Professor Messer (free)",
-      "TryHackMe (free tier)",
-      "NetworkChuck YouTube (free)",
+      "DataCamp Introduction to Data Analysis (free tier)",
+      "Storytelling with Data by Cole Knaflic (book)",
+      "Towards Data Science (free)",
     ],
     milestone:
-      "Build a home lab with 2+ VMs — one Windows, one Kali Linux — and document it publicly",
-    tip: "You already know more than you think. IT support taught you how systems break. Cybersecurity is just the next chapter — learning how attackers exploit those same breakpoints on purpose.",
+      "Write a 1-page analysis of a marketing dataset — go beyond the dashboard, explain the why",
+    tip: "Marketing people are the best analysts in the room who just don't know it yet. You already ask the right questions. You're already obsessed with what the numbers mean for the business. You just haven't been taught the tools to answer those questions yourself. That's what this roadmap fixes.",
   },
   {
     number: "02",
-    title: "Security Foundations & CompTIA Security+",
-    duration: "Weeks 5–12",
+    title: "SQL — The Language of Data",
+    duration: "Weeks 4–10",
     color: "#0891b2",
     bg: "#ecfeff",
     border: "#a5f3fc",
-    icon: Shield,
-    tagline: "The credential that opens 97% of entry-level cybersecurity doors",
+    icon: Database,
+    tagline: "If you only learn one technical skill, make it this one",
     skills: [
       {
-        name: "Threats & Vulnerabilities",
-        desc: "Malware types, social engineering, injection attacks, zero-days, ransomware — understand the attacker's full toolkit. You can't defend against what you don't understand.",
+        name: "SQL Fundamentals",
+        desc: "SELECT, FROM, WHERE, ORDER BY, LIMIT — reading data from a database. This is the single most important technical skill a data analyst can have, and it's learnable in weeks, not years.",
         time: "2 weeks",
       },
       {
-        name: "Cryptography Basics",
-        desc: "Symmetric and asymmetric encryption, hashing, PKI, digital certificates, TLS — the mathematical backbone of every secure system. You don't need the maths. You need to understand when each method applies.",
-        time: "1 week",
-      },
-      {
-        name: "Identity & Access Management",
-        desc: "MFA, SSO, RBAC, least privilege, privileged access management — the single biggest source of breaches is identity mismanagement. These concepts appear in every security role on earth.",
-        time: "1 week",
-      },
-      {
-        name: "Security+ Exam Preparation",
-        desc: "Practice exams, timed tests, exam technique — Security+ is performance-based as well as multiple choice. The preparation discipline matters as much as the knowledge.",
+        name: "Joins & Aggregations",
+        desc: "JOIN, GROUP BY, COUNT, SUM, AVG — combining tables and summarising data. This is where you stop just looking at dashboards and start building them.",
         time: "2 weeks",
+      },
+      {
+        name: "Subqueries & CTEs",
+        desc: "Nested queries and Common Table Expressions — write complex analyses that answer multi-part business questions. This is what separates a beginner from someone who gets hired.",
+        time: "1.5 weeks",
+      },
+      {
+        name: "Window Functions",
+        desc: "ROW_NUMBER, RANK, LAG, LEAD, running totals — the advanced SQL that appears in virtually every analyst interview. Master this and you stand out from 80% of applicants.",
+        time: "1 week",
       },
     ],
     resources: [
-      "Professor Messer Security+ (free)",
-      "Jason Dion Practice Tests",
-      "CompTIA CertMaster",
+      "Mode SQL Tutorial (free)",
+      "SQLZoo (free)",
+      "StrataScratch SQL Practice (free tier)",
     ],
     milestone:
-      "Pass CompTIA Security+ — your first industry-recognised cybersecurity credential",
-    tip: "Security+ is the golden ticket to the first role. 97% of employers recognise it. DoD 8570 compliance requires it. Get this done before anything else — it validates every subsequent skill you build.",
+      "Complete 30 SQL challenges on StrataScratch or LeetCode — at least 5 at medium difficulty",
+    tip: "SQL feels intimidating until you realise you've been writing it in English your whole career. 'Show me all customers who bought more than twice in Q4' is a SQL query. You just didn't know the syntax. Learn the syntax.",
   },
   {
     number: "03",
-    title: "Blue Team & SOC Analyst Skills",
-    duration: "Weeks 13–22",
+    title: "Excel & Google Sheets at Analyst Level",
+    duration: "Weeks 11–15",
     color: "#059669",
     bg: "#ecfdf5",
     border: "#a7f3d0",
-    icon: Eye,
-    tagline: "Detect threats. Investigate incidents. Contain damage.",
+    icon: FileSpreadsheet,
+    tagline: "You use Excel. You don't yet use Excel like an analyst.",
     skills: [
       {
-        name: "SIEM & Log Analysis",
-        desc: "Splunk, Microsoft Sentinel, IBM QRadar — parse enormous volumes of logs, correlate events, surface anomalies. SIEM is the primary tool of every SOC analyst. Learn to read what the logs are telling you.",
-        time: "2 weeks",
+        name: "Advanced Formulas",
+        desc: "VLOOKUP/XLOOKUP, INDEX/MATCH, SUMIFS, COUNTIFS, array formulas — the formulas that turn a spreadsheet from a table into an analytical tool.",
+        time: "1 week",
       },
       {
-        name: "Incident Response",
-        desc: "The IR lifecycle: preparation, identification, containment, eradication, recovery, lessons learned. Build playbooks. Practice the decision trees. An analyst who can run IR calmly under pressure is invaluable.",
-        time: "2 weeks",
+        name: "Pivot Tables & Power Query",
+        desc: "Analyse millions of rows without writing code. Build the same summaries that take SQL two joins and a GROUP BY — but in minutes, with a GUI.",
+        time: "1 week",
       },
       {
-        name: "Threat Intelligence",
-        desc: "MITRE ATT&CK framework, indicators of compromise, threat actor TTPs, threat hunting basics — understand how adversaries operate so you can anticipate, not just react.",
-        time: "1.5 weeks",
-      },
-      {
-        name: "Vulnerability Management",
-        desc: "Nessus, OpenVAS, Tenable — scan environments, prioritise findings by severity and exploitability, write reports that stakeholders can act on. Vulnerability triage is a core analyst skill.",
+        name: "Dynamic Charts & Dashboards",
+        desc: "Build dashboards your CMO actually wants to look at. Dynamic charts, conditional formatting, interactive slicers — spreadsheets that update when the data changes.",
         time: "1.5 weeks",
       },
     ],
     resources: [
-      "Blue Team Labs Online (free tier)",
-      "Splunk Free Training",
-      "MITRE ATT&CK (free)",
+      "ExcelJet (free)",
+      "Chandoo.org (free)",
+      "Google Sheets official documentation (free)",
     ],
     milestone:
-      "Complete 10 hands-on SOC labs and write 3 incident response reports from scratch",
-    tip: "Most entry-level cybersecurity roles are SOC Analyst Level 1. This is the phase that makes you directly hireable. Master it and you qualify for thousands of open positions right now.",
+      "Rebuild your company's most important marketing report in Excel from raw data — no formulas pre-filled",
+    tip: "Marketing teams live in spreadsheets. You probably know Excel better than you think. An analyst-level Excel user doesn't just build tables — they build models that answer questions. That's the shift.",
   },
   {
     number: "04",
-    title: "Hands-On Platforms & CTF Competitions",
-    duration: "Weeks 23–30",
+    title: "Python for Data Analysis",
+    duration: "Weeks 16–26",
     color: "#d97706",
     bg: "#fffbeb",
     border: "#fde68a",
-    icon: Terminal,
-    tagline: "Practical experience beats every certificate in an interview",
+    icon: Code2,
+    tagline: "This is where your analysis becomes truly limitless",
     skills: [
       {
-        name: "TryHackMe Learning Paths",
-        desc: "The SOC Level 1 path — 60+ guided, browser-based rooms. No setup required. Covers network analysis, malware analysis, threat intelligence, SIEM, and more. The closest thing to on-the-job training that exists for free.",
-        time: "3 weeks",
-      },
-      {
-        name: "Hack The Box Starting Point",
-        desc: "Real attack-and-defend scenarios with community writeups. Harder than TryHackMe, but the prestige is higher. A completed HTB profile on your resume signals serious intent to any hiring manager.",
+        name: "Python Basics for Analysts",
+        desc: "Variables, lists, dicts, functions, loops — the minimum Python you need before touching data libraries. Not a programming course. Just enough to work with data.",
         time: "2 weeks",
       },
       {
-        name: "CTF Competitions",
-        desc: "picoCTF, CTFtime.org — compete in forensics, cryptography, web hacking, and reverse engineering challenges. CTFs teach you to think like an adversary. Mention competition placements in your application.",
-        time: "1 week",
+        name: "Pandas — The Analyst's Library",
+        desc: "DataFrames, filtering, groupby, merge, pivot_table — doing everything you've been doing in Excel, but on datasets of any size, with full automation.",
+        time: "3 weeks",
       },
       {
-        name: "Python for Security Automation",
-        desc: "Log parsing, port scanning, alerting scripts — you don't need to be a developer. You need enough Python to automate repetitive SOC tasks and stand out from analysts who can't script at all.",
-        time: "1 week",
+        name: "Data Visualization with Matplotlib & Seaborn",
+        desc: "Build publication-quality charts in code. Scatter plots, histograms, heatmaps, time series — visuals that go beyond what Excel can produce.",
+        time: "1.5 weeks",
+      },
+      {
+        name: "Intro to Statistics for Analysts",
+        desc: "Mean, median, standard deviation, correlation, confidence intervals, hypothesis testing — the statistical concepts that come up in every analyst role.",
+        time: "1.5 weeks",
       },
     ],
     resources: [
-      "TryHackMe SOC L1 Path (free)",
-      "Hack The Box (free tier)",
-      "picoCTF (free)",
+      "Kaggle Python Course (free)",
+      "Pandas documentation (free)",
+      "StatQuest with Josh Starmer on YouTube (free)",
     ],
     milestone:
-      "Complete TryHackMe SOC Level 1 path in full and participate in 2 CTF events",
-    tip: "TryHackMe's SOC Level 1 path is the single best free resource in this roadmap. If you only have time for one platform, make it this one. The structured progression mirrors how real SOC teams operate.",
+      "Perform a full end-to-end analysis in a Jupyter notebook: load data → clean → analyse → visualise → write conclusions",
+    tip: "Python feels like a wall until you get over it. And then it feels like a superpower. Every manual task you've done in Excel — filtering, pivoting, merging — Python does in a line of code, on any size dataset, automatically. The investment pays back immediately.",
   },
   {
     number: "05",
-    title: "Portfolio, Certifications & LinkedIn",
-    duration: "Weeks 31–38",
+    title: "BI Tools & Data Storytelling",
+    duration: "Weeks 27–34",
     color: "#7c3aed",
     bg: "#f5f3ff",
     border: "#ddd6fe",
-    icon: Award,
-    tagline: "Document your skills in a way that survives the first 10-second resume scan",
+    icon: PieChart,
+    tagline: "Build dashboards executives actually use",
     skills: [
       {
-        name: "CySA+ Certification",
-        desc: "The natural successor to Security+ for analysts — behavioural analytics, threat hunting, incident response. CySA+ signals you are beyond entry-level. Add it after your SOC lab work and it lands with far more credibility.",
-        time: "3 weeks",
+        name: "Tableau or Power BI",
+        desc: "Build interactive dashboards that connect directly to databases. Drag-and-drop analytics that turn raw SQL results into decisions for the C-suite.",
+        time: "2.5 weeks",
       },
       {
-        name: "GitHub Security Portfolio",
-        desc: "Document your home lab builds, TryHackMe writeups, and Python scripts publicly on GitHub. Hiring managers will look. A well-maintained GitHub profile is evidence of sustained effort — something no certificate can fake.",
-        time: "1 week",
+        name: "Data Storytelling",
+        desc: "How to structure an analytical narrative: context → complication → resolution. How to present data in a way that leads to action, not just information.",
+        time: "1.5 weeks",
       },
       {
-        name: "Blog or LinkedIn Articles",
-        desc: "Write three short posts: how you set up your home lab, a CTF challenge walkthrough, an incident you investigated in a simulation. Writing about what you've learned forces precision and signals communication skills.",
-        time: "1 week",
-      },
-      {
-        name: "LinkedIn Profile Optimisation",
-        desc: "Keywords matter: SOC Analyst, SIEM, Splunk, incident response, threat intelligence, MITRE ATT&CK. Recruiters are searching these terms daily. Your profile either appears or it doesn't.",
-        time: "3 days",
+        name: "Marketing Analytics Specialisation",
+        desc: "Attribution modelling, funnel analysis, cohort analysis, LTV modelling — the specific analytical frameworks most valuable in your target market.",
+        time: "1.5 weeks",
       },
     ],
     resources: [
-      "Jason Dion CySA+ Course",
-      "Medium / Hashnode (free blogging)",
-      "LinkedIn (free)",
+      "Tableau Public (free)",
+      "Power BI Desktop (free)",
+      "Cole Nussbaumer Knaflic's blog (free)",
     ],
     milestone:
-      "CySA+ certification in progress + public portfolio with 5 or more documented security projects",
-    tip: "A write-up showing you investigated a real simulated security incident — logs, timeline, containment decision, lessons learned — is more impressive to a hiring manager than any certificate. Show the thinking, not just the outcome.",
+      "Build a complete marketing performance dashboard in Tableau or Power BI connected to a real dataset",
+    tip: "Your marketing background makes you exceptional at this phase. You know what the CMO wants to see. You know what questions the Sales team will ask. Most pure analysts don't. You're not just building a dashboard — you're building the right dashboard.",
   },
   {
     number: "06",
-    title: "Land Your First SOC Role",
-    duration: "Weeks 39–48",
+    title: "Build Your Portfolio & Land the Role",
+    duration: "Weeks 35–48",
     color: "#dc2626",
     bg: "#fef2f2",
     border: "#fecaca",
-    icon: AlertTriangle,
-    tagline: "Your IT experience is the differentiator — translate it into security language",
+    icon: Rocket,
+    tagline: "Your marketing experience is the differentiator — use it",
     skills: [
       {
-        name: "Resume Translation",
-        desc: "Every IT support task maps to a security skill. 'Troubleshot network issues' becomes 'identified and isolated anomalous network behaviour.' Rewrite your history in the language of the role you're targeting.",
-        time: "1 week",
+        name: "3 Analytics Portfolio Projects",
+        desc: "Each one tells a story: here's the business problem, here's the data I had, here's what I found, here's what I recommended. Not just charts — conclusions.",
+        time: "4 weeks",
       },
       {
-        name: "Interview Preparation",
-        desc: "SOC scenario walkthroughs: you receive a SIEM alert, what do you do next? Practice explaining your investigation methodology out loud. Technical interviews test your reasoning process, not just your answers.",
+        name: "Kaggle & Public Datasets",
+        desc: "Build projects on public marketing datasets. Demonstrate SEO analysis, customer segmentation, campaign attribution — analyses that hiring managers in your target companies care about.",
         time: "2 weeks",
       },
       {
-        name: "MSSP Applications",
-        desc: "Managed Security Service Providers hire the most entry-level analysts. The experience is intense, the breadth is huge, and after 12 to 18 months you become attractive to every in-house security team that exists.",
-        time: "Ongoing",
+        name: "Interview Prep",
+        desc: "SQL interview questions, case studies, the 'product metrics' interview — how data teams at tech companies think about analytical problems.",
+        time: "2 weeks",
       },
       {
-        name: "Government & Public Sector",
-        desc: "DoD, CISA, defence contractors — often more willing to train candidates with potential than the private sector. Many roles specifically value IT support backgrounds over pure security graduates.",
-        time: "Ongoing",
+        name: "Resume & LinkedIn Pivot",
+        desc: "Quantify your marketing achievements in analytical language. 'Reduced CAC by 34% through attribution model optimisation' is a data analyst achievement, not a marketing one.",
+        time: "1 week",
       },
     ],
     resources: [
-      "CyberSeek.org (free career map)",
-      "SANS Community Slack (free)",
-      "Indeed + LinkedIn Job Alerts",
+      "Kaggle Datasets (free)",
+      "Data Portfolio Builder YouTube (free)",
+      "Interviewing.io (free practice)",
     ],
     milestone:
-      "First SOC Analyst offer — your first day defending real infrastructure",
-    tip: "Apply to MSSPs first. They hire the most junior talent, they train aggressively, and the exposure is unmatched. Spend 12 to 18 months there, then move to an in-house role at twice the salary. It is the fastest path that consistently works.",
+      "3 published projects + a GitHub portfolio + your first data analyst role offer.",
+    tip: "You have a genuine advantage over candidates from pure technical backgrounds: you know what the business needs. Target companies in marketing-heavy industries — e-commerce, SaaS, consumer apps. They need analysts who speak both languages. That's you.",
   },
 ]
 
 const salaryData: SalaryRow[] = [
   {
-    label: "SOC Analyst L1 (0–2 yrs)",
+    label: "Junior Data Analyst (0–2 yrs)",
     range: "$55K–$80K",
     bar: 38,
     color: "#6366f1",
   },
   {
-    label: "SOC Analyst L2 (2–4 yrs)",
-    range: "$80K–$110K",
-    bar: 56,
+    label: "Data Analyst (2–4 yrs)",
+    range: "$80K–$115K",
+    bar: 58,
     color: "#0891b2",
   },
   {
-    label: "Security Engineer (4–6 yrs)",
-    range: "$110K–$160K",
-    bar: 76,
+    label: "Senior Analyst / Analytics Manager",
+    range: "$115K–$160K",
+    bar: 78,
     color: "#059669",
   },
   {
-    label: "Security Architect / CISO",
-    range: "$160K–$300K+",
+    label: "Analytics Lead / Director",
+    range: "$150K–$220K+",
     bar: 100,
     color: "#7c3aed",
   },
@@ -347,33 +333,34 @@ const salaryData: SalaryRow[] = [
 
 const advantages: AdvantageItem[] = [
   {
-    title: "You Already Understand How Systems Fail",
-    desc: "IT support is a masterclass in failure modes. You've seen misconfigurations, corrupted permissions, broken authentication flows, and rogue processes — all of which are exactly what attackers exploit. Most cybersecurity graduates have never seen a production system in distress. You have.",
+    title: "You Already Think in Business Questions",
+    desc: "Most junior analysts know how to calculate a metric but not why it matters. You've spent years translating business goals into measurement frameworks. That's a senior-level skill in a junior's body.",
   },
   {
-    title: "You Know How to Stay Calm Under Pressure",
-    desc: "Incident response requires composure. When a ransomware alert fires at 2am, the analyst who panics makes it worse. IT support trained you to triage calmly, communicate clearly, and work the problem. That is a rare and genuinely valuable skill in a SOC.",
+    title: "You Understand the Audience",
+    desc: "Data without communication is just noise. You know how to present to a CMO, a sales team, or a board. Your instinct for narrative and audience is what makes analysis actionable.",
   },
   {
-    title: "You Speak Both Technical and Human",
-    desc: "Analysts who can explain a security incident to a non-technical stakeholder are worth significantly more than those who can't. Your helpdesk work required translating technical problems for frustrated users. That communication skill transfers directly to security briefings.",
+    title: "You Know Which Numbers Matter",
+    desc: "You've seen vanity metrics vs meaningful metrics up close. You know the difference between a metric that looks good and one that actually drives decisions. Most analysts learn this after two years on the job.",
   },
   {
-    title: "You've Already Built a Lab Mindset",
-    desc: "Good IT support people have always tested things, built workarounds, and learned by breaking stuff in safe environments. That mindset — curious, methodical, hands-on — is identical to what makes an exceptional security analyst.",
+    title: "You've Already Run Experiments",
+    desc: "A/B testing, multivariate campaigns, audience segmentation — you've been running experiments and interpreting results longer than most data analysts. You just never called it that.",
   },
 ]
 
-export default function CybersecurityAnalystRoadmapPage(): React.ReactElement {
+export default function DataAnalystRoadmapPage(): React.ReactElement {
   const [openPhase, setOpenPhase] = useState<number | null>(0)
   const [heroRef, heroIn] = useInView()
   const [salRef, salIn] = useInView()
+  const [advRef] = useInView()
 
   const stats: StatItem[] = [
-    { icon: DollarSign, val: "$80K", label: "Avg. Starting Salary", color: "#6366f1" },
-    { icon: TrendingUp, val: "+35%", label: "Job Growth (10yr)", color: "#0891b2" },
-    { icon: Users, val: "3.5M", label: "Unfilled Global Jobs", color: "#059669" },
-    { icon: Clock, val: "9mo", label: "Avg. Time to Hire", color: "#d97706" },
+    { icon: DollarSign, val: "$70K", label: "Avg. Starting Salary", color: "#6366f1" },
+    { icon: TrendingUp, val: "+28%", label: "Job Growth (10yr)", color: "#0891b2" },
+    { icon: Users, val: "#2", label: "Most In-Demand Tech Role", color: "#059669" },
+    { icon: Clock, val: "10mo", label: "Avg. Time to Hire", color: "#d97706" },
   ]
 
   return (
@@ -430,7 +417,10 @@ export default function CybersecurityAnalystRoadmapPage(): React.ReactElement {
         }}
       >
         <div style={{ maxWidth: 800, margin: "0 auto" }}>
-          <button className="back-btn" onClick={() => window.history.back()}>
+          <button
+            className="back-btn"
+            onClick={() => window.history.back()}
+          >
             ← Back to Career Paths
           </button>
 
@@ -468,7 +458,7 @@ export default function CybersecurityAnalystRoadmapPage(): React.ReactElement {
               color: "#0d1117",
             }}
           >
-            From IT Support
+            From Marketing
             <br />
             <span
               style={{
@@ -477,7 +467,7 @@ export default function CybersecurityAnalystRoadmapPage(): React.ReactElement {
                 WebkitTextFillColor: "transparent",
               }}
             >
-              to Cybersecurity Analyst
+              to Data Analyst
             </span>
           </h1>
 
@@ -491,10 +481,8 @@ export default function CybersecurityAnalystRoadmapPage(): React.ReactElement {
               fontFamily: "'IBM Plex Serif', Georgia, serif",
             }}
           >
-            You already speak the language of systems, networks, and
-            troubleshooting. Cybersecurity is the next chapter — and your IT
-            background puts you years ahead of career changers starting from
-            scratch.
+            You've spent years living inside marketing data. Now it's time to
+            make it official — and get paid like an analyst.
           </p>
 
           <div
@@ -520,7 +508,7 @@ export default function CybersecurityAnalystRoadmapPage(): React.ReactElement {
                 fontWeight: 600,
               }}
             >
-              <Clock size={13} color="#6366f1" /> ~9–11 months part-time
+              <Clock size={13} color="#6366f1" /> ~11 months part-time
             </span>
           </div>
 
@@ -582,8 +570,8 @@ export default function CybersecurityAnalystRoadmapPage(): React.ReactElement {
               color: "#0d1117",
             }}
           >
-            IT support people make extraordinary security analysts. The gap is
-            narrower than the job titles suggest.
+            Marketing people make extraordinary data analysts. The industry just
+            doesn't advertise that yet.
           </h2>
 
           <p
@@ -594,12 +582,12 @@ export default function CybersecurityAnalystRoadmapPage(): React.ReactElement {
               marginBottom: "1.25rem",
             }}
           >
-            Think about what a SOC analyst actually does every day. They receive
-            an alert, they investigate a system, they trace the origin of
-            something suspicious, they contain the damage, and they explain what
-            happened to people who don't want to read log files. If you've spent
-            time in IT support, you've done every single one of those things —
-            just without the security framing.
+            Think about what a marketing analyst actually does every day. They
+            ask a business question — "Why did conversions drop in Q3?" — and
+            then they find the data to answer it. They pull reports, filter by
+            segments, compare cohorts, spot patterns, and build a story around
+            what the numbers are saying. Then they present it to people who
+            don't want to look at spreadsheets.
           </p>
 
           <p
@@ -610,20 +598,18 @@ export default function CybersecurityAnalystRoadmapPage(): React.ReactElement {
               marginBottom: "1.25rem",
             }}
           >
-            The difference between what you've been doing and what a
-            cybersecurity analyst is paid to do is a set of specific technical
-            skills, a different vocabulary, and a shift in perspective from
-            fixing systems to defending them. That gap closes faster than most
-            people expect — especially when you already understand what's
-            underneath.
+            If you've been in marketing for more than two years, you've done
+            this. Every week. You just did it with dashboards someone else
+            built, with metrics someone else defined. The gap between what
+            you've been doing and what a data analyst is paid to do is
+            surprisingly narrow.
           </p>
 
           <div className="data-quote">
-            "The best SOC analysts I've ever worked with came from helpdesk
-            backgrounds. They already knew how to stay calm when everything is
-            on fire, how to communicate to stressed stakeholders, and how to
-            think through problems methodically. We taught them the security
-            tools in weeks."
+            "The best analysts I've ever hired came from marketing backgrounds.
+            They had something our engineers didn't: they cared about what the
+            numbers meant for the business, not just whether the query was
+            technically correct."
             <div
               className="sans"
               style={{
@@ -634,7 +620,7 @@ export default function CybersecurityAnalystRoadmapPage(): React.ReactElement {
                 fontWeight: 600,
               }}
             >
-              — Security Operations Manager, Fortune 500 financial services firm
+              — Analytics Manager at a growth-stage e-commerce company
             </div>
           </div>
 
@@ -646,19 +632,18 @@ export default function CybersecurityAnalystRoadmapPage(): React.ReactElement {
               marginBottom: "1.25rem",
             }}
           >
-            The roadmap below bridges a specific technical gap: moving from
-            managing systems to defending them. From responding to user tickets
-            to responding to security incidents. From knowing how networks work
-            to understanding how they get attacked and how to stop it.
+            The roadmap below bridges a narrow but specific gap: moving from
+            reading data to creating it. From interpreting dashboards to
+            building them. From knowing what questions to ask to having the
+            technical tools to answer them yourself.
           </p>
 
           <div className="callout-indigo">
-            <strong>The honest picture:</strong> Cybersecurity analysts earn
-            significantly more than IT support roles at every level of
-            experience. The global skills shortage is real — 3.5 million
-            unfilled positions worldwide. And companies are actively looking for
-            people who combine technical IT knowledge with security training.
-            That combination is rarer than either skill alone.
+            <strong>The honest picture:</strong> Data analysts earn
+            significantly more than marketing coordinators and managers in most
+            industries. The skills overlap is real, the transition time is
+            shorter than most, and the demand for people who understand both the
+            technical and business sides is higher than ever.
           </div>
         </div>
       </section>
@@ -979,6 +964,7 @@ export default function CybersecurityAnalystRoadmapPage(): React.ReactElement {
 
       {/* UNFAIR ADVANTAGE */}
       <section
+        ref={advRef}
         style={{
           padding: "4.5rem 6%",
           background: "#fff",
@@ -1000,7 +986,7 @@ export default function CybersecurityAnalystRoadmapPage(): React.ReactElement {
               color: "#0d1117",
             }}
           >
-            What you bring that a pure security-theory candidate doesn't
+            What you bring that a pure technical candidate doesn't
           </h2>
           <p
             style={{
@@ -1010,13 +996,11 @@ export default function CybersecurityAnalystRoadmapPage(): React.ReactElement {
               marginBottom: "2rem",
             }}
           >
-            Security teams are full of people who understand attack frameworks
-            and can recite MITRE ATT&CK tactics — but have never managed a live
-            system under pressure, never talked a panicked user through a
-            ransomware incident, never had to figure out why the network was
-            behaving strangely at 3am on a Friday. Your IT background covers
-            all of that. Add the security layer and you become something the
-            industry genuinely struggles to find.
+            Companies are drowning in data but starving for insight. They have
+            engineers who can write flawless SQL but don't know what questions
+            to ask. They have analysts who can build beautiful dashboards but
+            don't understand the business context. You come in already
+            understanding both sides.
           </p>
           <div className="adv-grid" style={{ marginBottom: "2rem" }}>
             {advantages.map((item: AdvantageItem, i: number) => (
@@ -1073,8 +1057,7 @@ export default function CybersecurityAnalystRoadmapPage(): React.ReactElement {
               fontSize: "0.9rem",
             }}
           >
-            Cybersecurity salaries are among the fastest-growing in tech, with
-            a shortage that keeps compensation rising
+            Data roles have among the strongest salary growth curves in tech
           </p>
           <div
             style={{
@@ -1159,8 +1142,8 @@ export default function CybersecurityAnalystRoadmapPage(): React.ReactElement {
               color: "#0d1117",
             }}
           >
-            Security without systems knowledge is theory. You bring the systems
-            knowledge.
+            Data without business context is just a spreadsheet. You bring the
+            context.
           </h2>
           <p
             style={{
@@ -1170,13 +1153,11 @@ export default function CybersecurityAnalystRoadmapPage(): React.ReactElement {
               marginBottom: "1.25rem",
             }}
           >
-            The cybersecurity industry is full of people who can name every
-            MITRE ATT&CK technique but freeze when they have to explain why a
-            particular Windows process is behaving strangely, or how an
-            attacker actually moves laterally through an Active Directory
-            environment, or what the network logs would look like at the moment
-            of compromise. That operational knowledge comes from working with
-            systems — which you have done.
+            The data industry is full of people who can write a flawless Python
+            script but can't tell you what the output means for the business.
+            They know how to calculate churn but not why it went up last
+            quarter. They can build a funnel analysis but wouldn't know which
+            stage to prioritise fixing first.
           </p>
           <p
             style={{
@@ -1186,19 +1167,17 @@ export default function CybersecurityAnalystRoadmapPage(): React.ReactElement {
               marginBottom: "1.25rem",
             }}
           >
-            Add the security layer this roadmap teaches you — the frameworks,
-            the certifications, the detection and response tools — and you
-            become something rare: a defender who genuinely understands what
-            they are defending. That combination is exactly what the industry
-            has been struggling to hire for over a decade.
+            You've spent years developing exactly that context. You know how
+            campaigns work, how audiences behave, how funnels break, and how to
+            translate data into a recommendation someone will act on. Add the
+            technical skills this roadmap teaches you, and you become something
+            genuinely rare: an analyst who is also a strategist.
           </p>
           <div className="data-quote">
-            The cybersecurity skills gap is not a myth. 3.5 million positions go
-            unfilled globally every year — not because the industry doesn't want
-            to hire, but because it can't find people who combine technical
-            knowledge with the composure and communication that security work
-            demands. IT support people have both. They just haven't made the
-            move yet.
+            Data is the raw material. Insight is the product. The ability to
+            produce insight consistently — not just technically correct
+            analysis, but analysis that leads to better decisions — is worth
+            significantly more than the ability to write a JOIN.
           </div>
           <div
             style={{

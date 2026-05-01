@@ -508,7 +508,7 @@ export default function ScrumMasterRoadmapPage() {
       <div className="relative w-full" style={{ background: C.bg }}>
         <div className="relative w-full overflow-hidden" style={{ height: '100vh', minHeight: 600 }}>
           <img
-            src="https://i.imgur.com/7zZYMW9.jpeg"
+            src="https://i.imgur.com/hyv0AoI.jpeg"
             alt="Scrum Master agile team collaboration"
             className="w-full h-full object-cover object-center block"
             style={{ filter: 'saturate(0.55) brightness(1.05)' }}
@@ -1122,9 +1122,8 @@ export default function ScrumMasterRoadmapPage() {
             <Link to="/roadmaps" className="inline-flex items-center gap-2 rounded-xl px-7 py-3.5 font-bold text-sm no-underline" style={{ fontFamily: 'Syne, sans-serif', background: '#fff', color: C.primary }}>
               Explore More Roadmaps <ArrowRight size={16} />
             </Link>
-            <a href="/contact" className="inline-flex items-center gap-2 rounded-xl px-7 py-3.5 text-sm font-semibold text-white no-underline" style={{ background: 'rgba(255,255,255,0.1)', border: '1px solid rgba(255,255,255,0.2)' }}>
-              Get Career Advice
-            </a>
+            <Link to="/contact" className="inline-flex items-center gap-2 rounded-xl px-7 py-3.5 text-sm font-semibold text-white no-underline" style={{ background: 'rgba(255,255,255,0.1)', border: '1px solid rgba(255,255,255,0.2)' }}> Get Career Advice </Link>
+
           </div>
           <p className="text-xs mt-5" style={{ color: 'rgba(255,255,255,0.35)' }}>Start serving teams today. Your future self will thank you.</p>
         </div>
