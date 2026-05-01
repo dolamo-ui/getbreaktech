@@ -755,7 +755,7 @@ export default function AIResearcherRoadmapPage() {
               <div className="text-sm" style={{ color: 'rgba(255,255,255,0.6)' }}>12–18 months · Daily paper reading + implementation · Build and publish real research</div>
             </div>
           </div>
-          <ShareBar />
+         
         </div>
       </section>
 
