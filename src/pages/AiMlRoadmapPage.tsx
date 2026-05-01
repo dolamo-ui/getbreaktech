@@ -692,7 +692,7 @@ export default function AiMlRoadmapPage() {
               <div className="text-sm" style={{ color: 'rgba(255,255,255,0.6)' }}>10–14 months · Consistent daily practice · Build real projects</div>
             </div>
           </div>
-          <ShareBar />
+       
         </div>
       </section>
 
