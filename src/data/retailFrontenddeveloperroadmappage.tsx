@@ -1252,18 +1252,6 @@ export default function FrontendDeveloperRoadmapPage(): React.ReactElement {
             <a href="#roadmap" className="cta-btn">
               Start Phase 01 Today <ArrowRight size={16} />
             </a>
-            <a
-              href="/roadmaps"
-              className="sans"
-              style={{
-                fontSize: "0.9rem",
-                fontWeight: 600,
-                color: "#94a3b8",
-                textDecoration: "none",
-              }}
-            >
-              ← Browse All Paths
-            </a>
           </div>
         </div>
       </section>
