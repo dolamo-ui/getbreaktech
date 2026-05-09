@@ -395,7 +395,7 @@ export default function UXUIRoadmap() {
           </div>
           <div style={{marginTop:"2.5rem",display:"flex",gap:"1rem",flexWrap:"wrap",alignItems:"center"}}>
             <a href="#roadmap" className="cta-btn">Start Phase 01 Today <ArrowRight size={16}/></a>
-            <a href="/roadmaps" style={{fontSize:".9rem",fontWeight:600,color:"var(--ink4)",textDecoration:"none"}}>← Browse All Paths</a>
+            
           </div>
         </div>
       </section>
