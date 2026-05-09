@@ -316,7 +316,7 @@ export default function SoftwareDeveloperRoadmapPage() {
           <p style={{ color: "#64748b", lineHeight: 1.7, marginBottom: "2rem", fontSize: "0.95rem" }}>
             The tech industry desperately needs people who understand users — not just code. Your background isn't a liability. It's exactly what the best teams are looking for.
           </p>
-          <a href="/roadmaps" className="cta-btn">Browse All Roadmaps <ArrowRight size={18} /></a>
+          
         </div>
       </section>
     </div>
