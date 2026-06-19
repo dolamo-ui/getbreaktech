@@ -5,6 +5,7 @@ import { HeroSection }        from '../components/HeroSection'
 import { CategoriesSection }  from '../components/CategoriesSection'
 import { GuidesSection }      from '../components/GuidesSection'
 import { WhySection }         from '../components/WhySection'
+import { TestimonialsSection } from '../components/TestimonialsSection'
 import { FAQSection }         from '../components/Faqsection'
 import { CTASection }         from '../components/Catsection'
 import { Newsletter, Footer } from '../components/Footer'
@@ -128,6 +129,7 @@ const LandingPage: React.FC = () => {
         <CategoriesSection />
         <GuidesSection />
         <WhySection />
+        <TestimonialsSection />
         <FAQSection />
         <CTASection />
         <Newsletter />
